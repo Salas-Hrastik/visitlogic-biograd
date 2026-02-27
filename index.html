@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>VisitLogic – Biograd</title>
+</head>
+<body>
+  <h2>AI Informator – Biograd na Moru</h2>
+  <div id="response"></div>
+  <input id="message" placeholder="Postavite pitanje..." />
+  <button onclick="send()">Pošalji</button>
+
+<script>
+async function send() {
+  const message = document.getElementById("message").value;
+
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message })
+  });
+
+  const data = await res.json();
+  document.getElementById("response").innerHTML = "<p>" + data.reply + "</p>";
+}
+</script>
+
+</body>
+</html>
