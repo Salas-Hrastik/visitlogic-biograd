@@ -7,11 +7,17 @@ const openai = new OpenAI({
 });
 
 export default async function handler(req, res) {
+
+  // DOZVOLJAVAMO SAMO POST
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
   try {
+
     if (!process.env.OPENAI_API_KEY) {
       return res.status(500).json({
-        success: false,
-        error: "OPENAI_API_KEY nije postavljen."
+        reply: "API ključ nije postavljen."
       });
     }
 
@@ -26,7 +32,7 @@ export default async function handler(req, res) {
     for (const kategorija in data.kategorije) {
       const items = data.kategorije[kategorija];
       if (Array.isArray(items)) {
-        items.forEach((item, index) => {
+        items.forEach(item => {
           objekti.push({
             kategorija,
             ...item
@@ -71,7 +77,6 @@ export default async function handler(req, res) {
 
     if (results.length === 0) {
       return res.status(200).json({
-        success: true,
         reply: "Trenutno nemam dovoljno podataka za taj upit."
       });
     }
@@ -104,22 +109,20 @@ ${contextData}
 Ne izmišljaj.
 Ne spominji druge gradove.
 Ako nešto nije dostupno, reci da nema podataka.
-Odgovori prirodno i profesionalno.
+Odgovori profesionalno.
 `
         }
       ]
     });
 
     res.status(200).json({
-      success: true,
       reply: completion.choices[0].message.content
     });
 
   } catch (error) {
     console.error("SERVER ERROR:", error);
     res.status(500).json({
-      success: false,
-      error: "Server greška – provjerite Vercel log."
+      reply: "Server greška – provjerite Vercel log."
     });
   }
 }
