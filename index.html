@@ -1,125 +1,173 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Informator – Biograd na Moru</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Informator – Biograd na Moru</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-    .container {
-      width: 100%;
-      max-width: 600px;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    }
+.chat-container {
+  width: 100%;
+  max-width: 650px;
+  height: 90vh;
+  background: white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
 
-    h1 {
-      margin-top: 0;
-      color: #1f2937;
-    }
+.header {
+  background: #0ea5e9;
+  color: white;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
 
-    .chat-box {
-      min-height: 120px;
-      background: #f9fafb;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 15px;
-      white-space: pre-wrap;
-    }
+.messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #f9fafb;
+}
 
-    input {
-      width: 75%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-    }
+.message {
+  margin-bottom: 15px;
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  line-height: 1.4;
+  font-size: 15px;
+  white-space: pre-wrap;
+}
 
-    button {
-      padding: 10px 16px;
-      border-radius: 6px;
-      border: none;
-      background: #2563eb;
-      color: white;
-      cursor: pointer;
-    }
+.user {
+  background: #2563eb;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 6px;
+}
 
-    button:hover {
-      background: #1e40af;
-    }
+.ai {
+  background: #e5e7eb;
+  color: #111827;
+  border-bottom-left-radius: 6px;
+}
 
-    .loading {
-      color: #6b7280;
-      font-size: 14px;
-    }
-  </style>
+.input-area {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 25px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+}
+
+button {
+  margin-left: 10px;
+  padding: 12px 18px;
+  border-radius: 25px;
+  border: none;
+  background: #0ea5e9;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #0284c7;
+}
+
+.typing {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 5px;
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>AI Informator – Biograd na Moru</h1>
 
-    <div id="chat" class="chat-box">
-      Postavite pitanje o Biogradu na Moru...
-    </div>
-
-    <input id="message" type="text" placeholder="Upišite pitanje..." />
-    <button onclick="sendMessage()">Pošalji</button>
-
-    <div id="loading" class="loading"></div>
+<div class="chat-container">
+  <div class="header">
+    🌊 AI Informator – Biograd na Moru
   </div>
 
-  <script>
-    async function sendMessage() {
-      const input = document.getElementById("message");
-      const chat = document.getElementById("chat");
-      const loading = document.getElementById("loading");
+  <div id="messages" class="messages"></div>
 
-      const message = input.value.trim();
-      if (!message) return;
+  <div class="input-area">
+    <input id="messageInput" placeholder="Postavite pitanje..." />
+    <button onclick="sendMessage()">Pošalji</button>
+  </div>
+</div>
 
-      chat.innerText = "Vi: " + message + "\n\nAI razmišlja...";
-      loading.innerText = "⏳ Generiranje odgovora...";
+<script>
+const messagesDiv = document.getElementById("messages");
+const input = document.getElementById("messageInput");
 
-      try {
-        const response = await fetch("/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ message })
-        });
+function addMessage(text, type) {
+  const msg = document.createElement("div");
+  msg.classList.add("message", type);
+  msg.innerText = text;
+  messagesDiv.appendChild(msg);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
 
-        const data = await response.json();
+async function sendMessage() {
+  const message = input.value.trim();
+  if (!message) return;
 
-        chat.innerText =
-          "Vi: " + message + "\n\nAI:\n" +
-          (data.odgovor || "Nema odgovora.");
+  addMessage(message, "user");
+  input.value = "";
 
-      } catch (error) {
-        chat.innerText = "Dogodila se greška pri komunikaciji s AI sustavom.";
-      }
+  const typingIndicator = document.createElement("div");
+  typingIndicator.classList.add("typing");
+  typingIndicator.innerText = "AI razmišlja...";
+  messagesDiv.appendChild(typingIndicator);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
-      loading.innerText = "";
-      input.value = "";
-    }
-
-    // Enter tipka
-    document.getElementById("message").addEventListener("keydown", function(e) {
-      if (e.key === "Enter") {
-        sendMessage();
-      }
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
     });
-  </script>
+
+    const data = await response.json();
+    typingIndicator.remove();
+    addMessage(data.odgovor || "Nema odgovora.", "ai");
+
+  } catch (error) {
+    typingIndicator.remove();
+    addMessage("Došlo je do pogreške.", "ai");
+  }
+}
+
+input.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") sendMessage();
+});
+</script>
+
 </body>
 </html>
