@@ -1,0 +1,108 @@
+{
+  "grad": "Biograd na Moru",
+  "zupanija": "Zadarska županija",
+
+  "plaze": [
+    {
+      "naziv": "Plaža Dražica",
+      "tip": "šljunčana",
+      "pogodno_za": ["obitelji", "plivanje"],
+      "sadrzaji": ["tuševi", "ležaljke", "kafići", "vodeni park"],
+      "udaljenost_od_centra": "10 minuta hoda"
+    },
+    {
+      "naziv": "Plaža Soline",
+      "tip": "pješčano-šljunčana",
+      "pogodno_za": ["obitelji", "rekreacija"],
+      "sadrzaji": ["tuševi", "sportski sadržaji", "barovi"],
+      "udaljenost_od_centra": "15 minuta hoda"
+    },
+    {
+      "naziv": "Plaža Bošana",
+      "tip": "šljunčana",
+      "pogodno_za": ["mirniji odmor"],
+      "sadrzaji": ["manje gužve"],
+      "udaljenost_od_centra": "5 minuta hoda"
+    }
+  ],
+
+  "marina": {
+    "naziv": "Marina Kornati",
+    "kapacitet_vezova": 700,
+    "usluge": ["opsrkba vodom", "struja", "servis", "sanitarni čvorovi"],
+    "napomena": "Jedna od najvećih marina na Jadranu"
+  },
+
+  "kulturne_znamenitosti": [
+    {
+      "naziv": "Zavičajni muzej Biograd",
+      "tip": "muzej",
+      "opis": "Arheološki i povijesni eksponati vezani uz kraljevsku prošlost Biograda"
+    },
+    {
+      "naziv": "Crkva sv. Stošije",
+      "tip": "crkva"
+    }
+  ],
+
+  "izleti": [
+    {
+      "naziv": "Nacionalni park Kornati",
+      "tip": "brodski izlet"
+    },
+    {
+      "naziv": "Park prirode Vransko jezero",
+      "tip": "biciklizam, promatranje ptica"
+    }
+  ],
+
+  "restorani": [
+    {
+      "naziv": "Konoba Kampanel",
+      "tip_kuhinje": "dalmatinska kuhinja",
+      "lokacija": "centar"
+    },
+    {
+      "naziv": "Restoran Dupin",
+      "tip_kuhinje": "riblji specijaliteti",
+      "lokacija": "uz more"
+    },
+    {
+      "naziv": "Peperino",
+      "tip_kuhinje": "pizza i mediteranska kuhinja",
+      "lokacija": "centar"
+    }
+  ],
+
+  "zatvorene_aktivnosti": [
+    "Zavičajni muzej Biograd",
+    "Kafići u centru grada",
+    "Restorani s unutarnjim prostorom"
+  ],
+
+  "obiteljski_mod": {
+    "sigurne_plaze": ["Plaža Soline", "Plaža Dražica"],
+    "aktivnosti": ["šetnja rivom", "sladoled u centru", "vodeni park na Dražici"]
+  },
+
+  "itinerari": {
+    "1_dan": [
+      "Šetnja rivom",
+      "Kupanje na Dražici ili Solinama",
+      "Večera uz more"
+    ],
+    "3_dana": [
+      "Kupanje i plaže",
+      "Izlet u NP Kornati",
+      "Posjet Vranskom jezeru",
+      "Gastronomska večer"
+    ],
+    "7_dana": [
+      "Plaže i odmor",
+      "Kornati",
+      "Vransko jezero",
+      "Izlet u Zadar",
+      "Večernje šetnje i gastronomija"
+    ]
+  }
+}
