@@ -1,29 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="hr">
 <head>
   <meta charset="UTF-8" />
-  <title>VisitLogic – Biograd</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Informator – Biograd na Moru</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #1f2937;
+    }
+
+    .chat-box {
+      min-height: 120px;
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      white-space: pre-wrap;
+    }
+
+    input {
+      width: 75%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+    }
+
+    button {
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1e40af;
+    }
+
+    .loading {
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
-  <h2>AI Informator – Biograd na Moru</h2>
-  <div id="response"></div>
-  <input id="message" placeholder="Postavite pitanje..." />
-  <button onclick="send()">Pošalji</button>
+  <div class="container">
+    <h1>AI Informator – Biograd na Moru</h1>
 
-<script>
-async function send() {
-  const message = document.getElementById("message").value;
+    <div id="chat" class="chat-box">
+      Postavite pitanje o Biogradu na Moru...
+    </div>
 
-  const res = await fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message })
-  });
+    <input id="message" type="text" placeholder="Upišite pitanje..." />
+    <button onclick="sendMessage()">Pošalji</button>
 
-  const data = await res.json();
-  document.getElementById("response").innerHTML = "<p>" + data.reply + "</p>";
-}
-</script>
+    <div id="loading" class="loading"></div>
+  </div>
 
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("message");
+      const chat = document.getElementById("chat");
+      const loading = document.getElementById("loading");
+
+      const message = input.value.trim();
+      if (!message) return;
+
+      chat.innerText = "Vi: " + message + "\n\nAI razmišlja...";
+      loading.innerText = "⏳ Generiranje odgovora...";
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+
+        chat.innerText =
+          "Vi: " + message + "\n\nAI:\n" +
+          (data.odgovor || "Nema odgovora.");
+
+      } catch (error) {
+        chat.innerText = "Dogodila se greška pri komunikaciji s AI sustavom.";
+      }
+
+      loading.innerText = "";
+      input.value = "";
+    }
+
+    // Enter tipka
+    document.getElementById("message").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
 </body>
 </html>
