@@ -1,111 +1,93 @@
 import fs from "fs";
 import path from "path";
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(200).json({ odgovor: "API radi ✅ (pošalji POST zahtjev)" });
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    0.5 - Math.cos(dLat)/2 +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    (1 - Math.cos(dLon))/2;
+
+  return R * 2 * Math.asin(Math.sqrt(a));
+}
+
+function flattenData(data) {
+  const objekti = [];
+
+  for (const kategorija in data.kategorije) {
+    const items = data.kategorije[kategorija];
+
+    if (Array.isArray(items)) {
+      items.forEach((item, index) => {
+        objekti.push({
+          id: `${kategorija}_${index}`,
+          naziv: item.naziv,
+          kategorije: [kategorija],
+          ...item
+        });
+      });
+    }
   }
 
+  return objekti;
+}
+
+export default async function handler(req, res) {
   try {
-    const { message } = req.body;
+    const { message, userLocation } = req.body;
 
-    // 📚 1️⃣ UČITAVANJE DESTINACIJSKE BAZE
-    const filePath = path.join(process.cwd(), "data", "biograd.json");
-    const rawData = fs.readFileSync(filePath, "utf-8");
-    const biogradData = JSON.parse(rawData);
+    const filePath = path.join(process.cwd(), "data", "biograd_master.json");
+    const rawData = fs.readFileSync(filePath);
+    const data = JSON.parse(rawData);
 
-    // 🌦️ 2️⃣ DOHVAT REALNOG VREMENA (Open-Meteo)
-    let temperature = null;
-    let windspeed = null;
-    let weathercode = null;
+    const objekti = flattenData(data);
 
-    try {
-      const weatherResponse = await fetch(
-        "https://api.open-meteo.com/v1/forecast?latitude=43.937&longitude=15.451&current_weather=true"
-      );
+    let results = objekti;
 
-      const weatherData = await weatherResponse.json();
-
-      temperature = weatherData.current_weather?.temperature ?? null;
-      windspeed = weatherData.current_weather?.windspeed ?? null;
-      weathercode = weatherData.current_weather?.weathercode ?? null;
-    } catch (weatherError) {
-      console.error("Greška kod dohvaćanja vremena:", weatherError);
+    if (message.toLowerCase().includes("restoran")) {
+      results = objekti.filter(o => o.kategorije.includes("restorani"));
     }
 
-    // 📅 3️⃣ SEZONSKA LOGIKA
-    const currentMonth = new Date().getMonth() + 1;
+    if (message.toLowerCase().includes("plaža")) {
+      results = objekti.filter(o => o.kategorije.includes("plaze"));
+    }
 
-    let season = "izvan sezone";
-    if (currentMonth >= 7 && currentMonth <= 8) season = "sezona kupanja";
-    else if (currentMonth >= 4 && currentMonth <= 6) season = "prijelazno razdoblje";
-    else if (currentMonth >= 9 && currentMonth <= 10) season = "mirnija posezona";
+    if (message.toLowerCase().includes("djeca")) {
+      results = objekti.filter(o => o.kategorije.includes("djecji_sadrzaji"));
+    }
 
-    // 🧠 4️⃣ SYSTEM PROMPT
-    const systemPrompt = `
-Ti si službeni digitalni turistički informator za Biograd na Moru.
+    if (userLocation) {
+      results = results.map(o => {
+        if (o.koordinate) {
+          const distance = calculateDistance(
+            userLocation.lat,
+            userLocation.lng,
+            o.koordinate.lat,
+            o.koordinate.lng
+          );
+          return { ...o, distance };
+        }
+        return o;
+      }).sort((a, b) => (a.distance || 999) - (b.distance || 999));
+    }
 
---------------------------------------------------
-SLUŽBENA DESTINACIJSKA BAZA PODATAKA
---------------------------------------------------
-${JSON.stringify(biogradData, null, 2)}
+    results = results
+      .filter(o => o.ocjena >= 4.3)
+      .sort((a, b) => b.ocjena - a.ocjena)
+      .slice(0, 5);
 
---------------------------------------------------
-REALNI UVJETI
---------------------------------------------------
-Temperatura: ${temperature ?? "nepoznato"} °C
-Brzina vjetra: ${windspeed ?? "nepoznato"} km/h
-Weather code: ${weathercode ?? "nepoznato"}
-Sezona: ${season}
-
---------------------------------------------------
-PRAVILA
---------------------------------------------------
-- Koristi ISKLJUČIVO podatke iz baze.
-- Ne izmišljaj objekte.
-- Ako informacija nije u bazi, jasno reci da nije dostupna.
-- Maksimalno 3 preporuke.
-- Najviše jedno potpitanje.
-- Profesionalno, jasno i toplo.
-
-Hijerarhija:
-REALNI UVJETI → SEZONA → PREPORUKA → ATMOSFERA
-`;
-
-    // 🤖 5️⃣ POZIV OPENAI API-JA
-    const openaiResponse = await fetch(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-4.1-mini",
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: message }
-          ],
-          temperature: 0.3
-        }),
-      }
-    );
-
-    const data = await openaiResponse.json();
-
-    const aiReply =
-      data.choices?.[0]?.message?.content ||
-      "Trenutno nije moguće generirati odgovor.";
-
-    return res.status(200).json({
-      odgovor: aiReply
+    res.status(200).json({
+      success: true,
+      results
     });
 
   } catch (error) {
-    console.error("Greška:", error);
-    return res.status(500).json({
-      odgovor: "Došlo je do pogreške u sustavu."
+    res.status(500).json({
+      success: false,
+      error: "Greška u obradi zahtjeva."
     });
   }
 }
