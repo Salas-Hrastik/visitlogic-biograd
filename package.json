@@ -1,8 +1,6 @@
 {
-  "name": "visitlogic-biograd",
-  "version": "1.0.0",
-  "private": true,
-  "engines": {
-    "node": "24.x"
+  "type": "module",
+  "dependencies": {
+    "openai": "^4.0.0"
   }
 }
