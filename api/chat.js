@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
     const { message } = req.body;
 
-    // 🌤 DOHVAT TRENUTNOG VREMENA
+    // 🌤 Vrijeme
     const weatherResponse = await fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
     );
@@ -35,14 +35,15 @@ export default async function handler(req, res) {
     const weatherCode = weatherData.current_weather.weathercode;
     const weatherDescription = interpretWeather(weatherCode);
 
-    // 🕒 DIO DANA
+    // 🕒 Dio dana
     const now = new Date();
     const hour = now.getHours();
     let partOfDay = "dan";
+
     if (hour < 11) partOfDay = "jutro";
     else if (hour >= 18) partOfDay = "večer";
 
-    // 📂 UČITAVANJE BAZE
+    // 📂 Učitavanje baze
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
     const data = JSON.parse(rawData);
@@ -66,27 +67,22 @@ export default async function handler(req, res) {
       }
     }
 
-    // 🔎 DETEKCIJA KATEGORIJE
-    const categoryMap = {
-      restoran: "restorani",
-      večera: "restorani",
-      ručak: "restorani",
-      pizza: "restorani",
-      plaža: "plaze",
-      djeca: "djecji_sadrzaji",
-      ljekarna: "ljekarne",
-      hotel: "hoteli",
-      apartman: "apartmani",
-      kamp: "kampovi"
-    };
-
+    // 🔎 Prepoznavanje namjere
     let detectedCategory = null;
+    const m = message.toLowerCase();
 
-    for (const keyword in categoryMap) {
-      if (message.toLowerCase().includes(keyword)) {
-        detectedCategory = categoryMap[keyword];
-        break;
-      }
+    if (m.includes("plaž")) detectedCategory = "plaze";
+    else if (m.includes("restoran") || m.includes("ručak") || m.includes("večer"))
+      detectedCategory = "restorani";
+    else if (m.includes("kava") || m.includes("doručak"))
+      detectedCategory = "slasticarnice";
+
+    // 🧠 TVRDA LOGIKA DIJELA DANA
+    if (!detectedCategory) {
+      if (partOfDay === "jutro")
+        detectedCategory = "slasticarnice";
+      else if (partOfDay === "večer")
+        detectedCategory = "restorani";
     }
 
     let results = objekti;
@@ -98,7 +94,7 @@ export default async function handler(req, res) {
     results = results
       .filter(o => o.ocjena >= 4.2)
       .sort((a, b) => b.score - a.score)
-      .slice(0, 5);
+      .slice(0, 3);
 
     if (results.length === 0) {
       return res.status(200).json({
@@ -106,18 +102,19 @@ export default async function handler(req, res) {
       });
     }
 
-    const contextData = results.map(r => `
+    // 📎 FORMIRANJE OBAVEZNIH LINKOVA
+    const formattedData = results.map(r => `
 Naziv: ${r.naziv}
 Adresa: ${r.adresa}
 Ocjena: ${r.ocjena}
 Opis: ${r.opis}
 Google Maps: ${r.google_maps}
+${r.web ? `Web: ${r.web}` : ""}
 `).join("\n");
 
-    // 🤖 OPENAI
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.3,
+      temperature: 0.2,
       messages: [
         {
           role: "system",
@@ -127,12 +124,11 @@ Ti si službeni turistički informator za Biograd na Moru.
 Trenutno vrijeme: ${weatherDescription}, ${temperature}°C.
 Dio dana: ${partOfDay}.
 
-Ako je kiša ili nevrijeme → predlaži zatvorene aktivnosti.
-Ako je sunčano i toplo → predlaži vanjske aktivnosti.
-
-Koristi ISKLJUČIVO dostavljene podatke.
-Nikada ne spominji druge gradove.
-Ako nema podataka, jasno reci da nema.
+Uvijek:
+- koristi isključivo dostavljene objekte
+- prikaži Google Maps link
+- ako postoji web stranica, prikaži i web link
+- nikada ne spominji druge gradove
 `
         },
         {
@@ -142,7 +138,7 @@ Korisnik pita: "${message}"
 
 Dostupni objekti:
 
-${contextData}
+${formattedData}
 `
         }
       ]
