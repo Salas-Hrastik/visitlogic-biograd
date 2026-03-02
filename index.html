@@ -29,17 +29,19 @@ app.post("/api/chat", async (req, res) => {
 
     const { conversation } = req.body;
     const userMessage =
-      conversation?.[conversation.length - 1]?.content?.toLowerCase() || "";
+      conversation?.[conversation.length - 1]?.content || "";
+
+    const lowerMessage = userMessage.toLowerCase();
 
     // 🌤 Vrijeme
     const weatherResponse = await fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
     );
+
     const weatherData = await weatherResponse.json();
     const temperature = weatherData.current_weather.temperature;
-    const weatherDescription = interpretWeather(
-      weatherData.current_weather.weathercode
-    );
+    const weatherDescription =
+      interpretWeather(weatherData.current_weather.weathercode);
 
     // 📂 Baza
     const filePath = path.join(__dirname, "data", "biograd_master.json");
@@ -52,7 +54,6 @@ app.post("/api/chat", async (req, res) => {
       const items = data.kategorije[kategorija];
       if (Array.isArray(items)) {
         items.forEach(item => {
-
           const score =
             ((item.ocjena || 0) * 2) +
             ((item.broj_ocjena || 0) / 100);
@@ -66,20 +67,21 @@ app.post("/api/chat", async (req, res) => {
       }
     }
 
-    // 🔎 Detekcija kategorije
+    // 🔎 STRUKTURIRANE KATEGORIJE
     let category = null;
 
-    if (
-      userMessage.includes("restoran") ||
-      userMessage.includes("ručak") ||
-      userMessage.includes("večer")
-    ) category = "restorani";
+    if (lowerMessage.includes("restoran") || lowerMessage.includes("ručak") || lowerMessage.includes("večer"))
+      category = "restorani";
 
-    if (userMessage.includes("plaž")) category = "plaze";
-    if (userMessage.includes("ljekarn") || userMessage.includes("apotek")) category = "ljekarne";
-    if (userMessage.includes("hotel") || userMessage.includes("smještaj")) category = "smjestaj";
+    if (lowerMessage.includes("plaž"))
+      category = "plaze";
 
-    // 🎯 Strukturirani odgovor
+    if (lowerMessage.includes("ljekarn") || lowerMessage.includes("apotek"))
+      category = "ljekarne";
+
+    if (lowerMessage.includes("hotel") || lowerMessage.includes("smještaj"))
+      category = "smjestaj";
+
     if (category) {
 
       const results = objekti
@@ -102,17 +104,44 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    // 🤖 AI fallback
+    // 🤖 STRUKTURIRANI AI ODGOVOR
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.3,
       messages: [
         {
           role: "system",
-          content:
-            "Ti si profesionalni turistički informator za Biograd na Moru. Odgovaraj stručno i bez izmišljanja."
+          content: `
+Ti si profesionalni destinacijski savjetnik za Biograd na Moru.
+
+Odgovaraj ISKLJUČIVO u sljedećoj strukturi:
+
+NASLOV (jedna rečenica konteksta vremena)
+
+1. Naziv prijedloga
+   - Kratko objašnjenje (max 2 rečenice)
+
+2. Naziv prijedloga
+   - Kratko objašnjenje
+
+3. Naziv prijedloga
+   - Kratko objašnjenje
+
+Maksimalno 3 prijedloga.
+Bez eseja.
+Bez općih fraza.
+Bez promotivnog tona.
+`
         },
-        { role: "user", content: userMessage }
+        {
+          role: "user",
+          content: `
+Upit: ${userMessage}
+
+Vrijeme: ${weatherDescription}, ${temperature}°C
+`
+        }
       ]
     });
 
@@ -129,5 +158,5 @@ app.post("/api/chat", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log("Server running on port " + PORT);
 });
