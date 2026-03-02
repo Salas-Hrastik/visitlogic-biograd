@@ -10,70 +10,73 @@ export default async function handler(req, res) {
     const { message } = req.body;
     const lower = message.toLowerCase();
 
-    // 1. VRIJEME
+    // 1. VRIJEME (Za dinamički naslov)
     const weatherRes = await fetch("https://api.open-meteo.com/v1/forecast?latitude=43.9375&longitude=15.4428&current_weather=true");
     const weatherData = await weatherRes.json();
-    const temp = weatherData.current_weather?.temperature || "15";
+    const temp = weatherData.current_weather?.temperature || "10.3";
 
-    // 2. BAZA PODATAKA
+    // 2. BAZA (JSON)
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
     const data = JSON.parse(rawData);
 
-    // 3. DETEKCIJA KATEGORIJE (UX Trigger)
+    // 3. PROŠIRENA LOGIKA ZA KARTICE (UX Trigger)
     let category = null;
-    if (lower.includes("restoran") || lower.includes("hrana")) category = "restorani";
-    if (lower.includes("plaž") || lower.includes("more")) category = "plaze";
-    if (lower.includes("šetnj") || lower.includes("znamenitost") || lower.includes("obići")) category = "atrakcije";
+    
+    // Provjera ključnih riječi za aktivaciju strukturiranog prikaza
+    if (lower.includes("restoran") || lower.includes("hrana") || lower.includes("jesti")) {
+      category = "restorani";
+    } else if (lower.includes("plaž") || lower.includes("more") || lower.includes("kupanje")) {
+      category = "plaze";
+    } else if (lower.includes("šetnj") || lower.includes("obići") || lower.includes("znamenitost") || lower.includes("park")) {
+      // Ovdje mapiramo "šetnju" na kategoriju u vašem JSON-u (npr. 'atrakcije' ili 'šetnice')
+      category = "atrakcije"; 
+    }
 
-    // AKO JE KATEGORIJA PREPOZNATA -> ŠALJEMO KARTICE (Ovo eliminira tekstualni blok)
+    // Ako smo pogodili kategoriju, šaljemo IDENTIČNU STRUKTURU kao za restorane
     if (category && data.kategorije[category]) {
-      const items = data.kategorije[category]
-        .filter(i => i.ocjena >= 4.0)
+      const results = data.kategorije[category]
+        .filter(item => item.ocjena >= 4.0)
         .sort((a, b) => b.ocjena - a.ocjena)
         .slice(0, 3);
 
       return res.status(200).json({
         type: "cards",
-        title: `📍 Preporuke za: ${category.toUpperCase()}`,
-        temp: `${temp}°C`,
-        items: items.map(item => ({
-          naziv: item.naziv,
-          opis: `⭐ ${item.ocjena} | ${item.opis}`,
-          link: `https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}`
+        title: `Preporuke (${temp}°C)`,
+        items: results.map(r => ({
+          naziv: r.naziv,
+          opis: r.opis,
+          ocjena: r.ocjena,
+          adresa: r.adresa || "Biograd na Moru",
+          // Precizan link za "Otvori na karti" gumb
+          mapsUrl: `https://www.google.com/maps/search/?api=1&query=${r.lat},${r.lng}`,
+          lat: r.lat,
+          lng: r.lng
         }))
       });
     }
 
-    // 4. AI FALLBACK (Samo ako nema podudaranja u bazi)
-    // STROGO naređujemo AI-ju da koristi Markdown liste i razmake
+    // 4. AI FALLBACK (Samo za općenita pitanja)
+    // Forsiramo Markdown kako bi čak i običan tekst bio pregledniji
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
-          content: `Ti si turistički vodič. Govoriš kratko. 
-          MAX 3 točke. 
-          Obavezno koristi prazan red između točaka. 
-          Koristi emojije.
-          Format:
-          ### [Naslov]
-          - [Kratki opis]
-          
-          ### [Naslov]`
+          content: `Ti si turistički informator. Odgovaraj ISKLJUČIVO u kratkim natuknicama s emojijima. 
+          Maksimalno 3 točke. Svaka točka mora biti u novom redu s razmakom.`
         },
-        { role: "user", content: `Vrijeme je ${temp}°C. Upit: ${message}` }
+        { role: "user", content: message }
       ],
-      temperature: 0.3 // Niža temperatura = manje "brbljanja"
+      temperature: 0.3
     });
 
-    // Vraćamo tekst, ali frontend ga mora renderirati kao Markdown
     return res.status(200).json({
       type: "text",
       reply: completion.choices[0].message.content
     });
 
   } catch (error) {
-    return res.status(500).json({ reply: "Greška na serveru." });
+    return res.status(500).json({ reply: "Greška u sustavu." });
   }
 }
