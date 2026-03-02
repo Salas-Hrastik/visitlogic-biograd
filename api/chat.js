@@ -15,6 +15,28 @@ function interpretWeather(code) {
   return "nepoznato";
 }
 
+function parseActivities(text) {
+
+  const lines = text
+    .replace(/\*\*/g, "")
+    .replace(/#+/g, "")
+    .split(/\d+\./)
+    .map(l => l.trim())
+    .filter(l => l.length > 10)
+    .slice(0,3);
+
+  return lines.map(line => {
+
+    const parts = line.split(":");
+
+    return {
+      naziv: parts[0]?.trim() || "Prijedlog",
+      opis: parts.slice(1).join(":").trim() || line,
+      ikona: "📍"
+    };
+  });
+}
+
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -29,7 +51,7 @@ export default async function handler(req, res) {
 
     const lowerMessage = userMessage.toLowerCase();
 
-    // 🌤 Vrijeme
+    // WEATHER
     const weatherResponse = await fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
     );
@@ -39,7 +61,7 @@ export default async function handler(req, res) {
     const weatherDescription =
       interpretWeather(weatherData.current_weather.weathercode);
 
-    // 📂 Baza
+    // DATABASE
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
     const data = JSON.parse(rawData);
@@ -65,19 +87,9 @@ export default async function handler(req, res) {
 
     let category = null;
 
-    if (lowerMessage.includes("restoran") || lowerMessage.includes("ručak") || lowerMessage.includes("večer"))
-      category = "restorani";
+    if (lowerMessage.includes("restoran")) category = "restorani";
+    if (lowerMessage.includes("plaž")) category = "plaze";
 
-    if (lowerMessage.includes("plaž"))
-      category = "plaze";
-
-    if (lowerMessage.includes("ljekarn") || lowerMessage.includes("apotek"))
-      category = "ljekarne";
-
-    if (lowerMessage.includes("hotel") || lowerMessage.includes("smještaj"))
-      category = "smjestaj";
-
-    // DATABASE CARDS
     if (category) {
 
       const results = objekti
@@ -98,35 +110,18 @@ export default async function handler(req, res) {
       });
     }
 
-    // AI STRICT JSON
+    // AI GENERATION
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.2,
-      response_format: { type: "json_object" },
+      temperature: 0.3,
       messages: [
         {
           role: "system",
           content: `
-Vrati ISKLJUČIVO validan JSON.
-
-Format:
-
-{
-  "title": "Kratki kontekst vremena",
-  "items": [
-    {
-      "naziv": "Naziv aktivnosti",
-      "opis": "Jedna ili dvije rečenice",
-      "ikona": "emoji"
-    }
-  ]
-}
-
-Maksimalno 3 aktivnosti.
-Bez markdown.
-Bez numeracije.
-Bez ###.
-Bez dodatnog teksta.
+Daj maksimalno 3 prijedloga aktivnosti.
+Numeriraj ih 1., 2., 3.
+Svaki prijedlog u jednoj kraćoj rečenici.
+Bez eseja.
 `
         },
         {
@@ -139,11 +134,14 @@ Vrijeme: ${weatherDescription}, ${temperature}°C
       ]
     });
 
-    const structured = JSON.parse(completion.choices[0].message.content);
+    const rawText = completion.choices[0].message.content;
+
+    const activities = parseActivities(rawText);
 
     return res.status(200).json({
       type: "ai_cards",
-      ...structured
+      title: `Prijedlog aktivnosti (${weatherDescription}, ${temperature}°C)`,
+      items: activities
     });
 
   } catch (error) {
