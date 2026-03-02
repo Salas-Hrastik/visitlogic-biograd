@@ -24,15 +24,22 @@ export default async function handler(req, res) {
   try {
 
     const { conversation } = req.body;
-    const userMessage = conversation?.[0]?.content?.toLowerCase() || "";
+    const userMessage =
+      conversation?.[conversation.length - 1]?.content || "";
 
+    const lowerMessage = userMessage.toLowerCase();
+
+    // 🌤 Vrijeme
     const weatherResponse = await fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
     );
+
     const weatherData = await weatherResponse.json();
     const temperature = weatherData.current_weather.temperature;
-    const weatherDescription = interpretWeather(weatherData.current_weather.weathercode);
+    const weatherDescription =
+      interpretWeather(weatherData.current_weather.weathercode);
 
+    // 📂 Baza
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
     const data = JSON.parse(rawData);
@@ -43,7 +50,6 @@ export default async function handler(req, res) {
       const items = data.kategorije[kategorija];
       if (Array.isArray(items)) {
         items.forEach(item => {
-
           const score =
             ((item.ocjena || 0) * 2) +
             ((item.broj_ocjena || 0) / 100);
@@ -59,10 +65,19 @@ export default async function handler(req, res) {
 
     let category = null;
 
-    if (userMessage.includes("restoran") || userMessage.includes("ručak") || userMessage.includes("večer")) {
+    if (lowerMessage.includes("restoran") || lowerMessage.includes("ručak") || lowerMessage.includes("večer"))
       category = "restorani";
-    }
 
+    if (lowerMessage.includes("plaž"))
+      category = "plaze";
+
+    if (lowerMessage.includes("ljekarn") || lowerMessage.includes("apotek"))
+      category = "ljekarne";
+
+    if (lowerMessage.includes("hotel") || lowerMessage.includes("smještaj"))
+      category = "smjestaj";
+
+    // 🎯 STRUCTURED FROM DATABASE
     if (category) {
 
       const results = objekti
@@ -85,16 +100,47 @@ export default async function handler(req, res) {
       });
     }
 
+    // 🤖 AI → JSON STRUCTURED
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
+      temperature: 0.3,
+      response_format: { type: "json_object" },
       messages: [
-        { role: "system", content: "Ti si turistički informator za Biograd na Moru." },
-        { role: "user", content: userMessage }
+        {
+          role: "system",
+          content: `
+Vrati JSON:
+
+{
+  "title": "Naslov s kontekstom vremena",
+  "items": [
+    {
+      "naziv": "Naziv prijedloga",
+      "opis": "Kratko objašnjenje (max 2 rečenice)",
+      "ikona": "emoji"
+    }
+  ]
+}
+
+Maksimalno 3 prijedloga.
+Bez eseja.
+`
+        },
+        {
+          role: "user",
+          content: `
+Upit: ${userMessage}
+Vrijeme: ${weatherDescription}, ${temperature}°C
+`
+        }
       ]
     });
 
+    const structured = JSON.parse(completion.choices[0].message.content);
+
     return res.status(200).json({
-      reply: completion.choices[0].message.content
+      type: "ai_cards",
+      ...structured
     });
 
   } catch (error) {
