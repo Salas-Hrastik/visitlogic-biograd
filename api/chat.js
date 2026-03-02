@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   try {
 
     const { conversation } = req.body;
-    const lastMessage = conversation?.[0]?.content?.toLowerCase() || "";
+    const userMessage = conversation?.[0]?.content?.toLowerCase() || "";
 
     // 🌤 Vrijeme
     const weatherResponse = await fetch(
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     const temperature = weatherData.current_weather.temperature;
     const weatherDescription = interpretWeather(weatherData.current_weather.weathercode);
 
-    // 📂 Učitavanje baze
+    // 📂 Baza
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
     const data = JSON.parse(rawData);
@@ -58,25 +58,41 @@ export default async function handler(req, res) {
       }
     }
 
-    // 🔎 Intent
-    let detectedCategory = null;
+    // 🔎 Kategorijska detekcija
+    let category = null;
 
-    if (lastMessage.includes("ljekarn")) detectedCategory = "ljekarne";
-    else if (lastMessage.includes("plaž")) detectedCategory = "plaze";
-    else if (lastMessage.includes("restoran") || lastMessage.includes("ručak")) detectedCategory = "restorani";
-    else if (lastMessage.includes("hotel") || lastMessage.includes("smještaj")) detectedCategory = "smjestaj";
-    else if (lastMessage.includes("izlet")) detectedCategory = "izleti_i_avantura";
+    if (userMessage.includes("restoran") || userMessage.includes("večer") || userMessage.includes("ručak")) {
+      category = "restorani";
+    }
+    else if (userMessage.includes("plaž")) {
+      category = "plaze";
+    }
+    else if (userMessage.includes("hotel") || userMessage.includes("smještaj")) {
+      category = "smjestaj";
+    }
 
-    if (detectedCategory) {
+    // 🎯 Ako je restoranski kontekst
+    if (category === "restorani") {
 
-      const results = objekti
-        .filter(o => o.kategorija === detectedCategory && o.ocjena >= 4.2)
+      let results = objekti.filter(o => o.kategorija === "restorani");
+
+      // večernja filtracija
+      if (userMessage.includes("večer")) {
+        results = results.filter(o =>
+          o.opis?.toLowerCase().includes("ambijent") ||
+          o.opis?.toLowerCase().includes("terasa") ||
+          o.opis?.toLowerCase().includes("romanti")
+        );
+      }
+
+      results = results
+        .filter(o => o.ocjena >= 4.2)
         .sort((a, b) => b.score - a.score)
         .slice(0, 3);
 
       return res.status(200).json({
         type: "cards",
-        title: `Preporučeni ${detectedCategory}`,
+        title: `Preporuke (${weatherDescription}, ${temperature}°C)`,
         items: results.map(r => ({
           naziv: r.naziv,
           adresa: r.adresa,
@@ -88,7 +104,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // GPT samo za opće upite
+    // GPT samo za opće teme
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.2,
@@ -99,7 +115,7 @@ export default async function handler(req, res) {
         },
         {
           role: "user",
-          content: `Upit: ${lastMessage}. Trenutno vrijeme: ${weatherDescription}, ${temperature}°C`
+          content: `Upit: ${userMessage}. Vrijeme: ${weatherDescription}, ${temperature}°C`
         }
       ]
     });
