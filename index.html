@@ -1,176 +1,133 @@
-<!DOCTYPE html>
-<html lang="hr">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Turistički Informator – Biograd na Moru</title>
+import express from "express";
+import fs from "fs";
+import path from "path";
+import OpenAI from "openai";
+import fetch from "node-fetch";
 
-<style>
-body {
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#1f4e79,#2e86c1);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+const app = express();
+const __dirname = path.resolve();
+
+app.use(express.json());
+app.use(express.static(__dirname));
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+function interpretWeather(code) {
+  if ([0].includes(code)) return "sunčano";
+  if ([1,2,3].includes(code)) return "djelomično oblačno";
+  if ([45,48].includes(code)) return "magla";
+  if ([51,53,55,61,63,65].includes(code)) return "kiša";
+  if ([95,96,99].includes(code)) return "nevrijeme";
+  return "nepoznato";
 }
 
-.container {
-  width:90%;
-  max-width:900px;
-  background:white;
-  border-radius:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.2);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
+app.post("/api/chat", async (req, res) => {
 
-.header {
-  background:#1f4e79;
-  color:white;
-  padding:20px;
-  text-align:center;
-  font-weight:bold;
-  font-size:22px;
-}
+  try {
 
-.chat-area {
-  padding:20px;
-  overflow-y:auto;
-  flex:1;
-  background:#f4f6f9;
-}
+    const { conversation } = req.body;
+    const userMessage =
+      conversation?.[conversation.length - 1]?.content?.toLowerCase() || "";
 
-.bot-message,.user-message {
-  padding:15px;
-  margin-bottom:15px;
-  border-radius:12px;
-  max-width:80%;
-}
+    // 🌤 Vrijeme
+    const weatherResponse = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
+    );
+    const weatherData = await weatherResponse.json();
+    const temperature = weatherData.current_weather.temperature;
+    const weatherDescription = interpretWeather(
+      weatherData.current_weather.weathercode
+    );
 
-.bot-message { background:#e4e9f2; }
-.user-message {
-  background:#2e86c1;
-  color:white;
-  margin-left:auto;
-}
+    // 📂 Baza
+    const filePath = path.join(__dirname, "data", "biograd_master.json");
+    const rawData = fs.readFileSync(filePath);
+    const data = JSON.parse(rawData);
 
-.card {
-  background:white;
-  padding:18px;
-  margin-bottom:14px;
-  border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
-}
+    let objekti = [];
 
-.map-btn,.web-btn {
-  margin-top:8px;
-  margin-right:8px;
-  padding:8px 14px;
-  background:#1f4e79;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
+    for (const kategorija in data.kategorije) {
+      const items = data.kategorije[kategorija];
+      if (Array.isArray(items)) {
+        items.forEach(item => {
 
-.map-btn:hover,.web-btn:hover {
-  background:#163a5c;
-}
+          const score =
+            ((item.ocjena || 0) * 2) +
+            ((item.broj_ocjena || 0) / 100);
 
-.input-area {
-  display:flex;
-  border-top:1px solid #ddd;
-}
+          objekti.push({
+            kategorija,
+            score,
+            ...item
+          });
+        });
+      }
+    }
 
-input {
-  flex:1;
-  padding:15px;
-  border:none;
-  font-size:16px;
-  outline:none;
-}
+    // 🔎 Detekcija kategorije
+    let category = null;
 
-button {
-  padding:15px 25px;
-  border:none;
-  background:#1f4e79;
-  color:white;
-  cursor:pointer;
-}
+    if (
+      userMessage.includes("restoran") ||
+      userMessage.includes("ručak") ||
+      userMessage.includes("večer")
+    ) category = "restorani";
 
-button:hover { background:#163a5c; }
+    if (userMessage.includes("plaž")) category = "plaze";
+    if (userMessage.includes("ljekarn") || userMessage.includes("apotek")) category = "ljekarne";
+    if (userMessage.includes("hotel") || userMessage.includes("smještaj")) category = "smjestaj";
 
-/* MODAL */
+    // 🎯 Strukturirani odgovor
+    if (category) {
 
-.modal {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-}
+      const results = objekti
+        .filter(o => o.kategorija === category && o.ocjena >= 4.2)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
 
-.modal-content {
-  width:80%;
-  height:80%;
-  background:white;
-  border-radius:12px;
-  overflow:hidden;
-  position:relative;
-}
+      return res.json({
+        type: "cards",
+        title: `Preporuke (${weatherDescription}, ${temperature}°C)`,
+        items: results.map(r => ({
+          naziv: r.naziv,
+          adresa: r.adresa,
+          ocjena: r.ocjena,
+          opis: r.opis,
+          lat: r.lat || null,
+          lng: r.lng || null,
+          web: r.web || null
+        }))
+      });
+    }
 
-.modal-content iframe {
-  width:100%;
-  height:100%;
-  border:none;
-}
+    // 🤖 AI fallback
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      temperature: 0.3,
+      messages: [
+        {
+          role: "system",
+          content:
+            "Ti si profesionalni turistički informator za Biograd na Moru. Odgovaraj stručno i bez izmišljanja."
+        },
+        { role: "user", content: userMessage }
+      ]
+    });
 
-.close-btn {
-  position:absolute;
-  top:10px;
-  right:15px;
-  font-size:20px;
-  cursor:pointer;
-  background:white;
-  border:none;
-}
-</style>
-</head>
+    res.json({
+      reply: completion.choices[0].message.content
+    });
 
-<body>
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ reply: "Greška servera." });
+  }
 
-<div class="container">
-<div class="header">AI Turistički Informator – Biograd na Moru</div>
+});
 
-<div id="chat-box" class="chat-area">
-<div class="bot-message">
-Dobrodošli u Biograd na Moru.<br><br>
-Upišite: restorani, plaže, smještaj.
-</div>
-</div>
-
-<div class="input-area">
-<input id="user-input" type="text" placeholder="Postavite pitanje..." />
-<button id="send-btn">Pošalji</button>
-</div>
-</div>
-
-<!-- MODAL -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <button class="close-btn" onclick="closeModal()">✖</button>
-    <iframe id="modal-iframe"></iframe>
-  </div>
-</div>
-
-<script src="app.js"></script>
-</body>
-</html>
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
