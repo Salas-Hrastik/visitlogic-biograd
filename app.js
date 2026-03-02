@@ -4,7 +4,7 @@ async function sendMessage() {
   const message = input.value.trim();
   if (!message) return;
 
-  addTextMessage(message, "user");
+  addUserMessage(message);
   input.value = "";
 
   try {
@@ -19,44 +19,23 @@ async function sendMessage() {
 
     const data = await response.json();
 
-    if (data.type === "cards") {
+    if (data.type === "cards" || data.type === "ai_cards") {
       renderCards(data);
     } else if (data.reply) {
-      addTextMessage(data.reply, "bot");
+      renderPlainText(data.reply);
     }
 
-  } catch (error) {
-    console.error(error);
-    addTextMessage("Greška u komunikaciji sa serverom.", "bot");
+  } catch {
+    renderPlainText("Greška u komunikaciji.");
   }
 }
 
-function formatText(text) {
-
-  // Sigurnosno escape
-  const safe = text
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-
-  // Razdvajanje numeriranih točaka
-  return safe
-    .replace(/\n/g, "<br>")
-    .replace(/(\d+\.)/g, "<br><br><strong>$1</strong>");
-}
-
-function addTextMessage(text, sender) {
-
+function addUserMessage(text) {
   const chatBox = document.getElementById("chat-box");
-
   const div = document.createElement("div");
-  div.className = sender === "user"
-    ? "user-message"
-    : "bot-message";
-
-  div.innerHTML = formatText(text);
-
+  div.className = "user-message";
+  div.textContent = text;
   chatBox.appendChild(div);
-  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 function renderCards(data) {
@@ -65,80 +44,57 @@ function renderCards(data) {
   const wrapper = document.createElement("div");
   wrapper.className = "bot-message";
 
-  if (data.title) {
-    const title = document.createElement("h3");
-    title.textContent = data.title;
-    wrapper.appendChild(title);
-  }
+  const heading = document.createElement("h3");
+  heading.textContent = data.title;
+  wrapper.appendChild(heading);
 
   data.items.forEach(item => {
 
     const card = document.createElement("div");
     card.className = "card";
 
-    const mapButton = (item.lat && item.lng)
-      ? `<button class="map-btn"
-           onclick="openMapModal(${item.lat}, ${item.lng})">
-           📍 Otvori na karti
-         </button>`
-      : "";
-
-    const webButton = item.web
-      ? `<button class="web-btn"
-           onclick="openWebModal('${item.web}')">
-           🌐 Web
-         </button>`
-      : "";
-
     card.innerHTML = `
-      <strong>${item.naziv}</strong><br>
-      ⭐ ${item.ocjena}<br>
-      📍 ${item.adresa}<br><br>
-      ${item.opis}<br><br>
-      ${mapButton}
-      ${webButton}
+      <div class="card-title">
+        ${item.ikona ? item.ikona : "📍"} ${item.naziv}
+      </div>
+      <div class="card-description">
+        ${item.opis}
+      </div>
     `;
+
+    if (item.lat && item.lng) {
+      const btn = document.createElement("button");
+      btn.className = "map-btn";
+      btn.innerText = "📍 Otvori na karti";
+      btn.onclick = () => openMapModal(item.lat, item.lng);
+      card.appendChild(btn);
+    }
 
     wrapper.appendChild(card);
   });
 
   chatBox.appendChild(wrapper);
-  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function renderPlainText(text) {
+  const chatBox = document.getElementById("chat-box");
+  const div = document.createElement("div");
+  div.className = "bot-message";
+  div.textContent = text;
+  chatBox.appendChild(div);
 }
 
 function openMapModal(lat, lng) {
-
   const modal = document.getElementById("modal");
   const iframe = document.getElementById("modal-iframe");
-
   iframe.src = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
   modal.style.display = "flex";
 }
 
-function openWebModal(url) {
-
-  const modal = document.getElementById("modal");
-  const iframe = document.getElementById("modal-iframe");
-
-  iframe.src = url;
-  modal.style.display = "flex";
-}
-
 function closeModal() {
-
-  const modal = document.getElementById("modal");
-  const iframe = document.getElementById("modal-iframe");
-
-  iframe.src = "";
-  modal.style.display = "none";
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("modal-iframe").src = "";
 }
 
 document.getElementById("send-btn")
   .addEventListener("click", sendMessage);
-
-document.getElementById("user-input")
-  .addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-      sendMessage();
-    }
-  });
