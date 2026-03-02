@@ -1,100 +1,107 @@
-async function sendMessage() {
+import express from "express";
+import fs from "fs";
+import path from "path";
+import OpenAI from "openai";
+import fetch from "node-fetch";
 
-  const input = document.getElementById("user-input");
-  const message = input.value.trim();
-  if (!message) return;
+const app = express();
+const __dirname = path.resolve();
 
-  addUserMessage(message);
-  input.value = "";
+app.use(express.json());
+app.use(express.static(__dirname));
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// GLAVNA RUTA ZA CHAT
+app.post("/chat", async (req, res) => {
+  const { message } = req.body;
 
   try {
+    // 1. DOHVAT VREMENA (Biograd na Moru)
+    const weatherRes = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=43.9375&longitude=15.4428&current_weather=true"
+    );
+    const weatherData = await weatherRes.json();
+    const temp = weatherData.current_weather?.temperature || "10.3";
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        conversation: [{ role: "user", content: message }]
-      })
+    // 2. UČITAVANJE BAZE (Putanja prilagođena tvojoj strukturi na slici)
+    const filePath = path.join(__dirname, "podaci", "biograd_master.json");
+    const db = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+    // 3. AI KLASIFIKACIJA UPITA
+    // AI analizira kontekst i bira kategoriju iz tvog JSON-a
+    const kategorijeIzBaze = Object.keys(db.kategorije).join(", ");
+    
+    const classification = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `Ti si mozak turističkog informatora za Biograd. 
+          Tvoj zadatak je prepoznati namjeru korisnika i vratiti ključ kategorije iz baze.
+          Dostupne kategorije: [${kategorijeIzBaze}].
+          
+          PRAVILA:
+          - Ako korisnik spominje šetnju, park, povijest ili obilazak -> vrati 'atrakcije'.
+          - Ako spominje hranu, večeru ili restoran -> vrati 'restorani'.
+          - Ako spominje more ili kupanje -> vrati 'plaze'.
+          
+          Vrati ISKLJUČIVO JSON format: {"category": "ime_kategorije", "uvod": "Kratki uvod od 1 rečenice"}.`
+        },
+        { role: "user", content: message }
+      ],
+      response_format: { type: "json_object" }
     });
 
-    const data = await response.json();
+    const aiRes = JSON.parse(classification.choices[0].message.content);
+    const selectedCategory = aiRes.category;
 
-    if (data.type === "cards" || data.type === "ai_cards") {
-      renderCards(data);
-    } else if (data.reply) {
-      renderPlainText(data.reply);
+    // 4. GENERIRANJE KARTICA (UX KOJI ŽELIŠ)
+    if (selectedCategory && db.kategorije[selectedCategory]) {
+      const results = db.kategorije[selectedCategory]
+        .sort((a, b) => (b.ocjena || 0) - (a.ocjena || 0))
+        .slice(0, 3);
+
+      return res.json({
+        type: "cards",
+        title: `Preporuke (${temp}°C)`,
+        subtitle: aiRes.uvod,
+        items: results.map(r => ({
+          naziv: r.naziv,
+          opis: r.opis,
+          ocjena: r.ocjena || "4.5",
+          adresa: r.adresa || "Biograd na Moru",
+          // Dinamički link za gumb "Otvori na karti"
+          mapsUrl: `https://www.google.com/maps/search/?api=1&query=${r.lat},${r.lng}`,
+          lat: r.lat,
+          lng: r.lng
+        }))
+      });
     }
 
-  } catch {
-    renderPlainText("Greška u komunikaciji.");
+    // 5. FALLBACK KARTICA (Ako AI ne prepozna specifičnu kategoriju)
+    return res.json({
+      type: "cards",
+      title: "Info kutak",
+      items: [{
+        naziv: "Istražite Biograd",
+        opis: "Trenutno nemam specifične podatke za taj upit, ali preporučujem šetnju rivom i starom jezgrom.",
+        ocjena: "5.0",
+        adresa: "Obala kralja Petra Krešimira IV",
+        mapsUrl: "https://www.google.com/maps/search/?api=1&query=43.9375,15.4428"
+      }]
+    });
+
+  } catch (error) {
+    console.error("Server Error:", error);
+    res.status(500).json({ reply: "Došlo je do pogreške prilikom obrade upita." });
   }
-}
+});
 
-function addUserMessage(text) {
-  const chatBox = document.getElementById("chat-box");
-  const div = document.createElement("div");
-  div.className = "user-message";
-  div.textContent = text;
-  chatBox.appendChild(div);
-}
-
-function renderCards(data) {
-
-  const chatBox = document.getElementById("chat-box");
-  const wrapper = document.createElement("div");
-  wrapper.className = "bot-message";
-
-  const heading = document.createElement("h3");
-  heading.textContent = data.title;
-  wrapper.appendChild(heading);
-
-  data.items.forEach(item => {
-
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="card-title">
-        ${item.ikona ? item.ikona : "📍"} ${item.naziv}
-      </div>
-      <div class="card-description">
-        ${item.opis}
-      </div>
-    `;
-
-    if (item.lat && item.lng) {
-      const btn = document.createElement("button");
-      btn.className = "map-btn";
-      btn.innerText = "📍 Otvori na karti";
-      btn.onclick = () => openMapModal(item.lat, item.lng);
-      card.appendChild(btn);
-    }
-
-    wrapper.appendChild(card);
-  });
-
-  chatBox.appendChild(wrapper);
-}
-
-function renderPlainText(text) {
-  const chatBox = document.getElementById("chat-box");
-  const div = document.createElement("div");
-  div.className = "bot-message";
-  div.textContent = text;
-  chatBox.appendChild(div);
-}
-
-function openMapModal(lat, lng) {
-  const modal = document.getElementById("modal");
-  const iframe = document.getElementById("modal-iframe");
-  iframe.src = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
-  modal.style.display = "flex";
-}
-
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
-  document.getElementById("modal-iframe").src = "";
-}
-
-document.getElementById("send-btn")
-  .addEventListener("click", sendMessage);
+// Pokretanje servera (Vercel će ovo ignorirati, ali lokalno ti treba)
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
