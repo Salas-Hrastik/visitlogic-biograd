@@ -1,3 +1,5 @@
+let conversation = [];
+
 async function sendMessage() {
   const input = document.getElementById("user-input");
   const message = input.value.trim();
@@ -6,13 +8,19 @@ async function sendMessage() {
   addMessage(message, "user");
   input.value = "";
 
+  // Spremamo korisničku poruku
+  conversation.push({
+    role: "user",
+    content: message
+  });
+
   try {
     const response = await fetch("/api/chat", {
       method: "POST",
-      headers: { 
-        "Content-Type": "application/json" 
+      headers: {
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ conversation })
     });
 
     if (!response.ok) {
@@ -20,11 +28,18 @@ async function sendMessage() {
     }
 
     const data = await response.json();
-
-    console.log("SERVER RESPONSE:", data); // Debug
+    console.log("SERVER RESPONSE:", data);
 
     if (data && data.reply) {
+
       addMessage(data.reply, "bot");
+
+      // Spremamo odgovor asistenta
+      conversation.push({
+        role: "assistant",
+        content: data.reply
+      });
+
     } else {
       addMessage("Odgovor servera nije ispravan.", "bot");
     }
@@ -39,8 +54,8 @@ function addMessage(text, sender) {
   const chatBox = document.getElementById("chat-box");
 
   const div = document.createElement("div");
-  div.className = sender === "user" 
-    ? "user-message" 
+  div.className = sender === "user"
+    ? "user-message"
     : "bot-message";
 
   div.innerText = text ?? "Prazan odgovor.";
@@ -52,9 +67,8 @@ function addMessage(text, sender) {
 document.getElementById("send-btn")
   .addEventListener("click", sendMessage);
 
-// Omogućuje Enter tipku
 document.getElementById("user-input")
-  .addEventListener("keypress", function(e) {
+  .addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       sendMessage();
     }
