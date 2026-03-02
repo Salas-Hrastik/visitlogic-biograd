@@ -1,20 +1,3 @@
-import fs from "fs";
-import path from "path";
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-function interpretWeather(code) {
-  if ([0].includes(code)) return "sunčano";
-  if ([1, 2, 3].includes(code)) return "djelomično oblačno";
-  if ([45, 48].includes(code)) return "magla";
-  if ([51, 53, 55, 61, 63, 65].includes(code)) return "kiša";
-  if ([95, 96, 99].includes(code)) return "nevrijeme";
-  return "nepoznato";
-}
-
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -23,8 +6,14 @@ export default async function handler(req, res) {
 
   try {
 
-    const { message } = req.body;
-    const m = message.toLowerCase();
+    const { conversation } = req.body;
+
+    if (!conversation || !Array.isArray(conversation)) {
+      return res.status(400).json({ reply: "Neispravan format razgovora." });
+    }
+
+    const lastMessage = conversation[conversation.length - 1].content;
+    const m = lastMessage.toLowerCase();
 
     // 🌤 Vrijeme
     const weatherResponse = await fetch(
@@ -43,7 +32,7 @@ export default async function handler(req, res) {
     if (hour < 11) partOfDay = "jutro";
     else if (hour >= 18) partOfDay = "večer";
 
-    // 📂 Baza podataka
+    // 📂 Baza
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
     const data = JSON.parse(rawData);
@@ -54,7 +43,6 @@ export default async function handler(req, res) {
       const items = data.kategorije[kategorija];
       if (Array.isArray(items)) {
         items.forEach(item => {
-
           const score =
             ((item.ocjena || 0) * 2) +
             ((item.broj_ocjena || 0) / 100);
@@ -68,7 +56,7 @@ export default async function handler(req, res) {
       }
     }
 
-    // 🔎 Intent detekcija (prioritet eksplicitnog upita)
+    // 🔎 Intent
     let detectedCategory = null;
 
     if (m.includes("ljekarn") || m.includes("apotek")) {
@@ -87,12 +75,6 @@ export default async function handler(req, res) {
       detectedCategory = "izleti_i_avantura";
     }
 
-    // Kontekst dijela dana samo ako nema eksplicitnog upita
-    if (!detectedCategory) {
-      if (partOfDay === "jutro") detectedCategory = "restorani";
-      else if (partOfDay === "večer") detectedCategory = "restorani";
-    }
-
     let results = objekti;
 
     if (detectedCategory) {
@@ -103,12 +85,6 @@ export default async function handler(req, res) {
       .filter(o => o.ocjena >= 4.2)
       .sort((a, b) => b.score - a.score)
       .slice(0, 3);
-
-    if (results.length === 0) {
-      return res.status(200).json({
-        reply: "Trenutno nemam dostupne verificirane podatke za taj upit u Biogradu na Moru."
-      });
-    }
 
     const formattedData = results.map(r => `
 Naziv: ${r.naziv}
@@ -127,41 +103,20 @@ ${r.web ? `Web: ${r.web}` : ""}
           role: "system",
           content: `
 Ti si strateški destinacijski AI asistent za Biograd na Moru.
-
-Odgovaraj:
-- stručno
-- analitički
-- koncizno
-- bez neformalnih izraza
-- bez promotivnog pretjerivanja
-
-Struktura odgovora:
-1. Kratka situacijska analiza (vrijeme + dio dana)
-2. Strukturirana preporuka (maksimalno 3 objekta)
-3. Za svaki objekt:
-   - Naziv
-   - Jedna jasna informativna rečenica
-   - Ocjena
-   - Google Maps link
-   - Web link (ako postoji)
-4. Završno usmjeravajuće pitanje (jedna rečenica)
-
-Nikada ne izmišljaj podatke.
-Nikada ne spominji druge gradove.
-Koristi isključivo dostavljene objekte.
+Odgovaraj stručno, koncizno i analitički.
+Ne ponavljaj iste liste ako korisnik specificira objekt.
+Ako korisnik odabere konkretan objekt, fokusiraj se samo na njega.
 `
         },
+        ...conversation,
         {
           role: "user",
           content: `
-Upit korisnika: "${message}"
-
 Kontekst:
 Vrijeme: ${weatherDescription}, ${temperature}°C
 Dio dana: ${partOfDay}
 
 Dostupni objekti:
-
 ${formattedData}
 `
         }
