@@ -8,7 +8,6 @@ async function sendMessage() {
   addMessage(message, "user");
   input.value = "";
 
-  // Spremamo korisničku poruku
   conversation.push({
     role: "user",
     content: message
@@ -34,7 +33,6 @@ async function sendMessage() {
 
       addMessage(data.reply, "bot");
 
-      // Spremamo odgovor asistenta
       conversation.push({
         role: "assistant",
         content: data.reply
@@ -50,6 +48,38 @@ async function sendMessage() {
   }
 }
 
+function formatLinks(text) {
+
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  return text.replace(urlRegex, function(url) {
+
+    let label = "Otvori link";
+
+    if (url.includes("google")) {
+      label = "Otvori Google Maps";
+    }
+
+    if (url.includes("http")) {
+      return `<br><a href="${url}" target="_blank" 
+        style="
+          display:inline-block;
+          margin-top:6px;
+          padding:6px 12px;
+          background:#1f4e79;
+          color:white;
+          border-radius:6px;
+          text-decoration:none;
+          font-size:14px;
+        ">
+        ${label}
+      </a>`;
+    }
+
+    return url;
+  });
+}
+
 function addMessage(text, sender) {
   const chatBox = document.getElementById("chat-box");
 
@@ -58,7 +88,7 @@ function addMessage(text, sender) {
     ? "user-message"
     : "bot-message";
 
-  div.innerText = text ?? "Prazan odgovor.";
+  div.innerHTML = formatLinks(text ?? "Prazan odgovor.");
 
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
