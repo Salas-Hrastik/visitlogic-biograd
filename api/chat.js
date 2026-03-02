@@ -8,20 +8,22 @@ const openai = new OpenAI({
 
 export default async function handler(req, res) {
 
-  // DOZVOLJAVAMO SAMO POST
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
 
-    if (!process.env.OPENAI_API_KEY) {
-      return res.status(500).json({
-        reply: "API ključ nije postavljen."
-      });
-    }
-
     const { message } = req.body;
+
+    // 🌤 DOHVAT VREMENA (Open-Meteo)
+    const weatherResponse = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
+    );
+
+    const weatherData = await weatherResponse.json();
+    const temperature = weatherData.current_weather.temperature;
+    const weatherCode = weatherData.current_weather.weathercode;
 
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
@@ -45,14 +47,10 @@ export default async function handler(req, res) {
       restoran: "restorani",
       večera: "restorani",
       ručak: "restorani",
-      pizza: "restorani",
       plaža: "plaze",
       djeca: "djecji_sadrzaji",
-      rent: "rent_a_car",
       ljekarna: "ljekarne",
-      hotel: "hoteli",
-      apartman: "apartmani",
-      kamp: "kampovi"
+      hotel: "hoteli"
     };
 
     let detectedCategory = null;
@@ -75,12 +73,6 @@ export default async function handler(req, res) {
       .sort((a, b) => (b.ocjena || 0) - (a.ocjena || 0))
       .slice(0, 5);
 
-    if (results.length === 0) {
-      return res.status(200).json({
-        reply: "Trenutno nemam dovoljno podataka za taj upit."
-      });
-    }
-
     const contextData = results.map(r => `
 Naziv: ${r.naziv}
 Adresa: ${r.adresa}
@@ -95,21 +87,26 @@ Google Maps: ${r.google_maps}
       messages: [
         {
           role: "system",
-          content: "Ti si službeni turistički informator za Biograd na Moru. Koristi isključivo dostavljene podatke."
+          content: `
+Ti si službeni turistički informator za Biograd na Moru.
+
+Trenutna temperatura: ${temperature}°C
+Weather code: ${weatherCode}
+
+Ako je vrijeme sunčano i toplo → potičeš vanjske aktivnosti.
+Ako pada kiša → predlažeš zatvorene sadržaje (restorani, muzeji).
+Uvijek koristi isključivo dostavljene podatke.
+Ne izmišljaj.
+`
         },
         {
           role: "user",
           content: `
 Korisnik pita: "${message}"
 
-Smiješ koristiti isključivo sljedeće podatke:
+Dostupni podaci:
 
 ${contextData}
-
-Ne izmišljaj.
-Ne spominji druge gradove.
-Ako nešto nije dostupno, reci da nema podataka.
-Odgovori profesionalno.
 `
         }
       ]
@@ -122,7 +119,7 @@ Odgovori profesionalno.
   } catch (error) {
     console.error("SERVER ERROR:", error);
     res.status(500).json({
-      reply: "Server greška – provjerite Vercel log."
+      reply: "Greška servera."
     });
   }
 }
