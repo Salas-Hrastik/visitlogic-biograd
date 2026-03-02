@@ -1,139 +1,132 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Turistički Informator – Biograd na Moru</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Turistički Informator – Biograd na Moru</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1f4e79, #2e86c1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<style>
+body {
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#1f4e79,#2e86c1);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
 
-    .container {
-      width: 90%;
-      max-width: 900px;
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+.container {
+  width:90%;
+  max-width:900px;
+  background:white;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
 
-    .header {
-      background: #1f4e79;
-      color: white;
-      padding: 20px;
-      font-size: 22px;
-      font-weight: bold;
-      text-align: center;
-    }
+.header {
+  background:#1f4e79;
+  color:white;
+  padding:20px;
+  text-align:center;
+  font-weight:bold;
+  font-size:22px;
+}
 
-    .chat-area {
-      padding: 20px;
-      overflow-y: auto;
-      flex: 1;
-      background: #f4f6f9;
-    }
+.chat-area {
+  padding:20px;
+  overflow-y:auto;
+  flex:1;
+  background:#f4f6f9;
+}
 
-    .bot-message, .user-message {
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 12px;
-      max-width: 80%;
-    }
+.bot-message,.user-message {
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:12px;
+  max-width:80%;
+}
 
-    .bot-message {
-      background: #e4e9f2;
-    }
+.bot-message { background:#e4e9f2; }
+.user-message {
+  background:#2e86c1;
+  color:white;
+  margin-left:auto;
+}
 
-    .user-message {
-      background: #2e86c1;
-      color: white;
-      margin-left: auto;
-    }
+.card {
+  background:white;
+  padding:18px;
+  margin-bottom:14px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
 
-    .input-area {
-      display: flex;
-      border-top: 1px solid #ddd;
-    }
+.map-btn,.web-btn {
+  display:inline-block;
+  margin-top:8px;
+  margin-right:8px;
+  padding:8px 14px;
+  background:#1f4e79;
+  color:white;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:14px;
+}
 
-    input {
-      flex: 1;
-      padding: 15px;
-      border: none;
-      font-size: 16px;
-      outline: none;
-    }
+.map-btn:hover,.web-btn:hover {
+  background:#163a5c;
+}
 
-    button {
-      padding: 15px 25px;
-      border: none;
-      background: #1f4e79;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
+.input-area {
+  display:flex;
+  border-top:1px solid #ddd;
+}
 
-    button:hover {
-      background: #163a5c;
-    }
+input {
+  flex:1;
+  padding:15px;
+  border:none;
+  font-size:16px;
+  outline:none;
+}
 
-    .card {
-      background: white;
-      padding: 15px;
-      margin-bottom: 12px;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
+button {
+  padding:15px 25px;
+  border:none;
+  background:#1f4e79;
+  color:white;
+  cursor:pointer;
+}
 
-    .card strong {
-      font-size: 17px;
-    }
-
-    a {
-      color: #1f4e79;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-  </style>
+button:hover { background:#163a5c; }
+</style>
 </head>
 
 <body>
+<div class="container">
 
-  <div class="container">
+<div class="header">
+AI Turistički Informator – Biograd na Moru
+</div>
 
-    <div class="header">
-      AI Turistički Informator – Biograd na Moru
-    </div>
+<div id="chat-box" class="chat-area">
+<div class="bot-message">
+Dobrodošli u Biograd na Moru.<br><br>
+Upišite: restorani, plaže, smještaj, ljekarne ili izleti.
+</div>
+</div>
 
-    <div id="chat-box" class="chat-area">
-      <div class="bot-message">
-        Dobrodošli u Biograd na Moru.<br><br>
-        Pitajte za restorane, plaže, smještaj, ljekarne ili izlete.
-      </div>
-    </div>
+<div class="input-area">
+<input id="user-input" type="text" placeholder="Postavite pitanje..." />
+<button id="send-btn">Pošalji</button>
+</div>
 
-    <div class="input-area">
-      <input id="user-input" type="text" placeholder="Postavite pitanje..." />
-      <button id="send-btn">Pošalji</button>
-    </div>
+</div>
 
-  </div>
-
-  <script src="app.js"></script>
-
+<script src="app.js"></script>
 </body>
 </html>
