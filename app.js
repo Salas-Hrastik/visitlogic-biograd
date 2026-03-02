@@ -12,7 +12,9 @@ async function sendMessage() {
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ conversation: [{ role: "user", content: message }] })
+      body: JSON.stringify({
+        conversation: [{ role: "user", content: message }]
+      })
     });
 
     const data = await response.json();
@@ -24,6 +26,7 @@ async function sendMessage() {
     }
 
   } catch (error) {
+    console.error("FETCH ERROR:", error);
     addTextMessage("Greška u komunikaciji sa serverom.", "bot");
   }
 }
@@ -60,20 +63,29 @@ function renderCards(data) {
     const card = document.createElement("div");
     card.className = "card";
 
+    const mapButton = (item.lat && item.lng)
+      ? `<button class="map-btn"
+           onclick="openMapModal(${item.lat}, ${item.lng})">
+           📍 Otvori na karti
+         </button>`
+      : `<button class="map-btn disabled-btn" disabled>
+           📍 Nema koordinata
+         </button>`;
+
+    const webButton = item.web
+      ? `<button class="web-btn"
+           onclick="openWebModal('${item.web}')">
+           🌐 Web
+         </button>`
+      : "";
+
     card.innerHTML = `
       <strong>${item.naziv}</strong><br>
       ⭐ ${item.ocjena}<br>
       📍 ${item.adresa}<br>
       <p>${item.opis}</p>
-      <button class="map-btn"
-        onclick="openMapModal(${item.lat}, ${item.lng})">
-        📍 Otvori na karti
-      </button>
-      ${item.web ? `
-        <button class="web-btn"
-          onclick="openWebModal('${item.web}')">
-          🌐 Web
-        </button>` : ""}
+      ${mapButton}
+      ${webButton}
     `;
 
     wrapper.appendChild(card);
@@ -85,6 +97,8 @@ function renderCards(data) {
 
 function openMapModal(lat, lng) {
 
+  if (!lat || !lng) return;
+
   const modal = document.getElementById("modal");
   const iframe = document.getElementById("modal-iframe");
 
@@ -94,6 +108,8 @@ function openMapModal(lat, lng) {
 
 function openWebModal(url) {
 
+  if (!url) return;
+
   const modal = document.getElementById("modal");
   const iframe = document.getElementById("modal-iframe");
 
@@ -102,6 +118,7 @@ function openWebModal(url) {
 }
 
 function closeModal() {
+
   const modal = document.getElementById("modal");
   const iframe = document.getElementById("modal-iframe");
 
@@ -114,5 +131,7 @@ document.getElementById("send-btn")
 
 document.getElementById("user-input")
   .addEventListener("keypress", function (e) {
-    if (e.key === "Enter") sendMessage();
+    if (e.key === "Enter") {
+      sendMessage();
+    }
   });
