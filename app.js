@@ -26,9 +26,22 @@ async function sendMessage() {
     }
 
   } catch (error) {
-    console.error("FETCH ERROR:", error);
+    console.error(error);
     addTextMessage("Greška u komunikaciji sa serverom.", "bot");
   }
+}
+
+function formatText(text) {
+
+  // Sigurnosno escape
+  const safe = text
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // Razdvajanje numeriranih točaka
+  return safe
+    .replace(/\n/g, "<br>")
+    .replace(/(\d+\.)/g, "<br><br><strong>$1</strong>");
 }
 
 function addTextMessage(text, sender) {
@@ -40,7 +53,7 @@ function addTextMessage(text, sender) {
     ? "user-message"
     : "bot-message";
 
-  div.textContent = text;
+  div.innerHTML = formatText(text);
 
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
@@ -68,9 +81,7 @@ function renderCards(data) {
            onclick="openMapModal(${item.lat}, ${item.lng})">
            📍 Otvori na karti
          </button>`
-      : `<button class="map-btn disabled-btn" disabled>
-           📍 Nema koordinata
-         </button>`;
+      : "";
 
     const webButton = item.web
       ? `<button class="web-btn"
@@ -82,8 +93,8 @@ function renderCards(data) {
     card.innerHTML = `
       <strong>${item.naziv}</strong><br>
       ⭐ ${item.ocjena}<br>
-      📍 ${item.adresa}<br>
-      <p>${item.opis}</p>
+      📍 ${item.adresa}<br><br>
+      ${item.opis}<br><br>
       ${mapButton}
       ${webButton}
     `;
@@ -97,8 +108,6 @@ function renderCards(data) {
 
 function openMapModal(lat, lng) {
 
-  if (!lat || !lng) return;
-
   const modal = document.getElementById("modal");
   const iframe = document.getElementById("modal-iframe");
 
@@ -107,8 +116,6 @@ function openMapModal(lat, lng) {
 }
 
 function openWebModal(url) {
-
-  if (!url) return;
 
   const modal = document.getElementById("modal");
   const iframe = document.getElementById("modal-iframe");
