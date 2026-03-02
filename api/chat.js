@@ -2,41 +2,6 @@ import fs from "fs";
 import path from "path";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-function interpretWeather(code) {
-  if ([0].includes(code)) return "sunčano";
-  if ([1,2,3].includes(code)) return "djelomično oblačno";
-  if ([45,48].includes(code)) return "magla";
-  if ([51,53,55,61,63,65].includes(code)) return "kiša";
-  if ([95,96,99].includes(code)) return "nevrijeme";
-  return "nepoznato";
-}
-
-function parseActivities(text) {
-
-  const lines = text
-    .replace(/\*\*/g, "")
-    .replace(/#+/g, "")
-    .split(/\d+\./)
-    .map(l => l.trim())
-    .filter(l => l.length > 10)
-    .slice(0,3);
-
-  return lines.map(line => {
-
-    const parts = line.split(":");
-
-    return {
-      naziv: parts[0]?.trim() || "Prijedlog",
-      opis: parts.slice(1).join(":").trim() || line,
-      ikona: "📍"
-    };
-  });
-}
-
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -45,21 +10,19 @@ export default async function handler(req, res) {
 
   try {
 
-    const { conversation } = req.body;
-    const userMessage =
-      conversation?.[conversation.length - 1]?.content || "";
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
-    const lowerMessage = userMessage.toLowerCase();
+    const { message } = req.body;
+    const lower = message.toLowerCase();
 
     // WEATHER
-    const weatherResponse = await fetch(
+    const weatherRes = await fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
     );
-
-    const weatherData = await weatherResponse.json();
+    const weatherData = await weatherRes.json();
     const temperature = weatherData.current_weather.temperature;
-    const weatherDescription =
-      interpretWeather(weatherData.current_weather.weathercode);
 
     // DATABASE
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
@@ -86,9 +49,8 @@ export default async function handler(req, res) {
     }
 
     let category = null;
-
-    if (lowerMessage.includes("restoran")) category = "restorani";
-    if (lowerMessage.includes("plaž")) category = "plaze";
+    if (lower.includes("restoran")) category = "restorani";
+    if (lower.includes("plaž")) category = "plaze";
 
     if (category) {
 
@@ -99,49 +61,34 @@ export default async function handler(req, res) {
 
       return res.status(200).json({
         type: "cards",
-        title: `Preporuke (${weatherDescription}, ${temperature}°C)`,
+        title: `Preporuke (${temperature}°C)`,
         items: results.map(r => ({
           naziv: r.naziv,
           opis: r.opis,
-          lat: r.lat || null,
-          lng: r.lng || null,
-          ikona: "📍"
+          lat: r.lat,
+          lng: r.lng
         }))
       });
     }
 
-    // AI GENERATION
+    // AI fallback
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.3,
       messages: [
         {
           role: "system",
-          content: `
-Daj maksimalno 3 prijedloga aktivnosti.
-Numeriraj ih 1., 2., 3.
-Svaki prijedlog u jednoj kraćoj rečenici.
-Bez eseja.
-`
+          content: "Odgovori kratko i strukturirano u 3 točke."
         },
         {
           role: "user",
-          content: `
-Upit: ${userMessage}
-Vrijeme: ${weatherDescription}, ${temperature}°C
-`
+          content: message
         }
       ]
     });
 
-    const rawText = completion.choices[0].message.content;
-
-    const activities = parseActivities(rawText);
-
     return res.status(200).json({
-      type: "ai_cards",
-      title: `Prijedlog aktivnosti (${weatherDescription}, ${temperature}°C)`,
-      items: activities
+      type: "text",
+      reply: completion.choices[0].message.content
     });
 
   } catch (error) {
