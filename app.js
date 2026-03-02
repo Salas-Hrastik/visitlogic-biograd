@@ -66,8 +66,13 @@ function renderCards(data) {
       ⭐ ${item.ocjena}<br>
       📍 ${item.adresa}<br>
       <p>${item.opis}</p>
-      <a href="${item.google_maps}" target="_blank" class="map-btn">📍 Otvori na karti</a>
-      ${item.web ? `<a href="${item.web}" target="_blank" class="web-btn">🌐 Web</a>` : ""}
+      <button class="map-btn" onclick="openModal('${item.google_maps}')">
+        📍 Otvori na karti
+      </button>
+      ${item.web ? `
+        <button class="web-btn" onclick="openModal('${item.web}')">
+          🌐 Web
+        </button>` : ""}
     `;
 
     wrapper.appendChild(card);
@@ -75,6 +80,23 @@ function renderCards(data) {
 
   chatBox.appendChild(wrapper);
   chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function openModal(url) {
+
+  const modal = document.getElementById("modal");
+  const iframe = document.getElementById("modal-iframe");
+
+  iframe.src = url;
+  modal.style.display = "flex";
+}
+
+function closeModal() {
+  const modal = document.getElementById("modal");
+  const iframe = document.getElementById("modal-iframe");
+
+  iframe.src = "";
+  modal.style.display = "none";
 }
 
 document.getElementById("send-btn")
