@@ -46,7 +46,6 @@ function addTextMessage(text, sender) {
 function renderCards(data) {
 
   const chatBox = document.getElementById("chat-box");
-
   const wrapper = document.createElement("div");
   wrapper.className = "bot-message";
 
@@ -66,11 +65,13 @@ function renderCards(data) {
       ⭐ ${item.ocjena}<br>
       📍 ${item.adresa}<br>
       <p>${item.opis}</p>
-      <button class="map-btn" onclick="openModal('${item.google_maps}')">
+      <button class="map-btn"
+        onclick="openMapModal(${item.lat}, ${item.lng})">
         📍 Otvori na karti
       </button>
       ${item.web ? `
-        <button class="web-btn" onclick="openModal('${item.web}')">
+        <button class="web-btn"
+          onclick="openWebModal('${item.web}')">
           🌐 Web
         </button>` : ""}
     `;
@@ -82,7 +83,16 @@ function renderCards(data) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function openModal(url) {
+function openMapModal(lat, lng) {
+
+  const modal = document.getElementById("modal");
+  const iframe = document.getElementById("modal-iframe");
+
+  iframe.src = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
+  modal.style.display = "flex";
+}
+
+function openWebModal(url) {
 
   const modal = document.getElementById("modal");
   const iframe = document.getElementById("modal-iframe");
