@@ -77,7 +77,7 @@ export default async function handler(req, res) {
     if (lowerMessage.includes("hotel") || lowerMessage.includes("smještaj"))
       category = "smjestaj";
 
-    // 🎯 STRUCTURED FROM DATABASE
+    // DATABASE CARDS
     if (category) {
 
       const results = objekti
@@ -90,40 +90,43 @@ export default async function handler(req, res) {
         title: `Preporuke (${weatherDescription}, ${temperature}°C)`,
         items: results.map(r => ({
           naziv: r.naziv,
-          adresa: r.adresa,
-          ocjena: r.ocjena,
           opis: r.opis,
           lat: r.lat || null,
           lng: r.lng || null,
-          web: r.web || null
+          ikona: "📍"
         }))
       });
     }
 
-    // 🤖 AI → JSON STRUCTURED
+    // AI STRICT JSON
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.3,
+      temperature: 0.2,
       response_format: { type: "json_object" },
       messages: [
         {
           role: "system",
           content: `
-Vrati JSON:
+Vrati ISKLJUČIVO validan JSON.
+
+Format:
 
 {
-  "title": "Naslov s kontekstom vremena",
+  "title": "Kratki kontekst vremena",
   "items": [
     {
-      "naziv": "Naziv prijedloga",
-      "opis": "Kratko objašnjenje (max 2 rečenice)",
+      "naziv": "Naziv aktivnosti",
+      "opis": "Jedna ili dvije rečenice",
       "ikona": "emoji"
     }
   ]
 }
 
-Maksimalno 3 prijedloga.
-Bez eseja.
+Maksimalno 3 aktivnosti.
+Bez markdown.
+Bez numeracije.
+Bez ###.
+Bez dodatnog teksta.
 `
         },
         {
