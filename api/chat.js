@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     const { message } = req.body;
     const m = message.toLowerCase();
 
-    // 🌤 DOHVAT VREMENA
+    // 🌤 Vrijeme
     const weatherResponse = await fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
     );
@@ -36,14 +36,14 @@ export default async function handler(req, res) {
     const weatherCode = weatherData.current_weather.weathercode;
     const weatherDescription = interpretWeather(weatherCode);
 
-    // 🕒 DIO DANA
+    // 🕒 Dio dana
     const now = new Date();
     const hour = now.getHours();
     let partOfDay = "dan";
     if (hour < 11) partOfDay = "jutro";
     else if (hour >= 18) partOfDay = "večer";
 
-    // 📂 UČITAVANJE BAZE
+    // 📂 Baza podataka
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
     const data = JSON.parse(rawData);
@@ -68,7 +68,7 @@ export default async function handler(req, res) {
       }
     }
 
-    // 🔎 DETEKCIJA NAMJERE (PRIORITET EKSPPLICITNOG UPITA)
+    // 🔎 Intent detekcija (prioritet eksplicitnog upita)
     let detectedCategory = null;
 
     if (m.includes("ljekarn") || m.includes("apotek")) {
@@ -80,27 +80,17 @@ export default async function handler(req, res) {
     else if (m.includes("restoran") || m.includes("ručak") || m.includes("večer")) {
       detectedCategory = "restorani";
     }
-    else if (m.includes("kava") || m.includes("doručak") || m.includes("kafić")) {
-      detectedCategory = "slasticarnice";
+    else if (m.includes("hotel") || m.includes("smještaj")) {
+      detectedCategory = "smjestaj";
     }
-    else if (m.includes("hotel")) {
-      detectedCategory = "hoteli";
-    }
-    else if (m.includes("apartman")) {
-      detectedCategory = "apartmani";
-    }
-    else if (m.includes("kamp")) {
-      detectedCategory = "kampovi";
+    else if (m.includes("izlet") || m.includes("kornat")) {
+      detectedCategory = "izleti_i_avantura";
     }
 
-    // 🧠 KONTEKST DIJELA DANA VRIJEDI SAMO AKO NEMA EKSPPLICITNE KATEGORIJE
+    // Kontekst dijela dana samo ako nema eksplicitnog upita
     if (!detectedCategory) {
-      if (partOfDay === "jutro") {
-        detectedCategory = "slasticarnice";
-      }
-      else if (partOfDay === "večer") {
-        detectedCategory = "restorani";
-      }
+      if (partOfDay === "jutro") detectedCategory = "restorani";
+      else if (partOfDay === "večer") detectedCategory = "restorani";
     }
 
     let results = objekti;
@@ -116,11 +106,10 @@ export default async function handler(req, res) {
 
     if (results.length === 0) {
       return res.status(200).json({
-        reply: "Nemam dostupne podatke za taj upit u Biogradu."
+        reply: "Trenutno nemam dostupne verificirane podatke za taj upit u Biogradu na Moru."
       });
     }
 
-    // 📎 OBAVEZNI LINKOVI
     const formattedData = results.map(r => `
 Naziv: ${r.naziv}
 Adresa: ${r.adresa}
@@ -130,7 +119,6 @@ Google Maps: ${r.google_maps}
 ${r.web ? `Web: ${r.web}` : ""}
 `).join("\n");
 
-    // 🤖 OPENAI GENERACIJA
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.2,
@@ -138,23 +126,39 @@ ${r.web ? `Web: ${r.web}` : ""}
         {
           role: "system",
           content: `
-Ti si službeni turistički informator za Biograd na Moru.
+Ti si strateški destinacijski AI asistent za Biograd na Moru.
 
-Trenutno vrijeme: ${weatherDescription}, ${temperature}°C.
-Dio dana: ${partOfDay}.
+Odgovaraj:
+- stručno
+- analitički
+- koncizno
+- bez neformalnih izraza
+- bez promotivnog pretjerivanja
 
-Uvijek:
-- koristi isključivo dostavljene objekte
-- prikaži Google Maps link
-- ako postoji web stranica, prikaži i web link
-- nikada ne spominji druge gradove
-- ne izmišljaj podatke
+Struktura odgovora:
+1. Kratka situacijska analiza (vrijeme + dio dana)
+2. Strukturirana preporuka (maksimalno 3 objekta)
+3. Za svaki objekt:
+   - Naziv
+   - Jedna jasna informativna rečenica
+   - Ocjena
+   - Google Maps link
+   - Web link (ako postoji)
+4. Završno usmjeravajuće pitanje (jedna rečenica)
+
+Nikada ne izmišljaj podatke.
+Nikada ne spominji druge gradove.
+Koristi isključivo dostavljene objekte.
 `
         },
         {
           role: "user",
           content: `
-Korisnik pita: "${message}"
+Upit korisnika: "${message}"
+
+Kontekst:
+Vrijeme: ${weatherDescription}, ${temperature}°C
+Dio dana: ${partOfDay}
 
 Dostupni objekti:
 
@@ -169,9 +173,9 @@ ${formattedData}
     });
 
   } catch (error) {
-    console.error("SERVER ERROR:", error);
+    console.error(error);
     res.status(500).json({
-      reply: "Greška servera – provjerite Vercel log."
+      reply: "Greška servera."
     });
   }
 }
