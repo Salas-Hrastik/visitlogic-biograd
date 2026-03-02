@@ -1,3 +1,20 @@
+import fs from "fs";
+import path from "path";
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+function interpretWeather(code) {
+  if ([0].includes(code)) return "sunčano";
+  if ([1, 2, 3].includes(code)) return "djelomično oblačno";
+  if ([45, 48].includes(code)) return "magla";
+  if ([51, 53, 55, 61, 63, 65].includes(code)) return "kiša";
+  if ([95, 96, 99].includes(code)) return "nevrijeme";
+  return "nepoznato";
+}
+
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -25,111 +42,30 @@ export default async function handler(req, res) {
     const weatherCode = weatherData.current_weather.weathercode;
     const weatherDescription = interpretWeather(weatherCode);
 
-    // 🕒 Dio dana
-    const now = new Date();
-    const hour = now.getHours();
-    let partOfDay = "dan";
-    if (hour < 11) partOfDay = "jutro";
-    else if (hour >= 18) partOfDay = "večer";
-
-    // 📂 Baza
-    const filePath = path.join(process.cwd(), "data", "biograd_master.json");
-    const rawData = fs.readFileSync(filePath);
-    const data = JSON.parse(rawData);
-
-    let objekti = [];
-
-    for (const kategorija in data.kategorije) {
-      const items = data.kategorije[kategorija];
-      if (Array.isArray(items)) {
-        items.forEach(item => {
-          const score =
-            ((item.ocjena || 0) * 2) +
-            ((item.broj_ocjena || 0) / 100);
-
-          objekti.push({
-            kategorija,
-            score,
-            ...item
-          });
-        });
-      }
-    }
-
-    // 🔎 Intent
-    let detectedCategory = null;
-
-    if (m.includes("ljekarn") || m.includes("apotek")) {
-      detectedCategory = "ljekarne";
-    }
-    else if (m.includes("plaž")) {
-      detectedCategory = "plaze";
-    }
-    else if (m.includes("restoran") || m.includes("ručak") || m.includes("večer")) {
-      detectedCategory = "restorani";
-    }
-    else if (m.includes("hotel") || m.includes("smještaj")) {
-      detectedCategory = "smjestaj";
-    }
-    else if (m.includes("izlet") || m.includes("kornat")) {
-      detectedCategory = "izleti_i_avantura";
-    }
-
-    let results = objekti;
-
-    if (detectedCategory) {
-      results = objekti.filter(o => o.kategorija === detectedCategory);
-    }
-
-    results = results
-      .filter(o => o.ocjena >= 4.2)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3);
-
-    const formattedData = results.map(r => `
-Naziv: ${r.naziv}
-Adresa: ${r.adresa}
-Ocjena: ${r.ocjena}
-Opis: ${r.opis}
-Google Maps: ${r.google_maps}
-${r.web ? `Web: ${r.web}` : ""}
-`).join("\n");
+    // 📂 Minimalna verzija – bez baze (privremeno testiramo komunikaciju)
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.2,
       messages: [
         {
           role: "system",
-          content: `
-Ti si strateški destinacijski AI asistent za Biograd na Moru.
-Odgovaraj stručno, koncizno i analitički.
-Ne ponavljaj iste liste ako korisnik specificira objekt.
-Ako korisnik odabere konkretan objekt, fokusiraj se samo na njega.
-`
+          content: "Ti si AI turistički asistent za Biograd na Moru."
         },
         ...conversation,
         {
-          role: "user",
-          content: `
-Kontekst:
-Vrijeme: ${weatherDescription}, ${temperature}°C
-Dio dana: ${partOfDay}
-
-Dostupni objekti:
-${formattedData}
-`
+          role: "system",
+          content: `Trenutno vrijeme: ${weatherDescription}, ${temperature}°C`
         }
       ]
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       reply: completion.choices[0].message.content
     });
 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
+    console.error("SERVER ERROR:", error);
+    return res.status(500).json({
       reply: "Greška servera."
     });
   }
