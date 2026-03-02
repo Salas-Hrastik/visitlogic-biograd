@@ -24,8 +24,9 @@ export default async function handler(req, res) {
   try {
 
     const { message } = req.body;
+    const m = message.toLowerCase();
 
-    // 🌤 Vrijeme
+    // 🌤 DOHVAT VREMENA
     const weatherResponse = await fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
     );
@@ -35,15 +36,14 @@ export default async function handler(req, res) {
     const weatherCode = weatherData.current_weather.weathercode;
     const weatherDescription = interpretWeather(weatherCode);
 
-    // 🕒 Dio dana
+    // 🕒 DIO DANA
     const now = new Date();
     const hour = now.getHours();
     let partOfDay = "dan";
-
     if (hour < 11) partOfDay = "jutro";
     else if (hour >= 18) partOfDay = "večer";
 
-    // 📂 Učitavanje baze
+    // 📂 UČITAVANJE BAZE
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
     const rawData = fs.readFileSync(filePath);
     const data = JSON.parse(rawData);
@@ -54,6 +54,7 @@ export default async function handler(req, res) {
       const items = data.kategorije[kategorija];
       if (Array.isArray(items)) {
         items.forEach(item => {
+
           const score =
             ((item.ocjena || 0) * 2) +
             ((item.broj_ocjena || 0) / 100);
@@ -67,22 +68,39 @@ export default async function handler(req, res) {
       }
     }
 
-    // 🔎 Prepoznavanje namjere
+    // 🔎 DETEKCIJA NAMJERE (PRIORITET EKSPPLICITNOG UPITA)
     let detectedCategory = null;
-    const m = message.toLowerCase();
 
-    if (m.includes("plaž")) detectedCategory = "plaze";
-    else if (m.includes("restoran") || m.includes("ručak") || m.includes("večer"))
+    if (m.includes("ljekarn") || m.includes("apotek")) {
+      detectedCategory = "ljekarne";
+    }
+    else if (m.includes("plaž")) {
+      detectedCategory = "plaze";
+    }
+    else if (m.includes("restoran") || m.includes("ručak") || m.includes("večer")) {
       detectedCategory = "restorani";
-    else if (m.includes("kava") || m.includes("doručak"))
+    }
+    else if (m.includes("kava") || m.includes("doručak") || m.includes("kafić")) {
       detectedCategory = "slasticarnice";
+    }
+    else if (m.includes("hotel")) {
+      detectedCategory = "hoteli";
+    }
+    else if (m.includes("apartman")) {
+      detectedCategory = "apartmani";
+    }
+    else if (m.includes("kamp")) {
+      detectedCategory = "kampovi";
+    }
 
-    // 🧠 TVRDA LOGIKA DIJELA DANA
+    // 🧠 KONTEKST DIJELA DANA VRIJEDI SAMO AKO NEMA EKSPPLICITNE KATEGORIJE
     if (!detectedCategory) {
-      if (partOfDay === "jutro")
+      if (partOfDay === "jutro") {
         detectedCategory = "slasticarnice";
-      else if (partOfDay === "večer")
+      }
+      else if (partOfDay === "večer") {
         detectedCategory = "restorani";
+      }
     }
 
     let results = objekti;
@@ -102,7 +120,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // 📎 FORMIRANJE OBAVEZNIH LINKOVA
+    // 📎 OBAVEZNI LINKOVI
     const formattedData = results.map(r => `
 Naziv: ${r.naziv}
 Adresa: ${r.adresa}
@@ -112,6 +130,7 @@ Google Maps: ${r.google_maps}
 ${r.web ? `Web: ${r.web}` : ""}
 `).join("\n");
 
+    // 🤖 OPENAI GENERACIJA
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.2,
@@ -129,6 +148,7 @@ Uvijek:
 - prikaži Google Maps link
 - ako postoji web stranica, prikaži i web link
 - nikada ne spominji druge gradove
+- ne izmišljaj podatke
 `
         },
         {
