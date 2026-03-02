@@ -24,23 +24,15 @@ export default async function handler(req, res) {
   try {
 
     const { conversation } = req.body;
-
-    if (!conversation || !Array.isArray(conversation)) {
-      return res.status(400).json({ reply: "Neispravan format razgovora." });
-    }
-
-    const lastMessage = conversation[conversation.length - 1].content;
-    const m = lastMessage.toLowerCase();
+    const lastMessage = conversation?.[0]?.content?.toLowerCase() || "";
 
     // 🌤 Vrijeme
     const weatherResponse = await fetch(
       "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
     );
-
     const weatherData = await weatherResponse.json();
     const temperature = weatherData.current_weather.temperature;
-    const weatherCode = weatherData.current_weather.weathercode;
-    const weatherDescription = interpretWeather(weatherCode);
+    const weatherDescription = interpretWeather(weatherData.current_weather.weathercode);
 
     // 📂 Učitavanje baze
     const filePath = path.join(process.cwd(), "data", "biograd_master.json");
@@ -69,75 +61,45 @@ export default async function handler(req, res) {
     // 🔎 Intent
     let detectedCategory = null;
 
-    if (m.includes("ljekarn") || m.includes("apotek")) {
-      detectedCategory = "ljekarne";
-    }
-    else if (m.includes("plaž")) {
-      detectedCategory = "plaze";
-    }
-    else if (m.includes("restoran") || m.includes("ručak") || m.includes("večer")) {
-      detectedCategory = "restorani";
-    }
-    else if (m.includes("hotel") || m.includes("smještaj")) {
-      detectedCategory = "smjestaj";
-    }
-    else if (m.includes("izlet") || m.includes("kornat")) {
-      detectedCategory = "izleti_i_avantura";
-    }
-
-    let results = objekti;
+    if (lastMessage.includes("ljekarn")) detectedCategory = "ljekarne";
+    else if (lastMessage.includes("plaž")) detectedCategory = "plaze";
+    else if (lastMessage.includes("restoran") || lastMessage.includes("ručak")) detectedCategory = "restorani";
+    else if (lastMessage.includes("hotel") || lastMessage.includes("smještaj")) detectedCategory = "smjestaj";
+    else if (lastMessage.includes("izlet")) detectedCategory = "izleti_i_avantura";
 
     if (detectedCategory) {
-      results = objekti.filter(o => o.kategorija === detectedCategory);
-    }
 
-    results = results
-      .filter(o => o.ocjena >= 4.2)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3);
+      const results = objekti
+        .filter(o => o.kategorija === detectedCategory && o.ocjena >= 4.2)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
 
-    if (results.length === 0) {
       return res.status(200).json({
-        reply: "Trenutno nemam verificirane podatke za taj upit."
+        type: "cards",
+        title: `Preporučeni ${detectedCategory}`,
+        items: results.map(r => ({
+          naziv: r.naziv,
+          adresa: r.adresa,
+          ocjena: r.ocjena,
+          opis: r.opis,
+          google_maps: r.google_maps,
+          web: r.web || null
+        }))
       });
     }
 
-    const formattedData = results.map(r => `
-Naziv: ${r.naziv}
-Adresa: ${r.adresa}
-Ocjena: ${r.ocjena}
-Opis: ${r.opis}
-Google Maps: ${r.google_maps}
-${r.web ? `Web: ${r.web}` : ""}
-`).join("\n");
-
+    // GPT samo za opće upite
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.2,
       messages: [
         {
           role: "system",
-          content: `
-Ti si destinacijski AI asistent za Biograd na Moru.
-
-OBAVEZNO:
-- Koristi isključivo dostavljene objekte.
-- Nikada ne izmišljaj nove restorane.
-- Ne miješaj kategorije.
-- Ako korisnik specificira jedan objekt, fokusiraj se samo na njega.
-- Uvijek uključi Google Maps link.
-`
+          content: "Ti si profesionalni turistički informator za Biograd na Moru."
         },
-        ...conversation,
         {
-          role: "system",
-          content: `
-Kontekst:
-Vrijeme: ${weatherDescription}, ${temperature}°C
-
-Dostupni objekti:
-${formattedData}
-`
+          role: "user",
+          content: `Upit: ${lastMessage}. Trenutno vrijeme: ${weatherDescription}, ${temperature}°C`
         }
       ]
     });
@@ -147,7 +109,7 @@ ${formattedData}
     });
 
   } catch (error) {
-    console.error("SERVER ERROR:", error);
+    console.error(error);
     return res.status(500).json({
       reply: "Greška servera."
     });
