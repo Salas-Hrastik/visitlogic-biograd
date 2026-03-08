@@ -1,35 +1,22 @@
 import OpenAI from "openai";
-import fs from "fs";
-import path from "path";
+import data from "../podaci/biograd_master.json" assert { type: "json" };
 
 const openai = new OpenAI({
  apiKey: process.env.OPENAI_API_KEY
 });
 
-function loadData(){
+export default async function handler(req, res) {
 
-const filePath = path.join(process.cwd(),"podaci","biograd_master.json");
+try {
 
-const raw = fs.readFileSync(filePath);
-
-return JSON.parse(raw);
-
-}
-
-export default async function handler(req,res){
-
-try{
-
-const {conversation} = req.body;
+const { conversation } = req.body;
 
 const userMessage =
-conversation?.[conversation.length-1]?.content || "";
-
-const data = loadData();
+conversation?.[conversation.length - 1]?.content || "";
 
 let context = "";
 
-if(userMessage.toLowerCase().includes("plaž")){
+if (userMessage.toLowerCase().includes("plaž")) {
 
 context = data.plaze.map(p =>
 
@@ -41,7 +28,7 @@ ${p.opis}
 
 }
 
-else if(userMessage.toLowerCase().includes("restoran")){
+else if (userMessage.toLowerCase().includes("restoran")) {
 
 context = data.restorani.map(r =>
 
@@ -53,7 +40,7 @@ ${r.opis}
 
 }
 
-else if(userMessage.toLowerCase().includes("znamen")){
+else if (userMessage.toLowerCase().includes("znamen")) {
 
 context = data.znamenitosti.map(z =>
 
@@ -67,29 +54,27 @@ ${z.opis}
 
 const completion = await openai.chat.completions.create({
 
-model:"gpt-4o-mini",
+model: "gpt-4o-mini",
 
-messages:[
+messages: [
 
 {
-role:"system",
-content:`
+role: "system",
+content: `
 Ti si AI turistički informator Biograda na Moru.
 
-Koristi lokalne podatke destinacije.
-
-Odgovori kratko i pregledno koristeći ikone.
+Odgovaraj kratko, turistički i pregledno koristeći ikone.
 `
 },
 
 {
-role:"user",
-content:userMessage
+role: "user",
+content: userMessage
 },
 
 {
-role:"assistant",
-content:context
+role: "assistant",
+content: context
 }
 
 ]
@@ -98,14 +83,14 @@ content:context
 
 const reply = completion.choices[0].message.content;
 
-res.status(200).json({reply});
+res.status(200).json({ reply });
 
-}catch(error){
+} catch (error) {
 
 console.error(error);
 
 res.status(500).json({
-reply:"Došlo je do greške."
+reply: "Došlo je do greške."
 });
 
 }
