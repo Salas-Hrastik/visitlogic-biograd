@@ -7,24 +7,43 @@ const { conversation } = req.body;
 const message =
 conversation?.[conversation.length - 1]?.content?.toLowerCase() || "";
 
-let reply = "Rado ću pomoći. Pitajte o plažama, restoranima ili znamenitostima.";
+let reply = "";
 
 if (message.includes("plaž")) {
 
 reply = `
-🏖 Plaže u Biogradu na Moru
+<div style="display:flex;flex-direction:column;gap:14px">
 
-🏖 Plaža Dražica  
-najpopularnija gradska plaža  
-📍 https://maps.google.com/?q=Plaza+Drazica+Biograd
+<div style="background:#f3f7fb;padding:14px;border-radius:10px">
+<h3>🏖 Plaža Dražica</h3>
+👨‍👩‍👧 idealna za obitelji<br>
+🌊 šljunčana plaža<br>
+🌲 borova šuma<br><br>
+<a href="https://maps.google.com/?q=Plaza+Drazica+Biograd" target="_blank">
+📍 Otvori na Google Maps
+</a>
+</div>
 
-🏖 Plaža Soline  
-borova šuma i brojni sadržaji  
-📍 https://maps.google.com/?q=Plaza+Soline+Biograd
+<div style="background:#f3f7fb;padding:14px;border-radius:10px">
+<h3>🏖 Plaža Soline</h3>
+🌲 borova šuma<br>
+🍹 beach barovi<br>
+🚶 blizu centra<br><br>
+<a href="https://maps.google.com/?q=Plaza+Soline+Biograd" target="_blank">
+📍 Otvori na Google Maps
+</a>
+</div>
 
-🏖 Plaža Bošana  
-mirnija plaža za opuštanje  
-📍 https://maps.google.com/?q=Plaza+Bosana+Biograd
+<div style="background:#f3f7fb;padding:14px;border-radius:10px">
+<h3>🏖 Plaža Bošana</h3>
+😌 mirnija atmosfera<br>
+🌊 čisto more<br><br>
+<a href="https://maps.google.com/?q=Plaza+Bosana+Biograd" target="_blank">
+📍 Otvori na Google Maps
+</a>
+</div>
+
+</div>
 `;
 
 }
@@ -32,27 +51,45 @@ mirnija plaža za opuštanje
 else if (message.includes("restoran") || message.includes("gastr")) {
 
 reply = `
-🍽 Preporučeni restorani
+<div style="display:flex;flex-direction:column;gap:14px">
 
-🍽 Restoran Dupin  
-svježa riba i mediteranska kuhinja  
-📍 https://maps.google.com/?q=Restoran+Dupin+Biograd
+<div style="background:#f3f7fb;padding:14px;border-radius:10px">
+<h3>🍽 Restoran Dupin</h3>
+🐟 svježa riba<br>
+🍷 mediteranska kuhinja<br><br>
+<a href="https://maps.google.com/?q=Restoran+Dupin+Biograd" target="_blank">
+📍 Google Maps
+</a>
+</div>
 
-🍽 Konoba Kampanel  
-tradicionalna dalmatinska jela  
-📍 https://maps.google.com/?q=Konoba+Kampanel+Biograd
+<div style="background:#f3f7fb;padding:14px;border-radius:10px">
+<h3>🍝 Konoba Kampanel</h3>
+🍷 dalmatinska kuhinja<br>
+🐟 riblji specijaliteti<br><br>
+<a href="https://maps.google.com/?q=Konoba+Kampanel+Biograd" target="_blank">
+📍 Google Maps
+</a>
+</div>
+
+</div>
 `;
 
 }
 
-else if (message.includes("znamen")) {
+else {
 
 reply = `
-🏛 Znamenitosti
+👋 Dobrodošli u Biograd na Moru!
 
-🏛 Zavičajni muzej Biograd  
-povijest kraljevskog grada  
-📍 https://maps.google.com/?q=Zavicajni+Muzej+Biograd
+Mogu vam pomoći sa:
+
+🏖 Plaže  
+🍽 Gastronomija  
+🏛 Znamenitosti  
+🎉 Događanja  
+🏨 Smještaj
+
+Postavite pitanje ili kliknite opciju iz izbornika.
 `;
 
 }
@@ -64,7 +101,7 @@ res.status(200).json({ reply });
 console.error(error);
 
 res.status(500).json({
-reply: "Došlo je do greške u serveru."
+reply: "Došlo je do greške."
 });
 
 }
