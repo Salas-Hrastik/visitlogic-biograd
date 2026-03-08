@@ -11,15 +11,17 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 function interpretWeather(code) {
+
   if ([0].includes(code)) return "sunčano";
   if ([1,2,3].includes(code)) return "djelomično oblačno";
   if ([45,48].includes(code)) return "magla";
   if ([51,53,55,61,63,65].includes(code)) return "kiša";
   if ([95,96,99].includes(code)) return "nevrijeme";
+
   return "nepoznato";
 }
 
@@ -28,32 +30,48 @@ app.post("/api/chat", async (req, res) => {
   try {
 
     const { conversation } = req.body;
+
     const userMessage =
       conversation?.[conversation.length - 1]?.content || "";
 
     const lowerMessage = userMessage.toLowerCase();
 
-    // 🌤 Vrijeme
+
+    // ☀️ Vrijeme
+
     const weatherResponse = await fetch(
-      "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
+      "https://api.open-meteo.com/v1/forecast?latitude=45.6600&longitude=18.4180&current_weather=true"
     );
 
     const weatherData = await weatherResponse.json();
-    const temperature = weatherData.current_weather.temperature;
+
+    const temperatura = weatherData.current_weather.temperature;
+
     const weatherDescription =
       interpretWeather(weatherData.current_weather.weathercode);
 
-    // 📂 Baza
-    const filePath = path.join(__dirname, "data", "biograd_master.json");
+
+
+    // 📁 Baza podataka
+
+    const filePath = path.join(__dirname, "podaci", "valpovo.json");
+
     const rawData = fs.readFileSync(filePath);
-    const data = JSON.parse(rawData);
+
+    const podaci = JSON.parse(rawData);
+
 
     let objekti = [];
 
-    for (const kategorija in data.kategorije) {
-      const items = data.kategorije[kategorija];
+
+    for (const kategorija in podaci.kategorije) {
+
+      const items = podaci.kategorije[kategorija];
+
       if (Array.isArray(items)) {
+
         items.forEach(item => {
+
           const score =
             ((item.ocjena || 0) * 2) +
             ((item.broj_ocjena || 0) / 100);
@@ -63,35 +81,47 @@ app.post("/api/chat", async (req, res) => {
             score,
             ...item
           });
+
         });
+
       }
+
     }
 
-    // 🔎 STRUKTURIRANE KATEGORIJE
+
+
+    // 🔎 Kategorije
+
     let category = null;
 
-    if (lowerMessage.includes("restoran") || lowerMessage.includes("ručak") || lowerMessage.includes("večer"))
-      category = "restorani";
+    if (
+      lowerMessage.includes("restoran") ||
+      lowerMessage.includes("ručak") ||
+      lowerMessage.includes("večera")
+    ) category = "restorani";
 
-    if (lowerMessage.includes("plaž"))
-      category = "plaze";
+    if (lowerMessage.includes("smještaj") ||
+        lowerMessage.includes("hotel"))
+      category = "smjestaj";
 
-    if (lowerMessage.includes("ljekarn") || lowerMessage.includes("apotek"))
+    if (lowerMessage.includes("ljekarna") ||
+        lowerMessage.includes("apotek"))
       category = "ljekarne";
 
-    if (lowerMessage.includes("hotel") || lowerMessage.includes("smještaj"))
-      category = "smjestaj";
+
 
     if (category) {
 
-      const results = objekti
-        .filter(o => o.kategorija === category && o.ocjena >= 4.2)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3);
+      const results =
+        objekti
+          .filter(o => o.kategorija === category && o.ocjena >= 4.2)
+          .sort((a,b) => b.score - a.score)
+          .slice(0,3);
+
 
       return res.json({
         type: "cards",
-        title: `Preporuke (${weatherDescription}, ${temperature}°C)`,
+        title: `Preporuke (${weatherDescription}, ${temperatura}°C)`,
         items: results.map(r => ({
           naziv: r.naziv,
           adresa: r.adresa,
@@ -102,61 +132,68 @@ app.post("/api/chat", async (req, res) => {
           web: r.web || null
         }))
       });
+
     }
 
-    // 🤖 STRUKTURIRANI AI ODGOVOR
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      temperature: 0.3,
-      messages: [
-        {
-          role: "system",
-          content: `
-Ti si profesionalni destinacijski savjetnik za Biograd na Moru.
 
-Odgovaraj ISKLJUČIVO u sljedećoj strukturi:
+    // 🤖 AI odgovor
 
-NASLOV (jedna rečenica konteksta vremena)
+    const completion =
+      await openai.chat.completions.create({
 
-1. Naziv prijedloga
-   - Kratko objašnjenje (max 2 rečenice)
+        model: "gpt-4o-mini",
 
-2. Naziv prijedloga
-   - Kratko objašnjenje
+        temperature: 0.3,
 
-3. Naziv prijedloga
-   - Kratko objašnjenje
+        messages: [
 
-Maksimalno 3 prijedloga.
-Bez eseja.
-Bez općih fraza.
-Bez promotivnog tona.
-`
-        },
-        {
-          role: "user",
-          content: `
-Upit: ${userMessage}
+          {
+            role: "system",
+            content:
+            `Ti si profesionalni turistički vodič za grad Valpovo.
 
-Vrijeme: ${weatherDescription}, ${temperature}°C
-`
-        }
-      ]
-    });
+Govori kratko i jasno.
+Daj konkretne preporuke za posjetitelje.
+Ako je moguće uključi znamenitosti, gastronomiju i šetnje.`
+          },
+
+          {
+            role: "user",
+            content:
+            `${userMessage}
+
+Vrijeme u Valpovu: ${weatherDescription}, ${temperatura}°C`
+          }
+
+        ]
+
+      });
+
 
     res.json({
       reply: completion.choices[0].message.content
     });
 
-  } catch (error) {
+  }
+
+  catch(error) {
+
     console.error(error);
-    res.status(500).json({ reply: "Greška servera." });
+
+    res.status(500).json({
+      reply: "Greška poslužitelja."
+    });
+
   }
 
 });
 
+
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+
+  console.log("Server radi na portu " + PORT);
+
 });
