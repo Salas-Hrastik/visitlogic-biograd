@@ -2,80 +2,220 @@ import fs from "fs";
 import path from "path";
 import OpenAI from "openai";
 
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
+function interpretWeather(code) {
+
+  if ([0].includes(code)) return "sunčano";
+  if ([1,2,3].includes(code)) return "djelomično oblačno";
+  if ([45,48].includes(code)) return "magla";
+  if ([51,53,55,61,63,65].includes(code)) return "kiša";
+  if ([95,96,99].includes(code)) return "nevrijeme";
+
+  return "nepoznato";
+}
+
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ reply: "Method not allowed." });
 
   try {
-    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    const { message } = req.body;
 
-    // 1. DOHVAT VREMENA
-    const weatherRes = await fetch("https://api.open-meteo.com/v1/forecast?latitude=43.9375&longitude=15.4428&current_weather=true");
-    const weatherData = await weatherRes.json();
-    const temp = weatherData.current_weather?.temperature || "10.3";
+    const { conversation } = req.body || {};
 
-    // 2. UČITAVANJE BAZE
-    const filePath = path.join(process.cwd(), "data", "biograd_master.json");
+    const userMessage =
+      conversation?.[conversation.length - 1]?.content || "";
+
+    const lowerMessage = userMessage.toLowerCase();
+
+
+
+    // 🌤 VRIJEME BIOGRAD
+
+    const weatherResponse = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=43.9444&longitude=15.4444&current_weather=true"
+    );
+
+    const weatherData = await weatherResponse.json();
+
+    const temperatura =
+      weatherData.current_weather.temperature;
+
+    const weatherDescription =
+      interpretWeather(weatherData.current_weather.weathercode);
+
+
+
+    // 📁 BAZA PODATAKA
+
+    const filePath = path.join(
+      process.cwd(),
+      "podaci",
+      "biograd_master.json"
+    );
+
     const rawData = fs.readFileSync(filePath);
-    const db = JSON.parse(rawData);
 
-    // 3. AI KLASIFIKACIJA I ODGOVOR (Structured Output)
-    // Umjesto da pogađamo ključne riječi, AI-ju dajemo imena tvojih kategorija iz JSON-a
-    const kategorijeIzBaze = Object.keys(db.kategorije).join(", ");
+    const podaci = JSON.parse(rawData);
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: `Ti si mozak turističkog informatora. Tvoj zadatak je analizirati upit i odlučiti koju kategoriju iz baze podataka prikazati.
-          Dostupne kategorije u bazi su: [${kategorijeIzBaze}].
-          
-          VRATI ISKLJUČIVO JSON u ovom formatu:
-          {
-            "kategorija": "ime_kategorije_ili_null",
-            "ai_odgovor": "Kratka rečenica konteksta (npr. 'Evo prijedloga za šetnju po ovom oblačnom vremenu.')",
-            "savjet": "Kratki savjet temeljen na temperaturi od ${temp}°C"
-          }`
-        },
-        { role: "user", content: message }
-      ],
-      response_format: { type: "json_object" } // Prisiljava model na JSON
-    });
 
-    const aiAnaliza = JSON.parse(completion.choices[0].message.content);
-    const odabranaKategorija = aiAnaliza.kategorija;
 
-    // 4. LOGIKA ZA PRIKAZ KARTICA (Kao kod restorana)
-    if (odabranaKategorija && db.kategorije[odabranaKategorija]) {
-      const rezultati = db.kategorije[odabranaKategorija]
-        .sort((a, b) => (b.ocjena || 0) - (a.ocjena || 0))
-        .slice(0, 3);
+    // 🧠 OBJEKTI
 
-      return res.status(200).json({
-        type: "cards",
-        title: `Preporuke (${temp}°C)`,
-        subtitle: aiAnaliza.ai_odgovor,
-        items: rezultati.map(r => ({
-          naziv: r.naziv,
-          opis: r.opis,
-          ocjena: r.ocjena,
-          mapsUrl: `https://www.google.com/maps/search/?api=1&query=${r.lat},${r.lng}`,
-          lat: r.lat,
-          lng: r.lng
-        })),
-        footer: aiAnaliza.savjet
-      });
+    let objekti = [];
+
+    for (const kategorija in podaci.kategorije) {
+
+      const items = podaci.kategorije[kategorija];
+
+      if (Array.isArray(items)) {
+
+        items.forEach(item => {
+
+          const score =
+            ((item.ocjena || 0) * 2) +
+            ((item.broj_ocjena || 0) / 100);
+
+          objekti.push({
+            kategorija,
+            score,
+            ...item
+          });
+
+        });
+
+      }
+
     }
 
-    // 5. AKO BAŠ NIŠTA NE NAĐE U BAZI (Fallback tekst, ali strukturiran)
-    return res.status(200).json({
-      type: "text",
-      reply: `### ℹ️ Informacija\n${aiAnaliza.ai_odgovor}\n\n💡 **Savjet:** ${aiAnaliza.savjet}`
+
+
+    // 🔎 DETEKCIJA KATEGORIJE
+
+    let category = null;
+
+    if (
+      lowerMessage.includes("restoran") ||
+      lowerMessage.includes("ručak") ||
+      lowerMessage.includes("večera")
+    ) category = "restorani";
+
+    if (
+      lowerMessage.includes("hotel") ||
+      lowerMessage.includes("smještaj")
+    ) category = "smjestaj";
+
+    if (
+      lowerMessage.includes("ljekarna") ||
+      lowerMessage.includes("apotek")
+    ) category = "ljekarne";
+
+    if (
+      lowerMessage.includes("plaža")
+    ) category = "plaze";
+
+
+
+    // 📊 STRUKTURIRANI ODGOVOR
+
+    if (category) {
+
+      const results =
+        objekti
+          .filter(o => o.kategorija === category)
+          .sort((a,b) => b.score - a.score)
+          .slice(0,3);
+
+      return res.json({
+
+        type: "cards",
+
+        title:
+          `Preporuke (${weatherDescription}, ${temperatura}°C)`,
+
+        items:
+          results.map(r => ({
+
+            naziv: r.naziv,
+            adresa: r.adresa,
+            opis: r.opis,
+            ocjena: r.ocjena,
+
+            lat: r.lat || null,
+            lng: r.lng || null,
+
+            web: r.web || null
+
+          }))
+
+      });
+
+    }
+
+
+
+    // 🤖 AI ODGOVOR
+
+    const completion =
+      await openai.chat.completions.create({
+
+        model: "gpt-4o-mini",
+
+        temperature: 0.3,
+
+        messages: [
+
+          {
+            role: "system",
+            content:
+`Ti si profesionalni turistički informator grada Biograda na Moru.
+
+Odgovaraj kratko i jasno.
+
+Daj konkretne preporuke za:
+- plaže
+- restorane
+- znamenitosti
+- aktivnosti
+
+Uvijek uzmi u obzir vrijeme.`
+          },
+
+          {
+            role: "user",
+            content:
+`${userMessage}
+
+Vrijeme u Biogradu:
+${weatherDescription}, ${temperatura}°C`
+          }
+
+        ]
+
+      });
+
+
+    return res.json({
+
+      reply:
+        completion.choices[0].message.content
+
     });
 
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ reply: "Sustav trenutno nije dostupan." });
+
   }
+
+  catch(error) {
+
+    console.error(error);
+
+    return res.status(500).json({
+
+      reply:
+        "Greška u komunikaciji sa serverom."
+
+    });
+
+  }
+
 }
