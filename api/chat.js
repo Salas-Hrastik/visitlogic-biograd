@@ -2,120 +2,170 @@ import fs from "fs"
 import OpenAI from "openai"
 
 const openai = new OpenAI({
- apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 })
 
 const mjesta = JSON.parse(
- fs.readFileSync("./data/biograd_destinacija.json","utf8")
+  fs.readFileSync("./data/biograd_destinacija.json", "utf8")
 )
 
 function udaljenost(lat1, lon1, lat2, lon2){
 
- const R = 6371
+  const R = 6371
 
- const dLat = (lat2-lat1) * Math.PI/180
- const dLon = (lon2-lon1) * Math.PI/180
+  const dLat = (lat2 - lat1) * Math.PI/180
+  const dLon = (lon2 - lon1) * Math.PI/180
 
- const a =
- Math.sin(dLat/2)*Math.sin(dLat/2) +
- Math.cos(lat1*Math.PI/180) *
- Math.cos(lat2*Math.PI/180) *
- Math.sin(dLon/2)*Math.sin(dLon/2)
+  const a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI/180) *
+    Math.cos(lat2 * Math.PI/180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
 
- const c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
 
- return R*c
+  return R * c
 }
 
 function nadjiNajblize(userLat,userLon,kategorija){
 
- const filtrirano = mjesta.filter(m =>
- m.kategorija && m.kategorija.includes(kategorija)
- )
+  const filtrirano = mjesta.filter(m => {
 
- const sUdaljenosti = filtrirano.map(m=>{
+    if(!m.kategorija) return false
 
- const d = udaljenost(
- userLat,
- userLon,
- m.lat,
- m.lon
- )
+    return m.kategorija.toLowerCase().includes(kategorija)
 
- return {...m,udaljenost:d}
+  })
 
- })
+  const sUdaljenosti = filtrirano.map(m => {
 
- sUdaljenosti.sort((a,b)=>a.udaljenost-b.udaljenost)
+    const d = udaljenost(
+      userLat,
+      userLon,
+      m.lat,
+      m.lon
+    )
 
- return sUdaljenosti.slice(0,5)
+    return {
+      ...m,
+      udaljenost:d
+    }
+
+  })
+
+  sUdaljenosti.sort((a,b)=>a.udaljenost-b.udaljenost)
+
+  return sUdaljenosti.slice(0,5)
+}
+
+async function klasificirajUpit(poruka){
+
+  const prompt = `
+Klasificiraj turističko pitanje u jednu od kategorija.
+
+Moguće kategorije:
+
+parking
+restaurant
+beach
+atm
+pharmacy
+museum
+bar
+cafe
+general
+
+Vrati SAMO naziv kategorije.
+
+Pitanje:
+${poruka}
+`
+
+  const completion = await openai.chat.completions.create({
+
+    model:"gpt-5-3-instant",
+
+    messages:[
+      {role:"user",content:prompt}
+    ]
+
+  })
+
+  return completion.choices[0].message.content.trim().toLowerCase()
+
 }
 
 export default async function handler(req,res){
 
- if(req.method!=="POST"){
- return res.status(405).json({error:"Method not allowed"})
- }
+  if(req.method !== "POST"){
+    return res.status(405).json({error:"Method not allowed"})
+  }
 
- const {message,location,lang} = req.body
+  const {message,location,lang} = req.body
 
- let odgovor=""
+  let odgovor = ""
 
- const tekst = message.toLowerCase()
+  let kategorija = "general"
 
- if(location && tekst.includes("parking")){
+  try{
 
- const lista = nadjiNajblize(location.lat,location.lon,"parking")
+    kategorija = await klasificirajUpit(message)
 
- odgovor="🅿 Najbliži parking:\n\n"
+  }catch(e){
 
- lista.forEach((p,i)=>{
+    console.log("AI klasifikacija greška")
 
- const m = Math.round(p.udaljenost*1000)
+  }
 
- odgovor+=`${i+1}. ${p.naziv} – ${m} m\n${p.google_maps}\n\n`
+  if(location && kategorija !== "general"){
 
- })
+    const lista = nadjiNajblize(
+      location.lat,
+      location.lon,
+      kategorija
+    )
 
- return res.json({reply:odgovor})
- }
+    if(lista.length > 0){
 
- if(location && (tekst.includes("restoran") || tekst.includes("restaurant") || tekst.includes("food"))){
+      odgovor = `Najbliže lokacije:\n\n`
 
- const lista = nadjiNajblize(location.lat,location.lon,"restaurant")
+      lista.forEach((p,i)=>{
 
- odgovor="🍽 Najbliži restorani:\n\n"
+        const m = Math.round(p.udaljenost*1000)
 
- lista.forEach((p,i)=>{
+        odgovor += `${i+1}. ${p.naziv} – ${m} m\n${p.google_maps}\n\n`
 
- const m = Math.round(p.udaljenost*1000)
+      })
 
- odgovor+=`${i+1}. ${p.naziv} – ${m} m\n${p.google_maps}\n\n`
+      return res.json({reply:odgovor})
 
- })
+    }
 
- return res.json({reply:odgovor})
- }
+  }
 
- const systemPrompt = `
+  const systemPrompt = `
 Ti si turistički vodič za Biograd na Moru.
+
 Odgovaraj kratko i korisno.
-Odgovaraj na jeziku: ${lang || "en"}.
+
+Ako je moguće predloži restorane, plaže, atrakcije ili infrastrukturu.
+
+Odgovaraj na jeziku korisnika: ${lang || "en"}.
 `
 
- const completion = await openai.chat.completions.create({
+  const completion = await openai.chat.completions.create({
 
- model:"gpt-5-3-instant",
+    model:"gpt-5-3-instant",
 
- messages:[
- {role:"system",content:systemPrompt},
- {role:"user",content:message}
- ]
+    messages:[
+      {role:"system",content:systemPrompt},
+      {role:"user",content:message}
+    ]
 
- })
+  })
 
- odgovor = completion.choices[0].message.content
+  odgovor = completion.choices[0].message.content
 
- res.json({reply:odgovor})
+  res.json({reply:odgovor})
 
 }
