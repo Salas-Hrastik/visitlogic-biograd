@@ -1,0 +1,22 @@
+{
+  "plaze": [
+    {
+      "naziv": "Plaža Dražica",
+      "opis": "Najpoznatija plaža u Biogradu. Idealna za obitelji s djecom.",
+      "znacajke": ["šljunčana", "borova šuma", "blizu centra"],
+      "maps": "https://maps.google.com/?q=Plaza+Drazica+Biograd"
+    },
+    {
+      "naziv": "Plaža Soline",
+      "opis": "Velika plaža uz borovu šumu s mnogo sadržaja.",
+      "znacajke": ["beach barovi", "sport", "šetnica"],
+      "maps": "https://maps.google.com/?q=Plaza+Soline+Biograd"
+    },
+    {
+      "naziv": "Plaža Bošana",
+      "opis": "Mirnija plaža pogodna za opuštanje.",
+      "znacajke": ["mirnije more", "čisto more"],
+      "maps": "https://maps.google.com/?q=Plaza+Bosana+Biograd"
+    }
+  ]
+}
