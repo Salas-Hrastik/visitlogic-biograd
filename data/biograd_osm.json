@@ -1,0 +1,8337 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.10 2d4cfc48",
+  "osm3s": {
+    "timestamp_osm_base": "2026-03-08T18:46:14Z",
+    "timestamp_areas_base": "2026-01-22T23:45:51Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 513472638,
+  "lat": 43.9396538,
+  "lon": 15.4464649,
+  "tags": {
+    "amenity": "parking",
+    "capacity": "20",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 513472666,
+  "lat": 43.9393683,
+  "lon": 15.4397343,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "cargo": "passengers;vehicle",
+    "ferry": "yes",
+    "name": "Biograd na Moru",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 513472692,
+  "lat": 43.9363932,
+  "lon": 15.4431690,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "30",
+    "fee": "yes",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 708951779,
+  "lat": 43.9349799,
+  "lon": 15.4450119,
+  "tags": {
+    "amenity": "cafe",
+    "internet_access": "wlan",
+    "name": "Belvedere",
+    "opening_hours": "10:00-02:00"
+  }
+},
+{
+  "type": "node",
+  "id": 708952632,
+  "lat": 43.9411442,
+  "lon": 15.4457263,
+  "tags": {
+    "addr:housenumber": "32",
+    "addr:street": "Šetalište kneza Branimira",
+    "brand": "Konzum",
+    "brand:wikidata": "Q518563",
+    "name": "Konzum",
+    "ref": "767",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 877612268,
+  "lat": 43.9304937,
+  "lon": 15.4482198,
+  "tags": {
+    "amenity": "nightclub",
+    "name": "Aqua"
+  }
+},
+{
+  "type": "node",
+  "id": 877612429,
+  "lat": 43.9373829,
+  "lon": 15.4438744,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 877612437,
+  "lat": 43.9305444,
+  "lon": 15.4491075,
+  "tags": {
+    "amenity": "nightclub",
+    "name": "Pocco Locco cocktail bar"
+  }
+},
+{
+  "type": "node",
+  "id": 877612468,
+  "lat": 43.9361938,
+  "lon": 15.4432296,
+  "tags": {
+    "amenity": "cafe",
+    "internet_access": "wlan",
+    "name": "Šumpreš",
+    "opening_hours": "Mo-Su 06:30-01:00"
+  }
+},
+{
+  "type": "node",
+  "id": 877612598,
+  "lat": 43.9443758,
+  "lon": 15.4457095,
+  "tags": {
+    "addr:housenumber": "2",
+    "addr:street": "Kornatska",
+    "amenity": "cafe",
+    "name": "Škverić"
+  }
+},
+{
+  "type": "node",
+  "id": 877612679,
+  "lat": 43.9312913,
+  "lon": 15.4465561,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 877612729,
+  "lat": 43.9374315,
+  "lon": 15.4420491,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Cassa Vecchia"
+  }
+},
+{
+  "type": "node",
+  "id": 877612791,
+  "lat": 43.9347963,
+  "lon": 15.4436956,
+  "tags": {
+    "amenity": "cafe",
+    "internet_access": "wlan",
+    "name": "Lavender"
+  }
+},
+{
+  "type": "node",
+  "id": 877612948,
+  "lat": 43.9380558,
+  "lon": 15.4434137,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Kiss"
+  }
+},
+{
+  "type": "node",
+  "id": 877613056,
+  "lat": 43.9334942,
+  "lon": 15.4446366,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 877613118,
+  "lat": 43.9304504,
+  "lon": 15.4495744,
+  "tags": {
+    "amenity": "nightclub",
+    "name": "Queen bar",
+    "opening_hours": "Mo-Su 08:00-02:00"
+  }
+},
+{
+  "type": "node",
+  "id": 920203706,
+  "lat": 43.9396983,
+  "lon": 15.4467574,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:country": "HR",
+    "addr:housenumber": "4",
+    "addr:postcode": "23210",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ljekarne Pervan"
+  }
+},
+{
+  "type": "node",
+  "id": 1306561247,
+  "lat": 43.9417628,
+  "lon": 15.4454039,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 1306561255,
+  "lat": 43.9420840,
+  "lon": 15.4452033,
+  "tags": {
+    "amenity": "restaurant"
+  }
+},
+{
+  "type": "node",
+  "id": 1306561275,
+  "lat": 43.9423203,
+  "lon": 15.4451160,
+  "tags": {
+    "amenity": "atm"
+  }
+},
+{
+  "type": "node",
+  "id": 1404866212,
+  "lat": 43.9398416,
+  "lon": 15.4679636,
+  "tags": {
+    "name": "Bure",
+    "shop": "supermarket",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1404867192,
+  "lat": 43.9378857,
+  "lon": 15.4720443,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "balkan",
+    "name": "U Šime"
+  }
+},
+{
+  "type": "node",
+  "id": 1700595397,
+  "lat": 43.9416147,
+  "lon": 15.4496439,
+  "tags": {
+    "check_date": "2024-09-09",
+    "name": "Hotel Bolero",
+    "source": "Bing",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 1774010943,
+  "lat": 43.9366646,
+  "lon": 15.4415819,
+  "tags": {
+    "amenity": "cafe",
+    "cuisine": "ice_cream",
+    "name": "Blandona"
+  }
+},
+{
+  "type": "node",
+  "id": 1813991093,
+  "lat": 43.9382076,
+  "lon": 15.4464459,
+  "tags": {
+    "brand": "Yamaha",
+    "brand:wikidata": "Q158888",
+    "name": "Auto Hrvatska",
+    "shop": "motorcycle"
+  }
+},
+{
+  "type": "node",
+  "id": 1868497161,
+  "lat": 43.9479934,
+  "lon": 15.4433532,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Bošana"
+  }
+},
+{
+  "type": "node",
+  "id": 1868506122,
+  "lat": 43.9476254,
+  "lon": 15.4463811,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 1868506126,
+  "lat": 43.9476657,
+  "lon": 15.4464431,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "name": "Bure",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1868543489,
+  "lat": 43.9379753,
+  "lon": 15.4535359,
+  "tags": {
+    "name": "Adriatic",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 1868543494,
+  "lat": 43.9354996,
+  "lon": 15.4572185,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "name": "Bure Market",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1868543498,
+  "lat": 43.9372061,
+  "lon": 15.4505465,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "addr:street": "Splitska",
+    "name": "Bure Market",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1868543703,
+  "lat": 43.9381359,
+  "lon": 15.4507091,
+  "tags": {
+    "name": "Martin",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613187,
+  "lat": 43.9269296,
+  "lon": 15.4536739,
+  "tags": {
+    "amenity": "tourism",
+    "name": "Camp Ljutić",
+    "tourism": "camp_site"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613191,
+  "lat": 43.9374125,
+  "lon": 15.4447394,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Kaldi"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613194,
+  "lat": 43.9384397,
+  "lon": 15.4444566,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:country": "HR",
+    "addr:housenumber": "14",
+    "addr:street": "Šetalište kneza Branimira",
+    "brand": "dm",
+    "brand:wikidata": "Q266572",
+    "name": "dm",
+    "opening_hours": "Mo-Fr 08:00-22:00; Sa 08:00-21:00; Su 08:00-14:00",
+    "shop": "chemist"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613199,
+  "lat": 43.9292278,
+  "lon": 15.4511264,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Dišpetoža"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613202,
+  "lat": 43.9327576,
+  "lon": 15.4466523,
+  "tags": {
+    "addr:street": "Šetalište Dražica",
+    "amenity": "cafe",
+    "name": "Lolipop"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613205,
+  "lat": 43.9375993,
+  "lon": 15.4447718,
+  "tags": {
+    "name": "Mattina obuća",
+    "shop": "shoes"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613211,
+  "lat": 43.9374989,
+  "lon": 15.4448449,
+  "tags": {
+    "amenity": "bank",
+    "atm": "yes",
+    "brand": "PBZ",
+    "brand:wikidata": "Q7246343",
+    "name": "PBZ",
+    "ref:vatin": "HR02535697732"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613213,
+  "lat": 43.9280412,
+  "lon": 15.4521856,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Restaurant park Soline"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613220,
+  "lat": 43.9383575,
+  "lon": 15.4442951,
+  "tags": {
+    "name": "Sakić",
+    "shop": "butcher"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613682,
+  "lat": 43.9375573,
+  "lon": 15.4448018,
+  "tags": {
+    "amenity": "atm",
+    "operator": "Hypo"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613683,
+  "lat": 43.9377900,
+  "lon": 15.4440383,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Porto"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613684,
+  "lat": 43.9377910,
+  "lon": 15.4451860,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Firma"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613685,
+  "lat": 43.9387380,
+  "lon": 15.4438629,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Fabio"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613694,
+  "lat": 43.9411805,
+  "lon": 15.4457318,
+  "tags": {
+    "amenity": "atm",
+    "operator": "Raiffeisen"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613695,
+  "lat": 43.9386968,
+  "lon": 15.4466046,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:country": "HR",
+    "addr:housenumber": "32",
+    "addr:street": "Ulica dr. Franje Tuđmana",
+    "name": "Biograd promet",
+    "shop": "hardware"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613696,
+  "lat": 43.9227541,
+  "lon": 15.4584671,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Žuti"
+  }
+},
+{
+  "type": "node",
+  "id": 1871010060,
+  "lat": 43.9371116,
+  "lon": 15.4431011,
+  "tags": {
+    "name": "Geoss",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 1871010110,
+  "lat": 43.9374169,
+  "lon": 15.4439611,
+  "tags": {
+    "check_date:opening_hours": "2024-10-15",
+    "name": "Luiđi",
+    "opening_hours:signed": "no",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 1871010118,
+  "lat": 43.9370415,
+  "lon": 15.4431807,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Millenum"
+  }
+},
+{
+  "type": "node",
+  "id": 1951361810,
+  "lat": 43.9370271,
+  "lon": 15.4448631,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "addr:street": "Put Solina",
+    "name": "Bure",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1975172384,
+  "lat": 43.9382876,
+  "lon": 15.4441876,
+  "tags": {
+    "amenity": "marketplace",
+    "name": "Tržnica Biograd na moru"
+  }
+},
+{
+  "type": "node",
+  "id": 1975172475,
+  "lat": 43.9383656,
+  "lon": 15.4441489,
+  "tags": {
+    "shop": "seafood"
+  }
+},
+{
+  "type": "node",
+  "id": 2001918774,
+  "lat": 43.9402573,
+  "lon": 15.4392080,
+  "tags": {
+    "amenity": "toilets",
+    "seamark:small_craft_facility:category": "toilets;showers",
+    "seamark:type": "small_craft_facility"
+  }
+},
+{
+  "type": "node",
+  "id": 2304997195,
+  "lat": 43.9385530,
+  "lon": 15.4400265,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Roko"
+  }
+},
+{
+  "type": "node",
+  "id": 2366080205,
+  "lat": 43.9322697,
+  "lon": 15.4499316,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Tenis centar Ilirija",
+    "opening_hours": "Mo-Su 08:00-22:00"
+  }
+},
+{
+  "type": "node",
+  "id": 2412831026,
+  "lat": 43.9397648,
+  "lon": 15.4473185,
+  "tags": {
+    "name": "Lav Adria",
+    "shop": "laundry"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410744,
+  "lat": 43.9378500,
+  "lon": 15.4444353,
+  "tags": {
+    "name": "Klara",
+    "opening_hours": "Mo-Fr 06:00-19:00; Sa 07:00-14:00; Su 07:00-14:00",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410758,
+  "lat": 43.9380322,
+  "lon": 15.4400747,
+  "tags": {
+    "name": "Adriatic",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410768,
+  "lat": 43.9381215,
+  "lon": 15.4438459,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Amorella"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410784,
+  "lat": 43.9384236,
+  "lon": 15.4442312,
+  "tags": {
+    "name": "Andrea",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410802,
+  "lat": 43.9370606,
+  "lon": 15.4409039,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Aquarium"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410828,
+  "lat": 43.9386347,
+  "lon": 15.4448041,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Balun"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410850,
+  "lat": 43.9376147,
+  "lon": 15.4405483,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Barba",
+    "phone": "+38523383087"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410879,
+  "lat": 43.9377704,
+  "lon": 15.4402359,
+  "tags": {
+    "amenity": "ice_cream",
+    "name": "Cabala"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410891,
+  "lat": 43.9368421,
+  "lon": 15.4426777,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Carpymore"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410899,
+  "lat": 43.9376902,
+  "lon": 15.4402986,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Caruso bar"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410928,
+  "lat": 43.9367279,
+  "lon": 15.4429558,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Dalmatino"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410947,
+  "lat": 43.9364243,
+  "lon": 15.4434126,
+  "tags": {
+    "amenity": "bank",
+    "brand": "Erste Bank",
+    "brand:wikidata": "Q696867",
+    "name": "Erste Bank"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410965,
+  "lat": 43.9364452,
+  "lon": 15.4434113,
+  "tags": {
+    "amenity": "atm",
+    "brand": "Erste Bank",
+    "brand:wikidata": "Q696867",
+    "name": "Erste Bank",
+    "operator": "Erste Bank",
+    "operator:wikidata": "Q696867"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410981,
+  "lat": 43.9396233,
+  "lon": 15.4398587,
+  "tags": {
+    "amenity": "atm",
+    "check_date": "2024-10-10",
+    "name": "Erste"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410996,
+  "lat": 43.9373357,
+  "lon": 15.4405025,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Europa"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411023,
+  "lat": 43.9395240,
+  "lon": 15.4451313,
+  "tags": {
+    "name": "Europek",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411054,
+  "lat": 43.9378001,
+  "lon": 15.4402176,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Fibra"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411092,
+  "lat": 43.9379352,
+  "lon": 15.4437452,
+  "tags": {
+    "name": "Glorija",
+    "shop": "florist"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411119,
+  "lat": 43.9381598,
+  "lon": 15.4401081,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Hobos"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411144,
+  "lat": 43.9410916,
+  "lon": 15.4460899,
+  "tags": {
+    "check_date": "2024-08-05",
+    "name": "In",
+    "stars": "4",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411173,
+  "lat": 43.9367741,
+  "lon": 15.4428349,
+  "tags": {
+    "name": "Izvorka",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411214,
+  "lat": 43.9388501,
+  "lon": 15.4435774,
+  "tags": {
+    "name": "Judy shop",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411267,
+  "lat": 43.9390143,
+  "lon": 15.4433896,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Kornati"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411283,
+  "lat": 43.9364914,
+  "lon": 15.4434471,
+  "tags": {
+    "name": "Kroštula",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411298,
+  "lat": 43.9383333,
+  "lon": 15.4400109,
+  "tags": {
+    "amenity": "cafe",
+    "name": "LaMar"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411321,
+  "lat": 43.9365404,
+  "lon": 15.4423789,
+  "tags": {
+    "amenity": "cafe",
+    "name": "M&L"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411330,
+  "lat": 43.9386848,
+  "lon": 15.4449909,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Malibu"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411364,
+  "lat": 43.9367993,
+  "lon": 15.4413087,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Malo misto"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411403,
+  "lat": 43.9390730,
+  "lon": 15.4432924,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Marco Polo"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411418,
+  "lat": 43.9364309,
+  "lon": 15.4422818,
+  "tags": {
+    "amenity": "ice_cream",
+    "name": "Miami",
+    "opening_hours": "Mo-Su,PH 07:00-24:00"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411449,
+  "lat": 43.9370795,
+  "lon": 15.4420881,
+  "tags": {
+    "name": "Misterija",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411461,
+  "lat": 43.9384406,
+  "lon": 15.4400796,
+  "tags": {
+    "name": "More 2",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411475,
+  "lat": 43.9374722,
+  "lon": 15.4404228,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Mornar club"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411492,
+  "lat": 43.9381907,
+  "lon": 15.4438211,
+  "tags": {
+    "name": "Nakićen",
+    "shop": "butcher"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411508,
+  "lat": 43.9364797,
+  "lon": 15.4423358,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Nico"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411517,
+  "lat": 43.9377709,
+  "lon": 15.4439940,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP Banka",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593",
+    "short_name": "OTP"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411528,
+  "lat": 43.9365742,
+  "lon": 15.4416588,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Obala"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411540,
+  "lat": 43.9365925,
+  "lon": 15.4419852,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Riva",
+    "opening_hours": "Mo-Su 12:00-23:00"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411552,
+  "lat": 43.9387857,
+  "lon": 15.4436720,
+  "tags": {
+    "name": "Romana",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411564,
+  "lat": 43.9368659,
+  "lon": 15.4412382,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Silver"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411576,
+  "lat": 43.9409624,
+  "lon": 15.4454819,
+  "tags": {
+    "name": "Slobodna Dalmacija",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411588,
+  "lat": 43.9379064,
+  "lon": 15.4446196,
+  "tags": {
+    "name": "Sonik",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411599,
+  "lat": 43.9363436,
+  "lon": 15.4433399,
+  "tags": {
+    "amenity": "bank",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "brand:wikipedia": "hr:OTP Banka",
+    "name": "OTP banka",
+    "opening_hours": "Mo,Tu,Th,Fr 08:00-15:00; We 12:00-19:00",
+    "short_name": "OTP"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411611,
+  "lat": 43.9370950,
+  "lon": 15.4435368,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP Banka",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593",
+    "short_name": "OTP"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411628,
+  "lat": 43.9390125,
+  "lon": 15.4449928,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Takac"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411639,
+  "lat": 43.9360851,
+  "lon": 15.4431299,
+  "tags": {
+    "brand": "Tisak",
+    "brand:wikidata": "Q12643627",
+    "name": "Tisak",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411650,
+  "lat": 43.9365732,
+  "lon": 15.4433866,
+  "tags": {
+    "brand": "Tisak",
+    "brand:wikidata": "Q12643627",
+    "name": "Tisak",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411665,
+  "lat": 43.9379836,
+  "lon": 15.4448868,
+  "tags": {
+    "brand": "Tisak",
+    "brand:wikidata": "Q12643627",
+    "name": "Tisak",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411674,
+  "lat": 43.9365358,
+  "lon": 15.4418406,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Tonči"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411688,
+  "lat": 43.9373423,
+  "lon": 15.4437777,
+  "tags": {
+    "name": "Troskot",
+    "shop": "optician"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411718,
+  "lat": 43.9380711,
+  "lon": 15.4400614,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Vapor"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411747,
+  "lat": 43.9369200,
+  "lon": 15.4421920,
+  "tags": {
+    "name": "Visus",
+    "shop": "optician"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411770,
+  "lat": 43.9368897,
+  "lon": 15.4410741,
+  "tags": {
+    "amenity": "atm",
+    "name": "Money Exchange"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411805,
+  "lat": 43.9378990,
+  "lon": 15.4402176,
+  "tags": {
+    "name": "Zavičajni muzej",
+    "tourism": "museum"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411835,
+  "lat": 43.9376805,
+  "lon": 15.4439880,
+  "tags": {
+    "brand": "iNovine",
+    "brand:wikidata": "Q115137198",
+    "check_date": "2023-08-30",
+    "name": "iNovine",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411871,
+  "lat": 43.9388946,
+  "lon": 15.4449946,
+  "tags": {
+    "brand": "iNovine",
+    "brand:wikidata": "Q115137198",
+    "name": "iNovine",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416412371,
+  "lat": 43.9372962,
+  "lon": 15.4434635,
+  "tags": {
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416413634,
+  "lat": 43.9385687,
+  "lon": 15.4446611,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "2",
+    "addr:postcode": "23210",
+    "addr:street": "Obala kneza Branimira",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ljekarne Soline Farm",
+    "phone": "+385 23 385111",
+    "website": "https://www.facebook.com/soline.farm"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414173,
+  "lat": 43.9449816,
+  "lon": 15.4450770,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414194,
+  "lat": 43.9451610,
+  "lon": 15.4449817,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "amenity": "fast_food",
+    "name": "Fast food oaza"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414846,
+  "lat": 43.9365522,
+  "lon": 15.4420832,
+  "tags": {
+    "name": "Šangulin",
+    "shop": "ticket"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414887,
+  "lat": 43.9367182,
+  "lon": 15.4414305,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Šangulin"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414924,
+  "lat": 43.9368944,
+  "lon": 15.4432318,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Šare"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414969,
+  "lat": 43.9378813,
+  "lon": 15.4442928,
+  "tags": {
+    "name": "Števanja",
+    "shop": "butcher"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977511,
+  "lat": 43.9345276,
+  "lon": 15.4440418,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Adriatic"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977520,
+  "lat": 43.9357790,
+  "lon": 15.4482283,
+  "tags": {
+    "amenity": "cinema",
+    "name": "Ljetno kino Biograd"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977522,
+  "lat": 43.9344244,
+  "lon": 15.4484315,
+  "tags": {
+    "fee": "yes",
+    "name": "Mia",
+    "tourism": "caravan_site"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977524,
+  "lat": 43.9330448,
+  "lon": 15.4462203,
+  "tags": {
+    "amenity": "fast_food",
+    "cuisine": "pizza",
+    "name": "Slad"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977526,
+  "lat": 43.9361089,
+  "lon": 15.4453168,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Stari bunar"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977556,
+  "lat": 43.9336780,
+  "lon": 15.4442882,
+  "tags": {
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977566,
+  "lat": 43.9355885,
+  "lon": 15.4434264,
+  "tags": {
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2421849057,
+  "lat": 43.9415166,
+  "lon": 15.4541704,
+  "tags": {
+    "amenity": "parking_entrance",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 2421849084,
+  "lat": 43.9421598,
+  "lon": 15.4534992,
+  "tags": {
+    "amenity": "parking_entrance",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501074,
+  "lat": 43.9386170,
+  "lon": 15.4434714,
+  "tags": {
+    "name": "Bagar",
+    "shop": "doityourself"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501075,
+  "lat": 43.9386210,
+  "lon": 15.4430248,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Balde"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501078,
+  "lat": 43.9380510,
+  "lon": 15.4451277,
+  "tags": {
+    "amenity": "veterinary",
+    "name": "Boknjac"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501079,
+  "lat": 43.9377528,
+  "lon": 15.4450634,
+  "tags": {
+    "name": "Borovo",
+    "shop": "shoes"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501080,
+  "lat": 43.9388040,
+  "lon": 15.4432415,
+  "tags": {
+    "name": "Bure",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501081,
+  "lat": 43.9374245,
+  "lon": 15.4424117,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Cocolino"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501082,
+  "lat": 43.9389399,
+  "lon": 15.4430939,
+  "tags": {
+    "amenity": "veterinary",
+    "name": "Dado"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501083,
+  "lat": 43.9381371,
+  "lon": 15.4458247,
+  "tags": {
+    "name": "Dakar",
+    "shop": "confectionery"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501084,
+  "lat": 43.9383272,
+  "lon": 15.4466815,
+  "tags": {
+    "name": "Doris",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501085,
+  "lat": 43.9380012,
+  "lon": 15.4449670,
+  "tags": {
+    "name": "Duo peka Biograd",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501086,
+  "lat": 43.9418905,
+  "lon": 15.4531064,
+  "tags": {
+    "amenity": "atm",
+    "name": "Erste"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501087,
+  "lat": 43.9424672,
+  "lon": 15.4455523,
+  "tags": {
+    "amenity": "atm",
+    "name": "Erste"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501088,
+  "lat": 43.9417059,
+  "lon": 15.4530007,
+  "tags": {
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Farmacija"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501089,
+  "lat": 43.9369871,
+  "lon": 15.4445084,
+  "tags": {
+    "amenity": "bank",
+    "name": "Fina"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501090,
+  "lat": 43.9403246,
+  "lon": 15.4483673,
+  "tags": {
+    "name": "Flex Zadar",
+    "shop": "bed"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501091,
+  "lat": 43.9376990,
+  "lon": 15.4449121,
+  "tags": {
+    "name": "Gavrilović",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501092,
+  "lat": 43.9386843,
+  "lon": 15.4433630,
+  "tags": {
+    "name": "Glamour",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501093,
+  "lat": 43.9393256,
+  "lon": 15.4418628,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Guste"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501094,
+  "lat": 43.9382901,
+  "lon": 15.4462679,
+  "tags": {
+    "name": "IT centar",
+    "shop": "computer"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501095,
+  "lat": 43.9384757,
+  "lon": 15.4464040,
+  "tags": {
+    "name": "Inej",
+    "shop": "car_parts"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501096,
+  "lat": 43.9417377,
+  "lon": 15.4507124,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Jelena"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501098,
+  "lat": 43.9387381,
+  "lon": 15.4433256,
+  "tags": {
+    "name": "Lantana",
+    "shop": "florist"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501099,
+  "lat": 43.9375779,
+  "lon": 15.4423706,
+  "tags": {
+    "addr:housenumber": "2",
+    "addr:street": "Ulica Grgura Ninskog",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "internet_access": "wlan",
+    "name": "Mamma Mia",
+    "payment:credit_cards": "no",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501100,
+  "lat": 43.9381614,
+  "lon": 15.4465311,
+  "tags": {
+    "name": "Marčelo",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501101,
+  "lat": 43.9416830,
+  "lon": 15.4537434,
+  "tags": {
+    "brand": "Konzum",
+    "brand:wikidata": "Q518563",
+    "name": "Konzum",
+    "ref": "3281",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501103,
+  "lat": 43.9378636,
+  "lon": 15.4438544,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Ninan"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501104,
+  "lat": 43.9383052,
+  "lon": 15.4460465,
+  "tags": {
+    "amenity": "bank",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP banka"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501105,
+  "lat": 43.9383139,
+  "lon": 15.4460684,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501107,
+  "lat": 43.9375187,
+  "lon": 15.4448224,
+  "tags": {
+    "amenity": "atm",
+    "brand": "PBZ",
+    "brand:wikidata": "Q7246343",
+    "name": "PBZ",
+    "operator": "PBZ",
+    "operator:wikidata": "Q7246343"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501108,
+  "lat": 43.9379931,
+  "lon": 15.4449296,
+  "tags": {
+    "amenity": "fast_food",
+    "cuisine": "sandwich",
+    "name": "Panda"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501109,
+  "lat": 43.9373989,
+  "lon": 15.4440861,
+  "tags": {
+    "name": "Pivac",
+    "shop": "butcher"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501110,
+  "lat": 43.9418429,
+  "lon": 15.4535610,
+  "tags": {
+    "amenity": "restaurant",
+    "level": "1",
+    "name": "Bistro Rene"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501111,
+  "lat": 43.9378949,
+  "lon": 15.4452660,
+  "tags": {
+    "brand": "s.Oliver",
+    "brand:wikidata": "Q265056",
+    "name": "s.Oliver",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501112,
+  "lat": 43.9393982,
+  "lon": 15.4411789,
+  "tags": {
+    "name": "Sanja",
+    "shop": "dry_cleaning"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501113,
+  "lat": 43.9369037,
+  "lon": 15.4446187,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Sirena"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501114,
+  "lat": 43.9376922,
+  "lon": 15.4419183,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Stari grad"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501115,
+  "lat": 43.9383805,
+  "lon": 15.4465560,
+  "tags": {
+    "name": "Tokić",
+    "shop": "car_parts"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501116,
+  "lat": 43.9373626,
+  "lon": 15.4441085,
+  "tags": {
+    "information": "office",
+    "name": "Turistička zajednica grada Biograda na moru",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501118,
+  "lat": 43.9376398,
+  "lon": 15.4428490,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Vila Marijana"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501124,
+  "lat": 43.9373074,
+  "lon": 15.4428658,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "6",
+    "addr:postcode": "23210",
+    "addr:street": "trg hrvatski velikana",
+    "amenity": "restaurant",
+    "capacity": "200",
+    "cuisine": "pizza",
+    "delivery": "yes",
+    "email": "zejnilagicf@yahoo.com",
+    "internet_access": "wlan",
+    "name": "Peperino",
+    "name:hr": "Peperino Pizza grill",
+    "opening_hours": "09:00-24:00",
+    "operator": "Faruk Zejnilagic",
+    "phone": "+385951976311",
+    "smoking": "outside",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501132,
+  "lat": 43.9381271,
+  "lon": 15.4434264,
+  "tags": {
+    "amenity": "bureau_de_change"
+  }
+},
+{
+  "type": "node",
+  "id": 2428978568,
+  "lat": 43.9474889,
+  "lon": 15.4461765,
+  "tags": {
+    "amenity": "atm",
+    "operator": "Splitska banka"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262504,
+  "lat": 43.9383107,
+  "lon": 15.4409105,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Bazilika",
+    "opening_hours": "Mo-Sa 17:00-24:00",
+    "website": "http://www.konoba-bazilika.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262505,
+  "lat": 43.9368292,
+  "lon": 15.4437477,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Bijeli delfin"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262554,
+  "lat": 43.9387507,
+  "lon": 15.4404294,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Danilo"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262560,
+  "lat": 43.9372495,
+  "lon": 15.4423522,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Figa"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262566,
+  "lat": 43.9423717,
+  "lon": 15.4498850,
+  "tags": {
+    "name": "Hrid",
+    "tourism": "hostel"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262662,
+  "lat": 43.9379776,
+  "lon": 15.4447431,
+  "tags": {
+    "name": "Irena",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262663,
+  "lat": 43.9379722,
+  "lon": 15.4440778,
+  "tags": {
+    "amenity": "atm",
+    "name": "Kreditna banka Zagreb"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262887,
+  "lat": 43.9371634,
+  "lon": 15.4424644,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Liburnija"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262893,
+  "lat": 43.9422760,
+  "lon": 15.4545024,
+  "tags": {
+    "name": "Stanić",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262894,
+  "lat": 43.9378848,
+  "lon": 15.4445450,
+  "tags": {
+    "name": "Tende Rivjera",
+    "shop": "curtain"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262895,
+  "lat": 43.9377274,
+  "lon": 15.4449889,
+  "tags": {
+    "name": "Vindija",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2434010509,
+  "lat": 43.9364054,
+  "lon": 15.4549560,
+  "tags": {
+    "shop": "doityourself"
+  }
+},
+{
+  "type": "node",
+  "id": 2435339988,
+  "lat": 43.9410920,
+  "lon": 15.4543894,
+  "tags": {
+    "brand": "JYSK",
+    "brand:wikidata": "Q138913",
+    "brand:wikipedia": "en:Jysk (store)",
+    "name": "JYSK",
+    "shop": "furniture"
+  }
+},
+{
+  "type": "node",
+  "id": 2435340582,
+  "lat": 43.9411586,
+  "lon": 15.4546906,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Boši"
+  }
+},
+{
+  "type": "node",
+  "id": 2461895218,
+  "lat": 43.9425209,
+  "lon": 15.4566263,
+  "tags": {
+    "amenity": "fuel",
+    "fuel:lpg": "yes",
+    "name": "Auto Optimus"
+  }
+},
+{
+  "type": "node",
+  "id": 2502622992,
+  "lat": 43.9424245,
+  "lon": 15.4481758,
+  "tags": {
+    "addr:housenumber": "76",
+    "addr:street": "Zadarska ulica",
+    "email": "villanikolina@gmail.com",
+    "name": "Vila Nikolina",
+    "tourism": "hostel"
+  }
+},
+{
+  "type": "node",
+  "id": 2523123594,
+  "lat": 43.9382273,
+  "lon": 15.4400635,
+  "tags": {
+    "amenity": "harbourmaster",
+    "description": "harbour master, Hafenmeister",
+    "name": "Lučka kapetanija Zadar, ispostava Biograd na Moru",
+    "name:de": "Hafenamt",
+    "office": "harbour_master",
+    "waterway:sign": "notice"
+  }
+},
+{
+  "type": "node",
+  "id": 2587475311,
+  "lat": 43.9418464,
+  "lon": 15.4488053,
+  "tags": {
+    "check_date": "2024-08-13",
+    "internet_access": "yes",
+    "internet_access:fee": "no",
+    "name": "Vila Medvedec",
+    "smoking": "separated",
+    "stars": "2",
+    "tourism": "hostel"
+  }
+},
+{
+  "type": "node",
+  "id": 2691870876,
+  "lat": 43.9411485,
+  "lon": 15.4474774,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:street": "Ribarska",
+    "building:levels": "2",
+    "name": "Apartmani Ana",
+    "payment:litecoin": "yes",
+    "phone": "+385 91 4324307",
+    "tourism": "apartment",
+    "website": "http://apartmanibiograd.com"
+  }
+},
+{
+  "type": "node",
+  "id": 2719984348,
+  "lat": 43.9362608,
+  "lon": 15.4454271,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "1",
+    "addr:street": "Ulica Ante Kovačića",
+    "name": "Apartman Joso Barbara",
+    "tourism": "guest_house"
+  }
+},
+{
+  "type": "node",
+  "id": 2794110844,
+  "lat": 43.9355114,
+  "lon": 15.4510150,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Meduza"
+  }
+},
+{
+  "type": "node",
+  "id": 2924650717,
+  "lat": 43.9240051,
+  "lon": 15.4816540,
+  "tags": {
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 2958398884,
+  "lat": 43.9365026,
+  "lon": 15.4423447,
+  "tags": {
+    "addr:housenumber": "2",
+    "addr:street": "Primorska",
+    "amenity": "cafe",
+    "name": "Caffe Bar L&M"
+  }
+},
+{
+  "type": "node",
+  "id": 2982690956,
+  "lat": 43.9413051,
+  "lon": 15.4535874,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593"
+  }
+},
+{
+  "type": "node",
+  "id": 2982690962,
+  "lat": 43.9419700,
+  "lon": 15.4534034,
+  "tags": {
+    "brand": "Müller",
+    "brand:wikidata": "Q1958759",
+    "brand:wikipedia": "en:Müller (German trade company)",
+    "name": "Müller",
+    "opening_hours": "Mo-Sa 08:00-20:00",
+    "shop": "chemist"
+  }
+},
+{
+  "type": "node",
+  "id": 2982690963,
+  "lat": 43.9417618,
+  "lon": 15.4536630,
+  "tags": {
+    "amenity": "bureau_de_change",
+    "name": "Exclusive Exchange"
+  }
+},
+{
+  "type": "node",
+  "id": 2982691106,
+  "lat": 43.9413832,
+  "lon": 15.4537254,
+  "tags": {
+    "amenity": "atm",
+    "brand": "Zagrebačka banka",
+    "brand:wikidata": "Q140381",
+    "name": "Zagrebačka banka",
+    "operator": "Zagrebačka banka",
+    "operator:wikidata": "Q140381"
+  }
+},
+{
+  "type": "node",
+  "id": 2982691112,
+  "lat": 43.9413217,
+  "lon": 15.4533936,
+  "tags": {
+    "brand": "Intersport",
+    "brand:wikidata": "Q666888",
+    "name": "Intersport",
+    "shop": "sports"
+  }
+},
+{
+  "type": "node",
+  "id": 3012927652,
+  "lat": 43.9392417,
+  "lon": 15.4401651,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Amy"
+  }
+},
+{
+  "type": "node",
+  "id": 3012927653,
+  "lat": 43.9394742,
+  "lon": 15.4472724,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Grill Mama Neda"
+  }
+},
+{
+  "type": "node",
+  "id": 3089631614,
+  "lat": 43.9331453,
+  "lon": 15.4530549,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 3089755752,
+  "lat": 43.9307265,
+  "lon": 15.4522676,
+  "tags": {
+    "amenity": "parking",
+    "fee": "yes",
+    "parking": "surface",
+    "payment:cash": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3089756083,
+  "lat": 43.9234844,
+  "lon": 15.4559072,
+  "tags": {
+    "caravans": "yes",
+    "drinking_water": "no",
+    "name": "Camp Bakija",
+    "shower": "yes",
+    "tents": "yes",
+    "tourism": "camp_site"
+  }
+},
+{
+  "type": "node",
+  "id": 3414120641,
+  "lat": 43.9385784,
+  "lon": 15.4441256,
+  "tags": {
+    "amenity": "charging_station",
+    "amperage": "16",
+    "authentication:short_message": "yes",
+    "bicycle": "yes",
+    "capacity": "1",
+    "fee": "no",
+    "motorcar": "yes",
+    "opening_hours": "24/7",
+    "operator": "Zavod zadihaj",
+    "scooter": "yes",
+    "socket:schuko": "1",
+    "voltage": "230"
+  }
+},
+{
+  "type": "node",
+  "id": 3593510603,
+  "lat": 43.9457389,
+  "lon": 15.4454609,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "39",
+    "addr:postcode": "23210",
+    "addr:street": "Zadarska ulica",
+    "email": "info@biograd-na-moru.de",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "name": "Haus Marijan",
+    "phone": "+385 23 385083",
+    "tourism": "chalet",
+    "website": "http://www.biograd-na-moru.de"
+  }
+},
+{
+  "type": "node",
+  "id": 3593519897,
+  "lat": 43.9393715,
+  "lon": 15.4414967,
+  "tags": {
+    "amenity": "veterinary"
+  }
+},
+{
+  "type": "node",
+  "id": 3603663429,
+  "lat": 43.9610196,
+  "lon": 15.4960387,
+  "tags": {
+    "leisure": "horse_riding",
+    "name": "Vencel horse riding club"
+  }
+},
+{
+  "type": "node",
+  "id": 3687815892,
+  "lat": 43.9396559,
+  "lon": 15.4468372,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:country": "HR",
+    "addr:housenumber": "2",
+    "addr:postcode": "23210",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ljekarne Soline farm"
+  }
+},
+{
+  "type": "node",
+  "id": 3687815893,
+  "lat": 43.9424199,
+  "lon": 15.4552788,
+  "tags": {
+    "amenity": "atm",
+    "brand": "Euronet",
+    "brand:wikidata": "Q5412010",
+    "opening_hours": "24/7",
+    "operator": "Euronet",
+    "operator:wikidata": "Q5412010"
+  }
+},
+{
+  "type": "node",
+  "id": 3687815894,
+  "lat": 43.9448258,
+  "lon": 15.4536930,
+  "tags": {
+    "amenity": "atm",
+    "brand": "Euronet",
+    "brand:wikidata": "Q5412010",
+    "opening_hours": "24/7",
+    "operator": "Euronet",
+    "operator:wikidata": "Q5412010"
+  }
+},
+{
+  "type": "node",
+  "id": 3700757933,
+  "lat": 43.9374751,
+  "lon": 15.4446799,
+  "tags": {
+    "artist_name": "Aleksandar Guberina",
+    "artwork_type": "statue",
+    "name": "Franjo Tuđman",
+    "start_date": "2007-05-24",
+    "subject:wikidata": "Q183703",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 3706695413,
+  "lat": 43.9195258,
+  "lon": 15.4779840,
+  "tags": {
+    "name": "Crvena Luka Hotel & Resort",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 3709769204,
+  "lat": 43.9254765,
+  "lon": 15.4570054,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "addr:street": "Slanica",
+    "name": "Bure",
+    "operator": "Bure",
+    "shop": "supermarket",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 4049301273,
+  "lat": 43.9364254,
+  "lon": 15.4447526,
+  "tags": {
+    "description": "payment:bitcoin  Plaćanje u kriptovaluti (bitcoin, ethereum...) 15% popusta.",
+    "internet_access": "yes",
+    "internet_access:fee": "yes",
+    "name": "Soba 2+2",
+    "rooms": "1",
+    "smoking": "no",
+    "source:date": "2016",
+    "tourism": "guest_house"
+  }
+},
+{
+  "type": "node",
+  "id": 4175841691,
+  "lat": 43.9379290,
+  "lon": 15.4409570,
+  "tags": {
+    "amenity": "pub",
+    "name": "Konoba In vino veritas (Hilton)",
+    "opening_hours": "24/7"
+  }
+},
+{
+  "type": "node",
+  "id": 4304618842,
+  "lat": 43.9382584,
+  "lon": 15.4433181,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "3",
+    "addr:postcode": "23210",
+    "addr:street": "Ulica kralja Petra Svačića",
+    "description": "Premium selection of Croatian wine, brandy and food. #biograd #wine #yachtsupply",
+    "name": "Natural Food and Wine Shop",
+    "opening_hours": "09:00-23:00",
+    "operator": "Nikola Lalic",
+    "phone": "+385998462856",
+    "shop": "wine"
+  }
+},
+{
+  "type": "node",
+  "id": 4333500673,
+  "lat": 43.9363296,
+  "lon": 15.4428171,
+  "tags": {
+    "artwork_type": "sculpture",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 4333524667,
+  "lat": 43.9435906,
+  "lon": 15.4442543,
+  "tags": {
+    "leisure": "slipway"
+  }
+},
+{
+  "type": "node",
+  "id": 4342501790,
+  "lat": 43.9440276,
+  "lon": 15.4553503,
+  "tags": {
+    "amenity": "toilets",
+    "operator": "Заправка"
+  }
+},
+{
+  "type": "node",
+  "id": 4342620991,
+  "lat": 43.9445711,
+  "lon": 15.4477992,
+  "tags": {
+    "name": "apartman",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 4369794902,
+  "lat": 43.9418237,
+  "lon": 15.4532039,
+  "tags": {
+    "shop": "jewelry",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 4482422198,
+  "lat": 43.9411263,
+  "lon": 15.4452068,
+  "tags": {
+    "leisure": "slipway",
+    "seamark:information": "by car",
+    "seamark:small_craft_facility:category": "slipway",
+    "seamark:type": "small_craft_facility"
+  }
+},
+{
+  "type": "node",
+  "id": 4482425457,
+  "lat": 43.9408068,
+  "lon": 15.4450237,
+  "tags": {
+    "leisure": "slipway"
+  }
+},
+{
+  "type": "node",
+  "id": 4483747412,
+  "lat": 43.9393672,
+  "lon": 15.4408496,
+  "tags": {
+    "seamark:small_craft_facility:category": "chandler",
+    "shop": "ship_chandler"
+  }
+},
+{
+  "type": "node",
+  "id": 4483865777,
+  "lat": 43.9417624,
+  "lon": 15.4454870,
+  "tags": {
+    "seamark:small_craft_facility:category": "chandler",
+    "shop": "ship_chandler"
+  }
+},
+{
+  "type": "node",
+  "id": 4513331893,
+  "lat": 43.9426961,
+  "lon": 15.4488349,
+  "tags": {
+    "addr:housenumber": "11",
+    "addr:street": "Ivana Meštrovića",
+    "name:pl": "Iwan",
+    "tourism": "chalet"
+  }
+},
+{
+  "type": "node",
+  "id": 4544790959,
+  "lat": 43.9419667,
+  "lon": 15.4458729,
+  "tags": {
+    "artwork_type": "statue",
+    "name": "Beton Lučko",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 4544794220,
+  "lat": 43.9326053,
+  "lon": 15.4315399,
+  "tags": {
+    "board_type": "nature",
+    "information": "board",
+    "operator": "Croatian Government",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 4978039042,
+  "lat": 43.9402433,
+  "lon": 15.4570293,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Orcula"
+  }
+},
+{
+  "type": "node",
+  "id": 5108427664,
+  "lat": 43.9426400,
+  "lon": 15.4512381,
+  "tags": {
+    "addr:housenumber": "4",
+    "addr:street": "Otona Ivekovića",
+    "description": "Guest House Dia",
+    "name": "Guest House Dia",
+    "opening_hours": "Mo-Su 00:00-23:59",
+    "phone": "+385 91 338 3927",
+    "tourism": "guest_house",
+    "website": "http://www.guesthousedia.com"
+  }
+},
+{
+  "type": "node",
+  "id": 5135095037,
+  "lat": 43.9358964,
+  "lon": 15.4461643,
+  "tags": {
+    "name": "Villa Maimare",
+    "tourism": "guest_house"
+  }
+},
+{
+  "type": "node",
+  "id": 5638228421,
+  "lat": 43.9374743,
+  "lon": 15.4418558,
+  "tags": {
+    "addr:housenumber": "7",
+    "addr:street": "Kralja Kolomana",
+    "amenity": "restaurant",
+    "name": "Konoba Kampanel"
+  }
+},
+{
+  "type": "node",
+  "id": 5840227221,
+  "lat": 43.9395909,
+  "lon": 15.4451347,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Uvik kontra burgers & beer"
+  }
+},
+{
+  "type": "node",
+  "id": 5908869683,
+  "lat": 43.9412406,
+  "lon": 15.4526858,
+  "tags": {
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 6406293186,
+  "lat": 43.9401904,
+  "lon": 15.4524054,
+  "tags": {
+    "tourism": "guest_house"
+  }
+},
+{
+  "type": "node",
+  "id": 6432315286,
+  "lat": 43.9382654,
+  "lon": 15.4411374,
+  "tags": {
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 6600711778,
+  "lat": 43.9411671,
+  "lon": 15.4498927,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "74",
+    "addr:street": "ulica doktora Franje Tuđmana",
+    "phone": "+385922163911",
+    "source": "OSM note",
+    "tourism": "apartment",
+    "website": "https://felixapartment.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 6600711779,
+  "lat": 43.9378354,
+  "lon": 15.4478408,
+  "tags": {
+    "name": "Antea",
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 6760711342,
+  "lat": 43.9377451,
+  "lon": 15.4402261,
+  "tags": {
+    "amenity": "atm"
+  }
+},
+{
+  "type": "node",
+  "id": 6761285786,
+  "lat": 43.9377954,
+  "lon": 15.4438751,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "check_date": "2021-01-12",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593"
+  }
+},
+{
+  "type": "node",
+  "id": 6761305427,
+  "lat": 43.9383234,
+  "lon": 15.4432960,
+  "tags": {
+    "amenity": "atm"
+  }
+},
+{
+  "type": "node",
+  "id": 6767294758,
+  "lat": 43.9445705,
+  "lon": 15.4461689,
+  "tags": {
+    "name": "Škver Tours",
+    "shop": "travel_agency"
+  }
+},
+{
+  "type": "node",
+  "id": 7541103705,
+  "lat": 43.9550161,
+  "lon": 15.4685754,
+  "tags": {
+    "amenity": "vending_machine",
+    "vending": "eggs"
+  }
+},
+{
+  "type": "node",
+  "id": 7541103706,
+  "lat": 43.9550275,
+  "lon": 15.4685824,
+  "tags": {
+    "amenity": "vending_machine",
+    "vending": "milk"
+  }
+},
+{
+  "type": "node",
+  "id": 7602637327,
+  "lat": 43.9490614,
+  "lon": 15.4435618,
+  "tags": {
+    "contact:website": "www.apartmanylucie.com",
+    "name": "Apartmány Lucie",
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 7651914182,
+  "lat": 43.9305676,
+  "lon": 15.4477551,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Beach bar Viva"
+  }
+},
+{
+  "type": "node",
+  "id": 7652404439,
+  "lat": 43.9295566,
+  "lon": 15.4512861,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Rene"
+  }
+},
+{
+  "type": "node",
+  "id": 7724403813,
+  "lat": 43.9419543,
+  "lon": 15.4534393,
+  "tags": {
+    "brand": "Pepco",
+    "brand:wikidata": "Q11815580",
+    "floor": "1",
+    "name": "Pepco",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 7724403814,
+  "lat": 43.9418336,
+  "lon": 15.4535828,
+  "tags": {
+    "brand": "KiK",
+    "brand:wikidata": "Q883965",
+    "brand:wikipedia": "en:KiK",
+    "floor": "1",
+    "name": "KiK",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 7728123773,
+  "lat": 43.9411815,
+  "lon": 15.4623440,
+  "tags": {
+    "leisure": "sports_centre",
+    "name": "Adventure park Biograd",
+    "sport": "climbing_adventure"
+  }
+},
+{
+  "type": "node",
+  "id": 7761302714,
+  "lat": 43.9189005,
+  "lon": 15.4785379,
+  "tags": {
+    "amenity": "atm",
+    "brand": "PBZ",
+    "brand:wikidata": "Q7246343",
+    "operator": "PBZ",
+    "operator:wikidata": "Q7246343"
+  }
+},
+{
+  "type": "node",
+  "id": 7761307335,
+  "lat": 43.9188194,
+  "lon": 15.4787887,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Pizzeria Mamma Rosa"
+  }
+},
+{
+  "type": "node",
+  "id": 7785516703,
+  "lat": 43.9309998,
+  "lon": 15.4792020,
+  "tags": {
+    "amenity": "atm",
+    "operator": "Erste"
+  }
+},
+{
+  "type": "node",
+  "id": 9949061544,
+  "lat": 43.9330094,
+  "lon": 15.4521643,
+  "tags": {
+    "contact:phone": "+385 98 994 1063",
+    "name": "Apartman Zeljka Vidac",
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 9979959928,
+  "lat": 43.9454729,
+  "lon": 15.4447814,
+  "tags": {
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 9979959929,
+  "lat": 43.9365348,
+  "lon": 15.4428407,
+  "tags": {
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 9979959930,
+  "lat": 43.9343637,
+  "lon": 15.4438674,
+  "tags": {
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 9979959931,
+  "lat": 43.9302457,
+  "lon": 15.4513139,
+  "tags": {
+    "access": "yes",
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 10069536425,
+  "lat": 43.9443437,
+  "lon": 15.4545968,
+  "tags": {
+    "information": "board",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069536426,
+  "lat": 43.9438343,
+  "lon": 15.4552024,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069547523,
+  "lat": 43.9412831,
+  "lon": 15.4491684,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069547524,
+  "lat": 43.9410622,
+  "lon": 15.4490263,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069556795,
+  "lat": 43.9396146,
+  "lon": 15.4472651,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069556815,
+  "lat": 43.9371508,
+  "lon": 15.4489645,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069556816,
+  "lat": 43.9365899,
+  "lon": 15.4495632,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069563917,
+  "lat": 43.9365263,
+  "lon": 15.4498850,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069563918,
+  "lat": 43.9363744,
+  "lon": 15.4501194,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069563919,
+  "lat": 43.9276710,
+  "lon": 15.4559187,
+  "tags": {
+    "board_type": "welcome_sign",
+    "information": "board",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10086021542,
+  "lat": 43.9382329,
+  "lon": 15.4396530,
+  "tags": {
+    "amenity": "vending_machine",
+    "vending": "parking_tickets"
+  }
+},
+{
+  "type": "node",
+  "id": 10086021545,
+  "lat": 43.9385612,
+  "lon": 15.4397945,
+  "tags": {
+    "artwork_type": "sculpture",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 10586909866,
+  "lat": 43.9548411,
+  "lon": 15.4557690,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 10586909867,
+  "lat": 43.9552446,
+  "lon": 15.4556912,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 10586909868,
+  "lat": 43.9379585,
+  "lon": 15.4436686,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 10722382165,
+  "lat": 43.9381037,
+  "lon": 15.4440922,
+  "tags": {
+    "check_date": "2020-06-22",
+    "name": "Iločki podrumi",
+    "shop": "wine"
+  }
+},
+{
+  "type": "node",
+  "id": 10722382166,
+  "lat": 43.9380272,
+  "lon": 15.4439798,
+  "tags": {
+    "amenity": "pharmacy",
+    "check_date": "2020-06-22",
+    "healthcare": "pharmacy"
+  }
+},
+{
+  "type": "node",
+  "id": 10722382167,
+  "lat": 43.9371459,
+  "lon": 15.4435659,
+  "tags": {
+    "amenity": "post_box"
+  }
+},
+{
+  "type": "node",
+  "id": 11099630436,
+  "lat": 43.9305061,
+  "lon": 15.4488446,
+  "tags": {
+    "amenity": "fast_food",
+    "cuisine": "burger",
+    "name": "Garfild fast food"
+  }
+},
+{
+  "type": "node",
+  "id": 11111989783,
+  "lat": 43.9391524,
+  "lon": 15.4455492,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "27",
+    "addr:postcode": "23210",
+    "addr:street": "Ulica dr. Franje Tuđmana",
+    "amenity": "music_school",
+    "name": "Osnovna glazbena škola",
+    "operator": "Osnovna škola Biograd",
+    "operator:type": "school",
+    "ref:HR:e-matica": "13-003-001",
+    "website": "http://os-biogradnamoru.skole.hr"
+  }
+},
+{
+  "type": "node",
+  "id": 11117652415,
+  "lat": 43.9392806,
+  "lon": 15.4406150,
+  "tags": {
+    "access": "yes",
+    "amenity": "charging_station",
+    "brand": "Elen",
+    "capacity": "2",
+    "fee": "yes",
+    "name": "Biograd na moru",
+    "operator": "ELEN",
+    "operator:wikidata": "Q127433242",
+    "socket:chademo": "1",
+    "socket:chademo:output": "50 kW",
+    "socket:type2": "1",
+    "socket:type2:output": "22 kW",
+    "socket:type2_combo": "1",
+    "socket:type2_combo:output": "50 kW"
+  }
+},
+{
+  "type": "node",
+  "id": 11125687205,
+  "lat": 43.9373764,
+  "lon": 15.4404604,
+  "tags": {
+    "name": "Candy shop",
+    "shop": "confectionery"
+  }
+},
+{
+  "type": "node",
+  "id": 11129414803,
+  "lat": 43.9452399,
+  "lon": 15.4524490,
+  "tags": {
+    "amenity": "charging_station",
+    "fee": "no",
+    "operator": "Kaufland",
+    "socket:chademo": "1",
+    "socket:chademo:output": "50 kW",
+    "socket:type2": "1",
+    "socket:type2:output": "22 kW",
+    "socket:type2_combo": "1",
+    "socket:type2_combo:output": "50 kW"
+  }
+},
+{
+  "type": "node",
+  "id": 11129414804,
+  "lat": 43.9446271,
+  "lon": 15.4530806,
+  "tags": {
+    "amenity": "charging_station",
+    "operator": "Lidl",
+    "operator:wikidata": "Q151954",
+    "socket:chademo": "1",
+    "socket:chademo:output": "50 kW",
+    "socket:type2": "1",
+    "socket:type2:output": "22 kW",
+    "socket:type2_combo": "1",
+    "socket:type2_combo:output": "50 kW"
+  }
+},
+{
+  "type": "node",
+  "id": 11140666798,
+  "lat": 43.9322259,
+  "lon": 15.4791359,
+  "tags": {
+    "attraction": "big_wheel",
+    "name": "Adria eye",
+    "tourism": "attraction",
+    "website": "https://www.dalmaland.com/atrakcija/adria-eye/38"
+  }
+},
+{
+  "type": "node",
+  "id": 11140690040,
+  "lat": 43.9315891,
+  "lon": 15.4798168,
+  "tags": {
+    "attraction": "bumper_car",
+    "name": "Bumper Cars",
+    "tourism": "attraction",
+    "website": "https://www.dalmaland.com/atrakcija/bumper-cars/28"
+  }
+},
+{
+  "type": "node",
+  "id": 11147894293,
+  "lat": 43.9285820,
+  "lon": 15.4537097,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "male": "yes",
+    "toilets:disposal": "flush"
+  }
+},
+{
+  "type": "node",
+  "id": 11147894294,
+  "lat": 43.9285366,
+  "lon": 15.4537644,
+  "tags": {
+    "access": "customers",
+    "amenity": "shower",
+    "fee": "yes",
+    "hot_water": "yes",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 11147894295,
+  "lat": 43.9286864,
+  "lon": 15.4538653,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "female": "yes",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11147894296,
+  "lat": 43.9286425,
+  "lon": 15.4539430,
+  "tags": {
+    "access": "customers",
+    "amenity": "shower",
+    "fee": "yes",
+    "hot_water": "yes",
+    "opening_hours": "24/7",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903409,
+  "lat": 43.9295826,
+  "lon": 15.4530184,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903426,
+  "lat": 43.9297390,
+  "lon": 15.4514548,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Gajeta"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903427,
+  "lat": 43.9298700,
+  "lon": 15.4514826,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Luigi"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903428,
+  "lat": 43.9303845,
+  "lon": 15.4509929,
+  "tags": {
+    "amenity": "ice_cream",
+    "name": "Ledo"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903429,
+  "lat": 43.9313908,
+  "lon": 15.4465022,
+  "tags": {
+    "amenity": "dive_centre",
+    "name": "Škola Ronjenja"
+  }
+},
+{
+  "type": "node",
+  "id": 11155908646,
+  "lat": 43.9377458,
+  "lon": 15.4439656,
+  "tags": {
+    "check_date": "2023-08-30",
+    "opening_hours": "24/7",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 11155985705,
+  "lat": 43.9294149,
+  "lon": 15.4549464,
+  "tags": {
+    "addr:housenumber": "Parcel 799",
+    "addr:postcode": "23210",
+    "addr:street": "Put Kumenta 16",
+    "email": "info@mobilehomenensi.com",
+    "internet_access": "wlan",
+    "name:en": "Mobile Home Nensi",
+    "opening_hours": "24/7",
+    "phone": "+385911517823",
+    "tourism": "apartment",
+    "website": "https://www.mobilehomenensi.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 11157947962,
+  "lat": 43.9453015,
+  "lon": 15.4523791,
+  "tags": {
+    "amenity": "charging_station",
+    "name": "Kaufland"
+  }
+},
+{
+  "type": "node",
+  "id": 11157999724,
+  "lat": 43.9446901,
+  "lon": 15.4532861,
+  "tags": {
+    "amenity": "charging_station",
+    "name": "Lidl",
+    "operator": "Lidl",
+    "operator:wikidata": "Q151954"
+  }
+},
+{
+  "type": "node",
+  "id": 11241146415,
+  "lat": 43.9329962,
+  "lon": 15.4463182,
+  "tags": {
+    "amenity": "ice_cream"
+  }
+},
+{
+  "type": "node",
+  "id": 11241230109,
+  "lat": 43.9276731,
+  "lon": 15.4535630,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241230110,
+  "lat": 43.9276845,
+  "lon": 15.4535879,
+  "tags": {
+    "amenity": "recycling",
+    "recycling_type": "container"
+  }
+},
+{
+  "type": "node",
+  "id": 11241230135,
+  "lat": 43.9275382,
+  "lon": 15.4520515,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237643,
+  "lat": 43.9271487,
+  "lon": 15.4521569,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237646,
+  "lat": 43.9277118,
+  "lon": 15.4519772,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237647,
+  "lat": 43.9277167,
+  "lon": 15.4519477,
+  "tags": {
+    "amenity": "fast_food"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237648,
+  "lat": 43.9277630,
+  "lon": 15.4519410,
+  "tags": {
+    "amenity": "bench"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237660,
+  "lat": 43.9282157,
+  "lon": 15.4517400,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237663,
+  "lat": 43.9282903,
+  "lon": 15.4517028,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11241238233,
+  "lat": 43.9284031,
+  "lon": 15.4516202,
+  "tags": {
+    "amenity": "bench"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243212,
+  "lat": 43.9290211,
+  "lon": 15.4509004,
+  "tags": {
+    "leisure": "slipway"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243222,
+  "lat": 43.9301345,
+  "lon": 15.4513598,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243224,
+  "lat": 43.9303129,
+  "lon": 15.4511563,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243228,
+  "lat": 43.9303438,
+  "lon": 15.4507201,
+  "tags": {
+    "amenity": "dressing_room"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243229,
+  "lat": 43.9302911,
+  "lon": 15.4507384,
+  "tags": {
+    "amenity": "shower"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243230,
+  "lat": 43.9303072,
+  "lon": 15.4504549,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241248428,
+  "lat": 43.9330117,
+  "lon": 15.4464938,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Moby Dick"
+  }
+},
+{
+  "type": "node",
+  "id": 11241253637,
+  "lat": 43.9286459,
+  "lon": 15.4514197,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241253644,
+  "lat": 43.9288549,
+  "lon": 15.4512418,
+  "tags": {
+    "amenity": "bench"
+  }
+},
+{
+  "type": "node",
+  "id": 11241274961,
+  "lat": 43.9318895,
+  "lon": 15.4466926,
+  "tags": {
+    "amenity": "telephone"
+  }
+},
+{
+  "type": "node",
+  "id": 11364728491,
+  "lat": 43.9427295,
+  "lon": 15.4464233,
+  "tags": {
+    "check_date": "2023-10-11",
+    "name": "apartmani Grcić",
+    "phone": "+385 23 383948",
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 11364728492,
+  "lat": 43.9378475,
+  "lon": 15.4445343,
+  "tags": {
+    "amenity": "fast_food",
+    "check_date": "2023-09-22",
+    "name": "Numero 11"
+  }
+},
+{
+  "type": "node",
+  "id": 12049556769,
+  "lat": 43.9367401,
+  "lon": 15.4414904,
+  "tags": {
+    "amenity": "atm",
+    "opening_hours": "24/7",
+    "operator": "24/7"
+  }
+},
+{
+  "type": "node",
+  "id": 12090563273,
+  "lat": 43.9420938,
+  "lon": 15.4485065,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "8",
+    "addr:postcode": "23210",
+    "addr:street": "Zadarska ulica",
+    "amenity": "social_facility",
+    "name": "More",
+    "not:name": "Viktorija",
+    "operator": "Vesna Oluić",
+    "operator:type": "private",
+    "ref:vatin": "85372268393",
+    "social_facility": "nursing_home",
+    "social_facility:for": "senior",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068633,
+  "lat": 43.9436713,
+  "lon": 15.4700592,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068634,
+  "lat": 43.9437439,
+  "lon": 15.4701447,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068635,
+  "lat": 43.9437303,
+  "lon": 15.4698205,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068636,
+  "lat": 43.9437860,
+  "lon": 15.4698760,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068637,
+  "lat": 43.9438356,
+  "lon": 15.4699255,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12093782360,
+  "lat": 43.9401356,
+  "lon": 15.4451164,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12093816752,
+  "lat": 43.9405833,
+  "lon": 15.4451916,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12095439424,
+  "lat": 43.9425931,
+  "lon": 15.4476046,
+  "tags": {
+    "name": "Studenac",
+    "opening_hours": "Mo-Sa 07:00-22:00; Su 07:00-22:00; PH off",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12163008249,
+  "lat": 43.9285678,
+  "lon": 15.4552484,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12163051757,
+  "lat": 43.9292051,
+  "lon": 15.4566950,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 12163135424,
+  "lat": 43.9297556,
+  "lon": 15.4515756,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12163535078,
+  "lat": 43.9269751,
+  "lon": 15.4521145,
+  "tags": {
+    "amenity": "dressing_room"
+  }
+},
+{
+  "type": "node",
+  "id": 12163535351,
+  "lat": 43.9281657,
+  "lon": 15.4523791,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12163545078,
+  "lat": 43.9272805,
+  "lon": 15.4518975,
+  "tags": {
+    "amenity": "shower"
+  }
+},
+{
+  "type": "node",
+  "id": 12163545079,
+  "lat": 43.9271229,
+  "lon": 15.4521701,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12163569458,
+  "lat": 43.9281940,
+  "lon": 15.4547830,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 12169406740,
+  "lat": 43.9362811,
+  "lon": 15.4419471,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169448766,
+  "lat": 43.9326654,
+  "lon": 15.4464714,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169448767,
+  "lat": 43.9361143,
+  "lon": 15.4425873,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169450327,
+  "lat": 43.9331623,
+  "lon": 15.4458938,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169452586,
+  "lat": 43.9371232,
+  "lon": 15.4403646,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169457778,
+  "lat": 43.9329034,
+  "lon": 15.4462934,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169457789,
+  "lat": 43.9362109,
+  "lon": 15.4416569,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169458932,
+  "lat": 43.9317812,
+  "lon": 15.4468718,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169463241,
+  "lat": 43.9324203,
+  "lon": 15.4465192,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169463242,
+  "lat": 43.9330962,
+  "lon": 15.4460086,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169468482,
+  "lat": 43.9310764,
+  "lon": 15.4477246,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169473750,
+  "lat": 43.9362707,
+  "lon": 15.4421066,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169474519,
+  "lat": 43.9376019,
+  "lon": 15.4400472,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169478912,
+  "lat": 43.9363250,
+  "lon": 15.4413133,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169478913,
+  "lat": 43.9364277,
+  "lon": 15.4411701,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169482735,
+  "lat": 43.9327622,
+  "lon": 15.4464390,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169482736,
+  "lat": 43.9360415,
+  "lon": 15.4428097,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169484628,
+  "lat": 43.9365521,
+  "lon": 15.4409824,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169485289,
+  "lat": 43.9374267,
+  "lon": 15.4401556,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169486509,
+  "lat": 43.9322624,
+  "lon": 15.4465698,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169489254,
+  "lat": 43.9333345,
+  "lon": 15.4456057,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169497720,
+  "lat": 43.9334489,
+  "lon": 15.4454065,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169497803,
+  "lat": 43.9330455,
+  "lon": 15.4460832,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169499976,
+  "lat": 43.9361976,
+  "lon": 15.4415290,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169502346,
+  "lat": 43.9361916,
+  "lon": 15.4423521,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169507801,
+  "lat": 43.9373145,
+  "lon": 15.4402328,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12182779001,
+  "lat": 43.9411325,
+  "lon": 15.4453861,
+  "tags": {
+    "amenity": "bicycle_repair_station",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12182779002,
+  "lat": 43.9407682,
+  "lon": 15.4452984,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12182779101,
+  "lat": 43.9260912,
+  "lon": 15.4800509,
+  "tags": {
+    "amenity": "bicycle_repair_station"
+  }
+},
+{
+  "type": "node",
+  "id": 12255346457,
+  "lat": 43.9362476,
+  "lon": 15.4414783,
+  "tags": {
+    "amenity": "vending_machine",
+    "vending": "parking_tickets"
+  }
+},
+{
+  "type": "node",
+  "id": 12255349999,
+  "lat": 43.9361867,
+  "lon": 15.4423945,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12441703553,
+  "lat": 43.9453016,
+  "lon": 15.4519920,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Coffee Time 3",
+    "opening_hours": "Mo-Sa 07:00-24:00, Su 07:00-23:00"
+  }
+},
+{
+  "type": "node",
+  "id": 12488312894,
+  "lat": 43.9245830,
+  "lon": 15.4589741,
+  "tags": {
+    "email": "info@skver-tours.com",
+    "name": "Coastal Comfort Family Apartment",
+    "phone": "+385 233 844 57",
+    "tourism": "apartment",
+    "website": "https://www.skver-tours.com/?l=eng&ispis=ponuda&vrsta=apart&id=672&objekt=217"
+  }
+},
+{
+  "type": "node",
+  "id": 12578446860,
+  "lat": 43.9364373,
+  "lon": 15.4424353,
+  "tags": {
+    "artwork_type": "statue",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455063,
+  "lat": 43.9458327,
+  "lon": 15.4540096,
+  "tags": {
+    "brand": "EuroSpin",
+    "brand:wikidata": "Q1374674",
+    "name": "EuroSpin",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455064,
+  "lat": 43.9461424,
+  "lon": 15.4547568,
+  "tags": {
+    "brand": "Sinsay",
+    "brand:wikidata": "Q107410579",
+    "name": "Sinsay",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455065,
+  "lat": 43.9460767,
+  "lon": 15.4545535,
+  "tags": {
+    "brand": "TEDi",
+    "brand:wikidata": "Q1364603",
+    "name": "TEDi",
+    "shop": "variety_store"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455066,
+  "lat": 43.9460325,
+  "lon": 15.4544355,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:street": "Magistralna ulica",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ljekarna Švaljek"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455067,
+  "lat": 43.9459423,
+  "lon": 15.4542374,
+  "tags": {
+    "brand": "Bipa",
+    "brand:wikidata": "Q864933",
+    "name": "Bipa",
+    "shop": "chemist"
+  }
+},
+{
+  "type": "node",
+  "id": 13338041457,
+  "lat": 43.9416165,
+  "lon": 15.4547397,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "addr:street": "Fra Lina Pedišića",
+    "amenity": "restaurant",
+    "cuisine": "barbecue",
+    "name": "Pečenjara Brkljača"
+  }
+}
+
+  ]
+}
+Text to speech button
+Slika
+
+Novi razgovor
+
+Vaš osobni AI umjetnik je spreman za vas🎨 Molim vas, recite mi što želite stvoriti poput 🐦ptice koja leti iznad oceana, 🏝️palme na otoku, 🏡kuće u snježnim planinama, stvorit ću jedinstveno remek-djelo za vas u sekundama.
+
+bot artist image
+npr: slatki štene trči na plaži
+
+Dall-e 3
+coin image
+0
+Nadogradnja
+
+
+
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.10 2d4cfc48",
+  "osm3s": {
+    "timestamp_osm_base": "2026-03-08T18:46:14Z",
+    "timestamp_areas_base": "2026-01-22T23:45:51Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 513472638,
+  "lat": 43.9396538,
+  "lon": 15.4464649,
+  "tags": {
+    "amenity": "parking",
+    "capacity": "20",
+    "fee": "no",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 513472666,
+  "lat": 43.9393683,
+  "lon": 15.4397343,
+  "tags": {
+    "amenity": "ferry_terminal",
+    "cargo": "passengers;vehicle",
+    "ferry": "yes",
+    "name": "Biograd na Moru",
+    "public_transport": "stop_position"
+  }
+},
+{
+  "type": "node",
+  "id": 513472692,
+  "lat": 43.9363932,
+  "lon": 15.4431690,
+  "tags": {
+    "access": "yes",
+    "amenity": "parking",
+    "capacity": "30",
+    "fee": "yes",
+    "parking": "surface"
+  }
+},
+{
+  "type": "node",
+  "id": 708951779,
+  "lat": 43.9349799,
+  "lon": 15.4450119,
+  "tags": {
+    "amenity": "cafe",
+    "internet_access": "wlan",
+    "name": "Belvedere",
+    "opening_hours": "10:00-02:00"
+  }
+},
+{
+  "type": "node",
+  "id": 708952632,
+  "lat": 43.9411442,
+  "lon": 15.4457263,
+  "tags": {
+    "addr:housenumber": "32",
+    "addr:street": "Šetalište kneza Branimira",
+    "brand": "Konzum",
+    "brand:wikidata": "Q518563",
+    "name": "Konzum",
+    "ref": "767",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 877612268,
+  "lat": 43.9304937,
+  "lon": 15.4482198,
+  "tags": {
+    "amenity": "nightclub",
+    "name": "Aqua"
+  }
+},
+{
+  "type": "node",
+  "id": 877612429,
+  "lat": 43.9373829,
+  "lon": 15.4438744,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 877612437,
+  "lat": 43.9305444,
+  "lon": 15.4491075,
+  "tags": {
+    "amenity": "nightclub",
+    "name": "Pocco Locco cocktail bar"
+  }
+},
+{
+  "type": "node",
+  "id": 877612468,
+  "lat": 43.9361938,
+  "lon": 15.4432296,
+  "tags": {
+    "amenity": "cafe",
+    "internet_access": "wlan",
+    "name": "Šumpreš",
+    "opening_hours": "Mo-Su 06:30-01:00"
+  }
+},
+{
+  "type": "node",
+  "id": 877612598,
+  "lat": 43.9443758,
+  "lon": 15.4457095,
+  "tags": {
+    "addr:housenumber": "2",
+    "addr:street": "Kornatska",
+    "amenity": "cafe",
+    "name": "Škverić"
+  }
+},
+{
+  "type": "node",
+  "id": 877612679,
+  "lat": 43.9312913,
+  "lon": 15.4465561,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 877612729,
+  "lat": 43.9374315,
+  "lon": 15.4420491,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Cassa Vecchia"
+  }
+},
+{
+  "type": "node",
+  "id": 877612791,
+  "lat": 43.9347963,
+  "lon": 15.4436956,
+  "tags": {
+    "amenity": "cafe",
+    "internet_access": "wlan",
+    "name": "Lavender"
+  }
+},
+{
+  "type": "node",
+  "id": 877612948,
+  "lat": 43.9380558,
+  "lon": 15.4434137,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Kiss"
+  }
+},
+{
+  "type": "node",
+  "id": 877613056,
+  "lat": 43.9334942,
+  "lon": 15.4446366,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 877613118,
+  "lat": 43.9304504,
+  "lon": 15.4495744,
+  "tags": {
+    "amenity": "nightclub",
+    "name": "Queen bar",
+    "opening_hours": "Mo-Su 08:00-02:00"
+  }
+},
+{
+  "type": "node",
+  "id": 920203706,
+  "lat": 43.9396983,
+  "lon": 15.4467574,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:country": "HR",
+    "addr:housenumber": "4",
+    "addr:postcode": "23210",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ljekarne Pervan"
+  }
+},
+{
+  "type": "node",
+  "id": 1306561247,
+  "lat": 43.9417628,
+  "lon": 15.4454039,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 1306561255,
+  "lat": 43.9420840,
+  "lon": 15.4452033,
+  "tags": {
+    "amenity": "restaurant"
+  }
+},
+{
+  "type": "node",
+  "id": 1306561275,
+  "lat": 43.9423203,
+  "lon": 15.4451160,
+  "tags": {
+    "amenity": "atm"
+  }
+},
+{
+  "type": "node",
+  "id": 1404866212,
+  "lat": 43.9398416,
+  "lon": 15.4679636,
+  "tags": {
+    "name": "Bure",
+    "shop": "supermarket",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1404867192,
+  "lat": 43.9378857,
+  "lon": 15.4720443,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "balkan",
+    "name": "U Šime"
+  }
+},
+{
+  "type": "node",
+  "id": 1700595397,
+  "lat": 43.9416147,
+  "lon": 15.4496439,
+  "tags": {
+    "check_date": "2024-09-09",
+    "name": "Hotel Bolero",
+    "source": "Bing",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 1774010943,
+  "lat": 43.9366646,
+  "lon": 15.4415819,
+  "tags": {
+    "amenity": "cafe",
+    "cuisine": "ice_cream",
+    "name": "Blandona"
+  }
+},
+{
+  "type": "node",
+  "id": 1813991093,
+  "lat": 43.9382076,
+  "lon": 15.4464459,
+  "tags": {
+    "brand": "Yamaha",
+    "brand:wikidata": "Q158888",
+    "name": "Auto Hrvatska",
+    "shop": "motorcycle"
+  }
+},
+{
+  "type": "node",
+  "id": 1868497161,
+  "lat": 43.9479934,
+  "lon": 15.4433532,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Bošana"
+  }
+},
+{
+  "type": "node",
+  "id": 1868506122,
+  "lat": 43.9476254,
+  "lon": 15.4463811,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 1868506126,
+  "lat": 43.9476657,
+  "lon": 15.4464431,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "name": "Bure",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1868543489,
+  "lat": 43.9379753,
+  "lon": 15.4535359,
+  "tags": {
+    "name": "Adriatic",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 1868543494,
+  "lat": 43.9354996,
+  "lon": 15.4572185,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "name": "Bure Market",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1868543498,
+  "lat": 43.9372061,
+  "lon": 15.4505465,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "addr:street": "Splitska",
+    "name": "Bure Market",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1868543703,
+  "lat": 43.9381359,
+  "lon": 15.4507091,
+  "tags": {
+    "name": "Martin",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613187,
+  "lat": 43.9269296,
+  "lon": 15.4536739,
+  "tags": {
+    "amenity": "tourism",
+    "name": "Camp Ljutić",
+    "tourism": "camp_site"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613191,
+  "lat": 43.9374125,
+  "lon": 15.4447394,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Kaldi"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613194,
+  "lat": 43.9384397,
+  "lon": 15.4444566,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:country": "HR",
+    "addr:housenumber": "14",
+    "addr:street": "Šetalište kneza Branimira",
+    "brand": "dm",
+    "brand:wikidata": "Q266572",
+    "name": "dm",
+    "opening_hours": "Mo-Fr 08:00-22:00; Sa 08:00-21:00; Su 08:00-14:00",
+    "shop": "chemist"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613199,
+  "lat": 43.9292278,
+  "lon": 15.4511264,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Dišpetoža"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613202,
+  "lat": 43.9327576,
+  "lon": 15.4466523,
+  "tags": {
+    "addr:street": "Šetalište Dražica",
+    "amenity": "cafe",
+    "name": "Lolipop"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613205,
+  "lat": 43.9375993,
+  "lon": 15.4447718,
+  "tags": {
+    "name": "Mattina obuća",
+    "shop": "shoes"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613211,
+  "lat": 43.9374989,
+  "lon": 15.4448449,
+  "tags": {
+    "amenity": "bank",
+    "atm": "yes",
+    "brand": "PBZ",
+    "brand:wikidata": "Q7246343",
+    "name": "PBZ",
+    "ref:vatin": "HR02535697732"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613213,
+  "lat": 43.9280412,
+  "lon": 15.4521856,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Restaurant park Soline"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613220,
+  "lat": 43.9383575,
+  "lon": 15.4442951,
+  "tags": {
+    "name": "Sakić",
+    "shop": "butcher"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613682,
+  "lat": 43.9375573,
+  "lon": 15.4448018,
+  "tags": {
+    "amenity": "atm",
+    "operator": "Hypo"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613683,
+  "lat": 43.9377900,
+  "lon": 15.4440383,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Porto"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613684,
+  "lat": 43.9377910,
+  "lon": 15.4451860,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Firma"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613685,
+  "lat": 43.9387380,
+  "lon": 15.4438629,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Fabio"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613694,
+  "lat": 43.9411805,
+  "lon": 15.4457318,
+  "tags": {
+    "amenity": "atm",
+    "operator": "Raiffeisen"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613695,
+  "lat": 43.9386968,
+  "lon": 15.4466046,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:country": "HR",
+    "addr:housenumber": "32",
+    "addr:street": "Ulica dr. Franje Tuđmana",
+    "name": "Biograd promet",
+    "shop": "hardware"
+  }
+},
+{
+  "type": "node",
+  "id": 1868613696,
+  "lat": 43.9227541,
+  "lon": 15.4584671,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Žuti"
+  }
+},
+{
+  "type": "node",
+  "id": 1871010060,
+  "lat": 43.9371116,
+  "lon": 15.4431011,
+  "tags": {
+    "name": "Geoss",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 1871010110,
+  "lat": 43.9374169,
+  "lon": 15.4439611,
+  "tags": {
+    "check_date:opening_hours": "2024-10-15",
+    "name": "Luiđi",
+    "opening_hours:signed": "no",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 1871010118,
+  "lat": 43.9370415,
+  "lon": 15.4431807,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Millenum"
+  }
+},
+{
+  "type": "node",
+  "id": 1951361810,
+  "lat": 43.9370271,
+  "lon": 15.4448631,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "addr:street": "Put Solina",
+    "name": "Bure",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 1975172384,
+  "lat": 43.9382876,
+  "lon": 15.4441876,
+  "tags": {
+    "amenity": "marketplace",
+    "name": "Tržnica Biograd na moru"
+  }
+},
+{
+  "type": "node",
+  "id": 1975172475,
+  "lat": 43.9383656,
+  "lon": 15.4441489,
+  "tags": {
+    "shop": "seafood"
+  }
+},
+{
+  "type": "node",
+  "id": 2001918774,
+  "lat": 43.9402573,
+  "lon": 15.4392080,
+  "tags": {
+    "amenity": "toilets",
+    "seamark:small_craft_facility:category": "toilets;showers",
+    "seamark:type": "small_craft_facility"
+  }
+},
+{
+  "type": "node",
+  "id": 2304997195,
+  "lat": 43.9385530,
+  "lon": 15.4400265,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Roko"
+  }
+},
+{
+  "type": "node",
+  "id": 2366080205,
+  "lat": 43.9322697,
+  "lon": 15.4499316,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Tenis centar Ilirija",
+    "opening_hours": "Mo-Su 08:00-22:00"
+  }
+},
+{
+  "type": "node",
+  "id": 2412831026,
+  "lat": 43.9397648,
+  "lon": 15.4473185,
+  "tags": {
+    "name": "Lav Adria",
+    "shop": "laundry"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410744,
+  "lat": 43.9378500,
+  "lon": 15.4444353,
+  "tags": {
+    "name": "Klara",
+    "opening_hours": "Mo-Fr 06:00-19:00; Sa 07:00-14:00; Su 07:00-14:00",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410758,
+  "lat": 43.9380322,
+  "lon": 15.4400747,
+  "tags": {
+    "name": "Adriatic",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410768,
+  "lat": 43.9381215,
+  "lon": 15.4438459,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Amorella"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410784,
+  "lat": 43.9384236,
+  "lon": 15.4442312,
+  "tags": {
+    "name": "Andrea",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410802,
+  "lat": 43.9370606,
+  "lon": 15.4409039,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Aquarium"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410828,
+  "lat": 43.9386347,
+  "lon": 15.4448041,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Balun"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410850,
+  "lat": 43.9376147,
+  "lon": 15.4405483,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Barba",
+    "phone": "+38523383087"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410879,
+  "lat": 43.9377704,
+  "lon": 15.4402359,
+  "tags": {
+    "amenity": "ice_cream",
+    "name": "Cabala"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410891,
+  "lat": 43.9368421,
+  "lon": 15.4426777,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Carpymore"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410899,
+  "lat": 43.9376902,
+  "lon": 15.4402986,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Caruso bar"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410928,
+  "lat": 43.9367279,
+  "lon": 15.4429558,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Dalmatino"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410947,
+  "lat": 43.9364243,
+  "lon": 15.4434126,
+  "tags": {
+    "amenity": "bank",
+    "brand": "Erste Bank",
+    "brand:wikidata": "Q696867",
+    "name": "Erste Bank"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410965,
+  "lat": 43.9364452,
+  "lon": 15.4434113,
+  "tags": {
+    "amenity": "atm",
+    "brand": "Erste Bank",
+    "brand:wikidata": "Q696867",
+    "name": "Erste Bank",
+    "operator": "Erste Bank",
+    "operator:wikidata": "Q696867"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410981,
+  "lat": 43.9396233,
+  "lon": 15.4398587,
+  "tags": {
+    "amenity": "atm",
+    "check_date": "2024-10-10",
+    "name": "Erste"
+  }
+},
+{
+  "type": "node",
+  "id": 2416410996,
+  "lat": 43.9373357,
+  "lon": 15.4405025,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Europa"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411023,
+  "lat": 43.9395240,
+  "lon": 15.4451313,
+  "tags": {
+    "name": "Europek",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411054,
+  "lat": 43.9378001,
+  "lon": 15.4402176,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Fibra"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411092,
+  "lat": 43.9379352,
+  "lon": 15.4437452,
+  "tags": {
+    "name": "Glorija",
+    "shop": "florist"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411119,
+  "lat": 43.9381598,
+  "lon": 15.4401081,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Hobos"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411144,
+  "lat": 43.9410916,
+  "lon": 15.4460899,
+  "tags": {
+    "check_date": "2024-08-05",
+    "name": "In",
+    "stars": "4",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411173,
+  "lat": 43.9367741,
+  "lon": 15.4428349,
+  "tags": {
+    "name": "Izvorka",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411214,
+  "lat": 43.9388501,
+  "lon": 15.4435774,
+  "tags": {
+    "name": "Judy shop",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411267,
+  "lat": 43.9390143,
+  "lon": 15.4433896,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Kornati"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411283,
+  "lat": 43.9364914,
+  "lon": 15.4434471,
+  "tags": {
+    "name": "Kroštula",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411298,
+  "lat": 43.9383333,
+  "lon": 15.4400109,
+  "tags": {
+    "amenity": "cafe",
+    "name": "LaMar"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411321,
+  "lat": 43.9365404,
+  "lon": 15.4423789,
+  "tags": {
+    "amenity": "cafe",
+    "name": "M&L"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411330,
+  "lat": 43.9386848,
+  "lon": 15.4449909,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Malibu"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411364,
+  "lat": 43.9367993,
+  "lon": 15.4413087,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Malo misto"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411403,
+  "lat": 43.9390730,
+  "lon": 15.4432924,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Marco Polo"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411418,
+  "lat": 43.9364309,
+  "lon": 15.4422818,
+  "tags": {
+    "amenity": "ice_cream",
+    "name": "Miami",
+    "opening_hours": "Mo-Su,PH 07:00-24:00"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411449,
+  "lat": 43.9370795,
+  "lon": 15.4420881,
+  "tags": {
+    "name": "Misterija",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411461,
+  "lat": 43.9384406,
+  "lon": 15.4400796,
+  "tags": {
+    "name": "More 2",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411475,
+  "lat": 43.9374722,
+  "lon": 15.4404228,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Mornar club"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411492,
+  "lat": 43.9381907,
+  "lon": 15.4438211,
+  "tags": {
+    "name": "Nakićen",
+    "shop": "butcher"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411508,
+  "lat": 43.9364797,
+  "lon": 15.4423358,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Nico"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411517,
+  "lat": 43.9377709,
+  "lon": 15.4439940,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP Banka",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593",
+    "short_name": "OTP"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411528,
+  "lat": 43.9365742,
+  "lon": 15.4416588,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Obala"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411540,
+  "lat": 43.9365925,
+  "lon": 15.4419852,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Riva",
+    "opening_hours": "Mo-Su 12:00-23:00"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411552,
+  "lat": 43.9387857,
+  "lon": 15.4436720,
+  "tags": {
+    "name": "Romana",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411564,
+  "lat": 43.9368659,
+  "lon": 15.4412382,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Silver"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411576,
+  "lat": 43.9409624,
+  "lon": 15.4454819,
+  "tags": {
+    "name": "Slobodna Dalmacija",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411588,
+  "lat": 43.9379064,
+  "lon": 15.4446196,
+  "tags": {
+    "name": "Sonik",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411599,
+  "lat": 43.9363436,
+  "lon": 15.4433399,
+  "tags": {
+    "amenity": "bank",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "brand:wikipedia": "hr:OTP Banka",
+    "name": "OTP banka",
+    "opening_hours": "Mo,Tu,Th,Fr 08:00-15:00; We 12:00-19:00",
+    "short_name": "OTP"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411611,
+  "lat": 43.9370950,
+  "lon": 15.4435368,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP Banka",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593",
+    "short_name": "OTP"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411628,
+  "lat": 43.9390125,
+  "lon": 15.4449928,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Takac"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411639,
+  "lat": 43.9360851,
+  "lon": 15.4431299,
+  "tags": {
+    "brand": "Tisak",
+    "brand:wikidata": "Q12643627",
+    "name": "Tisak",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411650,
+  "lat": 43.9365732,
+  "lon": 15.4433866,
+  "tags": {
+    "brand": "Tisak",
+    "brand:wikidata": "Q12643627",
+    "name": "Tisak",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411665,
+  "lat": 43.9379836,
+  "lon": 15.4448868,
+  "tags": {
+    "brand": "Tisak",
+    "brand:wikidata": "Q12643627",
+    "name": "Tisak",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411674,
+  "lat": 43.9365358,
+  "lon": 15.4418406,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Tonči"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411688,
+  "lat": 43.9373423,
+  "lon": 15.4437777,
+  "tags": {
+    "name": "Troskot",
+    "shop": "optician"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411718,
+  "lat": 43.9380711,
+  "lon": 15.4400614,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Vapor"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411747,
+  "lat": 43.9369200,
+  "lon": 15.4421920,
+  "tags": {
+    "name": "Visus",
+    "shop": "optician"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411770,
+  "lat": 43.9368897,
+  "lon": 15.4410741,
+  "tags": {
+    "amenity": "atm",
+    "name": "Money Exchange"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411805,
+  "lat": 43.9378990,
+  "lon": 15.4402176,
+  "tags": {
+    "name": "Zavičajni muzej",
+    "tourism": "museum"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411835,
+  "lat": 43.9376805,
+  "lon": 15.4439880,
+  "tags": {
+    "brand": "iNovine",
+    "brand:wikidata": "Q115137198",
+    "check_date": "2023-08-30",
+    "name": "iNovine",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416411871,
+  "lat": 43.9388946,
+  "lon": 15.4449946,
+  "tags": {
+    "brand": "iNovine",
+    "brand:wikidata": "Q115137198",
+    "name": "iNovine",
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416412371,
+  "lat": 43.9372962,
+  "lon": 15.4434635,
+  "tags": {
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2416413634,
+  "lat": 43.9385687,
+  "lon": 15.4446611,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "2",
+    "addr:postcode": "23210",
+    "addr:street": "Obala kneza Branimira",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ljekarne Soline Farm",
+    "phone": "+385 23 385111",
+    "website": "https://www.facebook.com/soline.farm"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414173,
+  "lat": 43.9449816,
+  "lon": 15.4450770,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414194,
+  "lat": 43.9451610,
+  "lon": 15.4449817,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "amenity": "fast_food",
+    "name": "Fast food oaza"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414846,
+  "lat": 43.9365522,
+  "lon": 15.4420832,
+  "tags": {
+    "name": "Šangulin",
+    "shop": "ticket"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414887,
+  "lat": 43.9367182,
+  "lon": 15.4414305,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Šangulin"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414924,
+  "lat": 43.9368944,
+  "lon": 15.4432318,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Šare"
+  }
+},
+{
+  "type": "node",
+  "id": 2416414969,
+  "lat": 43.9378813,
+  "lon": 15.4442928,
+  "tags": {
+    "name": "Števanja",
+    "shop": "butcher"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977511,
+  "lat": 43.9345276,
+  "lon": 15.4440418,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Adriatic"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977520,
+  "lat": 43.9357790,
+  "lon": 15.4482283,
+  "tags": {
+    "amenity": "cinema",
+    "name": "Ljetno kino Biograd"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977522,
+  "lat": 43.9344244,
+  "lon": 15.4484315,
+  "tags": {
+    "fee": "yes",
+    "name": "Mia",
+    "tourism": "caravan_site"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977524,
+  "lat": 43.9330448,
+  "lon": 15.4462203,
+  "tags": {
+    "amenity": "fast_food",
+    "cuisine": "pizza",
+    "name": "Slad"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977526,
+  "lat": 43.9361089,
+  "lon": 15.4453168,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Stari bunar"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977556,
+  "lat": 43.9336780,
+  "lon": 15.4442882,
+  "tags": {
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2420977566,
+  "lat": 43.9355885,
+  "lon": 15.4434264,
+  "tags": {
+    "shop": "kiosk"
+  }
+},
+{
+  "type": "node",
+  "id": 2421849057,
+  "lat": 43.9415166,
+  "lon": 15.4541704,
+  "tags": {
+    "amenity": "parking_entrance",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 2421849084,
+  "lat": 43.9421598,
+  "lon": 15.4534992,
+  "tags": {
+    "amenity": "parking_entrance",
+    "parking": "underground"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501074,
+  "lat": 43.9386170,
+  "lon": 15.4434714,
+  "tags": {
+    "name": "Bagar",
+    "shop": "doityourself"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501075,
+  "lat": 43.9386210,
+  "lon": 15.4430248,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Balde"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501078,
+  "lat": 43.9380510,
+  "lon": 15.4451277,
+  "tags": {
+    "amenity": "veterinary",
+    "name": "Boknjac"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501079,
+  "lat": 43.9377528,
+  "lon": 15.4450634,
+  "tags": {
+    "name": "Borovo",
+    "shop": "shoes"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501080,
+  "lat": 43.9388040,
+  "lon": 15.4432415,
+  "tags": {
+    "name": "Bure",
+    "shop": "convenience",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501081,
+  "lat": 43.9374245,
+  "lon": 15.4424117,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "name": "Cocolino"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501082,
+  "lat": 43.9389399,
+  "lon": 15.4430939,
+  "tags": {
+    "amenity": "veterinary",
+    "name": "Dado"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501083,
+  "lat": 43.9381371,
+  "lon": 15.4458247,
+  "tags": {
+    "name": "Dakar",
+    "shop": "confectionery"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501084,
+  "lat": 43.9383272,
+  "lon": 15.4466815,
+  "tags": {
+    "name": "Doris",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501085,
+  "lat": 43.9380012,
+  "lon": 15.4449670,
+  "tags": {
+    "name": "Duo peka Biograd",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501086,
+  "lat": 43.9418905,
+  "lon": 15.4531064,
+  "tags": {
+    "amenity": "atm",
+    "name": "Erste"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501087,
+  "lat": 43.9424672,
+  "lon": 15.4455523,
+  "tags": {
+    "amenity": "atm",
+    "name": "Erste"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501088,
+  "lat": 43.9417059,
+  "lon": 15.4530007,
+  "tags": {
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Farmacija"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501089,
+  "lat": 43.9369871,
+  "lon": 15.4445084,
+  "tags": {
+    "amenity": "bank",
+    "name": "Fina"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501090,
+  "lat": 43.9403246,
+  "lon": 15.4483673,
+  "tags": {
+    "name": "Flex Zadar",
+    "shop": "bed"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501091,
+  "lat": 43.9376990,
+  "lon": 15.4449121,
+  "tags": {
+    "name": "Gavrilović",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501092,
+  "lat": 43.9386843,
+  "lon": 15.4433630,
+  "tags": {
+    "name": "Glamour",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501093,
+  "lat": 43.9393256,
+  "lon": 15.4418628,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Guste"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501094,
+  "lat": 43.9382901,
+  "lon": 15.4462679,
+  "tags": {
+    "name": "IT centar",
+    "shop": "computer"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501095,
+  "lat": 43.9384757,
+  "lon": 15.4464040,
+  "tags": {
+    "name": "Inej",
+    "shop": "car_parts"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501096,
+  "lat": 43.9417377,
+  "lon": 15.4507124,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Jelena"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501098,
+  "lat": 43.9387381,
+  "lon": 15.4433256,
+  "tags": {
+    "name": "Lantana",
+    "shop": "florist"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501099,
+  "lat": 43.9375779,
+  "lon": 15.4423706,
+  "tags": {
+    "addr:housenumber": "2",
+    "addr:street": "Ulica Grgura Ninskog",
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "internet_access": "wlan",
+    "name": "Mamma Mia",
+    "payment:credit_cards": "no",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501100,
+  "lat": 43.9381614,
+  "lon": 15.4465311,
+  "tags": {
+    "name": "Marčelo",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501101,
+  "lat": 43.9416830,
+  "lon": 15.4537434,
+  "tags": {
+    "brand": "Konzum",
+    "brand:wikidata": "Q518563",
+    "name": "Konzum",
+    "ref": "3281",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501103,
+  "lat": 43.9378636,
+  "lon": 15.4438544,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Ninan"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501104,
+  "lat": 43.9383052,
+  "lon": 15.4460465,
+  "tags": {
+    "amenity": "bank",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP banka"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501105,
+  "lat": 43.9383139,
+  "lon": 15.4460684,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501107,
+  "lat": 43.9375187,
+  "lon": 15.4448224,
+  "tags": {
+    "amenity": "atm",
+    "brand": "PBZ",
+    "brand:wikidata": "Q7246343",
+    "name": "PBZ",
+    "operator": "PBZ",
+    "operator:wikidata": "Q7246343"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501108,
+  "lat": 43.9379931,
+  "lon": 15.4449296,
+  "tags": {
+    "amenity": "fast_food",
+    "cuisine": "sandwich",
+    "name": "Panda"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501109,
+  "lat": 43.9373989,
+  "lon": 15.4440861,
+  "tags": {
+    "name": "Pivac",
+    "shop": "butcher"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501110,
+  "lat": 43.9418429,
+  "lon": 15.4535610,
+  "tags": {
+    "amenity": "restaurant",
+    "level": "1",
+    "name": "Bistro Rene"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501111,
+  "lat": 43.9378949,
+  "lon": 15.4452660,
+  "tags": {
+    "brand": "s.Oliver",
+    "brand:wikidata": "Q265056",
+    "name": "s.Oliver",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501112,
+  "lat": 43.9393982,
+  "lon": 15.4411789,
+  "tags": {
+    "name": "Sanja",
+    "shop": "dry_cleaning"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501113,
+  "lat": 43.9369037,
+  "lon": 15.4446187,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Sirena"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501114,
+  "lat": 43.9376922,
+  "lon": 15.4419183,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Stari grad"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501115,
+  "lat": 43.9383805,
+  "lon": 15.4465560,
+  "tags": {
+    "name": "Tokić",
+    "shop": "car_parts"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501116,
+  "lat": 43.9373626,
+  "lon": 15.4441085,
+  "tags": {
+    "information": "office",
+    "name": "Turistička zajednica grada Biograda na moru",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501118,
+  "lat": 43.9376398,
+  "lon": 15.4428490,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Vila Marijana"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501124,
+  "lat": 43.9373074,
+  "lon": 15.4428658,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "6",
+    "addr:postcode": "23210",
+    "addr:street": "trg hrvatski velikana",
+    "amenity": "restaurant",
+    "capacity": "200",
+    "cuisine": "pizza",
+    "delivery": "yes",
+    "email": "zejnilagicf@yahoo.com",
+    "internet_access": "wlan",
+    "name": "Peperino",
+    "name:hr": "Peperino Pizza grill",
+    "opening_hours": "09:00-24:00",
+    "operator": "Faruk Zejnilagic",
+    "phone": "+385951976311",
+    "smoking": "outside",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2424501132,
+  "lat": 43.9381271,
+  "lon": 15.4434264,
+  "tags": {
+    "amenity": "bureau_de_change"
+  }
+},
+{
+  "type": "node",
+  "id": 2428978568,
+  "lat": 43.9474889,
+  "lon": 15.4461765,
+  "tags": {
+    "amenity": "atm",
+    "operator": "Splitska banka"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262504,
+  "lat": 43.9383107,
+  "lon": 15.4409105,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Bazilika",
+    "opening_hours": "Mo-Sa 17:00-24:00",
+    "website": "http://www.konoba-bazilika.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262505,
+  "lat": 43.9368292,
+  "lon": 15.4437477,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Bijeli delfin"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262554,
+  "lat": 43.9387507,
+  "lon": 15.4404294,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Danilo"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262560,
+  "lat": 43.9372495,
+  "lon": 15.4423522,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Figa"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262566,
+  "lat": 43.9423717,
+  "lon": 15.4498850,
+  "tags": {
+    "name": "Hrid",
+    "tourism": "hostel"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262662,
+  "lat": 43.9379776,
+  "lon": 15.4447431,
+  "tags": {
+    "name": "Irena",
+    "shop": "hairdresser"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262663,
+  "lat": 43.9379722,
+  "lon": 15.4440778,
+  "tags": {
+    "amenity": "atm",
+    "name": "Kreditna banka Zagreb"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262887,
+  "lat": 43.9371634,
+  "lon": 15.4424644,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Liburnija"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262893,
+  "lat": 43.9422760,
+  "lon": 15.4545024,
+  "tags": {
+    "name": "Stanić",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262894,
+  "lat": 43.9378848,
+  "lon": 15.4445450,
+  "tags": {
+    "name": "Tende Rivjera",
+    "shop": "curtain"
+  }
+},
+{
+  "type": "node",
+  "id": 2432262895,
+  "lat": 43.9377274,
+  "lon": 15.4449889,
+  "tags": {
+    "name": "Vindija",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2434010509,
+  "lat": 43.9364054,
+  "lon": 15.4549560,
+  "tags": {
+    "shop": "doityourself"
+  }
+},
+{
+  "type": "node",
+  "id": 2435339988,
+  "lat": 43.9410920,
+  "lon": 15.4543894,
+  "tags": {
+    "brand": "JYSK",
+    "brand:wikidata": "Q138913",
+    "brand:wikipedia": "en:Jysk (store)",
+    "name": "JYSK",
+    "shop": "furniture"
+  }
+},
+{
+  "type": "node",
+  "id": 2435340582,
+  "lat": 43.9411586,
+  "lon": 15.4546906,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Boši"
+  }
+},
+{
+  "type": "node",
+  "id": 2461895218,
+  "lat": 43.9425209,
+  "lon": 15.4566263,
+  "tags": {
+    "amenity": "fuel",
+    "fuel:lpg": "yes",
+    "name": "Auto Optimus"
+  }
+},
+{
+  "type": "node",
+  "id": 2502622992,
+  "lat": 43.9424245,
+  "lon": 15.4481758,
+  "tags": {
+    "addr:housenumber": "76",
+    "addr:street": "Zadarska ulica",
+    "email": "villanikolina@gmail.com",
+    "name": "Vila Nikolina",
+    "tourism": "hostel"
+  }
+},
+{
+  "type": "node",
+  "id": 2523123594,
+  "lat": 43.9382273,
+  "lon": 15.4400635,
+  "tags": {
+    "amenity": "harbourmaster",
+    "description": "harbour master, Hafenmeister",
+    "name": "Lučka kapetanija Zadar, ispostava Biograd na Moru",
+    "name:de": "Hafenamt",
+    "office": "harbour_master",
+    "waterway:sign": "notice"
+  }
+},
+{
+  "type": "node",
+  "id": 2587475311,
+  "lat": 43.9418464,
+  "lon": 15.4488053,
+  "tags": {
+    "check_date": "2024-08-13",
+    "internet_access": "yes",
+    "internet_access:fee": "no",
+    "name": "Vila Medvedec",
+    "smoking": "separated",
+    "stars": "2",
+    "tourism": "hostel"
+  }
+},
+{
+  "type": "node",
+  "id": 2691870876,
+  "lat": 43.9411485,
+  "lon": 15.4474774,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:street": "Ribarska",
+    "building:levels": "2",
+    "name": "Apartmani Ana",
+    "payment:litecoin": "yes",
+    "phone": "+385 91 4324307",
+    "tourism": "apartment",
+    "website": "http://apartmanibiograd.com"
+  }
+},
+{
+  "type": "node",
+  "id": 2719984348,
+  "lat": 43.9362608,
+  "lon": 15.4454271,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "1",
+    "addr:street": "Ulica Ante Kovačića",
+    "name": "Apartman Joso Barbara",
+    "tourism": "guest_house"
+  }
+},
+{
+  "type": "node",
+  "id": 2794110844,
+  "lat": 43.9355114,
+  "lon": 15.4510150,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Meduza"
+  }
+},
+{
+  "type": "node",
+  "id": 2924650717,
+  "lat": 43.9240051,
+  "lon": 15.4816540,
+  "tags": {
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 2958398884,
+  "lat": 43.9365026,
+  "lon": 15.4423447,
+  "tags": {
+    "addr:housenumber": "2",
+    "addr:street": "Primorska",
+    "amenity": "cafe",
+    "name": "Caffe Bar L&M"
+  }
+},
+{
+  "type": "node",
+  "id": 2982690956,
+  "lat": 43.9413051,
+  "lon": 15.4535874,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "name": "OTP",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593"
+  }
+},
+{
+  "type": "node",
+  "id": 2982690962,
+  "lat": 43.9419700,
+  "lon": 15.4534034,
+  "tags": {
+    "brand": "Müller",
+    "brand:wikidata": "Q1958759",
+    "brand:wikipedia": "en:Müller (German trade company)",
+    "name": "Müller",
+    "opening_hours": "Mo-Sa 08:00-20:00",
+    "shop": "chemist"
+  }
+},
+{
+  "type": "node",
+  "id": 2982690963,
+  "lat": 43.9417618,
+  "lon": 15.4536630,
+  "tags": {
+    "amenity": "bureau_de_change",
+    "name": "Exclusive Exchange"
+  }
+},
+{
+  "type": "node",
+  "id": 2982691106,
+  "lat": 43.9413832,
+  "lon": 15.4537254,
+  "tags": {
+    "amenity": "atm",
+    "brand": "Zagrebačka banka",
+    "brand:wikidata": "Q140381",
+    "name": "Zagrebačka banka",
+    "operator": "Zagrebačka banka",
+    "operator:wikidata": "Q140381"
+  }
+},
+{
+  "type": "node",
+  "id": 2982691112,
+  "lat": 43.9413217,
+  "lon": 15.4533936,
+  "tags": {
+    "brand": "Intersport",
+    "brand:wikidata": "Q666888",
+    "name": "Intersport",
+    "shop": "sports"
+  }
+},
+{
+  "type": "node",
+  "id": 3012927652,
+  "lat": 43.9392417,
+  "lon": 15.4401651,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Amy"
+  }
+},
+{
+  "type": "node",
+  "id": 3012927653,
+  "lat": 43.9394742,
+  "lon": 15.4472724,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Grill Mama Neda"
+  }
+},
+{
+  "type": "node",
+  "id": 3089631614,
+  "lat": 43.9331453,
+  "lon": 15.4530549,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 3089755752,
+  "lat": 43.9307265,
+  "lon": 15.4522676,
+  "tags": {
+    "amenity": "parking",
+    "fee": "yes",
+    "parking": "surface",
+    "payment:cash": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3089756083,
+  "lat": 43.9234844,
+  "lon": 15.4559072,
+  "tags": {
+    "caravans": "yes",
+    "drinking_water": "no",
+    "name": "Camp Bakija",
+    "shower": "yes",
+    "tents": "yes",
+    "tourism": "camp_site"
+  }
+},
+{
+  "type": "node",
+  "id": 3414120641,
+  "lat": 43.9385784,
+  "lon": 15.4441256,
+  "tags": {
+    "amenity": "charging_station",
+    "amperage": "16",
+    "authentication:short_message": "yes",
+    "bicycle": "yes",
+    "capacity": "1",
+    "fee": "no",
+    "motorcar": "yes",
+    "opening_hours": "24/7",
+    "operator": "Zavod zadihaj",
+    "scooter": "yes",
+    "socket:schuko": "1",
+    "voltage": "230"
+  }
+},
+{
+  "type": "node",
+  "id": 3593510603,
+  "lat": 43.9457389,
+  "lon": 15.4454609,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "39",
+    "addr:postcode": "23210",
+    "addr:street": "Zadarska ulica",
+    "email": "info@biograd-na-moru.de",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "name": "Haus Marijan",
+    "phone": "+385 23 385083",
+    "tourism": "chalet",
+    "website": "http://www.biograd-na-moru.de"
+  }
+},
+{
+  "type": "node",
+  "id": 3593519897,
+  "lat": 43.9393715,
+  "lon": 15.4414967,
+  "tags": {
+    "amenity": "veterinary"
+  }
+},
+{
+  "type": "node",
+  "id": 3603663429,
+  "lat": 43.9610196,
+  "lon": 15.4960387,
+  "tags": {
+    "leisure": "horse_riding",
+    "name": "Vencel horse riding club"
+  }
+},
+{
+  "type": "node",
+  "id": 3687815892,
+  "lat": 43.9396559,
+  "lon": 15.4468372,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:country": "HR",
+    "addr:housenumber": "2",
+    "addr:postcode": "23210",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ljekarne Soline farm"
+  }
+},
+{
+  "type": "node",
+  "id": 3687815893,
+  "lat": 43.9424199,
+  "lon": 15.4552788,
+  "tags": {
+    "amenity": "atm",
+    "brand": "Euronet",
+    "brand:wikidata": "Q5412010",
+    "opening_hours": "24/7",
+    "operator": "Euronet",
+    "operator:wikidata": "Q5412010"
+  }
+},
+{
+  "type": "node",
+  "id": 3687815894,
+  "lat": 43.9448258,
+  "lon": 15.4536930,
+  "tags": {
+    "amenity": "atm",
+    "brand": "Euronet",
+    "brand:wikidata": "Q5412010",
+    "opening_hours": "24/7",
+    "operator": "Euronet",
+    "operator:wikidata": "Q5412010"
+  }
+},
+{
+  "type": "node",
+  "id": 3700757933,
+  "lat": 43.9374751,
+  "lon": 15.4446799,
+  "tags": {
+    "artist_name": "Aleksandar Guberina",
+    "artwork_type": "statue",
+    "name": "Franjo Tuđman",
+    "start_date": "2007-05-24",
+    "subject:wikidata": "Q183703",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 3706695413,
+  "lat": 43.9195258,
+  "lon": 15.4779840,
+  "tags": {
+    "name": "Crvena Luka Hotel & Resort",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 3709769204,
+  "lat": 43.9254765,
+  "lon": 15.4570054,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "addr:street": "Slanica",
+    "name": "Bure",
+    "operator": "Bure",
+    "shop": "supermarket",
+    "website": "https://www.bure.hr/"
+  }
+},
+{
+  "type": "node",
+  "id": 4049301273,
+  "lat": 43.9364254,
+  "lon": 15.4447526,
+  "tags": {
+    "description": "payment:bitcoin  Plaćanje u kriptovaluti (bitcoin, ethereum...) 15% popusta.",
+    "internet_access": "yes",
+    "internet_access:fee": "yes",
+    "name": "Soba 2+2",
+    "rooms": "1",
+    "smoking": "no",
+    "source:date": "2016",
+    "tourism": "guest_house"
+  }
+},
+{
+  "type": "node",
+  "id": 4175841691,
+  "lat": 43.9379290,
+  "lon": 15.4409570,
+  "tags": {
+    "amenity": "pub",
+    "name": "Konoba In vino veritas (Hilton)",
+    "opening_hours": "24/7"
+  }
+},
+{
+  "type": "node",
+  "id": 4304618842,
+  "lat": 43.9382584,
+  "lon": 15.4433181,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "3",
+    "addr:postcode": "23210",
+    "addr:street": "Ulica kralja Petra Svačića",
+    "description": "Premium selection of Croatian wine, brandy and food. #biograd #wine #yachtsupply",
+    "name": "Natural Food and Wine Shop",
+    "opening_hours": "09:00-23:00",
+    "operator": "Nikola Lalic",
+    "phone": "+385998462856",
+    "shop": "wine"
+  }
+},
+{
+  "type": "node",
+  "id": 4333500673,
+  "lat": 43.9363296,
+  "lon": 15.4428171,
+  "tags": {
+    "artwork_type": "sculpture",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 4333524667,
+  "lat": 43.9435906,
+  "lon": 15.4442543,
+  "tags": {
+    "leisure": "slipway"
+  }
+},
+{
+  "type": "node",
+  "id": 4342501790,
+  "lat": 43.9440276,
+  "lon": 15.4553503,
+  "tags": {
+    "amenity": "toilets",
+    "operator": "Заправка"
+  }
+},
+{
+  "type": "node",
+  "id": 4342620991,
+  "lat": 43.9445711,
+  "lon": 15.4477992,
+  "tags": {
+    "name": "apartman",
+    "tourism": "hotel"
+  }
+},
+{
+  "type": "node",
+  "id": 4369794902,
+  "lat": 43.9418237,
+  "lon": 15.4532039,
+  "tags": {
+    "shop": "jewelry",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 4482422198,
+  "lat": 43.9411263,
+  "lon": 15.4452068,
+  "tags": {
+    "leisure": "slipway",
+    "seamark:information": "by car",
+    "seamark:small_craft_facility:category": "slipway",
+    "seamark:type": "small_craft_facility"
+  }
+},
+{
+  "type": "node",
+  "id": 4482425457,
+  "lat": 43.9408068,
+  "lon": 15.4450237,
+  "tags": {
+    "leisure": "slipway"
+  }
+},
+{
+  "type": "node",
+  "id": 4483747412,
+  "lat": 43.9393672,
+  "lon": 15.4408496,
+  "tags": {
+    "seamark:small_craft_facility:category": "chandler",
+    "shop": "ship_chandler"
+  }
+},
+{
+  "type": "node",
+  "id": 4483865777,
+  "lat": 43.9417624,
+  "lon": 15.4454870,
+  "tags": {
+    "seamark:small_craft_facility:category": "chandler",
+    "shop": "ship_chandler"
+  }
+},
+{
+  "type": "node",
+  "id": 4513331893,
+  "lat": 43.9426961,
+  "lon": 15.4488349,
+  "tags": {
+    "addr:housenumber": "11",
+    "addr:street": "Ivana Meštrovića",
+    "name:pl": "Iwan",
+    "tourism": "chalet"
+  }
+},
+{
+  "type": "node",
+  "id": 4544790959,
+  "lat": 43.9419667,
+  "lon": 15.4458729,
+  "tags": {
+    "artwork_type": "statue",
+    "name": "Beton Lučko",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 4544794220,
+  "lat": 43.9326053,
+  "lon": 15.4315399,
+  "tags": {
+    "board_type": "nature",
+    "information": "board",
+    "operator": "Croatian Government",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 4978039042,
+  "lat": 43.9402433,
+  "lon": 15.4570293,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Orcula"
+  }
+},
+{
+  "type": "node",
+  "id": 5108427664,
+  "lat": 43.9426400,
+  "lon": 15.4512381,
+  "tags": {
+    "addr:housenumber": "4",
+    "addr:street": "Otona Ivekovića",
+    "description": "Guest House Dia",
+    "name": "Guest House Dia",
+    "opening_hours": "Mo-Su 00:00-23:59",
+    "phone": "+385 91 338 3927",
+    "tourism": "guest_house",
+    "website": "http://www.guesthousedia.com"
+  }
+},
+{
+  "type": "node",
+  "id": 5135095037,
+  "lat": 43.9358964,
+  "lon": 15.4461643,
+  "tags": {
+    "name": "Villa Maimare",
+    "tourism": "guest_house"
+  }
+},
+{
+  "type": "node",
+  "id": 5638228421,
+  "lat": 43.9374743,
+  "lon": 15.4418558,
+  "tags": {
+    "addr:housenumber": "7",
+    "addr:street": "Kralja Kolomana",
+    "amenity": "restaurant",
+    "name": "Konoba Kampanel"
+  }
+},
+{
+  "type": "node",
+  "id": 5840227221,
+  "lat": 43.9395909,
+  "lon": 15.4451347,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Uvik kontra burgers & beer"
+  }
+},
+{
+  "type": "node",
+  "id": 5908869683,
+  "lat": 43.9412406,
+  "lon": 15.4526858,
+  "tags": {
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 6406293186,
+  "lat": 43.9401904,
+  "lon": 15.4524054,
+  "tags": {
+    "tourism": "guest_house"
+  }
+},
+{
+  "type": "node",
+  "id": 6432315286,
+  "lat": 43.9382654,
+  "lon": 15.4411374,
+  "tags": {
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 6600711778,
+  "lat": 43.9411671,
+  "lon": 15.4498927,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "74",
+    "addr:street": "ulica doktora Franje Tuđmana",
+    "phone": "+385922163911",
+    "source": "OSM note",
+    "tourism": "apartment",
+    "website": "https://felixapartment.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 6600711779,
+  "lat": 43.9378354,
+  "lon": 15.4478408,
+  "tags": {
+    "name": "Antea",
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 6760711342,
+  "lat": 43.9377451,
+  "lon": 15.4402261,
+  "tags": {
+    "amenity": "atm"
+  }
+},
+{
+  "type": "node",
+  "id": 6761285786,
+  "lat": 43.9377954,
+  "lon": 15.4438751,
+  "tags": {
+    "amenity": "atm",
+    "brand": "OTP banka",
+    "brand:wikidata": "Q31198593",
+    "check_date": "2021-01-12",
+    "operator": "OTP banka",
+    "operator:wikidata": "Q31198593"
+  }
+},
+{
+  "type": "node",
+  "id": 6761305427,
+  "lat": 43.9383234,
+  "lon": 15.4432960,
+  "tags": {
+    "amenity": "atm"
+  }
+},
+{
+  "type": "node",
+  "id": 6767294758,
+  "lat": 43.9445705,
+  "lon": 15.4461689,
+  "tags": {
+    "name": "Škver Tours",
+    "shop": "travel_agency"
+  }
+},
+{
+  "type": "node",
+  "id": 7541103705,
+  "lat": 43.9550161,
+  "lon": 15.4685754,
+  "tags": {
+    "amenity": "vending_machine",
+    "vending": "eggs"
+  }
+},
+{
+  "type": "node",
+  "id": 7541103706,
+  "lat": 43.9550275,
+  "lon": 15.4685824,
+  "tags": {
+    "amenity": "vending_machine",
+    "vending": "milk"
+  }
+},
+{
+  "type": "node",
+  "id": 7602637327,
+  "lat": 43.9490614,
+  "lon": 15.4435618,
+  "tags": {
+    "contact:website": "www.apartmanylucie.com",
+    "name": "Apartmány Lucie",
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 7651914182,
+  "lat": 43.9305676,
+  "lon": 15.4477551,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Beach bar Viva"
+  }
+},
+{
+  "type": "node",
+  "id": 7652404439,
+  "lat": 43.9295566,
+  "lon": 15.4512861,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Rene"
+  }
+},
+{
+  "type": "node",
+  "id": 7724403813,
+  "lat": 43.9419543,
+  "lon": 15.4534393,
+  "tags": {
+    "brand": "Pepco",
+    "brand:wikidata": "Q11815580",
+    "floor": "1",
+    "name": "Pepco",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 7724403814,
+  "lat": 43.9418336,
+  "lon": 15.4535828,
+  "tags": {
+    "brand": "KiK",
+    "brand:wikidata": "Q883965",
+    "brand:wikipedia": "en:KiK",
+    "floor": "1",
+    "name": "KiK",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 7728123773,
+  "lat": 43.9411815,
+  "lon": 15.4623440,
+  "tags": {
+    "leisure": "sports_centre",
+    "name": "Adventure park Biograd",
+    "sport": "climbing_adventure"
+  }
+},
+{
+  "type": "node",
+  "id": 7761302714,
+  "lat": 43.9189005,
+  "lon": 15.4785379,
+  "tags": {
+    "amenity": "atm",
+    "brand": "PBZ",
+    "brand:wikidata": "Q7246343",
+    "operator": "PBZ",
+    "operator:wikidata": "Q7246343"
+  }
+},
+{
+  "type": "node",
+  "id": 7761307335,
+  "lat": 43.9188194,
+  "lon": 15.4787887,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Pizzeria Mamma Rosa"
+  }
+},
+{
+  "type": "node",
+  "id": 7785516703,
+  "lat": 43.9309998,
+  "lon": 15.4792020,
+  "tags": {
+    "amenity": "atm",
+    "operator": "Erste"
+  }
+},
+{
+  "type": "node",
+  "id": 9949061544,
+  "lat": 43.9330094,
+  "lon": 15.4521643,
+  "tags": {
+    "contact:phone": "+385 98 994 1063",
+    "name": "Apartman Zeljka Vidac",
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 9979959928,
+  "lat": 43.9454729,
+  "lon": 15.4447814,
+  "tags": {
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 9979959929,
+  "lat": 43.9365348,
+  "lon": 15.4428407,
+  "tags": {
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 9979959930,
+  "lat": 43.9343637,
+  "lon": 15.4438674,
+  "tags": {
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 9979959931,
+  "lat": 43.9302457,
+  "lon": 15.4513139,
+  "tags": {
+    "access": "yes",
+    "leisure": "playground"
+  }
+},
+{
+  "type": "node",
+  "id": 10069536425,
+  "lat": 43.9443437,
+  "lon": 15.4545968,
+  "tags": {
+    "information": "board",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069536426,
+  "lat": 43.9438343,
+  "lon": 15.4552024,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069547523,
+  "lat": 43.9412831,
+  "lon": 15.4491684,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069547524,
+  "lat": 43.9410622,
+  "lon": 15.4490263,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069556795,
+  "lat": 43.9396146,
+  "lon": 15.4472651,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069556815,
+  "lat": 43.9371508,
+  "lon": 15.4489645,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069556816,
+  "lat": 43.9365899,
+  "lon": 15.4495632,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069563917,
+  "lat": 43.9365263,
+  "lon": 15.4498850,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069563918,
+  "lat": 43.9363744,
+  "lon": 15.4501194,
+  "tags": {
+    "information": "guidepost",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10069563919,
+  "lat": 43.9276710,
+  "lon": 15.4559187,
+  "tags": {
+    "board_type": "welcome_sign",
+    "information": "board",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 10086021542,
+  "lat": 43.9382329,
+  "lon": 15.4396530,
+  "tags": {
+    "amenity": "vending_machine",
+    "vending": "parking_tickets"
+  }
+},
+{
+  "type": "node",
+  "id": 10086021545,
+  "lat": 43.9385612,
+  "lon": 15.4397945,
+  "tags": {
+    "artwork_type": "sculpture",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 10586909866,
+  "lat": 43.9548411,
+  "lon": 15.4557690,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 10586909867,
+  "lat": 43.9552446,
+  "lon": 15.4556912,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 10586909868,
+  "lat": 43.9379585,
+  "lon": 15.4436686,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 10722382165,
+  "lat": 43.9381037,
+  "lon": 15.4440922,
+  "tags": {
+    "check_date": "2020-06-22",
+    "name": "Iločki podrumi",
+    "shop": "wine"
+  }
+},
+{
+  "type": "node",
+  "id": 10722382166,
+  "lat": 43.9380272,
+  "lon": 15.4439798,
+  "tags": {
+    "amenity": "pharmacy",
+    "check_date": "2020-06-22",
+    "healthcare": "pharmacy"
+  }
+},
+{
+  "type": "node",
+  "id": 10722382167,
+  "lat": 43.9371459,
+  "lon": 15.4435659,
+  "tags": {
+    "amenity": "post_box"
+  }
+},
+{
+  "type": "node",
+  "id": 11099630436,
+  "lat": 43.9305061,
+  "lon": 15.4488446,
+  "tags": {
+    "amenity": "fast_food",
+    "cuisine": "burger",
+    "name": "Garfild fast food"
+  }
+},
+{
+  "type": "node",
+  "id": 11111989783,
+  "lat": 43.9391524,
+  "lon": 15.4455492,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "27",
+    "addr:postcode": "23210",
+    "addr:street": "Ulica dr. Franje Tuđmana",
+    "amenity": "music_school",
+    "name": "Osnovna glazbena škola",
+    "operator": "Osnovna škola Biograd",
+    "operator:type": "school",
+    "ref:HR:e-matica": "13-003-001",
+    "website": "http://os-biogradnamoru.skole.hr"
+  }
+},
+{
+  "type": "node",
+  "id": 11117652415,
+  "lat": 43.9392806,
+  "lon": 15.4406150,
+  "tags": {
+    "access": "yes",
+    "amenity": "charging_station",
+    "brand": "Elen",
+    "capacity": "2",
+    "fee": "yes",
+    "name": "Biograd na moru",
+    "operator": "ELEN",
+    "operator:wikidata": "Q127433242",
+    "socket:chademo": "1",
+    "socket:chademo:output": "50 kW",
+    "socket:type2": "1",
+    "socket:type2:output": "22 kW",
+    "socket:type2_combo": "1",
+    "socket:type2_combo:output": "50 kW"
+  }
+},
+{
+  "type": "node",
+  "id": 11125687205,
+  "lat": 43.9373764,
+  "lon": 15.4404604,
+  "tags": {
+    "name": "Candy shop",
+    "shop": "confectionery"
+  }
+},
+{
+  "type": "node",
+  "id": 11129414803,
+  "lat": 43.9452399,
+  "lon": 15.4524490,
+  "tags": {
+    "amenity": "charging_station",
+    "fee": "no",
+    "operator": "Kaufland",
+    "socket:chademo": "1",
+    "socket:chademo:output": "50 kW",
+    "socket:type2": "1",
+    "socket:type2:output": "22 kW",
+    "socket:type2_combo": "1",
+    "socket:type2_combo:output": "50 kW"
+  }
+},
+{
+  "type": "node",
+  "id": 11129414804,
+  "lat": 43.9446271,
+  "lon": 15.4530806,
+  "tags": {
+    "amenity": "charging_station",
+    "operator": "Lidl",
+    "operator:wikidata": "Q151954",
+    "socket:chademo": "1",
+    "socket:chademo:output": "50 kW",
+    "socket:type2": "1",
+    "socket:type2:output": "22 kW",
+    "socket:type2_combo": "1",
+    "socket:type2_combo:output": "50 kW"
+  }
+},
+{
+  "type": "node",
+  "id": 11140666798,
+  "lat": 43.9322259,
+  "lon": 15.4791359,
+  "tags": {
+    "attraction": "big_wheel",
+    "name": "Adria eye",
+    "tourism": "attraction",
+    "website": "https://www.dalmaland.com/atrakcija/adria-eye/38"
+  }
+},
+{
+  "type": "node",
+  "id": 11140690040,
+  "lat": 43.9315891,
+  "lon": 15.4798168,
+  "tags": {
+    "attraction": "bumper_car",
+    "name": "Bumper Cars",
+    "tourism": "attraction",
+    "website": "https://www.dalmaland.com/atrakcija/bumper-cars/28"
+  }
+},
+{
+  "type": "node",
+  "id": 11147894293,
+  "lat": 43.9285820,
+  "lon": 15.4537097,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "male": "yes",
+    "toilets:disposal": "flush"
+  }
+},
+{
+  "type": "node",
+  "id": 11147894294,
+  "lat": 43.9285366,
+  "lon": 15.4537644,
+  "tags": {
+    "access": "customers",
+    "amenity": "shower",
+    "fee": "yes",
+    "hot_water": "yes",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 11147894295,
+  "lat": 43.9286864,
+  "lon": 15.4538653,
+  "tags": {
+    "access": "customers",
+    "amenity": "toilets",
+    "changing_table": "yes",
+    "female": "yes",
+    "toilets:disposal": "flush",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11147894296,
+  "lat": 43.9286425,
+  "lon": 15.4539430,
+  "tags": {
+    "access": "customers",
+    "amenity": "shower",
+    "fee": "yes",
+    "hot_water": "yes",
+    "opening_hours": "24/7",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903409,
+  "lat": 43.9295826,
+  "lon": 15.4530184,
+  "tags": {
+    "amenity": "cafe"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903426,
+  "lat": 43.9297390,
+  "lon": 15.4514548,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Gajeta"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903427,
+  "lat": 43.9298700,
+  "lon": 15.4514826,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Luigi"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903428,
+  "lat": 43.9303845,
+  "lon": 15.4509929,
+  "tags": {
+    "amenity": "ice_cream",
+    "name": "Ledo"
+  }
+},
+{
+  "type": "node",
+  "id": 11147903429,
+  "lat": 43.9313908,
+  "lon": 15.4465022,
+  "tags": {
+    "amenity": "dive_centre",
+    "name": "Škola Ronjenja"
+  }
+},
+{
+  "type": "node",
+  "id": 11155908646,
+  "lat": 43.9377458,
+  "lon": 15.4439656,
+  "tags": {
+    "check_date": "2023-08-30",
+    "opening_hours": "24/7",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 11155985705,
+  "lat": 43.9294149,
+  "lon": 15.4549464,
+  "tags": {
+    "addr:housenumber": "Parcel 799",
+    "addr:postcode": "23210",
+    "addr:street": "Put Kumenta 16",
+    "email": "info@mobilehomenensi.com",
+    "internet_access": "wlan",
+    "name:en": "Mobile Home Nensi",
+    "opening_hours": "24/7",
+    "phone": "+385911517823",
+    "tourism": "apartment",
+    "website": "https://www.mobilehomenensi.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 11157947962,
+  "lat": 43.9453015,
+  "lon": 15.4523791,
+  "tags": {
+    "amenity": "charging_station",
+    "name": "Kaufland"
+  }
+},
+{
+  "type": "node",
+  "id": 11157999724,
+  "lat": 43.9446901,
+  "lon": 15.4532861,
+  "tags": {
+    "amenity": "charging_station",
+    "name": "Lidl",
+    "operator": "Lidl",
+    "operator:wikidata": "Q151954"
+  }
+},
+{
+  "type": "node",
+  "id": 11241146415,
+  "lat": 43.9329962,
+  "lon": 15.4463182,
+  "tags": {
+    "amenity": "ice_cream"
+  }
+},
+{
+  "type": "node",
+  "id": 11241230109,
+  "lat": 43.9276731,
+  "lon": 15.4535630,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241230110,
+  "lat": 43.9276845,
+  "lon": 15.4535879,
+  "tags": {
+    "amenity": "recycling",
+    "recycling_type": "container"
+  }
+},
+{
+  "type": "node",
+  "id": 11241230135,
+  "lat": 43.9275382,
+  "lon": 15.4520515,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237643,
+  "lat": 43.9271487,
+  "lon": 15.4521569,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237646,
+  "lat": 43.9277118,
+  "lon": 15.4519772,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237647,
+  "lat": 43.9277167,
+  "lon": 15.4519477,
+  "tags": {
+    "amenity": "fast_food"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237648,
+  "lat": 43.9277630,
+  "lon": 15.4519410,
+  "tags": {
+    "amenity": "bench"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237660,
+  "lat": 43.9282157,
+  "lon": 15.4517400,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241237663,
+  "lat": 43.9282903,
+  "lon": 15.4517028,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11241238233,
+  "lat": 43.9284031,
+  "lon": 15.4516202,
+  "tags": {
+    "amenity": "bench"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243212,
+  "lat": 43.9290211,
+  "lon": 15.4509004,
+  "tags": {
+    "leisure": "slipway"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243222,
+  "lat": 43.9301345,
+  "lon": 15.4513598,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243224,
+  "lat": 43.9303129,
+  "lon": 15.4511563,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243228,
+  "lat": 43.9303438,
+  "lon": 15.4507201,
+  "tags": {
+    "amenity": "dressing_room"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243229,
+  "lat": 43.9302911,
+  "lon": 15.4507384,
+  "tags": {
+    "amenity": "shower"
+  }
+},
+{
+  "type": "node",
+  "id": 11241243230,
+  "lat": 43.9303072,
+  "lon": 15.4504549,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241248428,
+  "lat": 43.9330117,
+  "lon": 15.4464938,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Moby Dick"
+  }
+},
+{
+  "type": "node",
+  "id": 11241253637,
+  "lat": 43.9286459,
+  "lon": 15.4514197,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 11241253644,
+  "lat": 43.9288549,
+  "lon": 15.4512418,
+  "tags": {
+    "amenity": "bench"
+  }
+},
+{
+  "type": "node",
+  "id": 11241274961,
+  "lat": 43.9318895,
+  "lon": 15.4466926,
+  "tags": {
+    "amenity": "telephone"
+  }
+},
+{
+  "type": "node",
+  "id": 11364728491,
+  "lat": 43.9427295,
+  "lon": 15.4464233,
+  "tags": {
+    "check_date": "2023-10-11",
+    "name": "apartmani Grcić",
+    "phone": "+385 23 383948",
+    "tourism": "apartment"
+  }
+},
+{
+  "type": "node",
+  "id": 11364728492,
+  "lat": 43.9378475,
+  "lon": 15.4445343,
+  "tags": {
+    "amenity": "fast_food",
+    "check_date": "2023-09-22",
+    "name": "Numero 11"
+  }
+},
+{
+  "type": "node",
+  "id": 12049556769,
+  "lat": 43.9367401,
+  "lon": 15.4414904,
+  "tags": {
+    "amenity": "atm",
+    "opening_hours": "24/7",
+    "operator": "24/7"
+  }
+},
+{
+  "type": "node",
+  "id": 12090563273,
+  "lat": 43.9420938,
+  "lon": 15.4485065,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:housenumber": "8",
+    "addr:postcode": "23210",
+    "addr:street": "Zadarska ulica",
+    "amenity": "social_facility",
+    "name": "More",
+    "not:name": "Viktorija",
+    "operator": "Vesna Oluić",
+    "operator:type": "private",
+    "ref:vatin": "85372268393",
+    "social_facility": "nursing_home",
+    "social_facility:for": "senior",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068633,
+  "lat": 43.9436713,
+  "lon": 15.4700592,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068634,
+  "lat": 43.9437439,
+  "lon": 15.4701447,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068635,
+  "lat": 43.9437303,
+  "lon": 15.4698205,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068636,
+  "lat": 43.9437860,
+  "lon": 15.4698760,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12092068637,
+  "lat": 43.9438356,
+  "lon": 15.4699255,
+  "tags": {
+    "amenity": "shelter",
+    "shelter_type": "gazebo"
+  }
+},
+{
+  "type": "node",
+  "id": 12093782360,
+  "lat": 43.9401356,
+  "lon": 15.4451164,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12093816752,
+  "lat": 43.9405833,
+  "lon": 15.4451916,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12095439424,
+  "lat": 43.9425931,
+  "lon": 15.4476046,
+  "tags": {
+    "name": "Studenac",
+    "opening_hours": "Mo-Sa 07:00-22:00; Su 07:00-22:00; PH off",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12163008249,
+  "lat": 43.9285678,
+  "lon": 15.4552484,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12163051757,
+  "lat": 43.9292051,
+  "lon": 15.4566950,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 12163135424,
+  "lat": 43.9297556,
+  "lon": 15.4515756,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12163535078,
+  "lat": 43.9269751,
+  "lon": 15.4521145,
+  "tags": {
+    "amenity": "dressing_room"
+  }
+},
+{
+  "type": "node",
+  "id": 12163535351,
+  "lat": 43.9281657,
+  "lon": 15.4523791,
+  "tags": {
+    "amenity": "toilets",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12163545078,
+  "lat": 43.9272805,
+  "lon": 15.4518975,
+  "tags": {
+    "amenity": "shower"
+  }
+},
+{
+  "type": "node",
+  "id": 12163545079,
+  "lat": 43.9271229,
+  "lon": 15.4521701,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12163569458,
+  "lat": 43.9281940,
+  "lon": 15.4547830,
+  "tags": {
+    "amenity": "toilets"
+  }
+},
+{
+  "type": "node",
+  "id": 12169406740,
+  "lat": 43.9362811,
+  "lon": 15.4419471,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169448766,
+  "lat": 43.9326654,
+  "lon": 15.4464714,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169448767,
+  "lat": 43.9361143,
+  "lon": 15.4425873,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169450327,
+  "lat": 43.9331623,
+  "lon": 15.4458938,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169452586,
+  "lat": 43.9371232,
+  "lon": 15.4403646,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169457778,
+  "lat": 43.9329034,
+  "lon": 15.4462934,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169457789,
+  "lat": 43.9362109,
+  "lon": 15.4416569,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169458932,
+  "lat": 43.9317812,
+  "lon": 15.4468718,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169463241,
+  "lat": 43.9324203,
+  "lon": 15.4465192,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169463242,
+  "lat": 43.9330962,
+  "lon": 15.4460086,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169468482,
+  "lat": 43.9310764,
+  "lon": 15.4477246,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169473750,
+  "lat": 43.9362707,
+  "lon": 15.4421066,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169474519,
+  "lat": 43.9376019,
+  "lon": 15.4400472,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169478912,
+  "lat": 43.9363250,
+  "lon": 15.4413133,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169478913,
+  "lat": 43.9364277,
+  "lon": 15.4411701,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169482735,
+  "lat": 43.9327622,
+  "lon": 15.4464390,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169482736,
+  "lat": 43.9360415,
+  "lon": 15.4428097,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169484628,
+  "lat": 43.9365521,
+  "lon": 15.4409824,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169485289,
+  "lat": 43.9374267,
+  "lon": 15.4401556,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169486509,
+  "lat": 43.9322624,
+  "lon": 15.4465698,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169489254,
+  "lat": 43.9333345,
+  "lon": 15.4456057,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169497720,
+  "lat": 43.9334489,
+  "lon": 15.4454065,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169497803,
+  "lat": 43.9330455,
+  "lon": 15.4460832,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12169499976,
+  "lat": 43.9361976,
+  "lon": 15.4415290,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169502346,
+  "lat": 43.9361916,
+  "lon": 15.4423521,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12169507801,
+  "lat": 43.9373145,
+  "lon": 15.4402328,
+  "tags": {
+    "amenity": "bench",
+    "backrest": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12182779001,
+  "lat": 43.9411325,
+  "lon": 15.4453861,
+  "tags": {
+    "amenity": "bicycle_repair_station",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12182779002,
+  "lat": 43.9407682,
+  "lon": 15.4452984,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12182779101,
+  "lat": 43.9260912,
+  "lon": 15.4800509,
+  "tags": {
+    "amenity": "bicycle_repair_station"
+  }
+},
+{
+  "type": "node",
+  "id": 12255346457,
+  "lat": 43.9362476,
+  "lon": 15.4414783,
+  "tags": {
+    "amenity": "vending_machine",
+    "vending": "parking_tickets"
+  }
+},
+{
+  "type": "node",
+  "id": 12255349999,
+  "lat": 43.9361867,
+  "lon": 15.4423945,
+  "tags": {
+    "amenity": "waste_basket"
+  }
+},
+{
+  "type": "node",
+  "id": 12441703553,
+  "lat": 43.9453016,
+  "lon": 15.4519920,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Coffee Time 3",
+    "opening_hours": "Mo-Sa 07:00-24:00, Su 07:00-23:00"
+  }
+},
+{
+  "type": "node",
+  "id": 12488312894,
+  "lat": 43.9245830,
+  "lon": 15.4589741,
+  "tags": {
+    "email": "info@skver-tours.com",
+    "name": "Coastal Comfort Family Apartment",
+    "phone": "+385 233 844 57",
+    "tourism": "apartment",
+    "website": "https://www.skver-tours.com/?l=eng&ispis=ponuda&vrsta=apart&id=672&objekt=217"
+  }
+},
+{
+  "type": "node",
+  "id": 12578446860,
+  "lat": 43.9364373,
+  "lon": 15.4424353,
+  "tags": {
+    "artwork_type": "statue",
+    "tourism": "artwork"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455063,
+  "lat": 43.9458327,
+  "lon": 15.4540096,
+  "tags": {
+    "brand": "EuroSpin",
+    "brand:wikidata": "Q1374674",
+    "name": "EuroSpin",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455064,
+  "lat": 43.9461424,
+  "lon": 15.4547568,
+  "tags": {
+    "brand": "Sinsay",
+    "brand:wikidata": "Q107410579",
+    "name": "Sinsay",
+    "shop": "clothes"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455065,
+  "lat": 43.9460767,
+  "lon": 15.4545535,
+  "tags": {
+    "brand": "TEDi",
+    "brand:wikidata": "Q1364603",
+    "name": "TEDi",
+    "shop": "variety_store"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455066,
+  "lat": 43.9460325,
+  "lon": 15.4544355,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:street": "Magistralna ulica",
+    "amenity": "pharmacy",
+    "healthcare": "pharmacy",
+    "name": "Ljekarna Švaljek"
+  }
+},
+{
+  "type": "node",
+  "id": 12776455067,
+  "lat": 43.9459423,
+  "lon": 15.4542374,
+  "tags": {
+    "brand": "Bipa",
+    "brand:wikidata": "Q864933",
+    "name": "Bipa",
+    "shop": "chemist"
+  }
+},
+{
+  "type": "node",
+  "id": 13338041457,
+  "lat": 43.9416165,
+  "lon": 15.4547397,
+  "tags": {
+    "addr:city": "Biograd na Moru",
+    "addr:postcode": "23210",
+    "addr:street": "Fra Lina Pedišića",
+    "amenity": "restaurant",
+    "cuisine": "barbecue",
+    "name": "Pečenjara Brkljača"
+  }
+}
+
+  ]
+}
+
+
+npr.
+⛵️ brod na oceanu
+👩 žena u gradu
+
+
+Pokreće AITOPIA 
+Čavrljanje
+Pitati
+Pretraži
+Pisati
+Slika
+ChatFile
+Vidljivost
+Cijela stranica
