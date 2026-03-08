@@ -1,87 +1,61 @@
-import OpenAI from "openai";
-import data from "../podaci/biograd_master.json" assert { type: "json" };
-
-const openai = new OpenAI({
- apiKey: process.env.OPENAI_API_KEY
-});
-
 export default async function handler(req, res) {
 
 try {
 
 const { conversation } = req.body;
 
-const userMessage =
-conversation?.[conversation.length - 1]?.content || "";
+const message =
+conversation?.[conversation.length - 1]?.content?.toLowerCase() || "";
 
-let context = "";
+let reply = "Rado ću pomoći. Pitajte o plažama, restoranima ili znamenitostima.";
 
-if (userMessage.toLowerCase().includes("plaž")) {
+if (message.includes("plaž")) {
 
-context = data.plaze.map(p =>
+reply = `
+🏖 Plaže u Biogradu na Moru
 
-`🏖 ${p.naziv}
-${p.opis}
-📍 ${p.maps}`
+🏖 Plaža Dražica  
+najpopularnija gradska plaža  
+📍 https://maps.google.com/?q=Plaza+Drazica+Biograd
 
-).join("\n\n");
+🏖 Plaža Soline  
+borova šuma i brojni sadržaji  
+📍 https://maps.google.com/?q=Plaza+Soline+Biograd
 
-}
-
-else if (userMessage.toLowerCase().includes("restoran")) {
-
-context = data.restorani.map(r =>
-
-`🍽 ${r.naziv}
-${r.opis}
-📍 ${r.maps}`
-
-).join("\n\n");
+🏖 Plaža Bošana  
+mirnija plaža za opuštanje  
+📍 https://maps.google.com/?q=Plaza+Bosana+Biograd
+`;
 
 }
 
-else if (userMessage.toLowerCase().includes("znamen")) {
+else if (message.includes("restoran") || message.includes("gastr")) {
 
-context = data.znamenitosti.map(z =>
+reply = `
+🍽 Preporučeni restorani
 
-`🏛 ${z.naziv}
-${z.opis}
-📍 ${z.maps}`
+🍽 Restoran Dupin  
+svježa riba i mediteranska kuhinja  
+📍 https://maps.google.com/?q=Restoran+Dupin+Biograd
 
-).join("\n\n");
+🍽 Konoba Kampanel  
+tradicionalna dalmatinska jela  
+📍 https://maps.google.com/?q=Konoba+Kampanel+Biograd
+`;
 
 }
 
-const completion = await openai.chat.completions.create({
+else if (message.includes("znamen")) {
 
-model: "gpt-4o-mini",
+reply = `
+🏛 Znamenitosti
 
-messages: [
+🏛 Zavičajni muzej Biograd  
+povijest kraljevskog grada  
+📍 https://maps.google.com/?q=Zavicajni+Muzej+Biograd
+`;
 
-{
-role: "system",
-content: `
-Ti si AI turistički informator Biograda na Moru.
-
-Odgovaraj kratko, turistički i pregledno koristeći ikone.
-`
-},
-
-{
-role: "user",
-content: userMessage
-},
-
-{
-role: "assistant",
-content: context
 }
-
-]
-
-});
-
-const reply = completion.choices[0].message.content;
 
 res.status(200).json({ reply });
 
@@ -90,7 +64,7 @@ res.status(200).json({ reply });
 console.error(error);
 
 res.status(500).json({
-reply: "Došlo je do greške."
+reply: "Došlo je do greške u serveru."
 });
 
 }
