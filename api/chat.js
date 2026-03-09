@@ -6,7 +6,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-export default async function handler(re, res) {
+export default async function handler(req, res) {
   try {
     const { message } = req.body;
 
