@@ -5,7 +5,7 @@ export default function handler(req,res){
 
 try{
 
-const filePath = path.join(process.cwd(),"podaci","biograd.json")
+const filePath = path.join(process.cwd(),"data","biograd_clean.json")
 
 const raw = fs.readFileSync(filePath,"utf8")
 
@@ -33,7 +33,7 @@ return res.status(200).json({reply:txt})
 }
 
 return res.status(200).json({
-reply:"Baza je učitana. Postavite pitanje."
+reply:"Baza učitana. Postavite pitanje poput: restorani, plaže, parking."
 })
 
 }catch(e){
