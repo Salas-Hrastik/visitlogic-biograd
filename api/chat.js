@@ -17,8 +17,12 @@ export default async function handler(req, res) {
     try {
       data = JSON.parse(raw);
     } catch(e) {
-      const lastBrace = raw.lastIndexOf('}');
-      data = JSON.parse(raw.substring(0, lastBrace + 1));
+      const posMatch = e.message.match(/position (\d+)/);
+      if (posMatch) {
+        data = JSON.parse(raw.substring(0, parseInt(posMatch[1])));
+      } else {
+        data = JSON.parse(raw.substring(0, raw.lastIndexOf('}') + 1));
+      }
     }
 
     const elements = data.elements || [];
