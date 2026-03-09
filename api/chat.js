@@ -4,7 +4,7 @@ import path from "path";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
-);
+});
 
 export default async function handler(req, res) {
   try {
@@ -14,8 +14,7 @@ export default async function handler(req, res) {
     const raw = fs.readFileSync(filePath, "utf8");
     let data; try { data = JSON.parse(raw); } catch(e) { data = JSON.parse(raw.substring(0, raw.lastIndexOf('\n}') + 2)); }
 const elements = data.elements || []; const restorani = elements.filter(e => e.tags && ['restaurant','cafe','bar','fast_food','pub'].includes(e.tags.amenity) && e.tags.name).map(e => ({ naziv: e.tags.name, tip: e.tags.amenity, kuhinja: e.tags.cuisine || null }));
-    const restorani = data.restorani || [];
-
+    
     const context = JSON.stringify(restorani.slice(0, 20));
 
     const completion = await openai.chat.completions.create({
