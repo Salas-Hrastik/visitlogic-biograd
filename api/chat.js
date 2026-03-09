@@ -20,17 +20,14 @@ body: JSON.stringify({
 model: "gpt-4o-mini",
 
 messages: [
-
 {
 role: "system",
 content: "Ti si turistički vodič za Biograd na Moru. Odgovaraj kratko i korisno."
 },
-
 {
 role: "user",
 content: message
 }
-
 ]
 
 })
@@ -39,19 +36,23 @@ content: message
 
 const data = await response.json()
 
-return Response.json({
-
+return new Response(
+JSON.stringify({
 reply: data.choices?.[0]?.message?.content || "Bot nema odgovor."
-
-})
+}),
+{ headers: { "Content-Type": "application/json" } }
+)
 
 } catch (error) {
 
-return Response.json({
+console.log(error)
 
+return new Response(
+JSON.stringify({
 reply: "AI turistički informator trenutno nije dostupan."
-
-})
+}),
+{ headers: { "Content-Type": "application/json" } }
+)
 
 }
 
