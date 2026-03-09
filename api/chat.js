@@ -1,49 +1,74 @@
-import fs from "fs"
-import path from "path"
+import OpenAI from "openai";
+import fs from "fs";
+import path from "path";
 
-export default function handler(req,res){
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
-try{
+export default async function handler(req, res) {
 
-const filePath = path.join(process.cwd(),"data","biograd_clean.json")
+  try {
 
-const raw = fs.readFileSync(filePath,"utf8")
+    const { message } = req.body;
 
-const data = JSON.parse(raw)
+    // putanja do baze
+    const dbPath = path.join(process.cwd(), "data", "biograd_clean.json");
 
-const {message} = req.body || {}
+    // provjera postoji li datoteka
+    if (!fs.existsSync(dbPath)) {
+      return res.status(200).json({
+        reply: "Baza podataka nije pronađena."
+      });
+    }
 
-const q = (message || "").toLowerCase()
+    // učitaj bazu
+    const raw = fs.readFileSync(dbPath, "utf8");
+    const data = JSON.parse(raw);
 
-if(q.includes("restoran")){
+    // filtriranje restorana
+    const restorani = data.filter(o =>
+      o.kategorija &&
+      o.kategorija.toLowerCase().includes("restaurant")
+    );
 
-const list = data.filter(o => o.kategorija === "restaurant")
+    // priprema konteksta
+    const context = JSON.stringify(restorani.slice(0, 20));
 
-let txt = "Restorani u Biogradu:\n\n"
+    // OpenAI odgovor
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `
+Ti si AI turistički informator za Biograd na Moru.
 
-list.slice(0,20).forEach(r => {
+Ako korisnik pita za restorane koristi ovu bazu:
 
-txt += r.naziv + "\n"
-txt += r.google_maps + "\n\n"
+${context}
+`
+        },
+        {
+          role: "user",
+          content: message
+        }
+      ],
+      temperature: 0.3
+    });
 
-})
+    res.status(200).json({
+      reply: completion.choices[0].message.content
+    });
 
-return res.status(200).json({reply:txt})
+  } catch (error) {
 
-}
+    console.error(error);
 
-return res.status(200).json({
-reply:"Baza učitana. Postavite pitanje poput: restorani, plaže, parking."
-})
+    res.status(200).json({
+      reply: "Greška pri čitanju baze podataka."
+    });
 
-}catch(e){
-
-console.log(e)
-
-return res.status(200).json({
-reply:"Greška pri čitanju baze podataka."
-})
-
-}
+  }
 
 }
