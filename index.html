@@ -11,30 +11,25 @@
 <style>
 
 body{
-font-family: Arial, sans-serif;
+font-family:Arial;
 background:#f2f2f2;
 margin:0;
-padding:0;
 }
 
 header{
 background:#0b6fa4;
 color:white;
-padding:15px;
+padding:20px;
 text-align:center;
 }
 
-.logo{
-height:60px;
-}
-
 .chat-container{
-max-width:700px;
-margin:20px auto;
+max-width:800px;
+margin:30px auto;
 background:white;
+padding:20px;
 border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.2);
-padding:20px;
 }
 
 .messages{
@@ -46,28 +41,30 @@ margin-bottom:10px;
 }
 
 .message{
-margin-bottom:10px;
+margin:10px 0;
 }
 
 .user{
 text-align:right;
-color:#333;
 }
 
 .bot{
-text-align:left;
 color:#0b6fa4;
 }
 
+.input-row{
+display:flex;
+gap:10px;
+}
+
 input{
-width:80%;
-padding:10px;
+flex:1;
+padding:12px;
 font-size:16px;
 }
 
 button{
-padding:10px;
-font-size:16px;
+padding:12px 20px;
 background:#0b6fa4;
 color:white;
 border:none;
@@ -75,11 +72,12 @@ cursor:pointer;
 }
 
 .quick{
-margin-top:10px;
+margin-top:15px;
+display:flex;
+gap:10px;
 }
 
 .quick button{
-margin:4px;
 background:#eee;
 color:#333;
 }
@@ -91,77 +89,41 @@ color:#333;
 <body>
 
 <header>
-
 <h2>AI turistički informator</h2>
 <div>Biograd na Moru</div>
-
 </header>
 
 <div class="chat-container">
 
-<div class="messages" id="messages"></div>
+<div id="messages" class="messages"></div>
 
+<div class="input-row">
 <input id="input" placeholder="Postavite pitanje...">
 <button onclick="sendMessage()">Pošalji</button>
+</div>
 
 <div class="quick">
-
 <button onclick="quick('plaže')">🏖 Plaže</button>
 <button onclick="quick('restorani')">🍽 Restorani</button>
 <button onclick="quick('parking')">🅿 Parking</button>
 <button onclick="quick('bankomat')">🏧 Bankomat</button>
-
 </div>
 
 </div>
 
 <script>
 
-let userLocation = null
-let userLang = "en"
-
-function detectLanguage(){
-
-const lang = navigator.language || navigator.userLanguage
-
-if(lang.startsWith("hr")) userLang="hr"
-if(lang.startsWith("de")) userLang="de"
-if(lang.startsWith("it")) userLang="it"
-
-console.log("Jezik:",userLang)
-
-}
-
-detectLanguage()
-
-function getLocation(){
-
-if(navigator.geolocation){
-
-navigator.geolocation.getCurrentPosition(function(position){
-
-userLocation={
-lat:position.coords.latitude,
-lon:position.coords.longitude
-}
-
-console.log("Lokacija:",userLocation)
-
-})
-
-}
-
-}
-
-getLocation()
+let userLocation=null
 
 function addMessage(text,type){
 
 const messages=document.getElementById("messages")
 
 const div=document.createElement("div")
+
 div.className="message "+type
-div.innerHTML=text
+
+div.innerText=text
 
 messages.appendChild(div)
 
@@ -169,23 +131,19 @@ messages.scrollTop=messages.scrollHeight
 
 }
 
-function quick(text){
-
-document.getElementById("input").value=text
-sendMessage()
-
-}
-
 async function sendMessage(){
 
 const input=document.getElementById("input")
-const text=input.value
+
+const text=input.value.trim()
 
 if(!text) return
 
 addMessage(text,"user")
 
 input.value=""
+
+try{
 
 const response=await fetch("/api/chat",{
 
@@ -197,17 +155,50 @@ headers:{
 
 body:JSON.stringify({
 message:text,
-location:userLocation,
-lang:userLang
+location:userLocation
 })
 
 })
 
 const data=await response.json()
 
+if(data.reply){
+
 addMessage(data.reply,"bot")
 
+}else{
+
+addMessage("Bot nema odgovor.","bot")
+
 }
+
+}catch(err){
+
+addMessage("Greška u komunikaciji sa serverom.","bot")
+
+console.log(err)
+
+}
+
+}
+
+function quick(text){
+
+document.getElementById("input").value=text
+
+sendMessage()
+
+}
+
+document.getElementById("input").addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+
+sendMessage()
+
+}
+
+})
 
 addMessage("Dobrodošli u Biograd na Moru 🌊 Kako vam mogu pomoći?","bot")
 
