@@ -281,10 +281,19 @@ function getCategoryItems(category, message = '') {
       return (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '' }));
     }
 
-    // Generalni upit → hoteli + direktni kontakti
+    // Hotel upit → filtriraj hotele
+    const isHotel = m.includes('hotel') || m.includes('hotels');
+    if (isHotel) {
+      return filterByMessage(
+        (db.smjestaj?.hoteli || []).map(h => item(h, { adresa: h.lokacija || '' })),
+        message
+      );
+    }
+
+    // Generalni upit → uvijek prikazuj hotele + direktni kontakti (bez filtriranja)
     const hoteli   = (db.smjestaj?.hoteli || []).map(h => item(h, { adresa: h.lokacija || '' }));
     const kontakti = (db.smjestaj?.direktni_kontakti || []).map(p => item(p, { adresa: p.tip || '' }));
-    return filterByMessage([...hoteli, ...kontakti], message);
+    return [...hoteli, ...kontakti];
   }
   if (category === 'kornati') {
     const k = db.kornati;
