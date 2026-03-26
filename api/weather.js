@@ -98,15 +98,19 @@ export default async function handler(req, res) {
     const datumHR = `${now.getDate()}. ${MONTHS_HR[now.getMonth()]} ${now.getFullYear()}.`;
     const danHR   = DAYS_HR[now.getDay()];
 
+    const hour = now.getHours();
+
     return res.status(200).json({
       temperature: Math.round(w.temperature),
       windspeed:   Math.round(w.windspeed),
+      weathercode: w.weathercode,
       icon:        WMO_ICONS[w.weathercode] || '🌡️',
       opis:        WMO_DESC[w.weathercode] || '',
       sea_temp:    seaTemp,
       wave_height: waveHeight,
       datum:       datumHR,
       dan:         danHR,
+      hour,
       forecast
     });
 

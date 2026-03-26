@@ -253,11 +253,109 @@ function getCategoryItems(category, message = '') {
   return [];
 }
 
+// ===== VREMENSKA INTELIGENCIJA =====
+function buildWeatherDirectives(w) {
+  if (!w || w.temperature == null) return '';
+
+  const lines = [];
+  const temp  = w.temperature;
+  const wind  = w.windspeed || 0;
+  const code  = w.weathercode ?? -1;
+  const sea   = w.sea_temp;
+  const wave  = w.wave_height;
+  const hour  = w.hour ?? new Date().getHours();
+
+  // --- Weathercode: stanje neba ---
+  const isStorm    = code >= 95;
+  const isHeavyRain= (code >= 80 && code <= 82) || (code >= 65 && code <= 67);
+  const isRain     = (code >= 51 && code <= 65) || (code >= 80 && code <= 82);
+  const isCloudy   = code === 3;
+  const isClear    = code <= 1;
+  const isPartly   = code === 2;
+
+  // --- Temperatura zraka ---
+  let swimAdvice = '';
+  if (temp < 12) {
+    swimAdvice = 'Temperatura zraka ispod 12°C — kupanje nije preporučljivo, fokusiraj se na kulturni/gastronomski program.';
+  } else if (temp < 18) {
+    swimAdvice = `Temperatura zraka ${temp}°C — kupanje za ljubitelje hladnijeg mora${sea != null ? `, more ${sea}°C` : ''}.`;
+  } else if (temp >= 30) {
+    swimAdvice = `Temperatura ${temp}°C — vrućina! Preporuči kupanje ujutro (do 10h) ili poslijepodne (od 17h), izbjegavaj podnevno sunce.`;
+  } else {
+    swimAdvice = `Temperatura zraka ${temp}°C${sea != null ? `, more ${sea}°C` : ''} — ugodni uvjeti za plažu i kupanje.`;
+  }
+
+  // --- Vjetar / nautika ---
+  let windAdvice = '';
+  if (wind > 45) {
+    windAdvice = `UPOZORENJE: Jak vjetar ${wind} km/h — izleti brodom i charter nisu preporučljivi, marina može imati ograničenja plovidbe.`;
+  } else if (wind > 35) {
+    windAdvice = `Vjetar ${wind} km/h — oprez na moru, nautičari neka provjere uvjete u Marini Kornati prije isplovljenja.`;
+  } else if (wind > 20) {
+    windAdvice = `Lagani do umjereni vjetar ${wind} km/h — ugodni uvjeti za jedrenje.`;
+  }
+
+  // --- Visina vala ---
+  if (wave != null && wave >= 1.5) {
+    windAdvice += ` Visina vala ${wave} m — manji brodovi neka ostanu u uvali.`;
+  }
+
+  // --- Kiša / oluja ---
+  let skyAdvice = '';
+  if (isStorm) {
+    skyAdvice = 'OLUJA — preporuči zatvorene aktivnosti: muzeji, restorani, shopping, degustacija vina u konobama. Odgodi izlete i nautiku.';
+  } else if (isHeavyRain) {
+    skyAdvice = 'Jaka kiša — idealan dan za gastronomiju (svježa riba, peka, brudet) i zatvorene atrakcije. Plaža i izleti odgođeni.';
+  } else if (isRain) {
+    skyAdvice = 'Kiša — preporuči konobe, šetnju starim gradom uz kišobran, degustaciju lokalnih vina.';
+  } else if (isCloudy) {
+    skyAdvice = 'Oblačno — dobri uvjeti za biciklizam, pješačenje, posjete Vranskom jezeru ili izlet do Zadra.';
+  } else if (isClear || isPartly) {
+    skyAdvice = 'Sunčano i vedro — savršeni uvjeti za plažu, Kornate i nautiku.';
+  }
+
+  // --- Večernji / jutarnji mod ---
+  let timeAdvice = '';
+  if (hour >= 19) {
+    timeAdvice = 'Večer je — preporuči šetnju rivom, večeru u restoranu s pogledom na more, degustaciju lokalnih vina ili ljetne manifestacije.';
+  } else if (hour < 9) {
+    timeAdvice = 'Jutro je — savršeno za ranu šetnju rivom, doručak u kafiću uz more, ili rani polazak na izlet brodom.';
+  }
+
+  // --- Prognoza sažetak (ako postoji) ---
+  let forecastNote = '';
+  if (w.forecast && w.forecast.length > 1) {
+    const tomorrow = w.forecast[1];
+    if (tomorrow) {
+      forecastNote = `Sutra (${tomorrow.dan}): ${tomorrow.icon} ${tomorrow.tmax}°C/${tomorrow.tmin}°C, ${tomorrow.opis}${tomorrow.kisa != null ? `, kiša ${tomorrow.kisa}%` : ''}.`;
+    }
+  }
+
+  const parts = [swimAdvice, windAdvice, skyAdvice, timeAdvice, forecastNote].filter(Boolean);
+  return parts.length > 0
+    ? '\nVREMENSKE DIREKTIVE (primijeni u odgovoru!):\n' + parts.map(p => '- ' + p).join('\n')
+    : '';
+}
+
+function getSeasonContext() {
+  const month = new Date().getMonth() + 1; // 1-12
+  if (month >= 7 && month <= 8) return 'VRHUNAC SEZONE (srpanj/kolovoz) — gužve, obavezna rezervacija 3-4 mj. unaprijed, visoke cijene, sve radi.';
+  if (month === 6)  return 'POČETAK SEZONE (lipanj) — sve radi, manje gužvi, povoljnije cijene nego u srpnju/kolovozu.';
+  if (month === 9)  return 'POSTSEZONI (rujan) — IDEALAN TERMIN: more toplo (24°C+), manje gužvi, povoljnije cijene, romantična atmosfera.';
+  if (month === 10) return 'JESEN (listopad) — sezona se zatvara, dio restorana i sadržaja zatvoren, mirno i autentično.';
+  if (month >= 11 || month <= 3) return 'VAN SEZONE — mnogi restorani, kampovi i nautički sadržaji zatvoreni. Grad je miran i autentičan.';
+  if (month >= 4 && month <= 5) return 'PREDSEZONE (travanj/svibanj) — otvaranje sadržaja, idealno za aktivni odmor bez gužvi.';
+  return '';
+}
+
 // ===== SYSTEM PROMPT =====
 function buildSystemPrompt(lang, context, weatherCtx) {
-  const weatherNote = weatherCtx?.temperature != null
-    ? `\nAKTUALNO STANJE: Temperatura zraka ${weatherCtx.temperature}°C, vjetar ${weatherCtx.windspeed} km/h${weatherCtx.sea_temp != null ? `, temperatura mora ${weatherCtx.sea_temp}°C` : ''}${weatherCtx.wave_height != null ? `, visina vala ${weatherCtx.wave_height} m` : ''}.`
-    : '';
+  const weatherDirectives = buildWeatherDirectives(weatherCtx);
+  const seasonCtx = getSeasonContext();
+
+  const weatherSummary = weatherCtx?.temperature != null
+    ? `Temperatura zraka: ${weatherCtx.temperature}°C | Vjetar: ${weatherCtx.windspeed} km/h${weatherCtx.sea_temp != null ? ` | Mora: ${weatherCtx.sea_temp}°C` : ''}${weatherCtx.wave_height != null ? ` | Val: ${weatherCtx.wave_height} m` : ''} | ${weatherCtx.icon || ''} ${weatherCtx.opis || ''}`
+    : 'Vremenski podaci nisu dostupni.';
 
   const langNote = lang === 'en'
     ? 'IMPORTANT: The user writes in English — respond ONLY in English.'
@@ -277,7 +375,12 @@ KARAKTER DESTINACIJE:
 - Park prirode Vransko jezero (6 km) — ornitološki rezervat, biciklizam
 - Zadar 28 km, Šibenik 65 km, NP Krka 65 km
 - Topla mediteranska klima, 2700+ sunčanih sati godišnje
-${weatherNote}
+
+AKTUALNO VRIJEME (REALNI PODACI — koristi ih konkretno!):
+${weatherSummary}
+${weatherDirectives}
+
+SEZONA: ${seasonCtx}
 
 TURISTIČKI PROFILI POSJETITELJA:
 - Nautičari (charter, jedriličari, motorni brodovi)
@@ -285,14 +388,6 @@ TURISTIČKI PROFILI POSJETITELJA:
 - Aktivni turisti (ronjenje, windsurfing, kayak, biciklizam)
 - Gastronomski turisti
 - Izletnici (Kornati, Zadar, NP Krka)
-
-SEZONALNE NAPOMENE (uvijek naglasi!):
-- Srpanj/kolovoz: gužve, obavezna rezervacija 3–4 mj. unaprijed, visoke cijene
-- Rujan: IDEALAN termin — more toplo (24°C+), manje gužve, povoljnije cijene
-- Lipanj: početak sezone, sve radi, manje gužvi
-- Van sezone (lista–svibanj): mnogi restorani i sadržaji zatvoreni
-
-TEMPERATURA MORA (ljeto): 24–27°C (srpanj–kolovoz)
 
 SPECIFIČNI SAVJETI:
 - Za NP Kornati: izlet brodom iz Biograda (8–10 sati, ~50–80 EUR), ili charter brod
@@ -309,10 +404,11 @@ ${JSON.stringify(context, null, 0).substring(0, 6000)}
 
 PRAVILA ODGOVARANJA:
 - Odgovori na jeziku na kojem korisnik piše (hr/en/de)
+- HIJERARHIJA: REALNI VREMENSKI UVJETI → SEZONA → FUNKCIONALNA PREPORUKA → ATMOSFERA
+- Uvijek integrira aktualne vremenske podatke u preporuku (ne ignoriraj ih!)
 - Budi konkretan i praktičan — turisti žele akcijske informacije
-- Uvijek naglasi sezonalnost kada je relevantno
 - Za preporuke smještaja/restorana napomeni da se rezervacija preporuča unaprijed
-- Temperatura mora je važan podatak — navedi je kada je relevantno za korisnika
+- Temperatura mora je važan podatak — navedi je kada je relevantno
 
 KLJUČNO PRAVILO — KARTICE:
 Kada korisnik pita za restorane, smještaj, plaže, hotele, kampove, izlete ili atrakcije,
@@ -322,7 +418,6 @@ Napiši samo kratki uvodni tekst (1-4 rečenice) s kontekstom, savjetom ili napo
 a kartice sa svim detaljima prikazat će se automatski ispod tvog teksta.
 ZABRANJEN FORMAT (nemoj ovako): "1. Konoba Kampanel — ...\n2. Restoran Dupin — ..."
 ISPRAVAN FORMAT: "Biograd ima izvrsnu ponudu svježe ribe i plodova mora. Preporuča se rezervacija unaprijed u sezoni."`;
-
 }
 
 // ===== GLAVNI HANDLER =====
