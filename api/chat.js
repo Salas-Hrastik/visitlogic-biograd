@@ -178,11 +178,19 @@ function getSuggestions(category, lang) {
   return (map[lang] || map.hr)[category] || [];
 }
 
+// ===== IMAGE PROXY — zaobilazi hotlink protection =====
+// Wikimedia uvijek radi izravno; sve ostalo ide kroz wsrv.nl proxy
+function proxyImg(url) {
+  if (!url) return '';
+  if (url.includes('upload.wikimedia.org') || url.includes('commons.wikimedia.org')) return url;
+  return 'https://wsrv.nl/?url=' + encodeURIComponent(url) + '&w=200&h=150&fit=cover&output=jpg&errorredirect=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F5%2F51%2FKornati.jpg';
+}
+
 // ===== ITEM KARTICE — uzima sve dostupne podatke iz baze =====
 function item(o, extra = {}) {
   return {
     naziv:           o.naziv || '',
-    slika:           o.slika || '',
+    slika:           proxyImg(o.slika || ''),
     adresa:          o.adresa || o.lokacija || o.tip || o.udaljenost || '',
     telefon:         o.telefon || '',
     web:             o.web || '',
