@@ -86,6 +86,9 @@ function detectCategory(msg, lastCategory) {
     || m.includes('strand') || m.includes('schwimmen') || m.includes('badestrand'))
     return 'plaze';
 
+  if (m.includes('noćni') || m.includes('nocni') || m.includes('klub') || m.includes('disco') || m.includes('party') || m.includes('cocktail') || m.includes('kokteli') || m.includes('nightlife') || m.includes('nachtleben') || m.includes('izlazak') || m.includes('zabav') || m.includes('ples'))
+    return 'gastronomija';
+
   if (m.includes('restoran') || m.includes('jelo') || m.includes('hrana') || m.includes('jesti') || m.includes('ručak') || m.includes('večera') || m.includes('doručak') || m.includes('riba') || m.includes('plodovi mora') || m.includes('konoba') || m.includes('kafi') || m.includes('kav') || m.includes('bar ') || m.includes(' bar') || m.includes('piti') || m.includes('pek') || m.includes('hobotnica') || m.includes('lignje') || m.includes('brancin') || m.includes('brudet') || m.includes('vino') || m.includes('dalmatinska') || m.includes('gastronomij')
     || m.includes('restaurant') || m.includes('food') || m.includes('eat') || m.includes('dinner') || m.includes('lunch') || m.includes('breakfast') || m.includes('fish') || m.includes('seafood') || m.includes('wine') || m.includes('tavern') || m.includes('konoba')
     || m.includes('essen') || m.includes('speise') || m.includes('trinken') || m.includes('café') || m.includes('fisch') || m.includes('wein'))
@@ -230,6 +233,13 @@ function getCategoryItems(category, message = '') {
     return filterByMessage(svi, message);
   }
   if (category === 'gastronomija') {
+    const m = (message || '').toLowerCase();
+    const isNocni = m.includes('noćni') || m.includes('nocni') || m.includes('klub') ||
+      m.includes('disco') || m.includes('party') || m.includes('cocktail') || m.includes('kokteli') ||
+      m.includes('nightlife') || m.includes('izlazak') || m.includes('zabav') || m.includes('ples');
+    if (isNocni) {
+      return (db.gastronomija?.nocni_zivot || []).map(r => item(r, { adresa: r.tip || '' }));
+    }
     const svi = (db.gastronomija?.restorani || []).map(r => item(r, { adresa: r.tip || '' }));
     return filterByMessage(svi, message);
   }

@@ -362,6 +362,44 @@ export const db = {
         "recenzija_url": ""
       }
     ],
+    "nocni_zivot": [
+      {
+        "naziv": "Aqua Club",
+        "opis": "Noćni klub u Biogradu na Moru — popularan u ljetnoj sezoni.",
+        "tip": "noćni klub",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Aqua+Club+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Pocco Locco Cocktail Bar",
+        "opis": "Koktel bar s noćnim programom u centru Biograda.",
+        "tip": "cocktail bar, noćni život",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Pocco+Locco+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Queen Bar",
+        "opis": "Bar s noćnim programom u Biogradu na Moru.",
+        "tip": "bar, noćni život",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Queen+Bar+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      }
+    ],
     "savjeti": [
       "Ribu uvijek pitajte je li 'domaća riba' ili uvoz — pravi konobe nude lokalnu ribu",
       "Peku naručite dan ranije ili ujutro za večernji obrok",
@@ -672,6 +710,20 @@ export const db = {
         "recenzija_url": ""
       },
       {
+        "naziv": "Felix Apartment",
+        "opis": "Privatni apartmani u Biogradu na Moru. Direktna rezervacija putem weba.",
+        "lokacija": "Biograd na Moru",
+        "telefon": "",
+        "email": "",
+        "slika": "",
+        "web": "https://felixapartment.com",
+        "karta": "https://maps.google.com/?q=Felix+Apartment+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
         "naziv": "Apartmani Ana",
         "opis": "Privatni apartmani uz more. Tel: +385 91 4324307",
         "lokacija": "Biograd na Moru",
@@ -948,6 +1000,18 @@ export const db = {
         "recenzija": "",
         "recenzija_izvor": "",
         "recenzija_url": ""
+      },
+      {
+        "naziv": "Dalmaland — zabavni park",
+        "opis": "Zabavni park uz more s atrakcijama za cijelu obitelj — Adria Eye (panoramski kotač s pogledom na more i Kornate), Bumper Cars, vodeni tobogani i dr. Sezonski rad (lipanj–rujan).",
+        "tip": "zabavni park, obitelj",
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/5/51/Kornati.jpg",
+        "web": "https://www.dalmaland.com",
+        "karta": "https://maps.google.com/?q=Dalmaland+Biograd+na+Moru",
+        "ocjena": "4.2",
+        "recenzija": "\"Odlično za djecu — panoramski kotač s nevjerojatnim pogledom na Kornate, vodeni tobogani i dobra atmosfera. Obavezno s obitelji!\"",
+        "recenzija_izvor": "Google",
+        "recenzija_url": "https://maps.google.com/?q=Dalmaland+Biograd+na+Moru"
       },
       {
         "naziv": "Crkva svete Stošije",
