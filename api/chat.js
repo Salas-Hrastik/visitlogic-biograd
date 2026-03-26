@@ -250,49 +250,37 @@ function getCategoryItems(category, message = '') {
   if (category === 'smjestaj') {
     const m = (message || '').toLowerCase();
 
-    // Privatni smještaj / apartmani → direktni kontakti
+    // Definiraj sve tipove unaprijed
+    const isHotel    = m.includes('hotel') || m.includes('hotels');
     const isApartman = m.includes('apartman') || m.includes('privat') || m.includes('soba') ||
       m.includes('rent') || m.includes('apartment') || m.includes('private') || m.includes('room') ||
       m.includes('wohnung') || m.includes('ferienwohnung');
-    if (isApartman) {
-      const kontakti = (db.smjestaj?.direktni_kontakti || []).map(p => item(p, { adresa: p.tip || '' }));
-      const pansioni = (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '' }));
-      return filterByMessage([...kontakti, ...pansioni], message);
-    }
-
-    // Kamp → kampovi
-    const isKamp = m.includes('kamp') || m.includes('camping') || m.includes('šator') ||
+    const isKamp     = m.includes('kamp') || m.includes('camping') || m.includes('šator') ||
       m.includes('karavan') || m.includes('mobile home') || m.includes('zelt');
-    if (isKamp) {
-      return filterByMessage((db.smjestaj?.kampovi || []).map(k => item(k)), message);
-    }
-
-    // Vila / bungalov / poseban smještaj
-    const isVila = m.includes('vila') || m.includes('bungalov') || m.includes('villa') ||
+    const isVila     = m.includes('vila') || m.includes('bungalov') || m.includes('villa') ||
       m.includes('crvena luka') || m.includes('san antonio');
-    if (isVila) {
-      return (db.smjestaj?.vile_i_posebni || []).map(v => item(v, { adresa: v.lokacija || '' }));
-    }
-
-    // Pansion / guest house
-    const isPansion = m.includes('pansion') || m.includes('guest house') || m.includes('guesthouse') ||
+    const isPansion  = m.includes('pansion') || m.includes('guest house') || m.includes('guesthouse') ||
       m.includes('pension') || m.includes('b&b');
-    if (isPansion) {
-      return (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '' }));
-    }
 
-    // Hotel upit → filtriraj hotele
-    const isHotel = m.includes('hotel') || m.includes('hotels');
-    if (isHotel) {
-      return filterByMessage(
-        (db.smjestaj?.hoteli || []).map(h => item(h, { adresa: h.lokacija || '' })),
-        message
-      );
-    }
-
-    // Generalni upit → uvijek prikazuj hotele + direktni kontakti (bez filtriranja)
     const hoteli   = (db.smjestaj?.hoteli || []).map(h => item(h, { adresa: h.lokacija || '' }));
     const kontakti = (db.smjestaj?.direktni_kontakti || []).map(p => item(p, { adresa: p.tip || '' }));
+    const kampovi  = (db.smjestaj?.kampovi || []).map(k => item(k, { adresa: k.lokacija || '' }));
+    const pansioni = (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '' }));
+    const vile     = (db.smjestaj?.vile_i_posebni || []).map(v => item(v, { adresa: v.lokacija || '' }));
+
+    // Miješani upit (2+ tipa) ili generalni smještaj → svi hoteli + direktni kontakti
+    const typeCount = [isHotel, isApartman, isKamp, isVila, isPansion].filter(Boolean).length;
+    if (typeCount >= 2 || (!isHotel && !isApartman && !isKamp && !isVila && !isPansion)) {
+      return [...hoteli, ...kontakti];
+    }
+
+    // Specifični upiti
+    if (isHotel)    return filterByMessage(hoteli, message);
+    if (isKamp)     return filterByMessage(kampovi, message);
+    if (isVila)     return vile;
+    if (isPansion)  return pansioni;
+    if (isApartman) return filterByMessage([...kontakti, ...pansioni], message);
+
     return [...hoteli, ...kontakti];
   }
   if (category === 'kornati') {
