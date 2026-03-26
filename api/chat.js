@@ -14,6 +14,7 @@ const CATEGORY_CONTEXTS = {
   kornati:     (db) => ({ grad: db.grad, kornati: db.kornati }),
   izleti:      (db) => ({ grad: db.grad, izleti: db.izleti }),
   sport:       (db) => ({ grad: db.grad, sport: db.sport }),
+  atrakcije:   (db) => ({ grad: db.grad, atrakcije: db.atrakcije }),
   dogadanja:   (db) => ({ grad: db.grad, dogadanja: db.dogadanja }),
   opcenito:    (db) => ({ grad: db.grad, opcenito: db.opcenito }),
   prakticno:   (db) => ({ grad: db.grad, prakticne_info: db.prakticne_info }),
@@ -124,6 +125,11 @@ function detectCategory(msg, lastCategory) {
     || m.includes('parkplatz') || m.includes('apotheke') || m.includes('bank') || m.includes('taxi') || m.includes('bus'))
     return 'prakticno';
 
+  if (m.includes('muzej') || m.includes('crkva') || m.includes('atrakcij') || m.includes('kultura') || m.includes('baštini') || m.includes('baština') || m.includes('samostan') || m.includes('ruševin') || m.includes('arheolog') || m.includes('povijesn') || m.includes('stošija') || m.includes('katarina') || m.includes('bazilika') || m.includes('monument') || m.includes('spomen')
+    || m.includes('museum') || m.includes('church') || m.includes('attraction') || m.includes('heritage') || m.includes('ruins') || m.includes('historic site')
+    || m.includes('museum') || m.includes('kirche') || m.includes('sehenswürdigkeit') || m.includes('kloster'))
+    return 'atrakcije';
+
   if (m.includes('povijest') || m.includes('histori') || m.includes('o biogradu') || m.includes('o gradu') || m.includes('osnovan') || m.includes('prijestolnica') || m.includes('krešimir') || m.includes('kresimir') || m.includes('zanimljiv') || m.includes('populacij') || m.includes('stanovnic') || m.includes('geografij')
     || m.includes('history') || m.includes('about') || m.includes('general') || m.includes('population') || m.includes('founded') || m.includes('capital') || m.includes('medieval')
     || m.includes('geschichte') || m.includes('über') || m.includes('einwohner') || m.includes('hauptstadt'))
@@ -147,6 +153,7 @@ function getSuggestions(category, lang) {
       izleti:      ['🏛️ Zadar — što vidjeti?', '🌊 Vransko jezero izlet?', '⛵ Kornati brodom?'],
       sport:       ['🏖 Plaže za windsurfing?', '🚴 Biciklizam oko Vranskog jezera?', '⛵ Nautika u Biogradu?'],
       dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Ljetne manifestacije?', '🎶 Koncerti na rivi?'],
+      atrakcije:   ['🏛️ Zavičajni muzej Biograd?', '⛪ Crkve i ruševine?', '🏖 Plaže Biograda?'],
       opcenito:    ['🏖 Plaže Biograda?', '⛵ Izlet na Kornate?', '🐟 Dalmatinska gastronomija?'],
       prakticno:   ['🚌 Prijevoz do Zadra?', '⛽ Benzinska postaja?', '🏥 Liječnik u Biogradu?'],
     },
@@ -158,6 +165,7 @@ function getSuggestions(category, lang) {
       kornati:     ['⛵ How to reach Kornati?', '🐟 Taverns on islands?', '🤿 Snorkeling spots?'],
       izleti:      ['🏛️ What to see in Zadar?', '🌊 Lake Vrana trip?', '⛵ Kornati by boat?'],
       sport:       ['🏖 Windsurfing beaches?', '🚴 Cycling around Lake Vrana?', '⛵ Boat rental?'],
+      atrakcije:   ['🏛️ Town museum?', '⛪ Medieval ruins?', '🏖 Biograd beaches?'],
       dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Summer events?', '🎶 Concerts on the waterfront?'],
       opcenito:    ['🏖 Biograd beaches?', '⛵ Kornati trip?', '🐟 Dalmatian food?'],
       prakticno:   ['🚌 Bus to Zadar?', '⛽ Petrol station?', '🏥 Doctor in Biograd?'],
@@ -170,6 +178,7 @@ function getSuggestions(category, lang) {
       kornati:     ['⛵ Wie erreicht man die Kornaten?', '🐟 Tavernen auf den Inseln?', '🤿 Schnorcheln?'],
       izleti:      ['🏛️ Was in Zadar sehen?', '🌊 Vranasee-Ausflug?', '⛵ Kornaten mit Boot?'],
       sport:       ['🏖 Windsurfing-Strände?', '🚴 Radtour am Vranasee?', '⛵ Bootsverleih?'],
+      atrakcije:   ['🏛️ Stadtmuseum Biograd?', '⛪ Mittelalterliche Ruinen?', '🏖 Strände von Biograd?'],
       dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Sommerveranstaltungen?', '🎶 Konzerte am Kai?'],
       opcenito:    ['🏖 Strände von Biograd?', '⛵ Kornaten-Ausflug?', '🐟 Dalmatinische Küche?'],
       prakticno:   ['🚌 Bus nach Zadar?', '⛽ Tankstelle?', '🏥 Arzt in Biograd?'],
@@ -245,6 +254,10 @@ function getCategoryItems(category, message = '') {
   }
   if (category === 'sport') {
     const svi = (db.sport?.aktivnosti || []).map(a => item(a, { adresa: a.tip || '' }));
+    return filterByMessage(svi, message);
+  }
+  if (category === 'atrakcije') {
+    const svi = (db.atrakcije?.objekti || []).map(a => item(a, { adresa: a.tip || '' }));
     return filterByMessage(svi, message);
   }
   if (category === 'dogadanja') {

@@ -240,6 +240,126 @@ export const db = {
         "recenzija": "\"Idealno za nautičare i zaljubljenike u more — odlična riba, pogled na vezove i profesionalna usluga u srcu marine.\"",
         "recenzija_izvor": "TripAdvisor",
         "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g608702-d633517-Reviews-Marina_Kornati-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+      },
+      {
+        "naziv": "Konoba Bazilika",
+        "opis": "Konoba u centru Biograda s dalmatinskom kuhinjom. Radi Mo–Sa 17:00–24:00.",
+        "tip": "konoba, dalmatinska kuhinja",
+        "slika": "",
+        "web": "http://www.konoba-bazilika.com/",
+        "karta": "https://maps.google.com/?q=Konoba+Bazilika+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Konoba Leo",
+        "opis": "Konoba s regionalnom dalmatinskom kuhinjom — riba, meso, lokalni specijaliteti.",
+        "tip": "konoba, dalmatinska kuhinja",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Konoba+Leo+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Čirjak",
+        "opis": "Restoran s roštiljem, ribom i plodovima mora. Radi Mo–Su 07:00–14:00 i 17:00–23:00.",
+        "tip": "roštilj, riba i plodovi mora",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=%C4%8Cirjak+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Peperino",
+        "opis": "Pizzeria i restoran s kapacitetom 200 mjesta. Radi 09:00–24:00. Tel: +385951976311",
+        "tip": "pizzeria, restoran",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Peperino+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Barba",
+        "opis": "Caffe bar i restoran u centru Biograda. Tel: +38523383087",
+        "tip": "restoran / caffe bar",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Barba+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Mamma Mia",
+        "opis": "Pizzeria u centru Biograda.",
+        "tip": "pizzeria",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Mamma+Mia+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Slad",
+        "opis": "Pizzeria u Biogradu na Moru.",
+        "tip": "pizzeria",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Slad+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Cocolino",
+        "opis": "Pizzeria u centru Biograda.",
+        "tip": "pizzeria",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Cocolino+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Blandona",
+        "opis": "Slastičarnica i sladoled u Biogradu na Moru.",
+        "tip": "slastičarnica, sladoled",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Blandona+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Pečenjara Brkljača",
+        "opis": "Pečenjara i roštilj restoran.",
+        "tip": "roštilj, pečenjara",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Pe%C4%8Denjara+Brklja%C4%8Da+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       }
     ],
     "savjeti": [
@@ -315,6 +435,142 @@ export const db = {
         "recenzija": "\"Kamp u borovoj šumi s direktnim izlazom na more — mirno obiteljsko okruženje, dobre sanitarije i animacija za djecu.\"",
         "recenzija_izvor": "Google",
         "recenzija_url": "https://maps.google.com/?q=Camping+Solaris+Biograd"
+      }
+    ],
+    "kampovi_ostali": [
+      {
+        "naziv": "Camp Soline",
+        "opis": "Kamp uz plažu Soline, mirno okruženje u borovoj šumi s direktnim pristupom moru.",
+        "tip": "kamp",
+        "lokacija": "Kod plaže Soline, Biograd na Moru",
+        "slika": "",
+        "web": "https://www.campsoline.com/",
+        "karta": "https://maps.google.com/?q=Camp+Soline+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Camping Filip",
+        "opis": "Obiteljski kamp u Biogradu s direktnim pristupom moru. Tel: +38523389196",
+        "tip": "kamp",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "https://www.campingfilip.com/",
+        "karta": "https://maps.google.com/?q=Camping+Filip+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Auto Camp Diana & Josip",
+        "opis": "Obiteljski autocamp na jugu Biograda uz more.",
+        "tip": "autocamp",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "http://www.autocampdiana.com/",
+        "karta": "https://maps.google.com/?q=Auto+Camp+Diana+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Camp Ljutić",
+        "opis": "Mali kamp na jugu Biograda uz more.",
+        "tip": "kamp",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Camp+Ljutic+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      }
+    ],
+    "hoteli_ostali": [
+      {
+        "naziv": "Hotel Bolero",
+        "opis": "Hotel u Biogradu na Moru uz more.",
+        "tip": "hotel",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Hotel+Bolero+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      }
+    ],
+    "privatni_smjestaj": [
+      {
+        "naziv": "Apartmani Ana",
+        "opis": "Privatni apartmani u Biogradu na Moru. Tel: +385 91 4324307",
+        "tip": "apartmani",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "http://apartmanibiograd.com",
+        "karta": "https://maps.google.com/?q=Apartmani+Ana+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Vila Smirna ★★★★",
+        "opis": "Vila s apartmanima, 4★ kategorija u Biogradu na Moru.",
+        "tip": "vila, apartmani",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "http://vila-smirna.com",
+        "karta": "https://maps.google.com/?q=Vila+Smirna+Biograd+na+Moru",
+        "ocjena": "4★",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Guest House Dia",
+        "opis": "Pansion s apartmanima, otvoren 0–24h. Tel: +385 91 338 3927",
+        "tip": "pansion, guest house",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "http://www.guesthousedia.com",
+        "karta": "https://maps.google.com/?q=Guest+House+Dia+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Apartmány Lucie",
+        "opis": "Apartmani u Biogradu, popularni kod čeških i slovačkih gostiju.",
+        "tip": "apartmani",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "https://www.apartmanylucie.com",
+        "karta": "https://maps.google.com/?q=Apartmany+Lucie+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Mobile Home Nensi",
+        "opis": "Mobilne kućice u kampu, dostupno 24/7. Tel: +385911517823",
+        "tip": "mobilni domovi",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "https://www.mobilehomenensi.com/",
+        "karta": "https://maps.google.com/?q=Mobile+Home+Nensi+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       }
     ],
     "apartmani": {
@@ -496,6 +752,85 @@ export const db = {
         "naziv": "Paragliding i rekreacijski letovi",
         "opis": "Velebit planina u blizini nudi startove za paragliding s pogledom na Jadran i Kornate.",
         "tip": "ekstremni sport"
+      },
+      {
+        "naziv": "Adventure Park Biograd",
+        "opis": "Avanturistički park s penjačkim poligonima i zip-lineovima u šumi izvan centra Biograda. Idealno za obitelji i adrenalinske turiste.",
+        "tip": "avantura, penjanje, zip-line",
+        "lokacija": "Biograd na Moru",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Adventure+Park+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Gradski stadion Kazimir i Silvio",
+        "opis": "Gradski nogometni stadion u Biogradu na Moru.",
+        "tip": "stadion, nogomet",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Gradski+stadion+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      }
+    ]
+  },
+
+  "atrakcije": {
+    "opis": "Biograd na Moru čuva bogato kulturno-povijesno nasljeđe — od ostataka benediktinskog samostana do zavičajnog muzeja i starih crkava.",
+    "objekti": [
+      {
+        "naziv": "Zavičajni muzej Biograd na Moru",
+        "opis": "Muzej u centru Biograda s izložbama o povijesti grada, arheološkim nalazima i pomorskoj baštini. Obavezan posjet za ljubitelje kulture i lokalne povijesti.",
+        "tip": "muzej, kultura",
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Zavi%C4%8Dajni+muzej+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Bazilika i Samostan Sv. Ivana Evanđelista",
+        "opis": "Ruševine benediktinskog samostana i bazilike iz 11. stoljeća — svjedok Biograda kao nekadašnje hrvatske kraljevske prijestolnice. Jedan od najvažnijih arheoloških lokaliteta u Dalmaciji.",
+        "tip": "ruševine, povijest, arheologija",
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Bazilika+Sv+Ivan+Evan%C4%91elist+Biograd",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Crkva svete Stošije",
+        "opis": "Crkva u centru Biograda, jedna od starijih sakralnih građevina u gradu.",
+        "tip": "crkva, religija, baština",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Crkva+svete+Sto%C5%A1ije+Biograd",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Crkvica svete Katarine",
+        "opis": "Ruševine crkvice sv. Katarine — mali ali zanimljiv ostatak srednjovjekovnog Biograda.",
+        "tip": "ruševine, crkva, povijest",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Crkvica+svete+Katarine+Biograd",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       }
     ]
   },
@@ -535,28 +870,72 @@ export const db = {
 
   "prakticne_info": {
     "trajekt_pasmanskim_kanalom": {
+      "naziv": "Trajekt Biograd — Tkon",
       "ruta": "Biograd — Tkon (otok Pašman)",
       "ucestalost": "Više polazaka dnevno (10–15 min vožnje)",
       "operater": "Jadrolinija",
-      "web": "https://www.jadrolinija.hr"
+      "web": "https://www.jadrolinija.hr",
+      "karta": "https://maps.google.com/?q=Ferry+Terminal+Biograd+na+Moru"
     },
     "parking": {
+      "naziv": "Parking u centru Biograda",
       "opis": "Parking u centru Biograda u sezoni je naplaćen. Preporuča se dolazak ranije ujutro ili korištenje parkirališta na periferiji.",
-      "savjet": "U srpnju i kolovozu centar je gust od turista — vozite bicikl ili koristite park & ride"
+      "savjet": "U srpnju i kolovozu centar je gust od turista — vozite bicikl ili koristite park & ride",
+      "karta": "https://maps.google.com/?q=parking+Biograd+na+Moru"
     },
     "prijevoz": {
       "autobus": "Autobusi prometuju između Biograda, Zadra i Šibenika. Autobusni kolodvor u centru.",
       "taksi": "Taksi dostupan u centru i marini",
       "rent_a_car": "Više rent-a-car tvrtki dostupno u centru i na marini"
     },
+    "ljekarne": [
+      {
+        "naziv": "Ljekarne Pervan",
+        "adresa": "Biograd na Moru — centar",
+        "telefon": "",
+        "karta": "https://maps.google.com/?q=Ljekarne+Pervan+Biograd+na+Moru"
+      },
+      {
+        "naziv": "Ljekarne Soline Farm",
+        "adresa": "Biograd na Moru",
+        "telefon": "+385 23 385111",
+        "karta": "https://maps.google.com/?q=Ljekarne+Soline+Farm+Biograd+na+Moru"
+      },
+      {
+        "naziv": "Ljekarna Švaljek",
+        "adresa": "Biograd na Moru — šira zona",
+        "telefon": "",
+        "karta": "https://maps.google.com/?q=Ljekarna+Svaljek+Biograd+na+Moru"
+      }
+    ],
     "zdravstvo": {
       "ambulanta": "Dom zdravlja Biograd na Moru — Šibuljina bb",
-      "ljekarna": "Ljekarna u centru Biograda — radi cijele godine, produženo radno vrijeme ljeti",
+      "ljekarna": "3 ljekarne u Biogradu — radi cijele godine, produženo radno vrijeme ljeti",
       "hitna": "Hitna pomoć: 194 | Policija: 192 | Vatrogasci: 193 | Europski broj: 112"
     },
+    "banke_atm": [
+      { "naziv": "PBZ", "tip": "banka", "karta": "https://maps.google.com/?q=PBZ+Biograd+na+Moru" },
+      { "naziv": "Erste Bank", "tip": "banka", "karta": "https://maps.google.com/?q=Erste+Bank+Biograd+na+Moru" },
+      { "naziv": "OTP Banka", "tip": "bankomat", "karta": "https://maps.google.com/?q=OTP+Banka+Biograd+na+Moru" },
+      { "naziv": "Zagrebačka banka (ZABA)", "tip": "bankomat", "karta": "https://maps.google.com/?q=Zagreba%C4%8Dka+banka+Biograd+na+Moru" },
+      { "naziv": "Kreditna banka Zagreb", "tip": "bankomat", "karta": "https://maps.google.com/?q=Kreditna+banka+Zagreb+Biograd+na+Moru" }
+    ],
+    "benzinska": [
+      {
+        "naziv": "Auto Optimus",
+        "adresa": "Biograd na Moru",
+        "karta": "https://maps.google.com/?q=Auto+Optimus+Biograd+na+Moru"
+      }
+    ],
+    "supermarketi": [
+      { "naziv": "Konzum", "karta": "https://maps.google.com/?q=Konzum+Biograd+na+Moru" },
+      { "naziv": "EuroSpin", "karta": "https://maps.google.com/?q=EuroSpin+Biograd+na+Moru" },
+      { "naziv": "Bure Market", "web": "https://www.bure.hr/", "karta": "https://maps.google.com/?q=Bure+Market+Biograd+na+Moru" },
+      { "naziv": "Studenac", "radno": "Mo–Su 07:00–22:00", "karta": "https://maps.google.com/?q=Studenac+Biograd+na+Moru" }
+    ],
     "internet_i_placanje": {
       "wifi": "Besplatan WiFi u centru, marini i većini restorana i kafića",
-      "bankomati": "Više bankomata u centru Biograda — Erste, Zaba, PBZ",
+      "bankomati": "5+ bankomata u centru Biograda — Erste, ZABA, PBZ, OTP, Kreditna banka Zagreb",
       "placanje": "Kartice prihvaćene u većini objekata. Euro (EUR) je službena valuta od 2023."
     },
     "sezonalnost": {
