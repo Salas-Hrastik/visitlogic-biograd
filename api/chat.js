@@ -240,31 +240,41 @@ function getCategoryItems(category, message = '') {
   if (category === 'smjestaj') {
     const m = (message || '').toLowerCase();
 
-    // Privatni smještaj / apartmani → prikaži rezervacijske platforme
+    // Privatni smještaj / apartmani → direktni kontakti
     const isApartman = m.includes('apartman') || m.includes('privat') || m.includes('soba') ||
-      m.includes('airbnb') || m.includes('booking') || m.includes('rent') ||
-      m.includes('apartment') || m.includes('private') || m.includes('room') ||
+      m.includes('rent') || m.includes('apartment') || m.includes('private') || m.includes('room') ||
       m.includes('wohnung') || m.includes('ferienwohnung');
-
     if (isApartman) {
-      return (db.smjestaj?.platforme_rezervacija || []).map(p => item(p, { adresa: p.tip || '' }));
+      const kontakti = (db.smjestaj?.direktni_kontakti || []).map(p => item(p, { adresa: p.tip || '' }));
+      const pansioni = (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '' }));
+      return filterByMessage([...kontakti, ...pansioni], message);
     }
 
     // Kamp → kampovi
     const isKamp = m.includes('kamp') || m.includes('camping') || m.includes('šator') ||
-      m.includes('karavan') || m.includes('mobile home') || m.includes('zelt') || m.includes('camping');
+      m.includes('karavan') || m.includes('mobile home') || m.includes('zelt');
     if (isKamp) {
-      const svi = [
-        ...(db.smjestaj?.kampovi || []),
-        ...(db.smjestaj?.kampovi_ostali || [])
-      ].map(k => item(k));
-      return filterByMessage(svi, message);
+      return filterByMessage((db.smjestaj?.kampovi || []).map(k => item(k)), message);
     }
 
-    // Generalni upit → hoteli + platforme
-    const hoteli    = (db.smjestaj?.hoteli  || []).map(h => item(h));
-    const platforme = (db.smjestaj?.platforme_rezervacija || []).map(p => item(p, { adresa: p.tip || '' }));
-    return filterByMessage([...hoteli, ...platforme], message);
+    // Vila / bungalov / poseban smještaj
+    const isVila = m.includes('vila') || m.includes('bungalov') || m.includes('villa') ||
+      m.includes('crvena luka') || m.includes('san antonio');
+    if (isVila) {
+      return (db.smjestaj?.vile_i_posebni || []).map(v => item(v, { adresa: v.lokacija || '' }));
+    }
+
+    // Pansion / guest house
+    const isPansion = m.includes('pansion') || m.includes('guest house') || m.includes('guesthouse') ||
+      m.includes('pension') || m.includes('b&b');
+    if (isPansion) {
+      return (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '' }));
+    }
+
+    // Generalni upit → hoteli + direktni kontakti
+    const hoteli   = (db.smjestaj?.hoteli || []).map(h => item(h, { adresa: h.lokacija || '' }));
+    const kontakti = (db.smjestaj?.direktni_kontakti || []).map(p => item(p, { adresa: p.tip || '' }));
+    return filterByMessage([...hoteli, ...kontakti], message);
   }
   if (category === 'kornati') {
     const k = db.kornati;
@@ -426,13 +436,15 @@ TURISTIČKI PROFILI POSJETITELJA:
 - Gastronomski turisti
 - Izletnici (Kornati, Zadar, NP Krka)
 
-PRIVATNI SMJEŠTAJ — KLJUČNE UPUTE:
-Biograd ima 1000+ privatnih apartmana i soba. Nemoj ih nabrajati — uputi na platforme:
-- Booking.com: https://www.booking.com/searchresults.hr.html?ss=Biograd+na+Moru (najveći izbor)
-- Airbnb: https://www.airbnb.com/s/Biograd-na-Moru--Croatia/homes (kuće, apartmani)
-- Škver Tours (lokalna agencija): https://www.skver-tours.com/?l=hr&ispis=ponuda&vrsta=apart&id=672 | Tel: +385 233 844 57
+PRIVATNI SMJEŠTAJ — DIREKTNI KONTAKTI (bez provizije):
+Biograd ima 1000+ privatnih apartmana. Uvijek upućuj na DIREKTNE kontakte — bez Booking.com/Airbnb:
+- TZ katalog: https://www.discover-biograd.com/en/accommodation (hoteli, kampovi, privatni smještaj)
+- BiogradBooking: https://www.biogradbooking.com (privatni smještaj, direktni kontakti vlasnika)
+- Škver Tours: https://www.skver-tours.com/?l=hr&ispis=ponuda&vrsta=apart&id=672 | Tel: +385 233 844 57
+- Ilirija Resort: reservations@ilirijabiograd.com | Tel: +385 23 383 556
 - Cijenovno: 48–170+ EUR/noć ovisno o veličini i sezoni
 - Rezervacija: srpanj/kolovoz → 3–4 mj. unaprijed, rujan/lipanj → 2–4 tjedna
+VAŽNO: nikad ne predlažaj Booking.com ili Airbnb — gost treba direktno kontaktirati vlasnika ili lokalnu agenciju!
 
 SPECIFIČNI SAVJETI:
 - Za NP Kornati: izlet brodom iz Biograda (8–10 sati, ~50–80 EUR), ili charter brod
