@@ -178,55 +178,53 @@ function getSuggestions(category, lang) {
   return (map[lang] || map.hr)[category] || [];
 }
 
-// ===== ITEM KARTICE — atrakcije, plaže, restorani =====
+// ===== ITEM KARTICE — uzima sve dostupne podatke iz baze =====
+function item(o, extra = {}) {
+  return {
+    naziv:           o.naziv || '',
+    slika:           o.slika || '',
+    adresa:          o.adresa || o.lokacija || o.tip || o.udaljenost || '',
+    telefon:         o.telefon || '',
+    web:             o.web || '',
+    karta:           o.karta || '',
+    recenzija:       o.recenzija || '',
+    ocjena:          o.ocjena || '',
+    recenzija_izvor: o.recenzija_izvor || '',
+    recenzija_url:   o.recenzija_url || '',
+    ...extra
+  };
+}
+
 function getCategoryItems(category) {
   if (category === 'plaze') {
-    return (db.plaze || []).map(p => ({
-      naziv: p.naziv, slika: '', adresa: p.tip || '',
-      telefon: '', web: '', karta: p.karta || '',
-      recenzija: p.opis || '', ocjena: '', recenzija_izvor: '', recenzija_url: ''
-    }));
+    return (db.plaze || []).map(p => item(p, { adresa: p.tip || '' }));
   }
   if (category === 'gastronomija') {
-    return (db.gastronomija?.restorani || []).map(r => ({
-      naziv: r.naziv, slika: '', adresa: r.tip || '',
-      telefon: r.telefon || '', web: r.web || '', karta: r.karta || '',
-      recenzija: r.opis || '', ocjena: '', recenzija_izvor: '', recenzija_url: ''
-    }));
+    return (db.gastronomija?.restorani || []).map(r => item(r, { adresa: r.tip || '' }));
+  }
+  if (category === 'nautika') {
+    const marina = db.nautika?.marina;
+    return marina ? [item(marina, { adresa: marina.adresa || '' })] : [];
   }
   if (category === 'smjestaj') {
-    const hoteli = (db.smjestaj?.hoteli || []).map(h => ({
-      naziv: h.naziv, slika: '', adresa: h.lokacija || '',
-      telefon: '', web: h.web || '', karta: h.karta || '',
-      recenzija: h.opis || '', ocjena: '', recenzija_izvor: '', recenzija_url: ''
-    }));
-    const kampovi = (db.smjestaj?.kampovi || []).map(k => ({
-      naziv: k.naziv, slika: '', adresa: k.lokacija || '',
-      telefon: '', web: k.web || '', karta: k.karta || '',
-      recenzija: k.opis || '', ocjena: '', recenzija_izvor: '', recenzija_url: ''
-    }));
+    const hoteli  = (db.smjestaj?.hoteli  || []).map(h => item(h));
+    const kampovi = (db.smjestaj?.kampovi || []).map(k => item(k));
     return [...hoteli, ...kampovi];
   }
+  if (category === 'kornati') {
+    const k = db.kornati;
+    return k ? [item(k, { adresa: k.polaziste || '' })] : [];
+  }
   if (category === 'izleti') {
-    return (db.izleti?.destinacije || []).map(d => ({
-      naziv: d.naziv, slika: '', adresa: d.udaljenost ? `${d.udaljenost}` : '',
-      telefon: '', web: d.web || '', karta: d.karta || '',
-      recenzija: d.opis || '', ocjena: '', recenzija_izvor: '', recenzija_url: ''
+    return (db.izleti?.destinacije || []).map(d => item(d, {
+      adresa: d.udaljenost ? `🚗 ${d.udaljenost}` : ''
     }));
   }
   if (category === 'sport') {
-    return (db.sport?.aktivnosti || []).map(a => ({
-      naziv: a.naziv, slika: '', adresa: a.lokacija || a.tip || '',
-      telefon: '', web: '', karta: '',
-      recenzija: a.opis || '', ocjena: '', recenzija_izvor: '', recenzija_url: ''
-    }));
+    return (db.sport?.aktivnosti || []).map(a => item(a, { adresa: a.tip || '' }));
   }
   if (category === 'dogadanja') {
-    return (db.dogadanja?.eventi || []).map(e => ({
-      naziv: e.naziv, slika: '', adresa: e.termin || '',
-      telefon: '', web: e.web || '', karta: e.lokacija || '',
-      recenzija: e.opis || '', ocjena: '', recenzija_izvor: '', recenzija_url: ''
-    }));
+    return (db.dogadanja?.eventi || []).map(e => item(e, { adresa: e.termin || '' }));
   }
   return [];
 }

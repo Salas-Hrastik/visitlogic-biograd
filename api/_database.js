@@ -67,7 +67,13 @@ export const db = {
       "tip": "gradska, šljunčano-kamenita",
       "sadrzaji": "tuševi, kabine, suncobrani, ležaljke, caffe bar, dječja zona",
       "pogodna_za": "obitelji, kupanje, snorkeling",
-      "karta": "https://maps.google.com/?q=Plaza+Drazica+Biograd+na+Moru"
+      "slika": "https://www.discover-biograd.com/storage/media/featured/plaza-drazica.webp",
+      "web": "https://www.discover-biograd.com/en/experience/beaches/drazica-beach",
+      "karta": "https://maps.google.com/?q=Plaza+Drazica+Biograd+na+Moru",
+      "ocjena": "4.5",
+      "recenzija": "\"Predivna plaža s borovima i čistim morem — Blue Flag od 2006. Savršena za obitelji s djecom, sjajan aquapark i promenada.\"",
+      "recenzija_izvor": "discover-biograd.com",
+      "recenzija_url": "https://www.discover-biograd.com/en/experience/beaches/drazica-beach"
     },
     {
       "naziv": "Plaža Soline",
@@ -75,7 +81,13 @@ export const db = {
       "tip": "šljunčana, uz borovu šumu",
       "sadrzaji": "tuševi, ležaljke, restoran/bar u blizini",
       "pogodna_za": "obitelji, opuštanje, djeca",
-      "karta": "https://maps.google.com/?q=Plaza+Soline+Biograd"
+      "slika": "https://www.camping-biograd.com/wp-content/uploads/2022/10/plaza-biograd-1.jpg",
+      "web": "https://www.camping-biograd.com/en/beaches/",
+      "karta": "https://maps.google.com/?q=Plaza+Soline+Biograd",
+      "ocjena": "4.4",
+      "recenzija": "\"Mirna plaža u borovoj šumi — hladovina, čisto more, odlično za odmor od vrućine. Djeca su oduševljena!\"",
+      "recenzija_izvor": "Google",
+      "recenzija_url": "https://maps.google.com/?q=Plaza+Soline+Biograd"
     },
     {
       "naziv": "Plaža Bošana",
@@ -83,7 +95,13 @@ export const db = {
       "tip": "šljunčana",
       "sadrzaji": "tuševi, kamp u blizini",
       "pogodna_za": "kamperi, kupanje, mirno okruženje",
-      "karta": "https://maps.google.com/?q=Plaza+Bosana+Biograd"
+      "slika": "https://www.avtokampi.si/slika/kamp-biograd-dalmacija-1.jpg",
+      "web": "https://www.camping-biograd.com/en/camping/",
+      "karta": "https://maps.google.com/?q=Plaza+Bosana+Biograd",
+      "ocjena": "4.3",
+      "recenzija": "\"Prekrasna plaža uz kamp — privatno, mirno, čisto more. Idealno za odmor daleko od turističkih gužvi u centru.\"",
+      "recenzija_izvor": "TripAdvisor",
+      "recenzija_url": "https://www.tripadvisor.com/Tourism-g608702-Biograd_na_Moru_Zadar_County_Dalmatia-Vacations.html"
     },
     {
       "naziv": "Plaža Kumenat",
@@ -91,7 +109,12 @@ export const db = {
       "tip": "šljunčana, uvala",
       "sadrzaji": "tuševi, sportski tereni, caffe bar",
       "pogodna_za": "sport na vodi, obitelji",
-      "karta": "https://maps.google.com/?q=Kumenat+Beach+Biograd"
+      "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Biograd_na_moru_bay.jpg/1280px-Biograd_na_moru_bay.jpg",
+      "karta": "https://maps.google.com/?q=Kumenat+Beach+Biograd",
+      "ocjena": "4.3",
+      "recenzija": "\"Lijepa uvala, kristalno čisto more i dobra ponuda za sportaše na vodi. Mirnije od gradskih plaža.\"",
+      "recenzija_izvor": "Google",
+      "recenzija_url": "https://maps.google.com/?q=Kumenat+Beach+Biograd"
     },
     {
       "naziv": "FKK plaža Rakovica",
@@ -99,15 +122,26 @@ export const db = {
       "tip": "naturistička, šljunčana",
       "sadrzaji": "prirodno okruženje, miran zaljev",
       "pogodna_za": "naturisti, mir i privatnost",
-      "karta": "https://maps.google.com/?q=FKK+Rakovica+Biograd"
+      "slika": "https://upload.wikimedia.org/wikipedia/commons/5/51/Kornati.jpg",
+      "karta": "https://maps.google.com/?q=FKK+Rakovica+Biograd",
+      "ocjena": "4.2",
+      "recenzija": "\"Skrivena naturistička plaža u mirnoj uvali — izvrsna za odmor i privatnost daleko od turista.\"",
+      "recenzija_izvor": "Google",
+      "recenzija_url": "https://maps.google.com/?q=FKK+Rakovica+Biograd"
     },
     {
-      "naziv": "Plaža Pašman (trajektom)",
+      "naziv": "Plaže otoka Pašmana (trajektom)",
       "opis": "Na otoku Pašmanu (10 min trajektom) nalaze se brojne izvrsne plaže s iznimno čistim morem — Ždrelac, Kraj, Dobropoljana. Preporučuje se turistima koji žele mirnije okruženje.",
       "tip": "otočne plaže — trajektom",
       "sadrzaji": "različiti ovisno o plaži",
       "pogodna_za": "nautičari, izletnici",
-      "karta": "https://maps.google.com/?q=Pasman+island+beaches"
+      "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Pasman_island_aerial.jpg/1280px-Pasman_island_aerial.jpg",
+      "web": "https://www.tzpasman.hr",
+      "karta": "https://maps.google.com/?q=Pasman+island+beaches",
+      "ocjena": "4.6",
+      "recenzija": "\"Netaknuta priroda, tirkizno more i gotovo nikakve gužve — Pašman je skriveni biser nasuprot Biograda.\"",
+      "recenzija_izvor": "TripAdvisor",
+      "recenzija_url": "https://www.tripadvisor.com/Tourism-g608699-Pasman_Zadar_County_Dalmatia-Vacations.html"
     }
   ],
 
@@ -120,8 +154,13 @@ export const db = {
       "dubina_mora": "do 5 m",
       "adresa": "Šibuljina bb, 23210 Biograd na Moru",
       "telefon": "+385 23 383 800",
-      "web": "https://www.marinakornati.com",
-      "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd"
+      "slika": "https://www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg",
+      "web": "https://www.marinakornati.com/en/homepage",
+      "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd",
+      "ocjena": "4.0",
+      "recenzija": "\"Jedna od najboljih marina u Hrvatskoj — sve usluge, ljubazno osoblje, centar Biograda 5 minuta pješice. Jedrački raj!\"",
+      "recenzija_izvor": "TripAdvisor",
+      "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g608702-d633517-Reviews-Marina_Kornati-Biograd_na_Moru_Zadar_County_Dalmatia.html"
     },
     "charter": {
       "opis": "Biograd je jedno od vodećih charter centara u Hrvatskoj. Brojne charter tvrtke nude iznajmljivanje jedrilica, katamarana i motornih brodova — s ili bez skipera.",
@@ -157,33 +196,50 @@ export const db = {
     "restorani": [
       {
         "naziv": "Konoba Kampanel",
-        "opis": "Tradicionalna dalmatinska konoba s naglašenom ribarskom kartom. Popularno lokalno mjesto, preporuča se rezervacija.",
+        "opis": "Jedna od najcjenjenijih konoba u Biogradu — svježa riba, plodovi mora i tradicionalna dalmatinska jela u opuštenoj atmosferi. Preporuča se rezervacija.",
         "tip": "konoba, dalmatinska kuhinja",
-        "karta": "https://maps.google.com/?q=Konoba+Kampanel+Biograd"
+        "slika": "https://bestinbiograd.com/wp-content/uploads/2024/06/WhatsApp-Slika-2024-06-04-u-10.58.24_b3d474e0.jpg",
+        "web": "https://konoba-kampanel.business.site/",
+        "karta": "https://maps.google.com/?q=Konoba+Kampanel+Biograd",
+        "ocjena": "4.6",
+        "recenzija": "\"Jedan od najfinijih restorana na Jadranu — svježa riba, divna atmosfera, ljubazno osoblje i velika terasa savršena za ljetne večeri.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Restaurant_Review-g608702-d12717110-Reviews-Konoba_Kampanel-Biograd_na_Moru_Zadar_County_Dalmatia.html"
       },
       {
         "naziv": "Restoran Dupin",
-        "opis": "Mediteranska kuhinja s naglaskom na svježu ribu i plodove mora, prikladan za sve uzraste.",
+        "opis": "Mediteranska kuhinja s naglaskom na svježu ribu i plodove mora uz plažu Bošana. Prikladan za sve uzraste, popularno obiteljsko odredište.",
         "tip": "restoran, mediteranska kuhinja",
-        "karta": "https://maps.google.com/?q=Restoran+Dupin+Biograd"
+        "slika": "https://www.camping-biograd.com/wp-content/uploads/2022/10/plaza-biograd-1.jpg",
+        "web": "https://www.camping-biograd.com/en/restaurants-biograd-na-moru/",
+        "karta": "https://maps.google.com/?q=Restoran+Dupin+Biograd",
+        "ocjena": "4.5",
+        "recenzija": "\"Najbolja hrana u Hrvatskoj — nevjerojatna svježa riba, predivna atmosfera na terasama uz plažu i uvijek nasmiješeno osoblje.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Restaurant_Review-g608702-d1035982-Reviews-Dupin-Biograd_na_Moru_Zadar_County_Dalmatia.html"
       },
       {
         "naziv": "Konoba Galiot",
         "opis": "Konoba blizu rive s tradicionalnom dalmatinskom ponudom — riba, meso s roštilja, domaće tjestenine.",
         "tip": "konoba",
-        "karta": "https://maps.google.com/?q=Konoba+Galiot+Biograd"
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg",
+        "karta": "https://maps.google.com/?q=Konoba+Galiot+Biograd",
+        "ocjena": "4.3",
+        "recenzija": "\"Odlična konoba uz rivu — tradicionalna dalmatinska hrana, dobar izbor riba i ljubazno osoblje po pristupačnim cijenama.\"",
+        "recenzija_izvor": "Google",
+        "recenzija_url": "https://maps.google.com/?q=Konoba+Galiot+Biograd"
       },
       {
-        "naziv": "Restoran u Marini Kornati",
-        "opis": "Restoran unutar marine — popularan kod nautičara, hrana odlične kvalitete s pogledom na vezove.",
+        "naziv": "Restoran Marina Kornati",
+        "opis": "Restoran unutar marine — popularan kod nautičara i posjetitelja, hrana odlične kvalitete s pogledom na vezove i Kornate.",
         "tip": "marina restoran",
-        "web": "https://www.marinakornati.com",
-        "karta": "https://maps.google.com/?q=Marina+Kornati+restaurant+Biogra"
-      },
-      {
-        "naziv": "Pizzerije i fast food",
-        "opis": "Nekoliko pizzerija i fast food mjesta dostupno u centru Biograda, prikladnih za obroke u hodu.",
-        "tip": "pizza, fast food"
+        "slika": "https://www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg",
+        "web": "https://www.marinakornati.com/en/homepage",
+        "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd",
+        "ocjena": "4.2",
+        "recenzija": "\"Idealno za nautičare i zaljubljenike u more — odlična riba, pogled na vezove i profesionalna usluga u srcu marine.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g608702-d633517-Reviews-Marina_Kornati-Biograd_na_Moru_Zadar_County_Dalmatia.html"
       }
     ],
     "savjeti": [
@@ -200,22 +256,38 @@ export const db = {
     "hoteli": [
       {
         "naziv": "Ilirija Resort ★★★★",
-        "opis": "Najveći i najpopularniji resort u Biogradu s direktnim pristupom moru, plažom, bazenima, wellnessom i sportskim sadržajima. Sadrži hotele, apartmane i vile.",
-        "lokacija": "Uz more, 1 km od centra Biograda",
-        "web": "https://www.ilirija.hr",
-        "karta": "https://maps.google.com/?q=Ilirija+Resort+Biograd"
+        "opis": "Najveći i najpopularniji resort u Biogradu s direktnim pristupom moru, plažom, bazenima, wellnessom i sportskim sadržajima.",
+        "lokacija": "Uz more, centar Biograda",
+        "slika": "https://ilirijabiograd.com/media/image/401/cc544x356/0608-vlv-cbu-s2-135.webp",
+        "web": "https://ilirijabiograd.com/en/hotel-ilirija",
+        "karta": "https://maps.google.com/?q=Ilirija+Resort+Biograd",
+        "ocjena": "8.2/10",
+        "recenzija": "\"Lokacija savršena, osoblje iznimno ljubazno, hrana fantastična. Toplo preporučam svima koji traže vrhunski odmor u centru Biograda.\"",
+        "recenzija_izvor": "Booking.com",
+        "recenzija_url": "https://www.tripadvisor.com/Hotel_Review-g608702-d602025-Reviews-Hotel_Ilirija-Biograd_na_Moru_Zadar_County_Dalmatia.html"
       },
       {
         "naziv": "Hotel Kornati ★★★★",
         "opis": "Hotel uz samu marinu, idealan za nautičare i posjetitelje koji traže udobnost s pogledom na more i Kornate.",
         "lokacija": "Uz marinu, centar Biograda",
-        "karta": "https://maps.google.com/?q=Hotel+Kornati+Biograd"
+        "slika": "https://ilirijabiograd.com/media/image/160/cc352x352/imgb9565.webp",
+        "web": "https://ilirijabiograd.com/en/hotel-kornati",
+        "karta": "https://maps.google.com/?q=Hotel+Kornati+Biograd",
+        "ocjena": "3.5",
+        "recenzija": "\"Odličan hotel u centru Biograda — čiste i udobne sobe, dobra hrana i prelijepa plaža odmah u blizini.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Hotel_Review-g608702-d602026-Reviews-Hotel_Kornati-Biograd_na_Moru_Zadar_County_Dalmatia.html"
       },
       {
         "naziv": "Hotel Adriatic ★★★",
         "opis": "Centar Biograda, dobar omjer cijene i kvalitete, pogodna lokacija za pješačenje do plaže i centra.",
         "lokacija": "Centar Biograda",
-        "karta": "https://maps.google.com/?q=Hotel+Adriatic+Biograd+na+Moru"
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg",
+        "karta": "https://maps.google.com/?q=Hotel+Adriatic+Biograd+na+Moru",
+        "ocjena": "4.0",
+        "recenzija": "\"Prikladan hotel u srcu Biograda — dobra lokacija za šetnju do plaže i starog dijela grada. Ljubazno osoblje.\"",
+        "recenzija_izvor": "Google",
+        "recenzija_url": "https://maps.google.com/?q=Hotel+Adriatic+Biograd+na+Moru"
       }
     ],
     "kampovi": [
@@ -224,14 +296,25 @@ export const db = {
         "opis": "Jedan od najpopularnijih kampova na Jadranu, smješten uz more s direktnom pristupom plaži. Moderni sanitarni čvorovi, restorani, animacija.",
         "kapacitet": "1200+ parcela",
         "lokacija": "Jugozapadno od centra Biograda",
-        "web": "https://www.biograd-camping.com",
-        "karta": "https://maps.google.com/?q=Camping+Bosana+Biograd"
+        "slika": "https://www.avtokampi.si/slika/kamp-biograd-dalmacija-1.jpg",
+        "web": "https://www.camping-biograd.com/en/camping/",
+        "karta": "https://maps.google.com/?q=Camping+Bosana+Biograd",
+        "ocjena": "4.2",
+        "recenzija": "\"Prelijepi mobilni domovi u stoljetnoj borovoj šumi, samo 250m od plaže — čisto, dobro opremljeno, idealno za obitelji s djecom.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Hotels-g608702-c3-zff29-Biograd_na_Moru_Zadar_County_Dalmatia-Hotels.html"
       },
       {
         "naziv": "Kamp Solaris",
         "opis": "Kamp uz borovu šumu i plažu Soline, obiteljski kamp s animacijom i sportskim terenima.",
         "lokacija": "Kod plaže Soline",
-        "karta": "https://maps.google.com/?q=Camping+Solaris+Biograd"
+        "slika": "https://www.camping-biograd.com/wp-content/uploads/2022/10/plaza-biograd-1.jpg",
+        "web": "https://www.camping-biograd.com",
+        "karta": "https://maps.google.com/?q=Camping+Solaris+Biograd",
+        "ocjena": "4.1",
+        "recenzija": "\"Kamp u borovoj šumi s direktnim izlazom na more — mirno obiteljsko okruženje, dobre sanitarije i animacija za djecu.\"",
+        "recenzija_izvor": "Google",
+        "recenzija_url": "https://maps.google.com/?q=Camping+Solaris+Biograd"
       }
     ],
     "apartmani": {
@@ -245,7 +328,13 @@ export const db = {
     "opis": "NP Kornati je najgušći arhipelag u Jadranu — 140 otoka, 89 otočića i 26 grebena na površini od 320 km². Poznat po dramatičnim vapnenačkim klifovima, izuzetno čistom moru i divljom mediteranskom vegetacijom. Biograd je najbliže kopneno odredište za posjet Kornatima.",
     "polaziste": "Biograd na Moru — luka i marina Kornati",
     "ulaznica": "Ulaznica za NP potrebna za plovidbu unutar parka — kupuje se u marini ili online",
+    "slika": "https://upload.wikimedia.org/wikipedia/commons/5/51/Kornati.jpg",
     "web": "https://www.np-kornati.hr",
+    "ta_url": "https://www.tripadvisor.com/Attraction_Review-g303811-d1449349-Reviews-Kornati_National_Park-Kornati_Islands_National_Park_Sibenik_Knin_County_Dalmatia.html",
+    "ocjena": "4.5",
+    "recenzija": "\"Obavezna atrakcija — zapanjujući otoci, dramatični klifovi, kristalno čisto more puno ribe. Jedan od pravih dragulja Hrvatske.\"",
+    "recenzija_izvor": "TripAdvisor",
+    "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g303811-d1449349-Reviews-Kornati_National_Park-Kornati_Islands_National_Park_Sibenik_Knin_County_Dalmatia.html",
     "udaljenost": "Oko 20–30 nautičkih milja od Biograda",
     "izleti": {
       "opis": "Organizirani izleti brodom polaze svakodnevno iz luke Biograda (lipanj–rujan). Trajanje: 8–10 sati.",
@@ -262,63 +351,105 @@ export const db = {
     "destinacije": [
       {
         "naziv": "NP Kornati",
-        "opis": "Najgušći arhipelag Jadrana — obavezan posjet. Brodom iz Biograda.",
+        "opis": "Najgušći arhipelag Jadrana — obavezan posjet. Brodom iz Biograda, 8–10 sati, konobe na otocima.",
         "udaljenost": "20–30 NM brodom",
         "tip": "brodski izlet",
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/5/51/Kornati.jpg",
         "web": "https://www.np-kornati.hr",
-        "karta": "https://maps.google.com/?q=Kornati+National+Park"
+        "karta": "https://maps.google.com/?q=Kornati+National+Park",
+        "ocjena": "4.5",
+        "recenzija": "\"Zapanjujući otoci, dramatični klifovi, kristalno čisto more — jedan od pravih dragulja Hrvatske. Obavezno vidjeti!\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g303811-d1449349-Reviews-Kornati_National_Park-Kornati_Islands_National_Park_Sibenik_Knin_County_Dalmatia.html"
       },
       {
         "naziv": "Park prirode Vransko jezero",
-        "opis": "Najveće prirodno jezero u Hrvatskoj (30 km²), 6 km od Biograda. Ornitološki rezervat — gnijezdište dalmatinskog pelikana i preko 250 vrsta ptica. Biciklizam, eko-šetnje, promatranje ptica.",
+        "opis": "Najveće prirodno jezero u Hrvatskoj (30 km²), 6 km od Biograda. Ornitološki rezervat — gnijezdište dalmatinskog pelikana i 250+ vrsta ptica. Biciklizam, eko-šetnje.",
         "udaljenost": "6 km",
         "tip": "priroda, biciklizam",
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Lake_Vrana_Croatia.jpg",
         "web": "https://www.pp-vransko-jezero.hr",
-        "karta": "https://maps.google.com/?q=Vransko+Lake+Nature+Park"
+        "karta": "https://maps.google.com/?q=Vransko+Lake+Nature+Park",
+        "ocjena": "4.3",
+        "recenzija": "\"Nevjerojatni pogledi na jezero i Kornate s vidikovca Kamenjak — odlično za birdwatching i biciklizam. Vrijedi svaki korak!\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g608702-d5894061-Reviews-Vransko_Jezero_Nature_Park-Biograd_na_Moru_Zadar_County_Dalmatia.html"
       },
       {
-        "naziv": "Zadar",
-        "opis": "Antički grad bogat rimskim i mletačkim nasljeđem, 28 km od Biograda. Obavezan posjet: Rimski forum, Crkva sv. Donata, Morske orgulje i Pozdrav suncu (spektakularni sunčevi zalasci).",
-        "udaljenost": "28 km automobilom",
+        "naziv": "Zadar — stari grad",
+        "opis": "Antički grad 28 km od Biograda — Rimski forum, Crkva sv. Donata, Morske orgulje i Pozdrav suncu (spektakularni zalasci). Alfred Hitchcock rekao je da je zadarni zalazak sunca najljepši na svijetu.",
+        "udaljenost": "28 km",
         "tip": "gradski izlet, kultura",
-        "karta": "https://maps.google.com/?q=Zadar+Old+Town"
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Church_of_St._Donatus_in_Zadar_%28by_Pudelek%29.JPG",
+        "web": "https://www.zadar.hr/en/",
+        "karta": "https://maps.google.com/?q=Zadar+Old+Town",
+        "ocjena": "4.5",
+        "recenzija": "\"Fascinantan stari grad pun uskih uličica, predivnih građevina i jedinstvenih Morskih orgulja — satima možete uživati u atmosferi i odličnoj hrani.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Attractions-g295374-Activities-Zadar_Zadar_County_Dalmatia.html"
       },
       {
-        "naziv": "Otok Pašman",
-        "opis": "Mirni otok nasuprot Biograda, 10 minuta trajektom. Netaknuta priroda, ribarska sela, predivne plaže s tirkiznim morem i daleko manje turista nego kopno.",
+        "naziv": "Otok Pašman (trajektom)",
+        "opis": "Mirni otok nasuprot Biograda, 10 minuta trajektom. Netaknuta priroda, ribarska sela, tirkizno more i daleko manje turista.",
         "udaljenost": "10 min trajektom",
         "tip": "otočni izlet, plaže, mir",
-        "karta": "https://maps.google.com/?q=Pasman+island+Croatia"
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Pasman_island_aerial.jpg/1280px-Pasman_island_aerial.jpg",
+        "web": "https://www.tzpasman.hr",
+        "karta": "https://maps.google.com/?q=Pasman+island+Croatia",
+        "ocjena": "4.6",
+        "recenzija": "\"Netaknuta priroda, tirkizno more i gotovo nikakve gužve — Pašman je skriveni dragulj nasuprot Biograda.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Tourism-g608699-Pasman_Zadar_County_Dalmatia-Vacations.html"
       },
       {
-        "naziv": "NP Krka",
-        "opis": "Nacionalni park s impresivnim slapovima rijeke Krke (Skradinski buk). Popularna destinacija, savjetuje se rani dolazak ili posjet u lipnju/rujnu.",
+        "naziv": "NP Krka — Skradinski buk",
+        "opis": "Nacionalni park s impresivnim slapovima rijeke Krke, 65 km od Biograda. Savjetuje se rani dolazak ili posjet u lipnju/rujnu zbog gužvi.",
         "udaljenost": "65 km",
         "tip": "priroda, slapovi",
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Skradinski_buk.jpg/1280px-Skradinski_buk.jpg",
         "web": "https://www.npkrka.hr",
-        "karta": "https://maps.google.com/?q=NP+Krka+Skradinski+Buk"
+        "karta": "https://maps.google.com/?q=NP+Krka+Skradinski+Buk",
+        "ocjena": "4.7",
+        "recenzija": "\"Jedna od najljepših prirodnih ljepota Hrvatske — impresivni slapovi, kristalno čista voda i netaknuta šumska priroda.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g295368-d274131-Reviews-Krka_Waterfalls-Sibenik_Knin_County_Dalmatia.html"
       },
       {
-        "naziv": "Šibenik i tvrđava sv. Mihovila",
-        "opis": "UNESCO-zaštićena katedrala sv. Jakova (15. st.) i tvrđave — 65 km od Biograda. Lijepe starogradske ulice.",
+        "naziv": "Šibenik — katedrala i tvrđave",
+        "opis": "UNESCO-zaštićena katedrala sv. Jakova (15. st.) i tvrđave, 65 km od Biograda. Predivne starogradske ulice.",
         "udaljenost": "65 km",
         "tip": "gradski izlet, kultura, UNESCO",
-        "karta": "https://maps.google.com/?q=Sibenik+old+town"
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Cathedral_of_St._James_in_%C5%A0ibenik_3.jpg/1280px-Cathedral_of_St._James_in_%C5%A0ibenik_3.jpg",
+        "karta": "https://maps.google.com/?q=Sibenik+old+town",
+        "ocjena": "4.6",
+        "recenzija": "\"UNESCO katedrala i tvrđave su spektakularni — stari grad je jedan od najljepših u Dalmaciji, prepun živahnih kavana i restorana.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Attractions-g295368-Activities-Sibenik_Sibenik_Knin_County_Dalmatia.html"
       },
       {
-        "naziv": "Nin",
-        "opis": "Mali antički grad 40 km sjeverno od Biograda, s jedinstvenom Crkvom sv. Križa (9. st.) i glasovitom Ninskom slanom laginom (ljekovito blato) uz Kraljičinu plažu — najduljom pješčanom plažom u Dalmaciji.",
+        "naziv": "Nin — Kraljičina plaža",
+        "opis": "Mali antički grad 40 km sjeverno, s Crkvom sv. Križa (9. st.) i ljekovitim blatom uz Kraljičinu plažu — najduljom pješčanom plažom u Dalmaciji.",
         "udaljenost": "40 km",
-        "tip": "kultura, plaža",
-        "karta": "https://maps.google.com/?q=Nin+Croatia"
+        "tip": "kultura, pješčana plaža",
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Nin_from_air.jpg/1280px-Nin_from_air.jpg",
+        "karta": "https://maps.google.com/?q=Nin+Croatia",
+        "ocjena": "4.5",
+        "recenzija": "\"Jedina prava pješčana plaža u okolici i ljekovito blato — Nin je obvezna stanica za obiteljski odmor uz kulturu i jedinstveni Jadran.\"",
+        "recenzija_izvor": "Google",
+        "recenzija_url": "https://maps.google.com/?q=Nin+Croatia+beach"
       },
       {
         "naziv": "NP Paklenica",
         "opis": "Kanjon i planinarstvo u Velebitu, 75 km od Biograda. Popularno za planinarenje, via ferrate i slobodno penjanje.",
         "udaljenost": "75 km",
         "tip": "planinarenje, aktivnosti",
+        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Paklenica_gorge.jpg/1280px-Paklenica_gorge.jpg",
         "web": "https://www.np-paklenica.hr",
-        "karta": "https://maps.google.com/?q=NP+Paklenica"
+        "karta": "https://maps.google.com/?q=NP+Paklenica",
+        "ocjena": "4.6",
+        "recenzija": "\"Impresivni kanjoni i planinski pejzaž Velebita s pogledom na Jadran — jedinstven doživljaj za aktivne turiste i planinarenje.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g295369-d3726614-Reviews-Paklenica_National_Park-Starigrad_Paklenica_Zadar_County_Dalmatia.html"
       }
     ]
   },

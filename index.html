@@ -376,6 +376,25 @@ overflow:hidden;
 box-shadow:0 1px 4px rgba(0,0,0,0.07);
 }
 
+.item-card-thumb{
+width:90px;
+height:86px;
+flex-shrink:0;
+overflow:hidden;
+background:#e8f4fc;
+}
+
+.item-card-thumb img{
+width:100%;
+height:100%;
+object-fit:cover;
+cursor:pointer;
+transition:opacity 0.2s;
+display:block;
+}
+
+.item-card-thumb img:hover{ opacity:0.82; }
+
 .item-card-info{
 padding:8px 12px;
 display:flex;
@@ -616,6 +635,20 @@ function addMessage(text, type, suggestions, images, items){
       const card = document.createElement("div");
       card.className = "item-card";
 
+      // Slika (minijatura)
+      if(it.slika){
+        const thumb = document.createElement("div");
+        thumb.className = "item-card-thumb";
+        const img = document.createElement("img");
+        img.src = it.slika;
+        img.alt = it.naziv;
+        img.title = it.naziv;
+        img.onerror = function(){ this.parentElement.style.display='none'; };
+        if(it.web) img.onclick = () => openModal(it.web);
+        thumb.appendChild(img);
+        card.appendChild(thumb);
+      }
+
       const info = document.createElement("div");
       info.className = "item-card-info";
 
@@ -657,7 +690,7 @@ function addMessage(text, type, suggestions, images, items){
       }
       if(links.children.length) info.appendChild(links);
 
-      if(it.recenzija){
+      if(it.recenzija || it.ocjena){
         const rev = document.createElement("div");
         rev.className = "item-card-review";
         if(it.ocjena){
@@ -666,7 +699,18 @@ function addMessage(text, type, suggestions, images, items){
           stars.textContent = "⭐ " + it.ocjena;
           rev.appendChild(stars);
         }
-        rev.appendChild(document.createTextNode(" " + it.recenzija.substring(0, 120)));
+        if(it.recenzija){
+          rev.appendChild(document.createTextNode(" " + it.recenzija.substring(0, 130)));
+        }
+        if(it.recenzija_izvor){
+          const src = document.createElement("a");
+          src.style.cssText = "font-style:normal;font-size:10px;color:#0077a8;font-weight:bold;margin-left:4px";
+          src.textContent = "— " + it.recenzija_izvor;
+          src.href = it.recenzija_url || "#";
+          src.target = "_blank";
+          src.rel = "noopener";
+          rev.appendChild(src);
+        }
         info.appendChild(rev);
       }
 
