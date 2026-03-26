@@ -203,12 +203,26 @@ function item(o, extra = {}) {
   };
 }
 
-function getCategoryItems(category) {
+// Filtrira listu po ključnim riječima iz poruke — ako nema podudaranja, vraća sve
+function filterByMessage(lista, msg) {
+  if (!msg) return lista;
+  const m = msg.toLowerCase();
+  const matched = lista.filter(it => {
+    // Uzmi značajne riječi iz naziva (dulje od 3 slova, bez zvjezdica/simbola)
+    const words = it.naziv.toLowerCase().replace(/[★✓\-\/,\.]+/g, ' ').split(/\s+/).filter(w => w.length > 3);
+    return words.some(w => m.includes(w));
+  });
+  return matched.length > 0 ? matched : lista;
+}
+
+function getCategoryItems(category, message = '') {
   if (category === 'plaze') {
-    return (db.plaze || []).map(p => item(p, { adresa: p.tip || '' }));
+    const svi = (db.plaze || []).map(p => item(p, { adresa: p.tip || '' }));
+    return filterByMessage(svi, message);
   }
   if (category === 'gastronomija') {
-    return (db.gastronomija?.restorani || []).map(r => item(r, { adresa: r.tip || '' }));
+    const svi = (db.gastronomija?.restorani || []).map(r => item(r, { adresa: r.tip || '' }));
+    return filterByMessage(svi, message);
   }
   if (category === 'nautika') {
     const marina = db.nautika?.marina;
@@ -217,19 +231,21 @@ function getCategoryItems(category) {
   if (category === 'smjestaj') {
     const hoteli  = (db.smjestaj?.hoteli  || []).map(h => item(h));
     const kampovi = (db.smjestaj?.kampovi || []).map(k => item(k));
-    return [...hoteli, ...kampovi];
+    return filterByMessage([...hoteli, ...kampovi], message);
   }
   if (category === 'kornati') {
     const k = db.kornati;
     return k ? [item(k, { adresa: k.polaziste || '' })] : [];
   }
   if (category === 'izleti') {
-    return (db.izleti?.destinacije || []).map(d => item(d, {
+    const svi = (db.izleti?.destinacije || []).map(d => item(d, {
       adresa: d.udaljenost ? `🚗 ${d.udaljenost}` : ''
     }));
+    return filterByMessage(svi, message);
   }
   if (category === 'sport') {
-    return (db.sport?.aktivnosti || []).map(a => item(a, { adresa: a.tip || '' }));
+    const svi = (db.sport?.aktivnosti || []).map(a => item(a, { adresa: a.tip || '' }));
+    return filterByMessage(svi, message);
   }
   if (category === 'dogadanja') {
     return (db.dogadanja?.eventi || []).map(e => item(e, { adresa: e.termin || '' }));
@@ -350,7 +366,7 @@ export default async function handler(req, res) {
 
     const reply = completion.choices[0]?.message?.content || '';
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang);
-    const items = getCategoryItems(detectedCategory);
+    const items = getCategoryItems(detectedCategory, message);
 
     return res.status(200).json({
       reply,
