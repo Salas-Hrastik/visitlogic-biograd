@@ -373,6 +373,56 @@ export const db = {
   "smjestaj": {
     "opis": "Biograd nudi bogat izbor smještaja — od hotela i resorta do privatnih apartmana i kampova. Kapacitet destinacije značajno raste ljeti (ljetna sezona), stoga je rezervacija unaprijed neophodna za srpanj i kolovoz.",
     "savjet_rezervacija": "Srpanj i kolovoz: rezervirajte najmanje 3–4 mjeseca unaprijed. Lipanj i rujan: dostupnost bolja, cijene povoljnije.",
+    "platforme_rezervacija": [
+      {
+        "naziv": "Booking.com — Biograd na Moru",
+        "opis": "Najveći izbor hotela, apartmana i privatnog smještaja u Biogradu. Instant potvrda, besplatni otkaz na većini ponuda. Preporuča se za prvu pretragu.",
+        "tip": "online platforma",
+        "slika": "",
+        "web": "https://www.booking.com/searchresults.hr.html?ss=Biograd+na+Moru",
+        "karta": "",
+        "ocjena": "",
+        "recenzija": "\"Najbrži način za pregled i usporedbu cijelog smještajnog spektra Biograda — od hotela do apartmana uz more.\"",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Airbnb — Biograd na Moru",
+        "opis": "Privatni apartmani, kuće i jedinstven smještaj — često uz more ili u strogom centru. Idealno za obitelji i dulje boravke.",
+        "tip": "online platforma",
+        "slika": "",
+        "web": "https://www.airbnb.com/s/Biograd-na-Moru--Croatia/homes",
+        "karta": "",
+        "ocjena": "",
+        "recenzija": "\"Odlična opcija za pronalazak autentičnih privatnih apartmana uz more, često s kuhinjom i parkingom.\"",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      },
+      {
+        "naziv": "Škver Tours — lokalna agencija",
+        "opis": "Lokalna turistička agencija iz Biograda s 20+ provjerenih privatnih apartmana u Biogradu, Svetom Filipu i Jakovu, Pakoštanima i na otoku Pašmanu. Cijena od 48 EUR/noć.",
+        "tip": "lokalna agencija",
+        "slika": "",
+        "web": "https://www.skver-tours.com/?l=hr&ispis=ponuda&vrsta=apart&id=672",
+        "karta": "https://maps.google.com/?q=Skver+Tours+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "\"Provjeren lokalni smještaj uz osobni pristup — direktan kontakt s agencijom, bez provizija platformi.\"",
+        "recenzija_izvor": "Škver Tours",
+        "recenzija_url": "https://www.skver-tours.com/?l=hr&ispis=ponuda&vrsta=apart&id=672"
+      },
+      {
+        "naziv": "TripAdvisor — Biograd smještaj",
+        "opis": "Pregled hotela, apartmana i B&B smještaja s autentičnim recenzijama putnika — korisno za usporedbu i provjeru kvalitete.",
+        "tip": "recenzijska platforma",
+        "slika": "",
+        "web": "https://www.tripadvisor.com/Hotels-g608702-Biograd_na_Moru_Zadar_County_Dalmatia-Hotels.html",
+        "karta": "",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
+      }
+    ],
     "hoteli": [
       {
         "naziv": "Ilirija Resort ★★★★",

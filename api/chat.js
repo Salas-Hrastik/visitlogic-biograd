@@ -238,9 +238,33 @@ function getCategoryItems(category, message = '') {
     return marina ? [item(marina, { adresa: marina.adresa || '' })] : [];
   }
   if (category === 'smjestaj') {
-    const hoteli  = (db.smjestaj?.hoteli  || []).map(h => item(h));
-    const kampovi = (db.smjestaj?.kampovi || []).map(k => item(k));
-    return filterByMessage([...hoteli, ...kampovi], message);
+    const m = (message || '').toLowerCase();
+
+    // Privatni smještaj / apartmani → prikaži rezervacijske platforme
+    const isApartman = m.includes('apartman') || m.includes('privat') || m.includes('soba') ||
+      m.includes('airbnb') || m.includes('booking') || m.includes('rent') ||
+      m.includes('apartment') || m.includes('private') || m.includes('room') ||
+      m.includes('wohnung') || m.includes('ferienwohnung');
+
+    if (isApartman) {
+      return (db.smjestaj?.platforme_rezervacija || []).map(p => item(p, { adresa: p.tip || '' }));
+    }
+
+    // Kamp → kampovi
+    const isKamp = m.includes('kamp') || m.includes('camping') || m.includes('šator') ||
+      m.includes('karavan') || m.includes('mobile home') || m.includes('zelt') || m.includes('camping');
+    if (isKamp) {
+      const svi = [
+        ...(db.smjestaj?.kampovi || []),
+        ...(db.smjestaj?.kampovi_ostali || [])
+      ].map(k => item(k));
+      return filterByMessage(svi, message);
+    }
+
+    // Generalni upit → hoteli + platforme
+    const hoteli    = (db.smjestaj?.hoteli  || []).map(h => item(h));
+    const platforme = (db.smjestaj?.platforme_rezervacija || []).map(p => item(p, { adresa: p.tip || '' }));
+    return filterByMessage([...hoteli, ...platforme], message);
   }
   if (category === 'kornati') {
     const k = db.kornati;
@@ -401,6 +425,14 @@ TURISTIČKI PROFILI POSJETITELJA:
 - Aktivni turisti (ronjenje, windsurfing, kayak, biciklizam)
 - Gastronomski turisti
 - Izletnici (Kornati, Zadar, NP Krka)
+
+PRIVATNI SMJEŠTAJ — KLJUČNE UPUTE:
+Biograd ima 1000+ privatnih apartmana i soba. Nemoj ih nabrajati — uputi na platforme:
+- Booking.com: https://www.booking.com/searchresults.hr.html?ss=Biograd+na+Moru (najveći izbor)
+- Airbnb: https://www.airbnb.com/s/Biograd-na-Moru--Croatia/homes (kuće, apartmani)
+- Škver Tours (lokalna agencija): https://www.skver-tours.com/?l=hr&ispis=ponuda&vrsta=apart&id=672 | Tel: +385 233 844 57
+- Cijenovno: 48–170+ EUR/noć ovisno o veličini i sezoni
+- Rezervacija: srpanj/kolovoz → 3–4 mj. unaprijed, rujan/lipanj → 2–4 tjedna
 
 SPECIFIČNI SAVJETI:
 - Za NP Kornati: izlet brodom iz Biograda (8–10 sati, ~50–80 EUR), ili charter brod
