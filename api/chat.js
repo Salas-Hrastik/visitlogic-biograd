@@ -148,52 +148,64 @@ function detectCategory(msg, lastCategory) {
 }
 
 // ===== SUGESTIJE PO KATEGORIJI =====
-function getSuggestions(category, lang) {
+// Pool od 5 sugestija po kategoriji — filtrira se trenutna poruka, vraćaju se 3
+function getSuggestions(category, lang, message) {
+  const m = (message || '').toLowerCase();
   const map = {
     hr: {
-      plaze:       ['⛵ Izlet na Kornate?', '🤿 Ronjenje u Biogradu?', '🏨 Smještaj blizu plaže?'],
-      gastronomija:['🐟 Kakva je lokalna riba?', '🍷 Preporuči konobu s pekarom?', '🏖 Plaže Biograda?'],
-      nautika:     ['⚓ Koliko košta charter?', '🏝 Kornati izletom?', '🏖 Plaže za kupanje?'],
-      smjestaj:    ['🏖 Koje plaže su blizu?', '🐟 Gdje jesti u Biogradu?', '⛵ Izlet na Kornate?'],
-      kornati:     ['⛵ Kako doći do Kornata?', '🐟 Konobe na otocima?', '🤿 Ronjenje na Kornatima?'],
-      izleti:      ['🏛️ Zadar — što vidjeti?', '🌊 Vransko jezero izlet?', '⛵ Kornati brodom?'],
-      sport:       ['🏖 Plaže za windsurfing?', '🚴 Biciklizam oko Vranskog jezera?', '⛵ Nautika u Biogradu?'],
-      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Ljetne manifestacije?', '🎶 Koncerti na rivi?'],
-      atrakcije:   ['🏛️ Zavičajni muzej Biograd?', '⛪ Crkve i ruševine?', '🏖 Plaže Biograda?'],
-      opcenito:    ['🏖 Plaže Biograda?', '⛵ Izlet na Kornate?', '🐟 Dalmatinska gastronomija?'],
-      prakticno:   ['🚌 Prijevoz do Zadra?', '⛽ Benzinska postaja?', '🏥 Liječnik u Biogradu?'],
-      klima:       ['🏖 Koje plaže preporučuješ?', '⛵ Kada je idealno za jedrenje?', '🌊 Temperatura mora u kolovozu?'],
+      plaze:       ['⛵ Izlet na Kornate?', '🤿 Ronjenje u Biogradu?', '🏨 Smještaj blizu plaže?', '🐟 Gdje jesti nakon plaže?', '☀️ Kakvo je vrijeme u srpnju?'],
+      gastronomija:['🐟 Kakva je lokalna riba?', '🍷 Preporuči konobu s pekarom?', '🏖 Plaže Biograda?', '🌙 Noćni život u Biogradu?', '⛵ Izlet na Kornate?'],
+      nautika:     ['⚓ Koliko košta charter?', '🚢 Charter tvrtke u Biogradu?', '🏝 Kornati izletom?', '🏖 Plaže za kupanje?', '⛵ Iznajmiti jedrilicu?'],
+      smjestaj:    ['🏖 Koje plaže su blizu?', '🐟 Gdje jesti u Biogradu?', '⛵ Izlet na Kornate?', '⛺ Kampovi u Biogradu?', '🏨 Hoteli uz more?'],
+      kornati:     ['⛵ Kako doći do Kornata?', '🐟 Konobe na otocima?', '🤿 Ronjenje na Kornatima?', '⚓ Charter za Kornate?', '🏖 Plaže na Kornatima?'],
+      izleti:      ['🏛️ Zadar — što vidjeti?', '🌊 Vransko jezero izlet?', '⛵ Kornati brodom?', '🏔️ Paklenica izlet?', '🐟 Šibenik i Krka?'],
+      sport:       ['🏖 Plaže za windsurfing?', '🚴 Biciklizam oko Vranskog jezera?', '⛵ Nautika u Biogradu?', '🤿 Ronjenje — gdje?', '🎣 Ribolov u Biogradu?'],
+      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Ljetne manifestacije?', '🎶 Koncerti na rivi?', '🐟 Ribarska večer?', '📅 Što se događa ovaj tjedan?'],
+      atrakcije:   ['🏛️ Zavičajni muzej Biograd?', '⛪ Crkve i ruševine?', '🏖 Plaže Biograda?', '🎡 Dalmaland zabavni park?', '⛵ Izlet na Kornate?'],
+      opcenito:    ['🏖 Plaže Biograda?', '⛵ Izlet na Kornate?', '🐟 Dalmatinska gastronomija?', '🏨 Smještaj u Biogradu?', '☀️ Klima i sezona?'],
+      prakticno:   ['🚌 Prijevoz do Zadra?', '⛽ Benzinska postaja?', '🏥 Liječnik u Biogradu?', '🏧 Bankomat u Biogradu?', '🅿️ Parkiranje u centru?'],
+      klima:       ['🏖 Koje plaže preporučuješ?', '⛵ Kada je idealno za jedrenje?', '🌊 Temperatura mora u kolovozu?', '☀️ Koliko sunčanih dana?', '🏨 Smještaj za ljetovanje?'],
     },
     en: {
-      plaze:       ['⛵ Kornati day trip?', '🤿 Diving in Biograd?', '🏨 Accommodation near beach?'],
-      gastronomija:['🐟 Best local fish dishes?', '🍷 Recommend a konoba?', '🏖 Biograd beaches?'],
-      nautika:     ['⚓ How much is a charter?', '🏝 Kornati excursion?', '🏖 Best beaches nearby?'],
-      smjestaj:    ['🏖 Beaches nearby?', '🐟 Where to eat?', '⛵ Kornati excursion?'],
-      kornati:     ['⛵ How to reach Kornati?', '🐟 Taverns on islands?', '🤿 Snorkeling spots?'],
-      izleti:      ['🏛️ What to see in Zadar?', '🌊 Lake Vrana trip?', '⛵ Kornati by boat?'],
-      sport:       ['🏖 Windsurfing beaches?', '🚴 Cycling around Lake Vrana?', '⛵ Boat rental?'],
-      atrakcije:   ['🏛️ Town museum?', '⛪ Medieval ruins?', '🏖 Biograd beaches?'],
-      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Summer events?', '🎶 Concerts on the waterfront?'],
-      opcenito:    ['🏖 Biograd beaches?', '⛵ Kornati trip?', '🐟 Dalmatian food?'],
-      prakticno:   ['🚌 Bus to Zadar?', '⛽ Petrol station?', '🏥 Doctor in Biograd?'],
-      klima:       ['🏖 Best beaches to visit?', '⛵ When is sailing season?', '🌊 Sea temperature in August?'],
+      plaze:       ['⛵ Kornati day trip?', '🤿 Diving in Biograd?', '🏨 Accommodation near beach?', '🐟 Where to eat after beach?', '☀️ Weather in July?'],
+      gastronomija:['🐟 Best local fish dishes?', '🍷 Recommend a konoba?', '🏖 Biograd beaches?', '🌙 Nightlife in Biograd?', '⛵ Kornati excursion?'],
+      nautika:     ['⚓ How much is a charter?', '🚢 Charter companies in Biograd?', '🏝 Kornati excursion?', '🏖 Best beaches nearby?', '⛵ Rent a sailboat?'],
+      smjestaj:    ['🏖 Beaches nearby?', '🐟 Where to eat?', '⛵ Kornati excursion?', '⛺ Campsites in Biograd?', '🏨 Hotels by the sea?'],
+      kornati:     ['⛵ How to reach Kornati?', '🐟 Taverns on islands?', '🤿 Snorkeling spots?', '⚓ Charter to Kornati?', '🏖 Beaches on Kornati?'],
+      izleti:      ['🏛️ What to see in Zadar?', '🌊 Lake Vrana trip?', '⛵ Kornati by boat?', '🏔️ Paklenica trip?', '🐟 Šibenik and Krka?'],
+      sport:       ['🏖 Windsurfing beaches?', '🚴 Cycling around Lake Vrana?', '⛵ Boat rental?', '🤿 Diving — where?', '🎣 Fishing in Biograd?'],
+      atrakcije:   ['🏛️ Town museum?', '⛪ Medieval ruins?', '🏖 Biograd beaches?', '🎡 Dalmaland park?', '⛵ Kornati excursion?'],
+      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Summer events?', '🎶 Concerts on the waterfront?', '🐟 Fishermen\'s evening?', '📅 What\'s on this week?'],
+      opcenito:    ['🏖 Biograd beaches?', '⛵ Kornati trip?', '🐟 Dalmatian food?', '🏨 Accommodation?', '☀️ Climate and season?'],
+      prakticno:   ['🚌 Bus to Zadar?', '⛽ Petrol station?', '🏥 Doctor in Biograd?', '🏧 ATM in Biograd?', '🅿️ Parking in the centre?'],
+      klima:       ['🏖 Best beaches to visit?', '⛵ When is sailing season?', '🌊 Sea temperature in August?', '☀️ How many sunny days?', '🏨 Accommodation for summer?'],
     },
     de: {
-      plaze:       ['⛵ Ausflug zu den Kornaten?', '🤿 Tauchen in Biograd?', '🏨 Unterkunft am Strand?'],
-      gastronomija:['🐟 Lokale Fischspezialitäten?', '🍷 Konoba empfehlen?', '🏖 Strände von Biograd?'],
-      nautika:     ['⚓ Charterpreise?', '🏝 Kornaten-Ausflug?', '🏖 Beste Strände?'],
-      smjestaj:    ['🏖 Strände in der Nähe?', '🐟 Wo essen?', '⛵ Kornaten-Ausflug?'],
-      kornati:     ['⛵ Wie erreicht man die Kornaten?', '🐟 Tavernen auf den Inseln?', '🤿 Schnorcheln?'],
-      izleti:      ['🏛️ Was in Zadar sehen?', '🌊 Vranasee-Ausflug?', '⛵ Kornaten mit Boot?'],
-      sport:       ['🏖 Windsurfing-Strände?', '🚴 Radtour am Vranasee?', '⛵ Bootsverleih?'],
-      atrakcije:   ['🏛️ Stadtmuseum Biograd?', '⛪ Mittelalterliche Ruinen?', '🏖 Strände von Biograd?'],
-      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Sommerveranstaltungen?', '🎶 Konzerte am Kai?'],
-      opcenito:    ['🏖 Strände von Biograd?', '⛵ Kornaten-Ausflug?', '🐟 Dalmatinische Küche?'],
-      prakticno:   ['🚌 Bus nach Zadar?', '⛽ Tankstelle?', '🏥 Arzt in Biograd?'],
-      klima:       ['🏖 Beste Strände?', '⛵ Wann ist Segelsaison?', '🌊 Meerestemperatur im August?'],
+      plaze:       ['⛵ Ausflug zu den Kornaten?', '🤿 Tauchen in Biograd?', '🏨 Unterkunft am Strand?', '🐟 Wo essen nach dem Strand?', '☀️ Wetter im Juli?'],
+      gastronomija:['🐟 Lokale Fischspezialitäten?', '🍷 Konoba empfehlen?', '🏖 Strände von Biograd?', '🌙 Nachtleben in Biograd?', '⛵ Kornaten-Ausflug?'],
+      nautika:     ['⚓ Charterpreise?', '🚢 Charterunternehmen Biograd?', '🏝 Kornaten-Ausflug?', '🏖 Beste Strände?', '⛵ Segelboot mieten?'],
+      smjestaj:    ['🏖 Strände in der Nähe?', '🐟 Wo essen?', '⛵ Kornaten-Ausflug?', '⛺ Campingplätze?', '🏨 Hotels am Meer?'],
+      kornati:     ['⛵ Wie erreicht man die Kornaten?', '🐟 Tavernen auf den Inseln?', '🤿 Schnorcheln?', '⚓ Charter zu den Kornaten?', '🏖 Strände auf Kornaten?'],
+      izleti:      ['🏛️ Was in Zadar sehen?', '🌊 Vranasee-Ausflug?', '⛵ Kornaten mit Boot?', '🏔️ Paklenica Ausflug?', '🐟 Šibenik und Krka?'],
+      sport:       ['🏖 Windsurfing-Strände?', '🚴 Radtour am Vranasee?', '⛵ Bootsverleih?', '🤿 Tauchen — wo?', '🎣 Angeln in Biograd?'],
+      atrakcije:   ['🏛️ Stadtmuseum Biograd?', '⛪ Mittelalterliche Ruinen?', '🏖 Strände von Biograd?', '🎡 Dalmaland Park?', '⛵ Kornaten-Ausflug?'],
+      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Sommerveranstaltungen?', '🎶 Konzerte am Kai?', '🐟 Fischerabend?', '📅 Was ist diese Woche los?'],
+      opcenito:    ['🏖 Strände von Biograd?', '⛵ Kornaten-Ausflug?', '🐟 Dalmatinische Küche?', '🏨 Unterkunft?', '☀️ Klima und Saison?'],
+      prakticno:   ['🚌 Bus nach Zadar?', '⛽ Tankstelle?', '🏥 Arzt in Biograd?', '🏧 Geldautomat?', '🅿️ Parken im Zentrum?'],
+      klima:       ['🏖 Beste Strände?', '⛵ Wann ist Segelsaison?', '🌊 Meerestemperatur im August?', '☀️ Wie viele Sonnentage?', '🏨 Unterkunft für den Sommer?'],
     }
   };
-  return (map[lang] || map.hr)[category] || [];
+
+  const pool = (map[lang] || map.hr)[category] || [];
+
+  // Filtriraj sugestiju koja se podudara s trenutnom porukom (sprječava ponavljanje)
+  const filtered = pool.filter(s => {
+    const sWords = s.toLowerCase().replace(/[⚓🏝🏖⛵🐟🍷🤿🌙🏛️⛪🎡🚌⛽🏥🏧🅿️🚢🏔️🌊☀️📅🎶🎣⛺🏨🏰🚴🎣]/g, '').trim();
+    const keywords = sWords.split(/[\s?!,.]+/).filter(w => w.length > 3);
+    return !keywords.some(kw => m.includes(kw));
+  });
+
+  return filtered.slice(0, 3);
 }
 
 // ===== IMAGE PROXY — zaobilazi hotlink protection =====
@@ -564,7 +576,7 @@ export default async function handler(req, res) {
     });
 
     const reply = completion.choices[0]?.message?.content || '';
-    const suggestions = getSuggestions(detectedCategory || 'opcenito', lang);
+    const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
     const items = getCategoryItems(detectedCategory, message);
 
     return res.status(200).json({
