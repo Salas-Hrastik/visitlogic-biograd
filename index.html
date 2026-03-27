@@ -298,40 +298,35 @@ button.send-btn:hover{ background:#e8894a; }
 /* ===== WELCOME ===== */
 .welcome{
 text-align:center;
-padding:0;
 flex:1;
 display:flex;
 flex-direction:column;
-align-items:center;
-justify-content:center;
 border-radius:0 0 14px 14px;
-background:
-  linear-gradient(rgba(0,40,80,0.08),rgba(0,20,60,0.22)),
-  url('https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=1280&output=jpg')
-  center top/cover no-repeat;
-min-height:180px;
-position:relative;
 overflow:hidden;
 }
 
 .welcome-text{
-background:rgba(0,20,60,0.75);
-backdrop-filter:blur(2px);
--webkit-backdrop-filter:blur(2px);
-border-radius:12px;
-padding:18px 32px;
-border:1px solid rgba(255,255,255,0.15);
-max-width:90%;
+background:#fff;
+padding:16px 32px;
+border-bottom:1px solid #e0eaf3;
+}
+
+.welcome-hero{
+flex:1;
+min-height:160px;
+background:
+  url('https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=1280&output=jpg')
+  center top/cover no-repeat;
 }
 
 .welcome p{
 margin:5px 0;
 font-size:15px;
-color:rgba(255,255,255,0.95);
+color:#334;
 }
 
 .welcome strong{
-color:#fff;
+color:#004e89;
 font-size:17px;
 }
 
@@ -568,6 +563,7 @@ width:100%;
           <p><strong>Dobrodošli u Biograd na Moru! 💙</strong></p>
           <p>Pitajte me o plažama, Kornatima, nautici, smještaju,<br>gastronomiji i svemu što ova ljetna destinacija nudi.</p>
         </div>
+        <div class="welcome-hero"></div>
       </div>
     </div>
   </div>
