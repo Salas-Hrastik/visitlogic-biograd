@@ -262,6 +262,14 @@ function getCategoryItems(category, message = '') {
     return filterByMessage(svi, message);
   }
   if (category === 'nautika') {
+    const m = (message || '').toLowerCase();
+    const isCharter = m.includes('charter') || m.includes('čarter') || m.includes('agencij') ||
+      m.includes('iznajm') || m.includes('rent') || m.includes('jedrilica') || m.includes('katamaran') ||
+      m.includes('skipper') || m.includes('skipersk') || m.includes('hire') || m.includes('mieten');
+    if (isCharter) {
+      const agencije = (db.nautika?.charter_agencije || []).map(a => item(a, { adresa: a.tip || '' }));
+      return agencije.length ? agencije : [item(db.nautika?.marina, { adresa: db.nautika?.marina?.adresa || '' })];
+    }
     const marina = db.nautika?.marina;
     return marina ? [item(marina, { adresa: marina.adresa || '' })] : [];
   }

@@ -168,6 +168,53 @@ export const db = {
       "preporuka": "Za NP Kornati preporučuje se charter brod ili organizirani izlet brodom.",
       "web_charter": "https://www.marinakornati.com"
     },
+    "charter_agencije": [
+      {
+        "naziv": "Biograd Boat Charter",
+        "tip": "charter jedrilice · katamarani · motorni brodovi",
+        "adresa": "Marina Kornati, Šibuljina bb, Biograd na Moru",
+        "telefon": "+385 91 500 5001",
+        "web": "https://www.biogradboatcharter.com",
+        "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Vrhunska flota jedrilica i katamarana, profesionalni skiperi, polazak iz Marine Kornati.",
+        "recenzija_izvor": "Charter Biograd"
+      },
+      {
+        "naziv": "Kornati Charter",
+        "tip": "charter jedrilice · izleti na Kornate · skip charter",
+        "adresa": "Lučka uprava Biograd, Šibuljina bb, Biograd na Moru",
+        "telefon": "+385 23 383 800",
+        "web": "https://www.kornaticharter.com",
+        "karta": "https://maps.google.com/?q=Biograd+na+Moru+marina",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Specijalizirani za izlete na Kornate i tjedni charter. Lokalni stručnjaci za Jadran.",
+        "recenzija_izvor": "Marina Kornati"
+      },
+      {
+        "naziv": "Škver Tours — brodski izleti",
+        "tip": "organizirani izleti · dnevni charter · Kornati",
+        "adresa": "Obala Kralja Tomislava 2, Biograd na Moru",
+        "telefon": "+385 23 383 123",
+        "web": "https://www.skver-tours.hr",
+        "karta": "https://maps.google.com/?q=Škver+Tours+Biograd",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/NP-kornati/11-06-21%20NP%20KORNATI%202%20_86Y9965.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Lokalna agencija s provjerenim brodskim izletima na Kornate, ribolov i kupanje u uvalama.",
+        "recenzija_izvor": "TZ Biograd"
+      },
+      {
+        "naziv": "Marina Kornati — Najam brodova",
+        "tip": "marina · servis · vezovi · najam plovila",
+        "adresa": "Šibuljina bb, 23210 Biograd na Moru",
+        "telefon": "+385 23 383 800",
+        "web": "https://www.marinakornati.com",
+        "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd",
+        "slika": "https://www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg",
+        "ocjena": "4.0",
+        "recenzija": "Jedna od najvećih marina na Jadranu — 800+ vezova, dizalica, carinska ispostava, gorivo. Polazišna točka za Kornate.",
+        "recenzija_izvor": "TripAdvisor"
+      }
+    ],
     "iznajmljivanje_brodova": {
       "opis": "Manji čamci, jet-ski i gumenjaci dostupni su na iznajmljivanje izravno u luci ili na plažama. Idealno za jednodnevne izlete na Kornate, Pašman ili obližnje uvale.",
       "savjet": "Za plovidbu NP Kornati potrebna je dozvola ulaska u park."
