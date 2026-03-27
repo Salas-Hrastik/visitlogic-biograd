@@ -365,6 +365,55 @@ function getCategoryItems(category, message = '') {
   if (category === 'dogadanja') {
     return (db.dogadanja?.eventi || []).map(e => item(e, { adresa: e.termin || '' }));
   }
+  if (category === 'prakticno') {
+    const m = (message || '').toLowerCase();
+    const pi = db.prakticne_info || {};
+
+    const toItems = (arr) => (arr || []).map(x => item(x, { adresa: x.adresa || x.tip || '' }));
+
+    if (m.includes('parking') || m.includes('parkiralis') || m.includes('parkira') || m.includes('park'))
+      return toItems(pi.parking);
+
+    if (m.includes('autobus') || m.includes('bus') || m.includes('taksi') || m.includes('taxi') ||
+        m.includes('prijevoz') || m.includes('rent') || m.includes('automobil') || m.includes('dolaz') ||
+        m.includes('javni') || m.includes('bus') || m.includes('flixbus'))
+      return toItems(pi.prijevoz);
+
+    if (m.includes('ljekarn') || m.includes('lijek') || m.includes('apoteka') || m.includes('farmac') ||
+        m.includes('pharmacy') || m.includes('apotheke'))
+      return toItems(pi.ljekarne);
+
+    if (m.includes('hitna') || m.includes('zdravstvo') || m.includes('doktor') || m.includes('liječnik') ||
+        m.includes('bolnica') || m.includes('ambulanta') || m.includes('hitne') || m.includes('hospital') ||
+        m.includes('doctor') || m.includes('arzt'))
+      return toItems(pi.zdravstvo);
+
+    if (m.includes('bankomat') || m.includes('banka') || m.includes('atm') || m.includes('novac') ||
+        m.includes('gotovina') || m.includes('isplat') || m.includes('bank') || m.includes('geldautomat'))
+      return toItems(pi.banke_atm);
+
+    if (m.includes('benzin') || m.includes('gorivo') || m.includes('nafta') || m.includes('ina') ||
+        m.includes('autoplin') || m.includes('tankiranje') || m.includes('tankstelle'))
+      return toItems(pi.benzinska);
+
+    if (m.includes('market') || m.includes('supermarket') || m.includes('trgovina') || m.includes('kupovina') ||
+        m.includes('konzum') || m.includes('studenac') || m.includes('namirnic') || m.includes('shopping'))
+      return toItems(pi.supermarketi);
+
+    if (m.includes('trajekt') || m.includes('ferry') || m.includes('pašman') || m.includes('pasman') ||
+        m.includes('tkon') || m.includes('jadrolinija'))
+      return pi.trajekt_pasmanskim_kanalom
+        ? [item(pi.trajekt_pasmanskim_kanalom, { adresa: pi.trajekt_pasmanskim_kanalom.ruta || '' })]
+        : [];
+
+    // Generalni upit → parking + prijevoz + ljekarna (prva)
+    return [
+      ...toItems(pi.parking),
+      ...toItems(pi.prijevoz),
+      toItems(pi.ljekarne)[0]
+    ].filter(Boolean);
+  }
+
   if (category === 'klima') {
     return [
       {
