@@ -145,8 +145,9 @@ function detectCategory(msg, lastCategory) {
     return 'dogadanja';
 
   if (m.includes('parking') || m.includes('parkir') || m.includes('trajekt') || m.includes('autobus') || m.includes('ljekar') || m.includes('bolnic') || m.includes('hitna') || m.includes('bankomat') || m.includes('banka') || m.includes('taksi') || m.includes('prijevoz') || m.includes('rent a car') || m.includes('wifi') || m.includes('euro') || m.includes('valuta') || m.includes('info') || m.includes('radno vrij')
-    || m.includes('parking') || m.includes('pharmacy') || m.includes('hospital') || m.includes('atm') || m.includes('bank') || m.includes('taxi') || m.includes('bus') || m.includes('transport') || m.includes('rent a car') || m.includes('currency') || m.includes('practical')
-    || m.includes('parkplatz') || m.includes('apotheke') || m.includes('bank') || m.includes('taxi') || m.includes('bus'))
+    || m.includes('benzin') || m.includes('gorivo') || m.includes('servis') || m.includes('mehaničar') || m.includes('vulkanizer') || m.includes('guma') || m.includes('kvar') || m.includes('supermarket') || m.includes('konzum') || m.includes('lidl') || m.includes('kaufland') || m.includes('plodine') || m.includes('tommy') || m.includes('studenac') || m.includes('tifon')
+    || m.includes('pharmacy') || m.includes('hospital') || m.includes('atm') || m.includes('bank') || m.includes('taxi') || m.includes('bus') || m.includes('transport') || m.includes('practical') || m.includes('petrol') || m.includes('supermarket') || m.includes('mechanic')
+    || m.includes('parkplatz') || m.includes('apotheke') || m.includes('tankstelle') || m.includes('werkstatt') || m.includes('reifenservice'))
     return 'prakticno';
 
   if (m.includes('muzej') || m.includes('crkva') || m.includes('atrakcij') || m.includes('kultura') || m.includes('baštini') || m.includes('baština') || m.includes('samostan') || m.includes('ruševin') || m.includes('arheolog') || m.includes('povijesn') || m.includes('stošija') || m.includes('katarina') || m.includes('bazilika') || m.includes('monument') || m.includes('spomen')
@@ -183,7 +184,7 @@ function getSuggestions(category, lang, message) {
       dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Ljetne manifestacije?', '🎶 Koncerti na rivi?', '🐟 Ribarska večer?', '📅 Što se događa ovaj tjedan?'],
       atrakcije:   ['🏛️ Zavičajni muzej Biograd?', '⛪ Crkve i ruševine?', '🏖 Plaže Biograda?', '🎡 Dalmaland zabavni park?', '⛵ Izlet na Kornate?'],
       opcenito:    ['🏖 Plaže Biograda?', '⛵ Izlet na Kornate?', '🐟 Dalmatinska gastronomija?', '🏨 Smještaj u Biogradu?', '☀️ Klima i sezona?'],
-      prakticno:   ['🚌 Prijevoz do Zadra?', '⛽ Benzinska postaja?', '🏥 Liječnik u Biogradu?', '🏧 Bankomat u Biogradu?', '🅿️ Parkiranje u centru?'],
+      prakticno:   ['🅿️ Parkiranje u centru?', '⛽ Benzinska postaja?', '🏥 Liječnik u Biogradu?', '🛒 Gdje je Lidl ili Kaufland?', '🔧 Auto servis ili vulkanizer?'],
       klima:       ['🏖 Koje plaže preporučuješ?', '⛵ Kada je idealno za jedrenje?', '🌊 Temperatura mora u kolovozu?', '☀️ Koliko sunčanih dana?', '🏨 Smještaj za ljetovanje?'],
     },
     en: {
@@ -197,7 +198,7 @@ function getSuggestions(category, lang, message) {
       atrakcije:   ['🏛️ Town museum?', '⛪ Medieval ruins?', '🏖 Biograd beaches?', '🎡 Dalmaland park?', '⛵ Kornati excursion?'],
       dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Summer events?', '🎶 Concerts on the waterfront?', '🐟 Fishermen\'s evening?', '📅 What\'s on this week?'],
       opcenito:    ['🏖 Biograd beaches?', '⛵ Kornati trip?', '🐟 Dalmatian food?', '🏨 Accommodation?', '☀️ Climate and season?'],
-      prakticno:   ['🚌 Bus to Zadar?', '⛽ Petrol station?', '🏥 Doctor in Biograd?', '🏧 ATM in Biograd?', '🅿️ Parking in the centre?'],
+      prakticno:   ['🅿️ Parking in the centre?', '⛽ Petrol station?', '🏥 Doctor in Biograd?', '🛒 Where is Lidl or Kaufland?', '🔧 Car service or tyre shop?'],
       klima:       ['🏖 Best beaches to visit?', '⛵ When is sailing season?', '🌊 Sea temperature in August?', '☀️ How many sunny days?', '🏨 Accommodation for summer?'],
     },
     de: {
@@ -211,7 +212,7 @@ function getSuggestions(category, lang, message) {
       atrakcije:   ['🏛️ Stadtmuseum Biograd?', '⛪ Mittelalterliche Ruinen?', '🏖 Strände von Biograd?', '🎡 Dalmaland Park?', '⛵ Kornaten-Ausflug?'],
       dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Sommerveranstaltungen?', '🎶 Konzerte am Kai?', '🐟 Fischerabend?', '📅 Was ist diese Woche los?'],
       opcenito:    ['🏖 Strände von Biograd?', '⛵ Kornaten-Ausflug?', '🐟 Dalmatinische Küche?', '🏨 Unterkunft?', '☀️ Klima und Saison?'],
-      prakticno:   ['🚌 Bus nach Zadar?', '⛽ Tankstelle?', '🏥 Arzt in Biograd?', '🏧 Geldautomat?', '🅿️ Parken im Zentrum?'],
+      prakticno:   ['🅿️ Parken im Zentrum?', '⛽ Tankstelle?', '🏥 Arzt in Biograd?', '🛒 Wo ist Lidl oder Kaufland?', '🔧 Kfz-Werkstatt oder Reifenservice?'],
       klima:       ['🏖 Beste Strände?', '⛵ Wann ist Segelsaison?', '🌊 Meerestemperatur im August?', '☀️ Wie viele Sonnentage?', '🏨 Unterkunft für den Sommer?'],
     }
   };
@@ -392,9 +393,15 @@ function getCategoryItems(category, message = '') {
         m.includes('gotovina') || m.includes('isplat') || m.includes('bank') || m.includes('geldautomat'))
       return toItems(pi.banke_atm);
 
-    if (m.includes('benzin') || m.includes('gorivo') || m.includes('nafta') || m.includes('ina') ||
-        m.includes('autoplin') || m.includes('tankiranje') || m.includes('tankstelle'))
+    if (m.includes('benzin') || m.includes('gorivo') || m.includes('nafta') || m.includes('tifon') ||
+        m.includes('autoplin') || m.includes('tankiranje') || m.includes('tankstelle') ||
+        (m.includes('ina') && !m.includes('marina')))
       return toItems(pi.benzinska);
+
+    if (m.includes('servis') || m.includes('mehaničar') || m.includes('kvar') || m.includes('vulkanizer') ||
+        m.includes('guma') || m.includes('popravak') || m.includes('auto servis') || m.includes('radionica') ||
+        m.includes('mechanic') || m.includes('werkstatt') || m.includes('reifenservice'))
+      return toItems(pi.servisi);
 
     if (m.includes('market') || m.includes('supermarket') || m.includes('trgovina') || m.includes('kupovina') ||
         m.includes('konzum') || m.includes('studenac') || m.includes('namirnic') || m.includes('shopping'))

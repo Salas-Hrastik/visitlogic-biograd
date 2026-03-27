@@ -1189,22 +1189,60 @@ export const db = {
     },
     "parking": [
       {
-        "naziv": "Parking centar — Šibuljina",
-        "tip": "🅿️ naplaćen · sezona: lipanj–rujan",
-        "adresa": "Šibuljina bb (uz marinu), Biograd na Moru",
+        "naziv": "Parking City Center — Marina Kornati",
+        "tip": "🅿️ naplaćen · otvoreno 0–24h · ⭐ 4,4 (36 recenzija)",
+        "adresa": "Šetalište kneza Branimira 24, Biograd na Moru",
+        "telefon": "091 408 7695",
+        "karta": "https://www.google.com/maps/search/Parking+Biograd+City+Center+Marina+Kornati/@43.9373,15.4444,16z",
         "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=Parking+Sibuljina+Biograd+na+Moru",
-        "recenzija": "Najveće parkiralište u centru, 5 minuta pješice od rive i marine.",
-        "recenzija_izvor": "TZ Biograd"
+        "recenzija": "Centralno parkiralište uz Marinu Kornati, 5 min pješice od rive.",
+        "recenzija_izvor": "Google Maps"
       },
       {
-        "naziv": "Parking Riva — centar",
-        "tip": "🅿️ naplaćen · kratko parkiranje",
-        "adresa": "Obala Kralja Tomislava, Biograd na Moru",
+        "naziv": "Parking Plaza Dražica",
+        "tip": "🅿️ parkiralište uz plažu · ⭐ 4,6 (62 recenzije)",
+        "adresa": "Ul. Augusta Šenoe bb, Biograd na Moru",
+        "karta": "https://www.google.com/maps/place/Parking+Plaza+Dražica/@43.9343328,15.4469693,17z",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-drazica.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Veliki parking tik uz plažu Dražica — idealno za kupanje. Posebno praktično za obitelji.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Parking — Ul. kralja Petra Svačića",
+        "tip": "🅿️ otvoreno 0–24h · ⭐ 4,4 (25 recenzija)",
+        "adresa": "Ul. kralja Petra Svačića 19, Biograd na Moru",
+        "karta": "https://maps.google.com/?q=Parking+Ul+kralja+Petra+Svačića+Biograd",
         "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=Riva+Biograd+na+Moru",
-        "recenzija": "Direktno uz rivu — idealno za kratke posjete. U sezoni uvijek gužva, preporuča se dolazak do 8h.",
-        "recenzija_izvor": "TZ Biograd"
+        "recenzija": "Parkiralište u stambenom dijelu centra, korisno za posjet staroj jezgri.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Gradski parking — Petra Svačića 18",
+        "tip": "🅿️ javno parkiralište · besplatno · ⭐ 5,0 (3)",
+        "adresa": "Ul. kralja Petra Svačića 18, Biograd na Moru",
+        "karta": "https://maps.google.com/?q=Gradski+parking+Biograd+na+Moru+Petra+Svačića+18",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Javno besplatno parkiralište u centru grada.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Parking Boat Show — Marina Kornati",
+        "tip": "🅿️ otvoreno 0–24h · ⭐ 3,9 (20 recenzija)",
+        "adresa": "Radovanova ulica, Biograd na Moru",
+        "telefon": "091 408 7695",
+        "karta": "https://maps.google.com/?q=Parking+Biograd+Boat+Show+Marina+Kornati",
+        "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Uz Marinu Kornati — korisno za nautičare i posjetitelje sajma. Blizu plaže, ali skuplje.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Parking — Ul. Tina Ujevića",
+        "tip": "🅿️ otvoreno 0–24h · ⭐ 4,1 (17 recenzija)",
+        "adresa": "Ul. Tina Ujevića 33, Biograd na Moru",
+        "karta": "https://maps.google.com/?q=Parking+Ul+Tina+Ujevića+33+Biograd",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Parkiralište u mirnom dijelu grada, dobra alternativa u sezoni.",
+        "recenzija_izvor": "Google Maps"
       }
     ],
     "prijevoz": [
@@ -1230,7 +1268,7 @@ export const db = {
         "recenzija_izvor": "TZ Biograd"
       },
       {
-        "naziv": "Rent-a-car — Biograd",
+        "naziv": "Rent-a-car — Marina Kornati",
         "tip": "🚗 iznajmljivanje automobila",
         "adresa": "Marina Kornati, Šibuljina bb, Biograd na Moru",
         "telefon": "+385 23 383 800",
@@ -1243,34 +1281,48 @@ export const db = {
     ],
     "ljekarne": [
       {
-        "naziv": "Ljekarne Pervan",
-        "tip": "💊 ljekarna",
-        "adresa": "Kralja Petra Krešimira IV 5, Biograd na Moru",
-        "telefon": "+385 23 383 055",
-        "karta": "https://maps.google.com/?q=Ljekarne+Pervan+Biograd+na+Moru",
+        "naziv": "Ljekarna Švaljek — Obala (br. 1)",
+        "tip": "💊 ljekarna · ⭐ 4,6 (34 recenzije) · pon–sub 07h",
+        "adresa": "Šetalište kneza Branimira bb, 23210 Biograd na Moru",
+        "telefon": "023 385 111",
+        "web": "https://www.ljekarnesvaljek.com",
+        "karta": "https://www.google.com/maps/place/Ljekarna+Švaljek+Biograd+na+Moru+1/@43.9386817,15.4447922,17z",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Ljekarna u centru grada, produženo radno vrijeme ljeti.",
-        "recenzija_izvor": "TZ Biograd"
+        "recenzija": "Na samoj obali u centru grada — najlakše dostupna ljekarna turistima.",
+        "recenzija_izvor": "Google Maps"
       },
       {
-        "naziv": "Ljekarne Soline Farm",
-        "tip": "💊 ljekarna · radi cijele godine",
-        "adresa": "Put Solina 2, Biograd na Moru",
-        "telefon": "+385 23 385 111",
-        "karta": "https://maps.google.com/?q=Ljekarne+Soline+Farm+Biograd+na+Moru",
+        "naziv": "Ljekarna Avicenna",
+        "tip": "💊 ljekarna · ⭐ 4,7 (30 recenzija) · pon–sub 08h",
+        "adresa": "Matije Ivanića 4, 23210 Biograd na Moru",
+        "telefon": "023 385 358",
+        "web": "https://www.ljekarne-joukhadar.hr",
+        "karta": "https://www.google.com/maps/place/Ljekarna+Avicenna/@43.9396452,15.4468229,17z",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Jedina ljekarna koja radi cijele godine — pouzdana za izvan-sezonske posjetitelje.",
-        "recenzija_izvor": "TZ Biograd"
+        "recenzija": "Izvrsno ocijenjena ljekarna s ljubaznim osobljem, u centru Biograda.",
+        "recenzija_izvor": "Google Maps"
       },
       {
-        "naziv": "Ljekarna Švaljek",
-        "tip": "💊 ljekarna",
-        "adresa": "Augusta Šenoe bb, Biograd na Moru",
-        "telefon": "+385 23 386 550",
-        "karta": "https://maps.google.com/?q=Ljekarna+Svaljek+Biograd+na+Moru",
+        "naziv": "Ljekarna Švaljek — br. 2",
+        "tip": "💊 ljekarna · ⭐ 4,9 (12 recenzija) · pon–sub 08h",
+        "adresa": "Matije Ivanića 2, 23210 Biograd na Moru",
+        "telefon": "023 385 444",
+        "web": "https://www.ljekarnesvaljek.com",
+        "karta": "https://maps.google.com/?q=Ljekarna+Švaljek+2+Biograd+na+Moru",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Ljekarna u sjevernom dijelu Biograda, brza i dostupna.",
-        "recenzija_izvor": "TZ Biograd"
+        "recenzija": "Visoko ocijenjena ljekarna u centru, tik uz Ljekarne Avicenna.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Ljekarna Švaljek — Park&Shop (br. 3)",
+        "tip": "💊 ljekarna · ⭐ 4,7 (27 recenzija) · pon–sub 08h",
+        "adresa": "Žutska 1, 23210 Biograd na Moru",
+        "telefon": "023 385 042",
+        "web": "https://www.ljekarnesvaljek.com",
+        "karta": "https://maps.google.com/?q=Ljekarna+Švaljek+Park+Shop+Biograd",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "U trgovačkom centru Park&Shop — praktično uz kupovinu.",
+        "recenzija_izvor": "Google Maps"
       }
     ],
     "zdravstvo": [
@@ -1293,22 +1345,134 @@ export const db = {
     ],
     "benzinska": [
       {
-        "naziv": "INA Biograd",
-        "tip": "⛽ benzinska postaja",
-        "adresa": "Vladimira Nazora bb, Biograd na Moru",
-        "telefon": "+385 23 383 045",
+        "naziv": "INA — Magistrala (0–24h)",
+        "tip": "⛽ benzinska postaja · ⭐ 4,3 (381 recenzija) · otvoreno 0–24h",
+        "adresa": "Magistralna ul. 2, 23210 Biograd na Moru",
+        "telefon": "0800 11 12",
         "web": "https://www.ina.hr",
-        "karta": "https://maps.google.com/?q=INA+Biograd+na+Moru",
+        "karta": "https://www.google.com/maps/place/Ina+Biograd+na+moru+-+magistrala/@43.9439997,15.455519,17z",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Glavna benzinska postaja — gorivo, autoplin, mali dućan. Radi 0–24h u sezoni.",
-        "recenzija_izvor": "INA"
+        "recenzija": "Najboljše ocijenjena benzinska u Biogradu, radi 0–24h cijele godine. Uz magistralu D8.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Tifon Biograd",
+        "tip": "⛽ benzinska postaja · ⭐ 4,5 (161 recenzija) · pon–sub od 06h",
+        "adresa": "Biograd na Moru (uz magistralu)",
+        "telefon": "091 464 1052",
+        "web": "https://www.tifon.hr",
+        "karta": "https://maps.google.com/?q=Tifon+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Dobro ocijenjena postaja s povoljnim cijenama, LPG autoplin dostupan.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "INA — Obala",
+        "tip": "⛽ benzinska postaja · ⭐ 3,4 (84 recenzije) · pon–sub od 07h",
+        "adresa": "Obala kralja Petra Krešimira IV 36a, Biograd na Moru",
+        "web": "https://www.ina.hr",
+        "karta": "https://maps.google.com/?q=INA+Obala+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Benzinska na obali — korisno za nautičare i marine. Manji asortiman.",
+        "recenzija_izvor": "Google Maps"
       }
     ],
     "supermarketi": [
-      { "naziv": "Konzum", "tip": "🛒 supermarket", "adresa": "Šibuljina bb, Biograd na Moru", "web": "https://www.konzum.hr", "karta": "https://maps.google.com/?q=Konzum+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg" },
-      { "naziv": "Studenac", "tip": "🛒 supermarket · Mo–Su 07–22h", "adresa": "Augusta Šenoe bb, Biograd na Moru", "web": "https://www.studenac.hr", "karta": "https://maps.google.com/?q=Studenac+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg" },
-      { "naziv": "EuroSpin", "tip": "🛒 diskont", "adresa": "Biograd na Moru", "karta": "https://maps.google.com/?q=EuroSpin+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg" },
-      { "naziv": "Bure Market", "tip": "🛒 supermarket", "adresa": "Biograd na Moru", "web": "https://www.bure.hr", "karta": "https://maps.google.com/?q=Bure+Market+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg" }
+      {
+        "naziv": "Kaufland Biograd",
+        "tip": "🛒 hipermarket · ⭐ 4,5 (1.821 recenzija) · pon–sub 07–22h",
+        "adresa": "D8 1, 23210 Biograd na Moru",
+        "telefon": "0800 223 223",
+        "web": "https://www.kaufland.hr",
+        "karta": "https://www.google.com/maps/place/Kaufland+Biograd+na+moru/@43.945218,15.4532205,17z",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Najveći hipermarket u Biogradu, uz magistralu D8. Širok asortiman, povoljne cijene.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Lidl Biograd",
+        "tip": "🛒 supermarket · ⭐ 4,4 (3.636 recenzija) · pon–sub 07–22h",
+        "adresa": "D8 1a, 23210 Biograd na Moru",
+        "telefon": "0800 200 220",
+        "web": "https://www.lidl.hr",
+        "karta": "https://www.google.com/maps/place/Lidl/@43.94502,15.4539,17z",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Najpopularniji supermarket — uz Kaufland na magistrali D8. Izvrsne cijene.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Plodine Biograd",
+        "tip": "🛒 supermarket · ⭐ 4,2 (1.592 recenzija) · pon–sub 07–22h",
+        "adresa": "Bl. Alojzija Stepinca 3, 23210 Biograd na Moru",
+        "telefon": "051 669 070",
+        "web": "https://www.plodine.hr",
+        "karta": "https://www.google.com/maps/place/Plodine/@43.9424758,15.4555539,17z",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Dobro snabdjeven supermarket s velikim izborom prehrambenih proizvoda.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Tommy Maximarket",
+        "tip": "🛒 hipermarket · ⭐ 4,3 (389 recenzija) · pon–sub 07–22h",
+        "adresa": "Ul. dr. Franje Tuđmana 82, 23210 Biograd na Moru",
+        "web": "https://www.tommy.hr",
+        "karta": "https://maps.google.com/?q=Tommy+Maximarket+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Veliki Dalmatinski lanac, dobar izbor svježeg voća, povrća i lokalne hrane.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Konzum Biograd",
+        "tip": "🛒 supermarket · ⭐ 3,6 (109 recenzija) · pon–sub 07–22h",
+        "adresa": "Šetalište kneza Branimira 32, 23210 Biograd na Moru",
+        "web": "https://www.konzum.hr",
+        "karta": "https://maps.google.com/?q=Konzum+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "U samom centru uz rivu — najpristupačniji za pješake i nautičare s marine.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Studenac Market",
+        "tip": "🛒 supermarket · ⭐ 3,8 · više lokacija · pon–sub 07–22h",
+        "adresa": "Splitska ul. 39 / Put Solina 13 / Ul. dr. F. Tuđmana 7",
+        "telefon": "072 000 990",
+        "web": "https://www.studenac.hr",
+        "karta": "https://maps.google.com/?q=Studenac+Market+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Više lokacija po gradu — praktično za brzu kupovinu u blizini smještaja.",
+        "recenzija_izvor": "Google Maps"
+      }
+    ],
+    "servisi": [
+      {
+        "naziv": "Auto servis Rakić MK-1",
+        "tip": "🔧 automehaničar · ⭐ 4,9 (100 recenzija)",
+        "adresa": "Dubrovačka ul. 22, Biograd na Moru",
+        "telefon": "099 518 9348",
+        "karta": "https://maps.google.com/?q=Auto+servis+Rakic+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Iznimno visoko ocijenjen automehaničar — pouzdan i brz servis za sve kvarove.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Vulkanizer Biograd",
+        "tip": "🔧 vulkanizer · ⭐ 5,0 (150 recenzija) · pon–sub od 08h",
+        "adresa": "Biograd na Moru",
+        "telefon": "095 591 7960",
+        "karta": "https://maps.google.com/?q=Vulkanizer+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Savršena ocjena — najbrži i najpouzdaniji vulkanizer u gradu. Brz dolazak na teren.",
+        "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Vulkanizer Morozin",
+        "tip": "🔧 vulkanizer · ⭐ 4,3 (40 recenzija) · pon–sub od 09h",
+        "adresa": "Dubrovačka ul. 4, Biograd na Moru",
+        "karta": "https://maps.google.com/?q=Vulkanizer+Morozin+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "recenzija": "Iskusan vulkanizer na Dubrovačkoj ulici, prihvatljive cijene.",
+        "recenzija_izvor": "Google Maps"
+      }
     ],
     "internet_i_placanje": {
       "wifi": "Besplatan WiFi u centru, marini i većini restorana i kafića",
