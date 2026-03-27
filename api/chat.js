@@ -25,10 +25,30 @@ const CATEGORY_CONTEXTS = {
 function detectLang(msg) {
   const w = msg.toLowerCase().split(/[\s,?.!;:()\-]+/);
   const has = (list) => list.some(x => w.includes(x));
-  if (has(['what','where','how','which','when','is','are','can','do','have','show','find','tell','any','the','and','best','visit','see','eat','drink','stay','sleep','book','beach','price','time','open','boat','sailing','island','sea','water']))
-    return 'en';
-  if (has(['was','wo','wie','welche','wann','ist','sind','kann','haben','zeig','gibt','ich','ein','eine','der','die','das','und','oder','nicht','hier','mit','für','von','strand','meer','insel','boot','wetter']))
+
+  // HR ima prioritet — tipične hrvatske riječi i nastavci
+  if (has(['kako','što','gdje','koji','koja','koje','kada','zašto','koliko','može','možete',
+           'imam','imaju','ima','nema','trebam','mogu','jeste','jesi','imate','idemo',
+           'plaža','plaže','more','mora','otok','otoci','restoran','konoba','smještaj',
+           'hotel','kamp','jedrilica','izlet','charter','čarter','nautika','marina',
+           'kornati','kornata','biogradu','biograda','biogradu','dalmacij',
+           'koji','kakav','kakva','blizu','daleko','preporuč','rezerv','sezona',
+           'srpanj','kolovoz','lipanj','rujan','ljeto','zima','proljeće','jesen',
+           'temperatura','klima','sunce','vjetar','kiša','bura','maestral']))
+    return 'hr';
+
+  // DE
+  if (has(['was','wo','wie','welche','wann','ist','sind','kann','haben','zeig','gibt',
+           'ich','ein','eine','der','die','das','und','oder','nicht','hier','mit',
+           'für','von','strand','meer','insel','boot','wetter','unterkunft','hafen']))
     return 'de';
+
+  // EN — bez ambigvitetnih riječi (do, is, and, sea) koje postoje i u HR/DE
+  if (has(['what','where','how','which','when','are','have','show','find','tell',
+           'best','visit','eat','drink','stay','sleep','book','beach','price',
+           'open','boat','sailing','island','water','recommend','charter','accommodation']))
+    return 'en';
+
   return 'hr';
 }
 
