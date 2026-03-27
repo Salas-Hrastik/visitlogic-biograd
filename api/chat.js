@@ -174,7 +174,7 @@ function getSuggestions(category, lang, message) {
   const map = {
     hr: {
       plaze:       ['⛵ Izlet na Kornate?', '🤿 Ronjenje u Biogradu?', '🏨 Smještaj blizu plaže?', '🐟 Gdje jesti nakon plaže?', '☀️ Kakvo je vrijeme u srpnju?'],
-      gastronomija:['🐟 Kakva je lokalna riba?', '🍷 Preporuči konobu s pekarom?', '🏖 Plaže Biograda?', '🌙 Noćni život u Biogradu?', '⛵ Izlet na Kornate?'],
+      gastronomija:['🐟 Kakva je lokalna riba?', '🍷 Preporuči konobu s pekom?', '🏖 Plaže Biograda?', '🌙 Noćni život u Biogradu?', '⛵ Izlet na Kornate?'],
       nautika:     ['⚓ Koliko košta charter?', '🚢 Charter tvrtke u Biogradu?', '🏝 Kornati izletom?', '🏖 Plaže za kupanje?', '⛵ Iznajmiti jedrilicu?'],
       smjestaj:    ['🏖 Koje plaže su blizu?', '🐟 Gdje jesti u Biogradu?', '⛵ Izlet na Kornate?', '⛺ Kampovi u Biogradu?', '🏨 Hoteli uz more?'],
       kornati:     ['⛵ Kako doći do Kornata?', '🐟 Konobe na otocima?', '🤿 Ronjenje na Kornatima?', '⚓ Charter za Kornate?', '🏖 Plaže na Kornatima?'],
