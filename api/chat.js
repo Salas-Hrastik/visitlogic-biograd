@@ -18,6 +18,7 @@ const CATEGORY_CONTEXTS = {
   dogadanja:   (db) => ({ grad: db.grad, dogadanja: db.dogadanja }),
   opcenito:    (db) => ({ grad: db.grad, opcenito: db.opcenito }),
   prakticno:   (db) => ({ grad: db.grad, prakticne_info: db.prakticne_info }),
+  klima:       (db) => ({ grad: db.grad, klima: db.klima }),
 };
 
 // ===== DETEKCIJA JEZIKA =====
@@ -138,8 +139,10 @@ function detectCategory(msg, lastCategory) {
     || m.includes('geschichte') || m.includes('über') || m.includes('einwohner') || m.includes('hauptstadt'))
     return 'opcenito';
 
-  if (lastCategory && CATEGORY_CONTEXTS[lastCategory])
-    return lastCategory;
+  if (m.includes('temperatura') || m.includes('klima') || m.includes('klimat') || m.includes('vrijeme') || m.includes('vremenski') || m.includes('sunce') || m.includes('sunčan') || m.includes('kišn') || m.includes('kiša') || m.includes('vjetar') || m.includes('bura') || m.includes('jugo') || m.includes('sezona') || m.includes('srpanj') || m.includes('kolovoz') || m.includes('lipanj') || m.includes('rujan') || m.includes('travanj') || m.includes('svibanj') || m.includes('toplota') || m.includes('toplo') || m.includes('hladno')
+    || m.includes('temperature') || m.includes('weather') || m.includes('climate') || m.includes('season') || m.includes('sunny') || m.includes('rain') || m.includes('wind') || m.includes('hot') || m.includes('cold') || m.includes('july') || m.includes('august') || m.includes('june') || m.includes('september')
+    || m.includes('temperatur') || m.includes('wetter') || m.includes('klima') || m.includes('sommer') || m.includes('sonne'))
+    return 'klima';
 
   return null;
 }
@@ -159,6 +162,7 @@ function getSuggestions(category, lang) {
       atrakcije:   ['🏛️ Zavičajni muzej Biograd?', '⛪ Crkve i ruševine?', '🏖 Plaže Biograda?'],
       opcenito:    ['🏖 Plaže Biograda?', '⛵ Izlet na Kornate?', '🐟 Dalmatinska gastronomija?'],
       prakticno:   ['🚌 Prijevoz do Zadra?', '⛽ Benzinska postaja?', '🏥 Liječnik u Biogradu?'],
+      klima:       ['🏖 Koje plaže preporučuješ?', '⛵ Kada je idealno za jedrenje?', '🌊 Temperatura mora u kolovozu?'],
     },
     en: {
       plaze:       ['⛵ Kornati day trip?', '🤿 Diving in Biograd?', '🏨 Accommodation near beach?'],
@@ -172,6 +176,7 @@ function getSuggestions(category, lang) {
       dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Summer events?', '🎶 Concerts on the waterfront?'],
       opcenito:    ['🏖 Biograd beaches?', '⛵ Kornati trip?', '🐟 Dalmatian food?'],
       prakticno:   ['🚌 Bus to Zadar?', '⛽ Petrol station?', '🏥 Doctor in Biograd?'],
+      klima:       ['🏖 Best beaches to visit?', '⛵ When is sailing season?', '🌊 Sea temperature in August?'],
     },
     de: {
       plaze:       ['⛵ Ausflug zu den Kornaten?', '🤿 Tauchen in Biograd?', '🏨 Unterkunft am Strand?'],
@@ -185,6 +190,7 @@ function getSuggestions(category, lang) {
       dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Sommerveranstaltungen?', '🎶 Konzerte am Kai?'],
       opcenito:    ['🏖 Strände von Biograd?', '⛵ Kornaten-Ausflug?', '🐟 Dalmatinische Küche?'],
       prakticno:   ['🚌 Bus nach Zadar?', '⛽ Tankstelle?', '🏥 Arzt in Biograd?'],
+      klima:       ['🏖 Beste Strände?', '⛵ Wann ist Segelsaison?', '🌊 Meerestemperatur im August?'],
     }
   };
   return (map[lang] || map.hr)[category] || [];
@@ -303,6 +309,40 @@ function getCategoryItems(category, message = '') {
   }
   if (category === 'dogadanja') {
     return (db.dogadanja?.eventi || []).map(e => item(e, { adresa: e.termin || '' }));
+  }
+  if (category === 'klima') {
+    return [
+      {
+        naziv: '☀️ Klima Biograda na Moru',
+        slika: 'https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg',
+        adresa: '🌡 Mediteranska klima · 300 sunčanih dana godišnje',
+        recenzija: 'Lipanj–rujan: 26–32°C · More: 24–28°C · Srpanj i kolovoz najtopliji.',
+        recenzija_izvor: 'Meteorološki podaci',
+        web: 'https://www.discover-biograd.com',
+        karta: 'https://maps.google.com/?q=Biograd+na+Moru',
+        telefon: '', ocjena: ''
+      },
+      {
+        naziv: '🏖 Plaže — idealno kupanje',
+        slika: 'https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg',
+        adresa: '🌊 Temperatura mora: 24–28°C (srpanj–kolovoz)',
+        recenzija: 'Dražica, Soline, Bošana — plaže idealne za kupanje i sunčanje.',
+        recenzija_izvor: 'TZ Biograd',
+        web: 'https://www.discover-biograd.com/prirodne-ljepote/plaze',
+        karta: 'https://maps.google.com/?q=plaže+Biograd+na+Moru',
+        telefon: '', ocjena: ''
+      },
+      {
+        naziv: '⛵ Nautička sezona',
+        slika: proxyImg('https://www.discover-biograd.com/storage/media/prirodne-ljepote/NP-kornati/11-06-21%20NP%20KORNATI%202%20_86Y9965.jpg'),
+        adresa: '🗓 Sezona: travanj – listopad',
+        recenzija: 'Idealni uvjeti za jedrenje i izlete na Kornate. Marina Biograd — 1200 vezova.',
+        recenzija_izvor: 'Marina Biograd',
+        web: 'https://www.discover-biograd.com/nautika',
+        karta: 'https://maps.google.com/?q=Marina+Biograd+na+Moru',
+        telefon: '', ocjena: ''
+      }
+    ];
   }
   return [];
 }
