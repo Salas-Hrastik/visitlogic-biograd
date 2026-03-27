@@ -253,13 +253,28 @@ function item(o, extra = {}) {
   };
 }
 
+// Generičke kategorijske riječi koje se ne smiju koristiti za filtriranje
+const GENERICKE_RIJECI = new Set([
+  'plaža','plaže','plaza','beach','strand',
+  'hotel','hoteli','hotels','unterkunft',
+  'restoran','restorani','restaurant','konoba','konobe','essen',
+  'kamp','kampovi','camping','smještaj','smjestaj','accommodation',
+  'izlet','izleti','excursion','kornati','kornate','ausflug',
+  'sport','aktivnosti','activities','atrakcij','atrakcija',
+  'biograd','biograda','biogradu','moru','mora',
+  'gdje','jesti','preporuči','preporuka','lokalna','lokalni'
+]);
+
 // Filtrira listu po ključnim riječima iz poruke — ako nema podudaranja, vraća sve
 function filterByMessage(lista, msg) {
   if (!msg) return lista;
   const m = msg.toLowerCase();
   const matched = lista.filter(it => {
-    // Uzmi značajne riječi iz naziva (dulje od 3 slova, bez zvjezdica/simbola)
-    const words = it.naziv.toLowerCase().replace(/[★✓\-\/,\.]+/g, ' ').split(/\s+/).filter(w => w.length > 3);
+    // Uzmi značajne riječi iz naziva — isključi generičke kategorijske pojmove
+    const words = it.naziv.toLowerCase()
+      .replace(/[★✓\-\/,\.\(\)]+/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length > 3 && !GENERICKE_RIJECI.has(w));
     return words.some(w => m.includes(w));
   });
   return matched.length > 0 ? matched : lista;
