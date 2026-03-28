@@ -346,7 +346,19 @@ function getCategoryItems(category, message = '') {
     return [...hoteli, ...kontakti];
   }
   if (category === 'kornati') {
+    const m = (message || '').toLowerCase();
     const k = db.kornati;
+    // Ako pita za hranu/konobe na Kornatima → prikaži konobe kartice
+    const isKonoba = m.includes('konob') || m.includes('rest') || m.includes('jelo') || m.includes('hranu') ||
+      m.includes('ručak') || m.includes('ruča') || m.includes('jesti') || m.includes('riba') ||
+      m.includes('jastog') || m.includes('plodovi') || m.includes('levrnaka') || m.includes('žakan') ||
+      m.includes('fešta') || m.includes('opat') || m.includes('piccolo') ||
+      m.includes('eat') || m.includes('food') || m.includes('lunch') || m.includes('dinner') ||
+      m.includes('restaurant') || m.includes('tavern') || m.includes('essen') || m.includes('speise');
+    if (isKonoba) {
+      const konobe = k?.izleti?.konobe_na_otocima || [];
+      return konobe.map(kon => item(kon, { adresa: kon.adresa || kon.tip || '' }));
+    }
     return k ? [item(k, { adresa: k.polaziste || '' })] : [];
   }
   if (category === 'izleti') {

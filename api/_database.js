@@ -894,7 +894,64 @@ export const db = {
       "opis": "Organizirani izleti brodom polaze svakodnevno iz luke Biograda (lipanj–rujan). Trajanje: 8–10 sati.",
       "sadrzaj_izleta": "Plovidba između otoka, zaustavljanje u providnim zaljevima za kupanje, ribolov, ručak u konobama na otocima (Levrnaka, Mana, Kornat)",
       "cijena_izleta": "Orijentacijska cijena: 50–80 EUR po osobi (ovisno o operatoru, s ručkom)",
-      "konobe_na_otocima": ["Konoba na Levrnakai", "Konoba Mana", "Konoba Opat na Kornatu"],
+      "konobe_na_otocima": [
+        {
+          "naziv": "Konoba Levrnaka",
+          "tip": "🍽️ konoba · riba i plodovi mora · jedina pješčana plaža u Kornatima",
+          "adresa": "Otok Levrnaka 7, 22243 Murter-Kornati",
+          "telefon": "+385 91 435 3777",
+          "web": "https://www.konoba-levrnaka.hr",
+          "karta": "https://maps.google.com/?q=Konoba+Levrnaka+Kornati",
+          "slika": "https://wsrv.nl/?url=www.zakan-kornati.hr/wp-content/uploads/2022/05/puna-zivota-zakan.png&w=400&h=220&fit=cover&output=jpg",
+          "ocjena": "⭐ 4,2 · 778 recenzija",
+          "recenzija": "Konoba u srcu NP Kornati — jedini otok s pješčanom plažom 'Lojena'. Pristanište za 20 brodova, svježa riba i dalmatinski specijaliteti.",
+          "recenzija_izvor": "RestaurantGuru / TripAdvisor"
+        },
+        {
+          "naziv": "Konoba Žakan",
+          "tip": "🍽️ konoba · gastro iskustvo · Ravni Žakan, Kornati",
+          "adresa": "Otok Ravni Žakan 8, 22243 Murter-Kornati",
+          "telefon": "+385 91 726 0579",
+          "web": "https://www.zakan-kornati.hr",
+          "karta": "https://maps.google.com/?q=Konoba+Žakan+Kornati",
+          "slika": "https://wsrv.nl/?url=www.zakan-kornati.hr/wp-content/uploads/2022/05/parkovi-hrvatske-zakan.png&w=400&h=220&fit=cover&output=jpg",
+          "ocjena": "⭐ 4,5 TripAdvisor",
+          "recenzija": "Vrhunski gastro doživljaj u srcu Kornata — moderna mediteranska kuhinja, taster menu, John Dory carpaccio. Radi 09–24h.",
+          "recenzija_izvor": "TripAdvisor / yachtscroatia.com"
+        },
+        {
+          "naziv": "Restaurant Fešta",
+          "tip": "🍽️ restoran · Gault&Millau · uvala Golubovac, Žut",
+          "adresa": "Otok Žut 52, 22243 Kornati",
+          "telefon": "+385 99 347 3519",
+          "web": "https://glamping-kornati.com/restaurant/",
+          "karta": "https://maps.google.com/?q=Restaurant+Festa+Kornati+Žut",
+          "slika": "https://wsrv.nl/?url=glamping-kornati.com/wp-content/uploads/2023/01/restoran-featured-1.png&w=400&h=220&fit=cover&output=jpg",
+          "ocjena": "⭐ Gault&Millau preporučen",
+          "recenzija": "Najekskluzivniji restoran arhipelaga, na ulazu u NP Kornati na otoku Žutu. Vlastita maslinova ulja, 500 etiketa vina, glamping smještaj.",
+          "recenzija_izvor": "Gault&Millau / Falstaff"
+        },
+        {
+          "naziv": "Konoba Opat",
+          "tip": "🍽️ konoba · jastog i plodovi mora · uvala Opat, Kornat",
+          "adresa": "Uvala Opat, Otok Kornat, Kornati",
+          "karta": "https://maps.google.com/?q=Konoba+Opat+Kornati",
+          "slika": "https://wsrv.nl/?url=glamping-kornati.com/wp-content/uploads/2023/01/hrana8.png&w=400&h=220&fit=cover&output=jpg",
+          "ocjena": "⭐ TripAdvisor preporučen",
+          "recenzija": "Specialitet: jastog rižoto sa šafranom i roštilanim jastogom s hollandaise umakom — po autentičnoj kornatskoj metodi.",
+          "recenzija_izvor": "yachtscroatia.com"
+        },
+        {
+          "naziv": "Konoba Piccolo",
+          "tip": "🍽️ konoba · domaća dalmatinska kuhinja · Smokvica Vela",
+          "adresa": "Smokvica Vela, Kornati",
+          "karta": "https://maps.google.com/?q=Konoba+Piccolo+Kornati+Smokvica",
+          "slika": "https://wsrv.nl/?url=glamping-kornati.com/wp-content/uploads/2023/01/restoran-page-2.png&w=400&h=220&fit=cover&output=jpg",
+          "ocjena": "⭐ lokalna preporuka",
+          "recenzija": "Tradicional kornatska kuhinja — hladna predjela, rižoto s plodovima mora, jastog s tjesteninom. Prava domaća atmosfera.",
+          "recenzija_izvor": "yachtscroatia.com"
+        }
+      ],
       "savjet": "Rezervirajte izlet dan ranije, posebno u srpnju i kolovozu. Ponesit adekvatan SPF zaštitu jer nema sjene na otocima."
     },
     "ronilacka_lokacija": "NP Kornati ima zabranjeno ronjenje bez posebne dozvole — kontaktirajte upravu parka"
@@ -1221,7 +1278,7 @@ export const db = {
         "tip": "🅿️ javno parkiralište · besplatno · ⭐ 5,0 (3)",
         "adresa": "Ul. kralja Petra Svačića 18, Biograd na Moru",
         "karta": "https://maps.google.com/?q=Gradski+parking+Biograd+na+Moru+Petra+Svačića+18",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Javno besplatno parkiralište u centru grada.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1231,7 +1288,7 @@ export const db = {
         "adresa": "Radovanova ulica, Biograd na Moru",
         "telefon": "091 408 7695",
         "karta": "https://maps.google.com/?q=Parking+Biograd+Boat+Show+Marina+Kornati",
-        "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Uz Marinu Kornati — korisno za nautičare i posjetitelje sajma. Blizu plaže, ali skuplje.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1240,7 +1297,7 @@ export const db = {
         "tip": "🅿️ otvoreno 0–24h · ⭐ 4,1 (17 recenzija)",
         "adresa": "Ul. Tina Ujevića 33, Biograd na Moru",
         "karta": "https://maps.google.com/?q=Parking+Ul+Tina+Ujevića+33+Biograd",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-bosana.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Parkiralište u mirnom dijelu grada, dobra alternativa u sezoni.",
         "recenzija_izvor": "Google Maps"
       }
@@ -1298,7 +1355,7 @@ export const db = {
         "telefon": "023 385 358",
         "web": "https://www.ljekarne-joukhadar.hr",
         "karta": "https://www.google.com/maps/place/Ljekarna+Avicenna/@43.9396452,15.4468229,17z",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Izvrsno ocijenjena ljekarna s ljubaznim osobljem, u centru Biograda.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1309,7 +1366,7 @@ export const db = {
         "telefon": "023 385 444",
         "web": "https://www.ljekarnesvaljek.com",
         "karta": "https://maps.google.com/?q=Ljekarna+Švaljek+2+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-bosana.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Visoko ocijenjena ljekarna u centru, tik uz Ljekarne Avicenna.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1320,7 +1377,7 @@ export const db = {
         "telefon": "023 385 042",
         "web": "https://www.ljekarnesvaljek.com",
         "karta": "https://maps.google.com/?q=Ljekarna+Švaljek+Park+Shop+Biograd",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "U trgovačkom centru Park&Shop — praktično uz kupovinu.",
         "recenzija_izvor": "Google Maps"
       }
@@ -1338,10 +1395,10 @@ export const db = {
       }
     ],
     "banke_atm": [
-      { "naziv": "PBZ Banka", "tip": "🏦 banka · bankomat", "adresa": "Šibuljina 2, Biograd na Moru", "karta": "https://maps.google.com/?q=PBZ+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg" },
-      { "naziv": "Erste Bank", "tip": "🏦 banka · bankomat", "adresa": "Vladimira Nazora 1, Biograd na Moru", "web": "https://www.erstebank.hr", "karta": "https://maps.google.com/?q=Erste+Bank+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg" },
-      { "naziv": "OTP Banka", "tip": "🏧 bankomat", "adresa": "Centar, Biograd na Moru", "karta": "https://maps.google.com/?q=OTP+Banka+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg" },
-      { "naziv": "Zagrebačka banka (ZABA)", "tip": "🏧 bankomat", "adresa": "Centar, Biograd na Moru", "karta": "https://maps.google.com/?q=Zagrebacka+banka+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg" }
+      { "naziv": "PBZ Banka", "tip": "🏦 banka · bankomat", "adresa": "Šibuljina 2, Biograd na Moru", "karta": "https://maps.google.com/?q=PBZ+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg" },
+      { "naziv": "Erste Bank", "tip": "🏦 banka · bankomat", "adresa": "Vladimira Nazora 1, Biograd na Moru", "web": "https://www.erstebank.hr", "karta": "https://maps.google.com/?q=Erste+Bank+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg" },
+      { "naziv": "OTP Banka", "tip": "🏧 bankomat", "adresa": "Centar, Biograd na Moru", "karta": "https://maps.google.com/?q=OTP+Banka+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg" },
+      { "naziv": "Zagrebačka banka (ZABA)", "tip": "🏧 bankomat", "adresa": "Centar, Biograd na Moru", "karta": "https://maps.google.com/?q=Zagrebacka+banka+Biograd+na+Moru", "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-bosana.webp&w=400&h=220&fit=cover&output=jpg" }
     ],
     "benzinska": [
       {
@@ -1351,7 +1408,7 @@ export const db = {
         "telefon": "0800 11 12",
         "web": "https://www.ina.hr",
         "karta": "https://www.google.com/maps/place/Ina+Biograd+na+moru+-+magistrala/@43.9439997,15.455519,17z",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Najboljše ocijenjena benzinska u Biogradu, radi 0–24h cijele godine. Uz magistralu D8.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1362,7 +1419,7 @@ export const db = {
         "telefon": "091 464 1052",
         "web": "https://www.tifon.hr",
         "karta": "https://maps.google.com/?q=Tifon+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Dobro ocijenjena postaja s povoljnim cijenama, LPG autoplin dostupan.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1372,7 +1429,7 @@ export const db = {
         "adresa": "Obala kralja Petra Krešimira IV 36a, Biograd na Moru",
         "web": "https://www.ina.hr",
         "karta": "https://maps.google.com/?q=INA+Obala+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Benzinska na obali — korisno za nautičare i marine. Manji asortiman.",
         "recenzija_izvor": "Google Maps"
       }
@@ -1396,7 +1453,7 @@ export const db = {
         "telefon": "0800 200 220",
         "web": "https://www.lidl.hr",
         "karta": "https://www.google.com/maps/place/Lidl/@43.94502,15.4539,17z",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Najpopularniji supermarket — uz Kaufland na magistrali D8. Izvrsne cijene.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1407,7 +1464,7 @@ export const db = {
         "telefon": "051 669 070",
         "web": "https://www.plodine.hr",
         "karta": "https://www.google.com/maps/place/Plodine/@43.9424758,15.4555539,17z",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Dobro snabdjeven supermarket s velikim izborom prehrambenih proizvoda.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1417,7 +1474,7 @@ export const db = {
         "adresa": "Ul. dr. Franje Tuđmana 82, 23210 Biograd na Moru",
         "web": "https://www.tommy.hr",
         "karta": "https://maps.google.com/?q=Tommy+Maximarket+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-bosana.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Veliki Dalmatinski lanac, dobar izbor svježeg voća, povrća i lokalne hrane.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1427,7 +1484,7 @@ export const db = {
         "adresa": "Šetalište kneza Branimira 32, 23210 Biograd na Moru",
         "web": "https://www.konzum.hr",
         "karta": "https://maps.google.com/?q=Konzum+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "U samom centru uz rivu — najpristupačniji za pješake i nautičare s marine.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1438,7 +1495,7 @@ export const db = {
         "telefon": "072 000 990",
         "web": "https://www.studenac.hr",
         "karta": "https://maps.google.com/?q=Studenac+Market+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-drazica.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Više lokacija po gradu — praktično za brzu kupovinu u blizini smještaja.",
         "recenzija_izvor": "Google Maps"
       }
@@ -1450,7 +1507,7 @@ export const db = {
         "adresa": "Dubrovačka ul. 22, Biograd na Moru",
         "telefon": "099 518 9348",
         "karta": "https://maps.google.com/?q=Auto+servis+Rakic+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Iznimno visoko ocijenjen automehaničar — pouzdan i brz servis za sve kvarove.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1469,7 +1526,7 @@ export const db = {
         "tip": "🔧 vulkanizer · ⭐ 4,3 (40 recenzija) · pon–sub od 09h",
         "adresa": "Dubrovačka ul. 4, Biograd na Moru",
         "karta": "https://maps.google.com/?q=Vulkanizer+Morozin+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Iskusan vulkanizer na Dubrovačkoj ulici, prihvatljive cijene.",
         "recenzija_izvor": "Google Maps"
       }
