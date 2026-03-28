@@ -406,6 +406,13 @@ font-size:13px;
 color:#004e89;
 }
 
+.item-card-opis{
+font-size:12px;
+color:#444;
+line-height:1.45;
+margin:3px 0 5px;
+}
+
 .item-card-meta{
 font-size:11px;
 color:#666;
@@ -652,6 +659,13 @@ function addMessage(text, type, suggestions, images, items){
       const name = document.createElement("strong");
       name.textContent = it.naziv;
       info.appendChild(name);
+
+      if(it.opis){
+        const opisEl = document.createElement("div");
+        opisEl.className = "item-card-opis";
+        opisEl.textContent = it.opis;
+        info.appendChild(opisEl);
+      }
 
       if(it.adresa){
         const m = document.createElement("div");

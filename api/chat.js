@@ -233,7 +233,13 @@ function getSuggestions(category, lang, message) {
 // Wikimedia uvijek radi izravno; sve ostalo ide kroz wsrv.nl proxy
 function proxyImg(url) {
   if (!url) return '';
+  // Direktni CDN-ovi koji ne trebaju proxy
   if (url.includes('upload.wikimedia.org') || url.includes('commons.wikimedia.org')) return url;
+  if (url.includes('lh3.googleusercontent.com')) return url;
+  if (url.includes('ilirijabiograd.com')) return url;
+  if (url.includes('camping-biograd.com')) return url;
+  if (url.includes('bestinbiograd.com')) return url;
+  if (url.includes('avtokampi.si')) return url;
   return 'https://wsrv.nl/?url=' + encodeURIComponent(url) + '&w=200&h=150&fit=cover&output=jpg&errorredirect=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F5%2F51%2FKornati.jpg';
 }
 
@@ -241,6 +247,7 @@ function proxyImg(url) {
 function item(o, extra = {}) {
   return {
     naziv:           o.naziv || '',
+    opis:            o.opis || '',
     slika:           proxyImg(o.slika || ''),
     adresa:          o.adresa || o.lokacija || o.tip || o.udaljenost || '',
     telefon:         o.telefon || '',
@@ -672,13 +679,15 @@ PRAVILA ODGOVARANJA:
 KLJUČNO PRAVILO — KARTICE:
 Kada korisnik pita za restorane, konobe, smještaj, plaže, hotele, kampove, parkinge,
 ljekarne, supermarkete, benzinske, servise, konobe na Kornatima, nautiku, izlete ili atrakcije,
-sustav će automatski prikazati vizualne kartice sa slikama, linkovima i recenzijama.
-ZBOG TOGA: u svom tekstu APSOLUTNO NEMOJ nabrajati ni ponavljati te objekte u obliku liste s crticama ili brojevima!
-Napiši samo kratki uvodni tekst (1–3 rečenice) s općim kontekstom ili savjetom.
-Kartice sa svim detaljima (naziv, adresa, telefon, web, slike, recenzije) prikazat će se automatski ispod.
+sustav će automatski prikazati vizualne kartice sa slikama, opisima, linkovima i recenzijama.
+ZBOG TOGA: u svom tekstu APSOLUTNO NEMOJ individualno nabrajati, navoditi niti opisivati svaki objekt posebno — ni u obliku liste, ni u obliku proze!
+Kartice sa SVIM detaljima (naziv, opis, adresa, telefon, web, slike, recenzije) prikazat će se automatski ispod tvog teksta.
+Napiši samo 1–2 kratke uvodne rečenice s općim kontekstom ili savjetom — NE opisuj svaku plažu/restoran/hotel zasebno!
+ZABRANJEN FORMAT: "Plaža Dražica je najpopularnija gradska plaža... Plaža Soline smještena je u borovoj šumi..."
 ZABRANJEN FORMAT: "- Konoba Levrnaka: Smještena na otoku... \n- Konoba Žakan: Ova konoba..."
 ZABRANJEN FORMAT: "1. Restoran... 2. Hotel... 3. Plaža..."
-ISPRAVAN FORMAT: "Kornati su poznati po svježoj ribi i autentičnoj dalmatinskoj kuhinji. Rezervirajte unaprijed — konobe su male i brzo se pune u sezoni."`;
+ISPRAVAN FORMAT (plaže): "Biograd nudi nekoliko predivnih plaža uz kristalno čisto more — nešto za svačiji ukus."
+ISPRAVAN FORMAT (konobe): "Kornati su poznati po svježoj ribi i autentičnoj dalmatinskoj kuhinji. Rezervirajte unaprijed — konobe su male i brzo se pune u sezoni."`;
 }
 
 // ===== GLAVNI HANDLER =====
