@@ -301,7 +301,30 @@ function getCategoryItems(category, message = '') {
     if (isNocni) {
       return (db.gastronomija?.nocni_zivot || []).map(r => item(r, { adresa: r.tip || '' }));
     }
-    const svi = (db.gastronomija?.restorani || []).map(r => item(r, { adresa: r.tip || '' }));
+    // Sortiranje: 1) restorani prije konoba, 2) unutar grupe: centar/riva prije ostalih
+    const tipGrupa = r => {
+      const naziv = (r.naziv || '').toLowerCase();
+      const tip   = (r.tip   || '').toLowerCase();
+      if (naziv.includes('konoba') || tip.includes('konoba')) return 1;
+      if (naziv.includes('restoran') || naziv.includes('restaurant') ||
+          tip.includes('restoran')   || tip.includes('restaurant')) return 0;
+      return 2; // pizzerie, grill, ostalo
+    };
+    const lokacijaPriority = r => {
+      const adr = (r.adresa || '').toLowerCase();
+      if (!adr) return 1; // bez adrese – sredina
+      if (adr.includes('put solina') || adr.includes('crvena luka') ||
+          adr.includes('šetalište') || adr.includes('setaliste')) return 2; // periferno
+      return 0; // centar / riva (Obala, Trg, Ul. …)
+    };
+    const sortirani = (db.gastronomija?.restorani || [])
+      .slice()
+      .sort((a, b) => {
+        const gA = tipGrupa(a), gB = tipGrupa(b);
+        if (gA !== gB) return gA - gB;
+        return lokacijaPriority(a) - lokacijaPriority(b);
+      });
+    const svi = sortirani.map(r => item(r, { adresa: r.tip || '' }));
     return filterByMessage(svi, message);
   }
   if (category === 'nautika') {
