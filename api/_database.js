@@ -902,7 +902,7 @@ export const db = {
           "telefon": "+385 91 435 3777",
           "web": "https://www.konoba-levrnaka.hr",
           "karta": "https://maps.google.com/?q=Konoba+Levrnaka+Kornati",
-          "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
+          "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/featured/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
           "ocjena": "⭐ 4,2 · 778 recenzija",
           "recenzija": "Konoba u srcu NP Kornati — jedini otok s pješčanom plažom 'Lojena'. Pristanište za 20 brodova, svježa riba i dalmatinski specijaliteti.",
           "recenzija_izvor": "RestaurantGuru / TripAdvisor"
@@ -926,7 +926,7 @@ export const db = {
           "telefon": "+385 99 347 3519",
           "web": "https://glamping-kornati.com/restaurant/",
           "karta": "https://maps.google.com/?q=Restaurant+Festa+Kornati+Žut",
-          "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-bosana.webp&w=400&h=220&fit=cover&output=jpg",
+          "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/featured/plaza-bosana.webp&w=400&h=220&fit=cover&output=jpg",
           "ocjena": "⭐ Gault&Millau preporučen",
           "recenzija": "Najekskluzivniji restoran arhipelaga na ulazu u NP Kornati (otok Žut). Vlastita maslinova ulja, 500 etiketa vina, glamping smještaj.",
           "recenzija_izvor": "Gault&Millau / Falstaff"
@@ -936,7 +936,7 @@ export const db = {
           "tip": "🍽️ konoba · jastog i plodovi mora · uvala Opat, Kornat",
           "adresa": "Uvala Opat, Otok Kornat, Kornati",
           "karta": "https://maps.google.com/?q=Konoba+Opat+Kornati",
-          "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
+          "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/featured/plaza-drazica.webp&w=400&h=220&fit=cover&output=jpg",
           "ocjena": "⭐ TripAdvisor preporučen",
           "recenzija": "Specialitet: jastog rižoto sa šafranom i roštilanim jastogom s hollandaise umakom — po autentičnoj kornatskoj metodi.",
           "recenzija_izvor": "yachtscroatia.com"
@@ -946,7 +946,7 @@ export const db = {
           "tip": "🍽️ konoba · domaća dalmatinska kuhinja · Smokvica Vela",
           "adresa": "Smokvica Vela, Kornati",
           "karta": "https://maps.google.com/?q=Konoba+Piccolo+Kornati+Smokvica",
-          "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-drazica.webp&w=400&h=220&fit=cover&output=jpg",
+          "slika": "https://upload.wikimedia.org/wikipedia/commons/5/51/Kornati.jpg",
           "ocjena": "⭐ lokalna preporuka",
           "recenzija": "Tradicionalna kornatska kuhinja — hladna predjela, rižoto s plodovima mora, jastog s tjesteninom. Prava domaća atmosfera.",
           "recenzija_izvor": "yachtscroatia.com"

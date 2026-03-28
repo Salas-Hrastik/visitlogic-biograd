@@ -565,6 +565,38 @@ function getSeasonContext() {
   return '';
 }
 
+// ===== STRIP BULLET LISTE IZ AI ODGOVORA =====
+// Kad postoje kartice, uklanjamo svaki bullet/numbered popis koji AI generira
+// jer su te informacije već prikazane kao kartice ispod teksta
+function stripBulletList(text) {
+  const lines = text.split('\n');
+  const out = [];
+  let skipBlank = false;
+
+  for (const line of lines) {
+    const t = line.trim();
+
+    // Bullet linija: počinje s "-", "•", "–", "—" ili brojem + točka
+    // i ima barem jednu veliku slova (naziv mjesta/objekta)
+    const isBullet =
+      /^[-•–—]\s+/.test(t) ||
+      /^\d+[.)]\s+/.test(t);
+
+    if (isBullet) {
+      skipBlank = true; // preskočit ćemo i prazne retke koji odmah slijede
+      continue;
+    }
+
+    // Preskači prazne retke neposredno nakon bullet bloka
+    if (skipBlank && t === '') continue;
+    skipBlank = false;
+
+    out.push(line);
+  }
+
+  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 // ===== SYSTEM PROMPT =====
 function buildSystemPrompt(lang, context, weatherCtx) {
   const weatherDirectives = buildWeatherDirectives(weatherCtx);
@@ -688,9 +720,13 @@ export default async function handler(req, res) {
       max_tokens: 800
     });
 
-    const reply = completion.choices[0]?.message?.content || '';
+    const rawReply = completion.choices[0]?.message?.content || '';
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
     const items = getCategoryItems(detectedCategory, message);
+
+    // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
+    // (model ponekad ignorira pravilo iz prompta i generira duplikate)
+    const reply = items.length > 0 ? stripBulletList(rawReply) : rawReply;
 
     return res.status(200).json({
       reply,
