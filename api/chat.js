@@ -26,16 +26,27 @@ function detectLang(msg, fallback = 'hr') {
   const w = msg.toLowerCase().split(/[\s,?.!;:()\-]+/);
   const has = (list) => list.some(x => w.includes(x));
 
-  // HR ima prioritet — tipične hrvatske riječi
-  if (has(['kako','što','gdje','koji','koja','koje','kada','zašto','koliko','može','možete',
-           'imam','imaju','ima','nema','trebam','mogu','jeste','jesi','imate','idemo',
-           'plaža','plaže','more','mora','otok','otoci','restoran','konoba','smještaj',
-           'hotel','kamp','jedrilica','izlet','charter','čarter','nautika','marina',
-           'kornati','kornata','biogradu','biograda','dalmacij',
-           'kakav','kakva','blizu','daleko','preporuč','rezerv','sezona',
-           'srpanj','kolovoz','lipanj','rujan','ljeto','zima','proljeće','jesen',
-           'temperatura','klima','sunce','vjetar','kiša','bura','maestral']))
-    return 'hr';
+  // HR — STROGI markeri (čisto hrvatska gramatika, ne postoje u EN/DE/IT/SL/...)
+  const hrStrong = ['kako','što','gdje','koji','koja','koje','kada','zašto','koliko',
+    'može','možete','imam','imaju','nema','trebam','mogu','jeste','jesi','imate','idemo',
+    'plaža','plaže','restoran','konoba','smještaj','jedrilica','čarter','nautika',
+    'biogradu','biograda','dalmacij','kakav','kakva','blizu','daleko',
+    'preporuč','rezerv','sezona','srpanj','kolovoz','lipanj','rujan',
+    'ljeto','zima','proljeće','jesen','klima','vjetar','kiša','bura','maestral',
+    'otok','otoci','sidrište'];
+
+  // HR — SLABI markeri (dijele se s drugim jezicima: 'more'=EN, 'hotel'=svugdje...)
+  // Koriste se SAMO kad je korisnik već u HR razgovoru (fallback='hr')
+  const hrWeak = [...hrStrong,
+    'more','mora','sunce','temperatura','hotel','kamp','charter','marina',
+    'kornati','kornata','ima'];
+
+  if (fallback === 'hr') {
+    if (has(hrWeak)) return 'hr';
+  } else {
+    // U stranom razgovoru — samo strogi HR markeri mogu resetirati jezik
+    if (has(hrStrong)) return 'hr';
+  }
 
   // HU — ugrofinski, veoma distinktivan
   if (has(['hol','mikor','hogyan','mennyibe','tenger','étterem','szállás','szálloda',
@@ -821,18 +832,21 @@ async function translateItems(items, lang) {
         content: `Translate Croatian tourism card texts to ${target}. Return ONLY JSON object {"t":[{"opis":"...","adresa":"...","recenzija":"..."},...]}. Keep proper nouns (place/restaurant names) unchanged. Be concise.\n\n${JSON.stringify(fields)}`
       }],
       temperature: 0.1,
-      max_tokens: 2000
+      max_tokens: 3000
     });
 
     const raw = tr.choices[0]?.message?.content || '';
     const match = raw.match(/\{[\s\S]*\}/);
     if (!match) return items;
-    const parsed = JSON.parse(match[0]);
+    let parsed;
+    try { parsed = JSON.parse(match[0]); } catch { return items; }
     const tArr = parsed.t || parsed.translations || parsed.items || [];
-    if (!Array.isArray(tArr) || tArr.length !== items.length) return items;
+    if (!Array.isArray(tArr) || !tArr.length) return items;
 
+    // Per-item merge — preveди što je dostupno, ostatak ostavi HR
     return items.map((it, i) => {
-      const t = tArr[i] || {};
+      const t = tArr[i];
+      if (!t) return it;
       return {
         ...it,
         opis:      t.opis     || it.opis,
