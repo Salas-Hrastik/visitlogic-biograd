@@ -796,6 +796,55 @@ function stripBulletList(text) {
   return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
+// ===== PRIJEVOD KARTICA =====
+const LANG_NAMES = {
+  en:'English', de:'German', sl:'Slovenian',
+  it:'Italian', hu:'Hungarian', cs:'Czech', sk:'Slovak'
+};
+
+async function translateItems(items, lang) {
+  if (lang === 'hr' || !items.length) return items;
+  const target = LANG_NAMES[lang];
+  if (!target) return items;
+
+  const fields = items.map(it => ({
+    opis:      it.opis     || '',
+    adresa:    it.adresa   || '',
+    recenzija: it.recenzija ? it.recenzija.replace(/^["""]+|["""]+$/g, '') : ''
+  }));
+
+  try {
+    const tr = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [{
+        role: 'user',
+        content: `Translate Croatian tourism card texts to ${target}. Return ONLY JSON object {"t":[{"opis":"...","adresa":"...","recenzija":"..."},...]}. Keep proper nouns (place/restaurant names) unchanged. Be concise.\n\n${JSON.stringify(fields)}`
+      }],
+      temperature: 0.1,
+      max_tokens: 2000
+    });
+
+    const raw = tr.choices[0]?.message?.content || '';
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (!match) return items;
+    const parsed = JSON.parse(match[0]);
+    const tArr = parsed.t || parsed.translations || parsed.items || [];
+    if (!Array.isArray(tArr) || tArr.length !== items.length) return items;
+
+    return items.map((it, i) => {
+      const t = tArr[i] || {};
+      return {
+        ...it,
+        opis:      t.opis     || it.opis,
+        adresa:    t.adresa   || it.adresa,
+        recenzija: t.recenzija ? `"${t.recenzija}"` : it.recenzija
+      };
+    });
+  } catch {
+    return items; // fallback na HR kartice ako prijevod ne uspije
+  }
+}
+
 // ===== SYSTEM PROMPT =====
 function buildSystemPrompt(lang, context, weatherCtx) {
   const weatherDirectives = buildWeatherDirectives(weatherCtx);
@@ -924,27 +973,32 @@ export default async function handler(req, res) {
       { role: 'user', content: message }
     ];
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages,
-      temperature: 0.4,
-      max_tokens: 800
-    });
+    // getCategoryItems je sinkron — pokrećemo ga PRIJE API poziva
+    const items = getCategoryItems(detectedCategory, message);
+
+    // Paralelno: glavni AI odgovor + prijevod kartica (nema dodatne latencije)
+    const [completion, translatedItems] = await Promise.all([
+      openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages,
+        temperature: 0.4,
+        max_tokens: 800
+      }),
+      translateItems(items, lang)
+    ]);
 
     const rawReply = completion.choices[0]?.message?.content || '';
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
-    const items = getCategoryItems(detectedCategory, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
-    // (model ponekad ignorira pravilo iz prompta i generira duplikate)
-    const reply = items.length > 0 ? stripBulletList(rawReply) : rawReply;
+    const reply = translatedItems.length > 0 ? stripBulletList(rawReply) : rawReply;
 
     return res.status(200).json({
       reply,
       category: detectedCategory,
       lang,
       suggestions,
-      items
+      items: translatedItems
     });
 
   } catch (err) {
