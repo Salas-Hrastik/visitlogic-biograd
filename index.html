@@ -551,21 +551,21 @@ width:100%;
 
 <!-- CATEGORY TABS -->
 <nav id="cat-tabs">
-  <button onclick="quickAsk('Koje plaže su u Biogradu na Moru?')" data-cat="plaze">🏖 Plaže</button>
-  <button onclick="quickAsk('Gdje jesti u Biogradu? Preporuči ribu i dalmatinsku kuhinju')" data-cat="gastronomija">🐟 Gastronomija</button>
-  <button onclick="quickAsk('Nautika u Biogradu — marina, charter i plovidba')" data-cat="nautika">⛵ Nautika</button>
-  <button onclick="quickAsk('Smještaj u Biogradu na Moru — hoteli, kampovi i apartmani')" data-cat="smjestaj">🏨 Smještaj</button>
-  <button onclick="quickAsk('Izlet na Kornate — kako organizirati i što vidjeti?')" data-cat="kornati">🏝 Kornati</button>
-  <button onclick="quickAsk('Izleti iz Biograda — Zadar, Vransko jezero, NP Krka')" data-cat="izleti">🗺 Izleti</button>
-  <button onclick="quickAsk('Sport i aktivnosti u Biogradu — ronjenje, windsurfing, kayak')" data-cat="sport">🤿 Sport</button>
-  <button onclick="quickAsk('Korisne informacije o Biogradu — parking, prijevoz, ljekarna')" data-cat="prakticno">ℹ️ Praktično</button>
+  <button data-cat="plaze">🏖 Plaže</button>
+  <button data-cat="gastronomija">🐟 Gastronomija</button>
+  <button data-cat="nautika">⛵ Nautika</button>
+  <button data-cat="smjestaj">🏨 Smještaj</button>
+  <button data-cat="kornati">🏝 Kornati</button>
+  <button data-cat="izleti">🗺 Izleti</button>
+  <button data-cat="sport">🤿 Sport</button>
+  <button data-cat="prakticno">ℹ️ Praktično</button>
 </nav>
 
 <!-- MAIN -->
 <div class="main">
 
   <div id="chat-box" class="chat-box">
-    <div class="chat-label">Turistički informator</div>
+    <div class="chat-label" id="chat-label">Turistički informator</div>
     <div class="chat-messages" id="chat-messages">
       <div class="welcome" id="welcome-block">
         <div class="welcome-text">
@@ -605,6 +605,82 @@ let chatHistory = [];
 let currentCategory = null;
 let firstMessage = true;
 let currentWeather = null;
+let currentLang = 'hr';
+
+// ===== UI PRIJEVODI =====
+const UI_LANGS = {
+  hr: {
+    chatLabel: 'Turistički informator',
+    typing: 'Razmišljam...',
+    speechLang: 'hr-HR',
+    tabs: {
+      plaze:       { label:'🏖 Plaže',        q:'Koje plaže su u Biogradu na Moru?' },
+      gastronomija:{ label:'🐟 Gastronomija', q:'Gdje jesti u Biogradu? Preporuči ribu i dalmatinsku kuhinju' },
+      nautika:     { label:'⛵ Nautika',       q:'Nautika u Biogradu — marina, charter i plovidba' },
+      smjestaj:    { label:'🏨 Smještaj',      q:'Smještaj u Biogradu na Moru — hoteli, kampovi i apartmani' },
+      kornati:     { label:'🏝 Kornati',       q:'Izlet na Kornate — kako organizirati i što vidjeti?' },
+      izleti:      { label:'🗺 Izleti',        q:'Izleti iz Biograda — Zadar, Vransko jezero, NP Krka' },
+      sport:       { label:'🤿 Sport',         q:'Sport i aktivnosti u Biogradu — ronjenje, windsurfing, kayak' },
+      prakticno:   { label:'ℹ️ Praktično',    q:'Korisne informacije o Biogradu — parking, prijevoz, ljekarna' },
+    }
+  },
+  en: {
+    chatLabel: 'Tourist Information',
+    typing: 'Thinking...',
+    speechLang: 'en-US',
+    tabs: {
+      plaze:       { label:'🏖 Beaches',        q:'What beaches are in Biograd na Moru?' },
+      gastronomija:{ label:'🐟 Food & Dining',  q:'Where to eat in Biograd? Recommend local fish dishes' },
+      nautika:     { label:'⛵ Sailing',         q:'Sailing in Biograd — marina, charter and boating' },
+      smjestaj:    { label:'🏨 Accommodation',  q:'Accommodation in Biograd — hotels, campsites and apartments' },
+      kornati:     { label:'🏝 Kornati',         q:'Day trip to Kornati — how to organise and what to see?' },
+      izleti:      { label:'🗺 Excursions',      q:'Day trips from Biograd — Zadar, Lake Vrana, Krka NP' },
+      sport:       { label:'🤿 Activities',      q:'Sports and activities in Biograd — diving, windsurfing, kayak' },
+      prakticno:   { label:'ℹ️ Info',            q:'Useful info about Biograd — parking, transport, pharmacy' },
+    }
+  },
+  de: {
+    chatLabel: 'Touristeninformation',
+    typing: 'Ich denke nach...',
+    speechLang: 'de-DE',
+    tabs: {
+      plaze:       { label:'🏖 Strände',      q:'Welche Strände gibt es in Biograd na Moru?' },
+      gastronomija:{ label:'🐟 Gastronomie',  q:'Wo essen in Biograd? Lokale Fischgerichte empfehlen' },
+      nautika:     { label:'⛵ Nautik',        q:'Nautik in Biograd — Marina, Charter und Segeln' },
+      smjestaj:    { label:'🏨 Unterkunft',    q:'Unterkunft in Biograd — Hotels, Campingplätze und Apartments' },
+      kornati:     { label:'🏝 Kornaten',      q:'Ausflug zu den Kornaten — wie organisieren und was sehen?' },
+      izleti:      { label:'🗺 Ausflüge',      q:'Ausflüge von Biograd — Zadar, Vranasee, Krka NP' },
+      sport:       { label:'🤿 Sport',         q:'Sport und Aktivitäten in Biograd — Tauchen, Windsurfen, Kajak' },
+      prakticno:   { label:'ℹ️ Info',          q:'Nützliche Infos zu Biograd — Parken, Transport, Apotheke' },
+    }
+  }
+};
+
+function applyLang(lang) {
+  const ui = UI_LANGS[lang] || UI_LANGS.hr;
+  // Tabovi — natpis i onclick
+  document.querySelectorAll('#cat-tabs button[data-cat]').forEach(btn => {
+    const t = ui.tabs[btn.dataset.cat];
+    if (!t) return;
+    btn.textContent = t.label;
+    btn.onclick = () => quickAsk(t.q);
+  });
+  // Chat label
+  const lbl = document.getElementById('chat-label');
+  if (lbl) lbl.textContent = ui.chatLabel;
+}
+
+function setLang(lang) {
+  const newLang = UI_LANGS[lang] ? lang : 'hr';
+  if (newLang === currentLang) return;
+  currentLang = newLang;
+  applyLang(newLang);
+  // Mikrofon — ažuriraj jezik prepoznavanja govora
+  if (window.recognition) recognition.lang = UI_LANGS[newLang].speechLang;
+}
+
+// Inicijaliziraj tabove na HR pri učitavanju
+applyLang('hr');
 
 // ===== FORMAT REPLY =====
 function formatReply(text){
@@ -768,7 +844,8 @@ async function sendMessage(){
   const chatMessages = document.getElementById("chat-messages");
   const typing = document.createElement("div");
   typing.className = "typing";
-  typing.innerHTML = '<span>Razmišljam...</span><div class="typing-dots"><span></span><span></span><span></span></div>';
+  const typingText = (UI_LANGS[currentLang] || UI_LANGS.hr).typing;
+  typing.innerHTML = '<span>' + typingText + '</span><div class="typing-dots"><span></span><span></span><span></span></div>';
   chatMessages.appendChild(typing);
   setTimeout(() => typing.scrollIntoView({ behavior: "smooth", block: "end" }), 50);
 
@@ -792,6 +869,8 @@ async function sendMessage(){
     typing.remove();
 
     const data = await response.json();
+
+    if(data.lang) setLang(data.lang);
 
     if(data.category){
       currentCategory = data.category;
