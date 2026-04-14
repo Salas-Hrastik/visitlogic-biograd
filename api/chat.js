@@ -22,20 +22,33 @@ const CATEGORY_CONTEXTS = {
 };
 
 // ===== DETEKCIJA JEZIKA =====
-function detectLang(msg) {
+function detectLang(msg, fallback = 'hr') {
   const w = msg.toLowerCase().split(/[\s,?.!;:()\-]+/);
   const has = (list) => list.some(x => w.includes(x));
 
-  // HR ima prioritet — tipične hrvatske riječi i nastavci
+  // HR ima prioritet — tipične hrvatske riječi
   if (has(['kako','što','gdje','koji','koja','koje','kada','zašto','koliko','može','možete',
            'imam','imaju','ima','nema','trebam','mogu','jeste','jesi','imate','idemo',
            'plaža','plaže','more','mora','otok','otoci','restoran','konoba','smještaj',
            'hotel','kamp','jedrilica','izlet','charter','čarter','nautika','marina',
-           'kornati','kornata','biogradu','biograda','biogradu','dalmacij',
-           'koji','kakav','kakva','blizu','daleko','preporuč','rezerv','sezona',
+           'kornati','kornata','biogradu','biograda','dalmacij',
+           'kakav','kakva','blizu','daleko','preporuč','rezerv','sezona',
            'srpanj','kolovoz','lipanj','rujan','ljeto','zima','proljeće','jesen',
            'temperatura','klima','sunce','vjetar','kiša','bura','maestral']))
     return 'hr';
+
+  // HU — ugrofinski, veoma distinktivan
+  if (has(['hol','mikor','hogyan','mennyibe','tenger','étterem','szállás','szálloda',
+           'sziget','kirándulás','köszönöm','kérem','magyarul','magyarország',
+           'strand','nincs','igen','van']))
+    return 'hu';
+
+  // IT — romanski, distinktivan
+  if (has(['dove','quando','come','perché','spiaggia','ristorante','albergo',
+           'grazie','ciao','buongiorno','buonasera','cosa','mangiare','bere',
+           'escursione','appartamento','prego','italiano','italia','bella','bello',
+           'mare','isola','volo','noleggio','quanto','quali']))
+    return 'it';
 
   // DE
   if (has(['was','wo','wie','welche','wann','ist','sind','kann','haben','zeig','gibt',
@@ -43,13 +56,29 @@ function detectLang(msg) {
            'für','von','strand','meer','insel','boot','wetter','unterkunft','hafen']))
     return 'de';
 
-  // EN — bez ambigvitetnih riječi (do, is, and, sea) koje postoje i u HR/DE
+  // EN
   if (has(['what','where','how','which','when','are','have','show','find','tell',
            'best','visit','eat','drink','stay','sleep','book','beach','price',
            'open','boat','sailing','island','water','recommend','charter','accommodation']))
     return 'en';
 
-  return 'hr';
+  // SL — južnoslavenski, srodan HR — tražimo distinktivne slovenačke riječi
+  if (has(['kje','kdaj','zakaj','morje','nastanitev','restavracija','iščem',
+           'tukaj','torej','katera','kateri','slovenijo','slovenec','slovenka',
+           'hvala','prosim','lepo']))
+    return 'sl';
+
+  // CS — zapadnoslavenski
+  if (has(['kde','pláž','moře','restaurace','ubytování','děkuji','výlet',
+           'počasí','jsou','česky','česká','čechy','chci','jaké']))
+    return 'cs';
+
+  // SK — zapadnoslavenski
+  if (has(['kedy','reštaurácia','ubytovanie','ďakujem','počasie',
+           'slovensky','slovenská','som','áno','aké','koľko']))
+    return 'sk';
+
+  return fallback;
 }
 
 // ===== PRIJEVODI =====
@@ -95,6 +124,76 @@ const TR = {
     general:  'Über Biograd',
     tips:     'Praktische Infos',
     sea:      'Meerestemperatur',
+  },
+  sl: {
+    inCity:   'v Biogradu na Moru',
+    beaches:  'Plaže Biograda',
+    food:     'Gastronomija in restavracije',
+    nautical: 'Nautika in marina',
+    accom:    'Nastanitev',
+    kornati:  'NP Kornati — izleti',
+    trips:    'Izleti iz Biograda',
+    sport:    'Šport in aktivnosti',
+    events:   'Dogodki',
+    general:  'O Biogradu',
+    tips:     'Praktične informacije',
+    sea:      'temperatura morja',
+  },
+  it: {
+    inCity:   'a Biograd na Moru',
+    beaches:  'Spiagge di Biograd',
+    food:     'Gastronomia e ristoranti',
+    nautical: 'Nautica e marina',
+    accom:    'Alloggio',
+    kornati:  'PN Kornati — escursioni',
+    trips:    'Gite da Biograd',
+    sport:    'Sport e attività',
+    events:   'Eventi',
+    general:  'Su Biograd',
+    tips:     'Informazioni pratiche',
+    sea:      'temperatura del mare',
+  },
+  hu: {
+    inCity:   'Biogradban',
+    beaches:  'Biograd strandjai',
+    food:     'Gasztronómia és éttermek',
+    nautical: 'Nautika és kikötő',
+    accom:    'Szállás',
+    kornati:  'Kornati NP — kirándulások',
+    trips:    'Kirándulások Biogradból',
+    sport:    'Sport és tevékenységek',
+    events:   'Események',
+    general:  'Biogradról',
+    tips:     'Gyakorlati információk',
+    sea:      'tengerpart hőmérséklete',
+  },
+  cs: {
+    inCity:   'v Biogradu na Moři',
+    beaches:  'Pláže Biogradu',
+    food:     'Gastronomie a restaurace',
+    nautical: 'Nautika a marina',
+    accom:    'Ubytování',
+    kornati:  'NP Kornati — výlety',
+    trips:    'Výlety z Biogradu',
+    sport:    'Sport a aktivity',
+    events:   'Události',
+    general:  'O Biogradu',
+    tips:     'Praktické informace',
+    sea:      'teplota moře',
+  },
+  sk: {
+    inCity:   'v Biogradu na Mori',
+    beaches:  'Pláže Biogradu',
+    food:     'Gastronómia a reštaurácie',
+    nautical: 'Nautika a marina',
+    accom:    'Ubytovanie',
+    kornati:  'NP Kornati — výlety',
+    trips:    'Výlety z Biogradu',
+    sport:    'Šport a aktivity',
+    events:   'Udalosti',
+    general:  'O Biogradu',
+    tips:     'Praktické informácie',
+    sea:      'teplota mora',
   }
 };
 
@@ -214,7 +313,77 @@ function getSuggestions(category, lang, message) {
       opcenito:    ['🏖 Strände von Biograd?', '⛵ Kornaten-Ausflug?', '🐟 Dalmatinische Küche?', '🏨 Unterkunft?', '☀️ Klima und Saison?'],
       prakticno:   ['🅿️ Parken im Zentrum?', '⛽ Tankstelle?', '🏥 Arzt in Biograd?', '🛒 Wo ist Lidl oder Kaufland?', '🔧 Kfz-Werkstatt oder Reifenservice?'],
       klima:       ['🏖 Beste Strände?', '⛵ Wann ist Segelsaison?', '🌊 Meerestemperatur im August?', '☀️ Wie viele Sonnentage?', '🏨 Unterkunft für den Sommer?'],
-    }
+    },
+    sl: {
+      plaze:       ['⛵ Izlet na Kornate?', '🤿 Potapljanje v Biogradu?', '🏨 Nastanitev blizu plaže?', '🐟 Kje jesti po plaži?', '☀️ Kakšno je vreme v juliju?'],
+      gastronomija:['🐟 Kakšne lokalne ribe?', '🍷 Priporoči konobo s peko?', '🏖 Plaže Biograda?', '🌙 Nočno življenje?', '⛵ Izlet na Kornate?'],
+      nautika:     ['⚓ Koliko stane čarter?', '🚢 Čarter podjetja v Biogradu?', '🏝 Kornati z izletom?', '🏖 Kopalne plaže?', '⛵ Najem jadrnice?'],
+      smjestaj:    ['🏖 Katere plaže so blizu?', '🐟 Kje jesti v Biogradu?', '⛵ Izlet na Kornate?', '⛺ Kampi v Biogradu?', '🏨 Hoteli ob morju?'],
+      kornati:     ['⛵ Kako priti na Kornate?', '🐟 Konobe na otokih?', '🤿 Potapljanje na Kornatih?', '⚓ Čarter za Kornate?', '🏖 Plaže na Kornatih?'],
+      izleti:      ['🏛️ Zadar — kaj videti?', '🌊 Vransko jezero izlet?', '⛵ Kornati z ladjo?', '🏔️ Paklenica izlet?', '🐟 Šibenik in Krka?'],
+      sport:       ['🏖 Plaže za windsurfing?', '🚴 Kolesarstvo ob Vranskem jezeru?', '⛵ Najem čolna?', '🤿 Potapljanje — kje?', '🎣 Ribolov v Biogradu?'],
+      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Poletni dogodki?', '🎶 Koncerti na rivi?', '🐟 Ribarska večer?', '📅 Kaj se dogaja ta teden?'],
+      atrakcije:   ['🏛️ Mestni muzej Biograd?', '⛪ Cerkve in ruševine?', '🏖 Plaže Biograda?', '🎡 Dalmaland zabaviščni park?', '⛵ Izlet na Kornate?'],
+      opcenito:    ['🏖 Plaže Biograda?', '⛵ Izlet na Kornate?', '🐟 Dalmatinska kuhinja?', '🏨 Nastanitev v Biogradu?', '☀️ Podnebje in sezona?'],
+      prakticno:   ['🅿️ Parkiranje v centru?', '⛽ Bencinska črpalka?', '🏥 Zdravnik v Biogradu?', '🛒 Kje je Lidl ali Kaufland?', '🔧 Avtomehanik?'],
+      klima:       ['🏖 Katere plaže priporočaš?', '⛵ Kdaj je idealno za jadranje?', '🌊 Temperatura morja avgusta?', '☀️ Koliko sončnih dni?', '🏨 Nastanitev za poletje?'],
+    },
+    it: {
+      plaze:       ['⛵ Gita alle Kornati?', '🤿 Immersioni a Biograd?', '🏨 Alloggio vicino alla spiaggia?', '🐟 Dove mangiare dopo la spiaggia?', '☀️ Meteo in luglio?'],
+      gastronomija:['🐟 Pesce locale consigliato?', '🍷 Consiglia una konoba?', '🏖 Spiagge di Biograd?', '🌙 Vita notturna?', '⛵ Escursione Kornati?'],
+      nautika:     ['⚓ Prezzi charter?', '🚢 Aziende charter a Biograd?', '🏝 Escursione Kornati?', '🏖 Migliori spiagge?', '⛵ Noleggio barca a vela?'],
+      smjestaj:    ['🏖 Spiagge vicine?', '🐟 Dove mangiare?', '⛵ Escursione Kornati?', '⛺ Campeggi a Biograd?', '🏨 Hotel sul mare?'],
+      kornati:     ['⛵ Come raggiungere Kornati?', '🐟 Ristoranti sulle isole?', '🤿 Snorkeling?', '⚓ Charter per Kornati?', '🏖 Spiagge di Kornati?'],
+      izleti:      ['🏛️ Zadar — cosa vedere?', '🌊 Lago Vrana?', '⛵ Kornati in barca?', '🏔️ Paklenica escursione?', '🐟 Šibenik e Krka?'],
+      sport:       ['🏖 Spiagge per windsurf?', '🚴 Ciclismo al lago Vrana?', '⛵ Noleggio barca?', '🤿 Immersioni — dove?', '🎣 Pesca a Biograd?'],
+      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Eventi estivi?', '🎶 Concerti sul lungomare?', '🐟 Serata dei pescatori?', '📅 Cosa succede questa settimana?'],
+      atrakcije:   ['🏛️ Museo di Biograd?', '⛪ Chiese e rovine?', '🏖 Spiagge di Biograd?', '🎡 Parco Dalmaland?', '⛵ Escursione Kornati?'],
+      opcenito:    ['🏖 Spiagge di Biograd?', '⛵ Gita a Kornati?', '🐟 Cucina dalmata?', '🏨 Alloggio a Biograd?', '☀️ Clima e stagione?'],
+      prakticno:   ['🅿️ Parcheggio in centro?', '⛽ Stazione di servizio?', '🏥 Medico a Biograd?', '🛒 Dove è il Lidl o Kaufland?', '🔧 Officina auto?'],
+      klima:       ['🏖 Quali spiagge consigliare?', '⛵ Quando è ideale per veleggiare?', '🌊 Temperatura del mare in agosto?', '☀️ Quante giornate di sole?', '🏨 Alloggio per l\'estate?'],
+    },
+    hu: {
+      plaze:       ['⛵ Kirándulás Kornatira?', '🤿 Búvárkodás Biogradban?', '🏨 Szállás a strandnál?', '🐟 Hol együnk strand után?', '☀️ Időjárás júliusban?'],
+      gastronomija:['🐟 Helyi halételek?', '🍷 Ajánlj egy konobu?', '🏖 Biograd strandjai?', '🌙 Éjszakai élet?', '⛵ Kornati kirándulás?'],
+      nautika:     ['⚓ Mennyibe kerül a csárter?', '🚢 Csárter cégek Biogradban?', '🏝 Kornati kirándulás?', '🏖 Legjobb strandok?', '⛵ Vitorlás bérlet?'],
+      smjestaj:    ['🏖 Közeli strandok?', '🐟 Hol együnk Biogradban?', '⛵ Kornati kirándulás?', '⛺ Kemping Biogradban?', '🏨 Tenger melletti szállodák?'],
+      kornati:     ['⛵ Hogyan jutunk el Kornatira?', '🐟 Éttermek a szigeteken?', '🤿 Snorkeling helyek?', '⚓ Csárter Kornatira?', '🏖 Strandok Kornatin?'],
+      izleti:      ['🏛️ Zadar — mit nézzünk?', '🌊 Vrana-tó kirándulás?', '⛵ Kornati hajóval?', '🏔️ Paklenica kirándulás?', '🐟 Šibenik és Krka?'],
+      sport:       ['🏖 Windsurfing strandok?', '🚴 Kerékpározás a Vrana-tónál?', '⛵ Csónakbérlés?', '🤿 Búvárkodás — hol?', '🎣 Horgászat Biogradban?'],
+      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Nyári rendezvények?', '🎶 Koncertek a rakparton?', '🐟 Halászest?', '📅 Mi lesz ezen a héten?'],
+      atrakcije:   ['🏛️ Biograd múzeum?', '⛪ Templomok és romok?', '🏖 Biograd strandjai?', '🎡 Dalmaland vidámpark?', '⛵ Kornati kirándulás?'],
+      opcenito:    ['🏖 Biograd strandjai?', '⛵ Kornati kirándulás?', '🐟 Dalmát gasztronómia?', '🏨 Szállás Biogradban?', '☀️ Éghajlat és szezon?'],
+      prakticno:   ['🅿️ Parkolás a belvárosban?', '⛽ Benzinkút?', '🏥 Orvos Biogradban?', '🛒 Hol van a Lidl vagy Kaufland?', '🔧 Autószerelő?'],
+      klima:       ['🏖 Melyik strandot ajánlod?', '⛵ Mikor ideális a vitorlázás?', '🌊 Tenger hőmérséklete augusztusban?', '☀️ Hány napos nap?', '🏨 Szállás nyárra?'],
+    },
+    cs: {
+      plaze:       ['⛵ Výlet na Kornati?', '🤿 Potápění v Biogradu?', '🏨 Ubytování u pláže?', '🐟 Kde jíst po pláži?', '☀️ Počasí v červenci?'],
+      gastronomija:['🐟 Místní rybí pokrmy?', '🍷 Doporuč konobu?', '🏖 Pláže Biogradu?', '🌙 Noční život?', '⛵ Výlet na Kornati?'],
+      nautika:     ['⚓ Cena charteru?', '🚢 Charterové firmy v Biogradu?', '🏝 Výlet na Kornati?', '🏖 Nejlepší pláže?', '⛵ Pronájem plachetnice?'],
+      smjestaj:    ['🏖 Pláže v okolí?', '🐟 Kde jíst v Biogradu?', '⛵ Výlet na Kornati?', '⛺ Kempy v Biogradu?', '🏨 Hotely u moře?'],
+      kornati:     ['⛵ Jak se dostat na Kornati?', '🐟 Restaurace na ostrovech?', '🤿 Šnorchlování?', '⚓ Charter na Kornati?', '🏖 Pláže na Kornati?'],
+      izleti:      ['🏛️ Zadar — co vidět?', '🌊 Vranjské jezero?', '⛵ Kornati lodí?', '🏔️ Paklenica výlet?', '🐟 Šibenik a Krka?'],
+      sport:       ['🏖 Pláže pro windsurfing?', '🚴 Cyklistika kolem jezera?', '⛵ Pronájem lodi?', '🤿 Potápění — kde?', '🎣 Rybaření v Biogradu?'],
+      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Letní akce?', '🎶 Koncerty na nábřeží?', '🐟 Rybářský večer?', '📅 Co se děje tento týden?'],
+      atrakcije:   ['🏛️ Muzeum Biogradu?', '⛪ Kostely a ruiny?', '🏖 Pláže Biogradu?', '🎡 Zábavní park Dalmaland?', '⛵ Výlet na Kornati?'],
+      opcenito:    ['🏖 Pláže Biogradu?', '⛵ Výlet na Kornati?', '🐟 Dalmatská kuchyně?', '🏨 Ubytování v Biogradu?', '☀️ Klima a sezóna?'],
+      prakticno:   ['🅿️ Parkování v centru?', '⛽ Čerpací stanice?', '🏥 Lékař v Biogradu?', '🛒 Kde je Lidl nebo Kaufland?', '🔧 Autoservis?'],
+      klima:       ['🏖 Jaké pláže doporučuješ?', '⛵ Kdy je ideální pro plachtění?', '🌊 Teplota moře v srpnu?', '☀️ Kolik slunečných dní?', '🏨 Ubytování na léto?'],
+    },
+    sk: {
+      plaze:       ['⛵ Výlet na Kornati?', '🤿 Potápanie v Biogradu?', '🏨 Ubytovanie pri pláži?', '🐟 Kde jesť po pláži?', '☀️ Počasie v júli?'],
+      gastronomija:['🐟 Miestne rybie jedlá?', '🍷 Odporúč konobu?', '🏖 Pláže Biogradu?', '🌙 Nočný život?', '⛵ Výlet na Kornati?'],
+      nautika:     ['⚓ Cena chartru?', '🚢 Chartrové firmy v Biogradu?', '🏝 Výlet na Kornati?', '🏖 Najlepšie pláže?', '⛵ Prenájom plachetnice?'],
+      smjestaj:    ['🏖 Pláže v okolí?', '🐟 Kde jesť v Biogradu?', '⛵ Výlet na Kornati?', '⛺ Kempy v Biogradu?', '🏨 Hotely pri mori?'],
+      kornati:     ['⛵ Ako sa dostať na Kornati?', '🐟 Reštaurácie na ostrovoch?', '🤿 Šnorchlování?', '⚓ Charter na Kornati?', '🏖 Pláže na Kornati?'],
+      izleti:      ['🏛️ Zadar — čo vidieť?', '🌊 Vranské jazero?', '⛵ Kornati loďou?', '🏔️ Paklenica výlet?', '🐟 Šibenik a Krka?'],
+      sport:       ['🏖 Pláže na windsurfing?', '🚴 Cyklistika okolo jazera?', '⛵ Prenájom lode?', '🤿 Potápanie — kde?', '🎣 Rybárčenie v Biogradu?'],
+      dogadanja:   ['⛵ Biograd Boat Show?', '🏖 Letné podujatia?', '🎶 Koncerty na nábreží?', '🐟 Rybársky večer?', '📅 Čo sa deje tento týždeň?'],
+      atrakcije:   ['🏛️ Múzeum Biogradu?', '⛪ Kostoly a ruiny?', '🏖 Pláže Biogradu?', '🎡 Zábavný park Dalmaland?', '⛵ Výlet na Kornati?'],
+      opcenito:    ['🏖 Pláže Biogradu?', '⛵ Výlet na Kornati?', '🐟 Dalmatská kuchyňa?', '🏨 Ubytovanie v Biogradu?', '☀️ Klíma a sezóna?'],
+      prakticno:   ['🅿️ Parkovanie v centre?', '⛽ Čerpacia stanica?', '🏥 Lekár v Biogradu?', '🛒 Kde je Lidl alebo Kaufland?', '🔧 Autoservis?'],
+      klima:       ['🏖 Aké pláže odporúčaš?', '⛵ Kedy je ideálne na plachtenie?', '🌊 Teplota mora v auguste?', '☀️ Koľko slnečných dní?', '🏨 Ubytovanie na leto?'],
+    },
   };
 
   const pool = (map[lang] || map.hr)[category] || [];
@@ -636,10 +805,13 @@ function buildSystemPrompt(lang, context, weatherCtx) {
     ? `Temperatura zraka: ${weatherCtx.temperature}°C | Vjetar: ${weatherCtx.windspeed} km/h${weatherCtx.sea_temp != null ? ` | Mora: ${weatherCtx.sea_temp}°C` : ''}${weatherCtx.wave_height != null ? ` | Val: ${weatherCtx.wave_height} m` : ''} | ${weatherCtx.icon || ''} ${weatherCtx.opis || ''}`
     : 'Vremenski podaci nisu dostupni.';
 
-  const langNote = lang === 'en'
-    ? 'IMPORTANT: The user writes in English — respond ONLY in English.'
-    : lang === 'de'
-    ? 'WICHTIG: Der Nutzer schreibt auf Deutsch — antworte NUR auf Deutsch.'
+  const langNote = lang === 'en' ? 'IMPORTANT: The user writes in English — respond ONLY in English.'
+    : lang === 'de' ? 'WICHTIG: Der Nutzer schreibt auf Deutsch — antworte NUR auf Deutsch.'
+    : lang === 'sl' ? 'POMEMBNO: Uporabnik piše v slovenščini — odgovarjaj SAMO v slovenščini.'
+    : lang === 'it' ? 'IMPORTANTE: L\'utente scrive in italiano — rispondi SOLO in italiano.'
+    : lang === 'hu' ? 'FONTOS: A felhasználó magyarul ír — válaszolj CSAK magyarul.'
+    : lang === 'cs' ? 'DŮLEŽITÉ: Uživatel píše česky — odpovídej POUZE česky.'
+    : lang === 'sk' ? 'DÔLEŽITÉ: Používateľ píše po slovensky — odpovedaj IBA po slovensky.'
     : '';
 
   return `Ti si AI turistički informator za Biograd na Moru — primorski grad u Zadarskoj županiji na dalmatinskoj obali između Zadra i Šibenika.
@@ -726,7 +898,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message, history = [], category: lastCategory, weather } = req.body || {};
+  const { message, history = [], category: lastCategory, weather, clientLang } = req.body || {};
 
   // Warmup ping
   if (message === '__warmup__') {
@@ -738,7 +910,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const lang = detectLang(message);
+    const lang = detectLang(message, clientLang || 'hr');
     const detectedCategory = detectCategory(message, lastCategory);
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
     const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito };
