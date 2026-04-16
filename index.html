@@ -156,6 +156,7 @@ margin:4px 0;
 text-align:right;
 align-self:flex-end;
 max-width:80%;
+font-size:19px;
 }
 
 .bot-message{
@@ -163,10 +164,11 @@ background:#f4f9fc;
 padding:14px 16px;
 border-radius:10px 10px 10px 2px;
 margin:4px 0;
-line-height:1.6;
+line-height:1.65;
 align-self:flex-start;
 max-width:90%;
 border-left:3px solid #f4a261;
+font-size:19px;
 }
 
 .typing{
@@ -550,7 +552,7 @@ width:100%;
 
   .chat-messages{ padding:8px 10px 10px; gap:6px; }
 
-  .user-message, .bot-message{ max-width:95%; font-size:15px; padding:10px 13px; }
+  .user-message, .bot-message{ max-width:95%; font-size:17px; padding:10px 13px; }
 
   .typing{ font-size:14px; padding:10px 13px; }
 
@@ -817,9 +819,9 @@ applyLang('hr');
 // ===== FORMAT REPLY =====
 function formatReply(text){
   return text
-    .replace(/^### (.+)$/gm,'<div style="font-family:inherit;font-weight:bold;font-size:16.5px;color:#004e89;margin:10px 0 3px;border-bottom:1px solid #ddeef7;padding-bottom:2px">$1</div>')
-    .replace(/^## (.+)$/gm,'<div style="font-family:inherit;font-weight:bold;font-size:17.5px;color:#004e89;margin:12px 0 4px;border-bottom:1px solid #ddeef7;padding-bottom:2px">$1</div>')
-    .replace(/^# (.+)$/gm,'<div style="font-family:inherit;font-weight:bold;font-size:19px;color:#004e89;margin:12px 0 4px">$1</div>')
+    .replace(/^### (.+)$/gm,'<div style="font-family:inherit;font-weight:bold;font-size:19px;color:#004e89;margin:10px 0 3px;border-bottom:1px solid #ddeef7;padding-bottom:2px">$1</div>')
+    .replace(/^## (.+)$/gm,'<div style="font-family:inherit;font-weight:bold;font-size:21px;color:#004e89;margin:12px 0 4px;border-bottom:1px solid #ddeef7;padding-bottom:2px">$1</div>')
+    .replace(/^# (.+)$/gm,'<div style="font-family:inherit;font-weight:bold;font-size:23px;color:#004e89;margin:12px 0 4px">$1</div>')
     .replace(/\n/g,"<br>")
     .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>")
     .replace(/\*(.*?)\*/g,"<em>$1</em>")
