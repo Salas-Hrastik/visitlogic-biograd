@@ -1363,14 +1363,35 @@ export const db = {
   },
 
   "dogadanja": {
-    "opis": "Biograd ima bogat kulturni i sportski program u ljetnoj sezoni. Vrhunac je Biograd Boat Show u rujnu/listopadu.",
+    "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (rujan/listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Slovenski vikend (travanj/svibanj).",
     "eventi": [
       {
+        "naziv": "Slovenski vikend",
+        "opis": "Dinamičan vikend pun zanimljivih aktivnosti za sve uzraste — sport, glazba, gastronomija i zabava za slovensku zajednicu i sve posjetitelje Biograda.",
+        "termin": "29.04. – 03.05.2026",
+        "lokacija": "Biograd na Moru",
+        "web": "https://slovenski-vikend.hr/"
+      },
+      {
+        "naziv": "Biograd Family & Friends Festival",
+        "opis": "Dvodnevni ljetni festival na plaži uz bazen Ilirija — vodeni sportovi, SUP utrke, kajak, plivanje, aquathlon i radionice za sve uzraste i razine kondicije.",
+        "termin": "20. – 21.06.2026",
+        "lokacija": "Plaža uz bazen Ilirija, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Biogradska noć",
+        "opis": "Jedna od najvećih manifestacija u Dalmaciji, posvećena Danu pobjede i domovinske zahvalnosti. Više od 20.000 posjetitelja dolazi uživati u brodovima ukrašenim svjetlima, vatrometu i laserskom showu sinkroniziranom s glazbom, folklornim skupinama, tamburašima i gastronomijom na rivi.",
+        "termin": "kolovoz (Dan pobjede)",
+        "lokacija": "Riva i stara jezgra, Biograd na Moru",
+        "web": ""
+      },
+      {
         "naziv": "Biograd Boat Show",
-        "opis": "Jedan od najvećih nautičkih sajmova u jugoistočnoj Europi, koji se tradicionalno održava krajem rujna/početkom listopada u Marini Kornati. Izlaže se nekoliko stotina plovila svih vrsta — jedrilice, motorne jahte, katamarani, gumenjaci. Privlači desetke tisuća posjetitelja iz regije.",
+        "opis": "Jedan od najvećih nautičkih sajmova u jugoistočnoj Europi, koji se tradicionalno održava krajem rujna/početkom listopada u Marini Kornati. Izlaže se nekoliko stotina plovila svih vrsta — jedrilice, motorne jahte, katamarani, gumenjaci. Zlatni član IFBSO mreže (36 najprestižnijih sajmova nautike na svijetu). Privlači desetke tisuća posjetitelja iz regije.",
         "termin": "kraj rujna / početak listopada",
         "lokacija": "Marina Kornati, Biograd na Moru",
-        "web": ""
+        "web": "http://bbs.com.hr/"
       },
       {
         "naziv": "Ribarska večer",
