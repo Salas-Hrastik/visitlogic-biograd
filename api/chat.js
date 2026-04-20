@@ -209,7 +209,7 @@ const TR = {
 };
 
 // ===== DETEKCIJA KATEGORIJE IZ PORUKE =====
-function detectCategory(msg, lastCategory) {
+function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
 
   if (m.includes('plaža') || m.includes('plaze') || m.includes('plaže') || m.includes('plaža') || m.includes('kupanje') || m.includes('kupat') || m.includes('dražica') || m.includes('soline') || m.includes('bošana') || m.includes('kumenat') || m.includes('fkk') || m.includes('nudist') || m.includes('pješčan') || m.includes('sunčan') || m.includes('sunbath') || m.includes('more je') || m.includes('lijeva ruka') || m.includes('plivat')
@@ -249,11 +249,19 @@ function detectCategory(msg, lastCategory) {
     || m.includes('sport') || m.includes('tauchen') || m.includes('radfahren') || m.includes('angeln'))
     return 'sport';
 
+  // Dinamička provjera: prepoznaj bilo koji naziv događanja iz baze
+  if (db?.dogadanja?.eventi?.length) {
+    const eventWords = db.dogadanja.eventi
+      .flatMap(e => (e.naziv || '').toLowerCase().split(/[\s\-&]+/))
+      .filter(w => w.length > 3);
+    if (eventWords.some(w => m.includes(w))) return 'dogadanja';
+  }
+
   if (m.includes('događaj') || m.includes('dogadaj') || m.includes('festival') || m.includes('boat show') || m.includes('manifestac') || m.includes('program') || m.includes('što se događa') || m.includes('što ima') || m.includes('ribarska večer') || m.includes('krešimir') || m.includes('ljetna zabava') || m.includes('koncerti')
-    || m.includes('vikend') || m.includes('noć') || m.includes('biogradska noć') || m.includes('slovenski') || m.includes('slovenian') || m.includes('family') || m.includes('friends') || m.includes('priredba') || m.includes('smotra') || m.includes('sajam') || m.includes('karneval') || m.includes('praznik') || m.includes('blagdan') || m.includes('proslava') || m.includes('zabava') || m.includes('nastup') || m.includes('kada je') || m.includes('kad je') || m.includes('datum')
-    || m.includes('event') || m.includes('what\'s on') || m.includes('boat show') || m.includes('upcoming') || m.includes('celebration') || m.includes('weekend') || m.includes('night') || m.includes('show') || m.includes('fair') || m.includes('when is')
+    || m.includes('vikend') || m.includes('noć') || m.includes('biogradska noć') || m.includes('slovenski') || m.includes('slovenian') || m.includes('family') || m.includes('friends') || m.includes('priredba') || m.includes('smotra') || m.includes('sajam') || m.includes('karneval') || m.includes('praznik') || m.includes('blagdan') || m.includes('proslava') || m.includes('nastup') || m.includes('kada je') || m.includes('kad je') || m.includes('datum')
+    || m.includes('event') || m.includes('what\'s on') || m.includes('upcoming') || m.includes('celebration') || m.includes('weekend') || m.includes('night') || m.includes('when is')
     || m.includes('veranstaltung') || m.includes('fest') || m.includes('bootsmesse') || m.includes('wann') || m.includes('wochenende')
-    || m.includes('vikend') || m.includes('dogajanje') || m.includes('prireditev') || m.includes('manifestazione') || m.includes('quando') || m.includes('esemény') || m.includes('akce') || m.includes('podujatie'))
+    || m.includes('dogajanje') || m.includes('prireditev') || m.includes('manifestazione') || m.includes('quando') || m.includes('esemény') || m.includes('akce') || m.includes('podujatie'))
     return 'dogadanja';
 
   if (m.includes('parking') || m.includes('parkir') || m.includes('trajekt') || m.includes('autobus') || m.includes('ljekar') || m.includes('bolnic') || m.includes('hitna') || m.includes('bankomat') || m.includes('banka') || m.includes('taksi') || m.includes('prijevoz') || m.includes('rent a car') || m.includes('wifi') || m.includes('euro') || m.includes('valuta') || m.includes('info') || m.includes('radno vrij')
@@ -976,7 +984,7 @@ export default async function handler(req, res) {
 
   try {
     const lang = detectLang(message, clientLang || 'hr');
-    const detectedCategory = detectCategory(message, lastCategory);
+    const detectedCategory = detectCategory(message, lastCategory, db);
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
     const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito };
 
