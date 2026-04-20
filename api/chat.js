@@ -250,8 +250,10 @@ function detectCategory(msg, lastCategory) {
     return 'sport';
 
   if (m.includes('događaj') || m.includes('dogadaj') || m.includes('festival') || m.includes('boat show') || m.includes('manifestac') || m.includes('program') || m.includes('što se događa') || m.includes('što ima') || m.includes('ribarska večer') || m.includes('krešimir') || m.includes('ljetna zabava') || m.includes('koncerti')
-    || m.includes('event') || m.includes('festival') || m.includes('what\'s on') || m.includes('boat show') || m.includes('upcoming') || m.includes('celebration')
-    || m.includes('veranstaltung') || m.includes('fest') || m.includes('bootsmesse'))
+    || m.includes('vikend') || m.includes('noć') || m.includes('biogradska noć') || m.includes('slovenski') || m.includes('slovenian') || m.includes('family') || m.includes('friends') || m.includes('priredba') || m.includes('smotra') || m.includes('sajam') || m.includes('karneval') || m.includes('praznik') || m.includes('blagdan') || m.includes('proslava') || m.includes('zabava') || m.includes('nastup') || m.includes('kada je') || m.includes('kad je') || m.includes('datum')
+    || m.includes('event') || m.includes('what\'s on') || m.includes('boat show') || m.includes('upcoming') || m.includes('celebration') || m.includes('weekend') || m.includes('night') || m.includes('show') || m.includes('fair') || m.includes('when is')
+    || m.includes('veranstaltung') || m.includes('fest') || m.includes('bootsmesse') || m.includes('wann') || m.includes('wochenende')
+    || m.includes('vikend') || m.includes('dogajanje') || m.includes('prireditev') || m.includes('manifestazione') || m.includes('quando') || m.includes('esemény') || m.includes('akce') || m.includes('podujatie'))
     return 'dogadanja';
 
   if (m.includes('parking') || m.includes('parkir') || m.includes('trajekt') || m.includes('autobus') || m.includes('ljekar') || m.includes('bolnic') || m.includes('hitna') || m.includes('bankomat') || m.includes('banka') || m.includes('taksi') || m.includes('prijevoz') || m.includes('rent a car') || m.includes('wifi') || m.includes('euro') || m.includes('valuta') || m.includes('info') || m.includes('radno vrij')
