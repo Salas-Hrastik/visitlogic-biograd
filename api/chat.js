@@ -785,9 +785,13 @@ function getSeasonContext() {
   return '';
 }
 
-// ===== STRIP BULLET LISTE IZ AI ODGOVORA =====
-// Kad postoje kartice, uklanjamo svaki bullet/numbered popis koji AI generira
-// jer su te informacije već prikazane kao kartice ispod teksta
+// ===== STRIP BULLET LISTE I MARKDOWN NASLOVA IZ AI ODGOVORA =====
+// Kad postoje kartice, uklanjamo bullet/numbered popise i bold naslove
+// jer su informacije već prikazane kao kartice ispod teksta.
+// Problem: AI generira "**Organizacija:**\n- bullet\n- bullet" →
+// stripBulletList briše bullets, ali ostavlja prazan bold naslov.
+// Rješenje: bold naslove (redak koji je samo **Tekst:** ili ### Tekst)
+// brišemo zajedno s njihovim sadržajem.
 function stripBulletList(text) {
   const lines = text.split('\n');
   const out = [];
@@ -796,18 +800,22 @@ function stripBulletList(text) {
   for (const line of lines) {
     const t = line.trim();
 
+    // Bold naslov sekcije: **Tekst:** ili ### Tekst ili ## Tekst
+    const isSectionHeader =
+      /^\*\*[^*]+\*\*:?\s*$/.test(t) ||
+      /^#{2,4}\s+/.test(t);
+
     // Bullet linija: počinje s "-", "•", "–", "—" ili brojem + točka
-    // i ima barem jednu veliku slova (naziv mjesta/objekta)
     const isBullet =
       /^[-•–—]\s+/.test(t) ||
       /^\d+[.)]\s+/.test(t);
 
-    if (isBullet) {
-      skipBlank = true; // preskočit ćemo i prazne retke koji odmah slijede
+    if (isBullet || isSectionHeader) {
+      skipBlank = true;
       continue;
     }
 
-    // Preskači prazne retke neposredno nakon bullet bloka
+    // Preskači prazne retke neposredno nakon bullet/header bloka
     if (skipBlank && t === '') continue;
     skipBlank = false;
 
@@ -961,7 +969,9 @@ ZABRANJEN FORMAT: "Plaža Dražica je najpopularnija gradska plaža... Plaža So
 ZABRANJEN FORMAT: "- Konoba Levrnaka: Smještena na otoku... \n- Konoba Žakan: Ova konoba..."
 ZABRANJEN FORMAT: "1. Restoran... 2. Hotel... 3. Plaža..."
 ZABRANJEN FORMAT: "Za više informacija pogledajte kartice ispod." (kartice se prikazuju automatski!)
+ZABRANJEN FORMAT: bold naslovi sekcija kao "**Organizacija izleta:**", "**Što vidjeti:**", "**Savjeti:**", "**Tips:**" — NE koristiti strukturu s naslovima!
 ISPRAVAN FORMAT (plaže): "Biograd nudi nekoliko predivnih plaža uz kristalno čisto more — nešto za svačiji ukus."
+ISPRAVAN FORMAT (kornati): "Izlet na Kornate traje 8–10 sati i kreće iz Biograd — idealno rezervirati unaprijed jer su mjesta ograničena."
 ISPRAVAN FORMAT (konobe): "Kornati su poznati po svježoj ribi i autentičnoj dalmatinskoj kuhinji. Rezervirajte unaprijed — konobe su male i brzo se pune u sezoni."`;
 }
 
