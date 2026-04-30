@@ -934,7 +934,7 @@ VAŽNO: nikad ne predlažaj Booking.com ili Airbnb — gost treba direktno konta
 SPECIFIČNI SAVJETI:
 - Za NP Kornati: izlet brodom iz Biograda (8–10 sati, ~50–80 EUR), ili charter brod
 - Peka: naručiti 2+ sata unaprijed
-- Parking: u sezoni naplaćen, centar gust — preporuči dolazak ujutro
+- Parking (upravlja Bošana d.o.o., tel. +385 23 384 363): 3 zone — Zona 0 Bijela €2,60/sat (cijele god.), Zona I Plava €1,50/sat (sezona 15.6.–15.9.) / €1,00/sat (van sezone), Zona II Žuta €1,50/sat cijele god. Dnevna karta: €10 sezona / €5 van sezone. Plaćanje: parkomat ili m-parking SMS (Zona 0→708238, Zona I→708237). Šlep: €53,09. U sezoni centar gust — preporuči dolazak ujutro ili Zona II
 - Trajekt na Pašman: svakodnevno iz Biograda, 10 min vožnje — mirno okruženje
 - Vransko jezero: kružna biciklistička ruta 32 km — idealno za aktivne turiste
 

@@ -1425,62 +1425,90 @@ export const db = {
       "web": "https://www.jadrolinija.hr",
       "karta": "https://maps.google.com/?q=Ferry+Terminal+Biograd+na+Moru"
     },
+    "parking_info": {
+      "upravitelj": "Bošana d.o.o.",
+      "telefon": "+385 23 384 363",
+      "email": "cistoca@bosana.hr",
+      "web": "https://bosana.hr/usluge/parking",
+      "zone": [
+        {
+          "zona": "Zona 0 — Bijela",
+          "cijena": "€2,60/sat · cijele godine",
+          "mparking_sms": "708238"
+        },
+        {
+          "zona": "Zona I — Plava",
+          "cijena": "€1,50/sat (15.6.–15.9.) · €1,00/sat (van sezone)",
+          "mparking_sms": "708237"
+        },
+        {
+          "zona": "Zona II — Žuta",
+          "cijena": "€1,50/sat · cijele godine",
+          "mparking_sms": ""
+        }
+      ],
+      "dnevne_karte": {
+        "sezona": "€10/dan · €60/tjedan · €180/mjesec",
+        "van_sezone": "€5/dan · €25/tjedan · €80/mjesec"
+      },
+      "placanje": "Parkomat, m-parking (SMS ili aplikacija)",
+      "slep_sluzba": {
+        "odvoz": "€53,09",
+        "pokusaj_odvoza": "€26,54",
+        "dnevno_cuvanje": "€6,64/dan",
+        "lokacija_vozila": "Šetalište kneza Branimira, uz osnovnu školu"
+      }
+    },
     "parking": [
       {
         "naziv": "Parking City Center — Marina Kornati",
-        "tip": "🅿️ naplaćen · otvoreno 0–24h · ⭐ 4,4 (36 recenzija)",
+        "tip": "🅿️ Zona 0 (Bijela) · €2,60/sat · 0–24h · ⭐ 4,4 (36 recenzija)",
         "adresa": "Šetalište kneza Branimira 24, Biograd na Moru",
-        "telefon": "091 408 7695",
+        "telefon": "+385 23 384 363",
+        "web": "https://bosana.hr/usluge/parking",
         "karta": "https://www.google.com/maps/search/Parking+Biograd+City+Center+Marina+Kornati/@43.9373,15.4444,16z",
         "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Centralno parkiralište uz Marinu Kornati, 5 min pješice od rive.",
-        "recenzija_izvor": "Google Maps"
+        "recenzija": "Centralno parkiralište uz Marinu Kornati, 5 min pješice od rive. Najskuplja zona — €2,60/sat."
       },
       {
         "naziv": "Parking Plaza Dražica",
-        "tip": "🅿️ parkiralište uz plažu · ⭐ 4,6 (62 recenzije)",
+        "tip": "🅿️ Zona I (Plava) · €1,50/sat (sezona) · ⭐ 4,6 (62 recenzije)",
         "adresa": "Ul. Augusta Šenoe bb, Biograd na Moru",
+        "telefon": "+385 23 384 363",
+        "web": "https://bosana.hr/usluge/parking",
         "karta": "https://www.google.com/maps/place/Parking+Plaza+Dražica/@43.9343328,15.4469693,17z",
         "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-drazica.webp&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Veliki parking tik uz plažu Dražica — idealno za kupanje. Posebno praktično za obitelji.",
-        "recenzija_izvor": "Google Maps"
+        "recenzija": "Veliki parking tik uz plažu Dražica — idealno za kupanje. €1,50/sat u sezoni, €1,00/sat van sezone."
       },
       {
         "naziv": "Parking — Ul. kralja Petra Svačića",
-        "tip": "🅿️ otvoreno 0–24h · ⭐ 4,4 (25 recenzija)",
+        "tip": "🅿️ Zona I (Plava) · €1,50/sat (sezona) · ⭐ 4,4 (25 recenzija)",
         "adresa": "Ul. kralja Petra Svačića 19, Biograd na Moru",
+        "telefon": "+385 23 384 363",
+        "web": "https://bosana.hr/usluge/parking",
         "karta": "https://maps.google.com/?q=Parking+Ul+kralja+Petra+Svačića+Biograd",
         "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Parkiralište u stambenom dijelu centra, korisno za posjet staroj jezgri.",
-        "recenzija_izvor": "Google Maps"
-      },
-      {
-        "naziv": "Gradski parking — Petra Svačića 18",
-        "tip": "🅿️ javno parkiralište · besplatno · ⭐ 5,0 (3)",
-        "adresa": "Ul. kralja Petra Svačića 18, Biograd na Moru",
-        "karta": "https://maps.google.com/?q=Gradski+parking+Biograd+na+Moru+Petra+Svačića+18",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Javno besplatno parkiralište u centru grada.",
-        "recenzija_izvor": "Google Maps"
+        "recenzija": "Parkiralište u centru, korisno za posjet staroj jezgri. Plati parkomat ili m-parking SMS 708237."
       },
       {
         "naziv": "Parking Boat Show — Marina Kornati",
-        "tip": "🅿️ otvoreno 0–24h · ⭐ 3,9 (20 recenzija)",
+        "tip": "🅿️ Zona II (Žuta) · €1,50/sat · 0–24h · ⭐ 3,9 (20 recenzija)",
         "adresa": "Radovanova ulica, Biograd na Moru",
-        "telefon": "091 408 7695",
+        "telefon": "+385 23 384 363",
+        "web": "https://bosana.hr/usluge/parking",
         "karta": "https://maps.google.com/?q=Parking+Biograd+Boat+Show+Marina+Kornati",
         "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Uz Marinu Kornati — korisno za nautičare i posjetitelje sajma. Blizu plaže, ali skuplje.",
-        "recenzija_izvor": "Google Maps"
+        "recenzija": "Uz Marinu Kornati — korisno za nautičare i posjetitelje sajma. €1,50/sat cijele godine."
       },
       {
         "naziv": "Parking — Ul. Tina Ujevića",
-        "tip": "🅿️ otvoreno 0–24h · ⭐ 4,1 (17 recenzija)",
+        "tip": "🅿️ Zona II (Žuta) · €1,50/sat · 0–24h · ⭐ 4,1 (17 recenzija)",
         "adresa": "Ul. Tina Ujevića 33, Biograd na Moru",
+        "telefon": "+385 23 384 363",
+        "web": "https://bosana.hr/usluge/parking",
         "karta": "https://maps.google.com/?q=Parking+Ul+Tina+Ujevića+33+Biograd",
         "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-bosana.webp&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Parkiralište u mirnom dijelu grada, dobra alternativa u sezoni.",
-        "recenzija_izvor": "Google Maps"
+        "recenzija": "Parkiralište u mirnom dijelu grada, dobra alternativa u sezoni. €1,50/sat cijele godine."
       }
     ],
     "prijevoz": [
