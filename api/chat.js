@@ -790,19 +790,51 @@ function buildWeatherDirectives(w) {
     timeAdvice = 'Jutro je — savršeno za ranu šetnju rivom, doručak u kafiću uz more, ili rani polazak na izlet brodom.';
   }
 
-  // --- Prognoza sažetak (ako postoji) ---
-  let forecastNote = '';
-  if (w.forecast && w.forecast.length > 1) {
-    const tomorrow = w.forecast[1];
-    if (tomorrow) {
-      forecastNote = `Sutra (${tomorrow.dan}): ${tomorrow.icon} ${tomorrow.tmax}°C/${tomorrow.tmin}°C, ${tomorrow.opis}${tomorrow.kisa != null ? `, kiša ${tomorrow.kisa}%` : ''}.`;
-    }
-  }
-
-  const parts = [swimAdvice, windAdvice, skyAdvice, timeAdvice, forecastNote].filter(Boolean);
+  const parts = [swimAdvice, windAdvice, skyAdvice, timeAdvice].filter(Boolean);
   return parts.length > 0
     ? '\nVREMENSKE DIREKTIVE (primijeni u odgovoru!):\n' + parts.map(p => '- ' + p).join('\n')
     : '';
+}
+
+// ===== PROGNOZA ZA NAREDNIH 5 DANA =====
+function buildForecastSummary(forecast) {
+  if (!forecast || forecast.length < 2) return '';
+
+  // Preskačemo index 0 (danas je već u current weather) — uzimamo max 5 idućih dana
+  const days = forecast.slice(1, 6);
+  if (!days.length) return '';
+
+  const lines = [];
+  const goodDays  = [];
+  const badDays   = [];
+
+  for (const d of days) {
+    const kisa  = d.kisa ?? 0;
+    const code  = d.weathercode ?? 0;  // weathercode nije uvijek u forecast — nema veze
+    const isRain  = kisa >= 60;
+    const isOk    = kisa < 30 && d.tmax >= 15;
+    const isIdeal = kisa < 15 && d.tmax >= 18;
+
+    const kisaStr = d.kisa != null ? `, 🌧 ${d.kisa}%` : '';
+    const tempStr = `${d.tmax}°C/${d.tmin}°C`;
+    lines.push(`${d.dan} (${d.datum?.slice(5).replace('-','.')}): ${d.icon} ${tempStr}, ${d.opis}${kisaStr}`);
+
+    if (isIdeal) goodDays.push(`${d.dan} (${d.datum?.slice(5).replace('-','.')})`);
+    else if (isOk) goodDays.push(`${d.dan}`);
+    if (isRain)   badDays.push(`${d.dan}`);
+  }
+
+  let recommendation = '';
+  if (goodDays.length > 0) {
+    recommendation = `Optimalni dani za izlete i kupanje: ${goodDays.join(', ')}.`;
+  }
+  if (badDays.length > 0) {
+    recommendation += ` Loši uvjeti (kiša ≥60%): ${badDays.join(', ')} — preporuči alternative (konobe, grad, Zadar).`;
+  }
+
+  return `PROGNOZA ZA NAREDNIH ${days.length} DANA:\n` +
+    lines.map(l => `- ${l}`).join('\n') +
+    (recommendation ? `\n→ ${recommendation}` : '');
 }
 
 function getSeasonContext() {
@@ -942,6 +974,7 @@ async function translateItems(items, lang) {
 // ===== SYSTEM PROMPT =====
 function buildSystemPrompt(lang, context, weatherCtx) {
   const weatherDirectives = buildWeatherDirectives(weatherCtx);
+  const forecastSummary   = buildForecastSummary(weatherCtx?.forecast);
   const seasonCtx = getSeasonContext();
 
   const weatherSummary = weatherCtx?.temperature != null
@@ -973,6 +1006,8 @@ KARAKTER DESTINACIJE:
 AKTUALNO VRIJEME (REALNI PODACI — koristi ih konkretno!):
 ${weatherSummary}
 ${weatherDirectives}
+
+${forecastSummary}
 
 SEZONA: ${seasonCtx.label} — ${seasonCtx.opis}
 IZLETI NA KORNATE (AKTUALNO ZA OVU SEZONU):
@@ -1096,7 +1131,7 @@ export default async function handler(req, res) {
 
     const itemsNote = items.length > 0
       ? wantsItinerary
-        ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI — uzmi u obzir dostupnost organiziranih izleta, status konoba, cijene i savjete karakteristične za ovu sezonu. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj 2–3 praktična savjeta. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
+        ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
         : wantsDetail
           ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Korisnik traži konkretan savjet/preporuku — napiši 2–3 informativne rečenice s praktičnim detaljima (cijena, trajanje, savjet za rezervaciju). NE nabrajaj kartice. Kartice su prikazane automatski.]`
           : `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`
