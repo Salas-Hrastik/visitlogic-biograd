@@ -1685,23 +1685,33 @@ export const db = {
         "recenzija": "Dalmatinski lanac poznat po svježoj robi i lokalnim proizvodima. Radi svaki dan."
       },
       {
-        "naziv": "Konzum — Centar",
-        "tip": "🛒 supermarket · ⭐ 3,6 (109 recenzija) · pon–sub 07–21h",
-        "adresa": "Šetalište kneza Branimira 32, 23210 Biograd na Moru",
+        "naziv": "Konzum — Kneza Branimira (Riva)",
+        "tip": "🛒 supermarket · pon–sub 07–21h, ned 07–20h",
+        "adresa": "Kneza Branimira 7, 23210 Biograd na Moru",
+        "telefon": "0800 400 000",
         "web": "https://www.konzum.hr",
-        "karta": "https://maps.google.com/?q=Konzum+Kneza+Branimira+32+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Konzum+Kneza+Branimira+7+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=220&fit=crop",
-        "recenzija": "U samom centru uz rivu — najpristupačniji za pješake i nautičare s marine."
+        "recenzija": "Uz rivu i marinu — najpristupačniji za pješake i nautičare. Radi i nedjeljom."
       },
       {
-        "naziv": "Studenac Market",
-        "tip": "🛒 supermarket · više lokacija · pon–sub 07–21h",
-        "adresa": "Osječka ulica 2, 23210 Biograd na Moru",
-        "telefon": "021 430 801",
-        "web": "https://www.studenac.hr",
-        "karta": "https://maps.google.com/?q=Studenac+Biograd+na+Moru+Osjecka",
+        "naziv": "Konzum — Bure Centar",
+        "tip": "🛒 supermarket · pon–sub 07–21h, ned 07–20h",
+        "adresa": "Dr. Franje Tuđmana 82, 23210 Biograd na Moru",
+        "telefon": "0800 400 000",
+        "web": "https://www.konzum.hr",
+        "karta": "https://maps.google.com/?q=Konzum+Bure+Centar+Biograd+na+Moru",
+        "slika": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=220&fit=crop",
+        "recenzija": "Konzum unutar Bure Shopping Centra. Radi i nedjeljom, veliki parking u centru."
+      },
+      {
+        "naziv": "Studenac — 5 lokacija",
+        "tip": "🛒 supermarket · svaki dan 07–22h",
+        "adresa": "Ivana Raosa 10 · Splitska 43 · Put Solina 13 · Zadarska 11 · Slanica 5A",
+        "web": "https://www.studenac.hr/trgovine",
+        "karta": "https://maps.google.com/?q=Studenac+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=400&h=220&fit=crop",
-        "recenzija": "Više lokacija po gradu — praktično za brzu kupovinu u blizini smještaja."
+        "recenzija": "5 lokacija raspoređenih po cijelom gradu — uvijek jedna blizu tvog smještaja. Sitno i bitno!"
       }
     ],
     "lokalne_trgovine": [
@@ -1748,8 +1758,34 @@ export const db = {
         "adresa": "Šetalište kneza Branimira 6, 23210 Biograd na Moru",
         "telefon": "098 996 2240",
         "karta": "https://maps.google.com/?q=Di+Maris+Ribarnica+Biograd+na+Moru",
-        "slika": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=220&fit=crop",
+        "slika": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=220&fit=crop",
         "recenzija": "Svježa riba i plodovi mora direktno s broda. Uz obalu — idealno za konobe i kuhanje na plovilu."
+      },
+      {
+        "naziv": "Marinera — Ribarska i lovačka oprema",
+        "tip": "🎣 ribarska oprema · uz obalu",
+        "adresa": "Obala kralja Petra Krešimira IV 11, 23210 Biograd na Moru",
+        "telefon": "+385 23 384 882",
+        "karta": "https://maps.google.com/?q=Marinera+Biograd+na+Moru+Obala+Krešimira",
+        "slika": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=220&fit=crop",
+        "recenzija": "Ribarska i lovačka oprema uz samu obalu — idealno za nautičare i ribiče koji dolaze brodom."
+      },
+      {
+        "naziv": "Hermes Nautika",
+        "tip": "⚓ nautička oprema · moda i oprema za more",
+        "adresa": "Dr. Franje Tuđmana 18, 23210 Biograd na Moru",
+        "karta": "https://maps.google.com/?q=Hermes+Nautika+Biograd+na+Moru",
+        "slika": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=220&fit=crop",
+        "recenzija": "Nautička oprema, odjeća i pribor za more. U središtu grada, blizu rive."
+      },
+      {
+        "naziv": "Full Team — Nautička oprema",
+        "tip": "⚓ nautička oprema · pon–pet 08–17h",
+        "adresa": "Šetalište kneza Branimira 1, 23210 Biograd na Moru",
+        "telefon": "023 384 502",
+        "karta": "https://maps.google.com/?q=Full+Team+Nautika+Biograd+na+Moru",
+        "slika": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=220&fit=crop",
+        "recenzija": "Profesionalna nautička oprema uz Marinu Kornati. Servisna podrška za jedriličare i motoriste."
       }
     ],
     "servisi": [
