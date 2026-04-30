@@ -1038,8 +1038,21 @@ export default async function handler(req, res) {
     const systemPrompt = buildSystemPrompt(lang, context, weather);
 
     // Ako kartice postoje, dodajemo eksplicitnu uputu u zadnju user poruku
+    // Detektiramo je li korisnik tražio konkretan/detaljan odgovor
+    const msgLow = message.toLowerCase();
+    const wantsDetail = msgLow.includes('prijedlog') || msgLow.includes('konkretan') || msgLow.includes('konkretno') ||
+      msgLow.includes('preporuč') || msgLow.includes('savjet') || msgLow.includes('plan') ||
+      msgLow.includes('kako') || msgLow.includes('što trebam') || msgLow.includes('detalj') ||
+      msgLow.includes('recommend') || msgLow.includes('suggest') || msgLow.includes('advice') ||
+      msgLow.includes('how to') || msgLow.includes('what should') || msgLow.includes('best way') ||
+      msgLow.includes('empfehlung') || msgLow.includes('vorschlag') || msgLow.includes('wie') ||
+      msgLow.includes('priporoč') || msgLow.includes('nasvet') || msgLow.includes('predlog') ||
+      msgLow.includes('consig') || msgLow.includes('suggest') || msgLow.includes('javasol');
+
     const itemsNote = items.length > 0
-      ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`
+      ? wantsDetail
+        ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Korisnik traži KONKRETAN prijedlog/savjet — napiši 2–3 informativne rečenice s praktičnim detaljima (cijena, trajanje, savjet za rezervaciju) koristeći podatke iz baze. NE nabrajaj kartice, NE opisuj svaki objekt zasebno. Kartice su prikazane automatski.]`
+        : `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`
       : '';
 
     // Poruke za OpenAI (do 10 prethodnih)
