@@ -807,13 +807,44 @@ function buildWeatherDirectives(w) {
 
 function getSeasonContext() {
   const month = new Date().getMonth() + 1; // 1-12
-  if (month >= 7 && month <= 8) return 'VRHUNAC SEZONE (srpanj/kolovoz) — gužve, obavezna rezervacija 3-4 mj. unaprijed, visoke cijene, sve radi.';
-  if (month === 6)  return 'POČETAK SEZONE (lipanj) — sve radi, manje gužvi, povoljnije cijene nego u srpnju/kolovozu.';
-  if (month === 9)  return 'POSTSEZONI (rujan) — IDEALAN TERMIN: more toplo (24°C+), manje gužvi, povoljnije cijene, romantična atmosfera.';
-  if (month === 10) return 'JESEN (listopad) — sezona se zatvara, dio restorana i sadržaja zatvoren, mirno i autentično.';
-  if (month >= 11 || month <= 3) return 'VAN SEZONE — mnogi restorani, kampovi i nautički sadržaji zatvoreni. Grad je miran i autentičan.';
-  if (month >= 4 && month <= 5) return 'PREDSEZONE (travanj/svibanj) — otvaranje sadržaja, idealno za aktivni odmor bez gužvi.';
-  return '';
+
+  if (month >= 7 && month <= 8) return {
+    label: 'VRHUNAC SEZONE (srpanj/kolovoz)',
+    opis: 'Gužve, sve radi, visoke cijene, obavezna rezervacija unaprijed.',
+    izleti_kornati: 'Organizirani izleti SVAKI DAN, više polazaka. Polazak 07:30. Cijena 65–80 EUR/osobi s ručkom. OBAVEZNA rezervacija 2–3 dana unaprijed. Sve konobe na otocima rade.',
+    savjet_izlet: 'Rezervirajte odmah — mjesta se pune tjednima unaprijed. Ponesite SPF50+, nema sjene na otocima.'
+  };
+  if (month === 6) return {
+    label: 'POČETAK SEZONE (lipanj)',
+    opis: 'Sve radi, manje gužvi nego u srpnju/kolovozu, povoljnije cijene.',
+    izleti_kornati: 'Organizirani izleti svaki dan. Polazak 08:00. Cijena 50–70 EUR/osobi. Rezervacija dan ranije dovoljna. Sve konobe rade.',
+    savjet_izlet: 'Lipanj je idealan — more toplo, nema gužvi, konobe prihvaćaju goste bez dugog čekanja.'
+  };
+  if (month === 9) return {
+    label: 'POSTSEZONE (rujan)',
+    opis: 'IDEALAN TERMIN — more toplo (24°C+), manje gužvi, romantična atmosfera.',
+    izleti_kornati: 'Organizirani izleti svaki dan. Polazak 08:00. Cijena 50–70 EUR/osobi. Rezervacija dan ranije. Sve konobe rade.',
+    savjet_izlet: 'Rujan je turistima tajna — jednaka ponuda kao lipanj/kolovoz, ali bez gužvi i jeftinije.'
+  };
+  if (month === 10) return {
+    label: 'JESEN (listopad)',
+    opis: 'Sezona se zatvara, dio sadržaja zatvoren, mirno i autentično.',
+    izleti_kornati: 'Organizirani izleti SAMO vikendom. Inače privatni charter (200–400 EUR/dan za cijeli brod). Kontakt: Škver Tours (+385 23 383 123) ili Marina Kornati (+385 23 383 800). Konobe na otocima: provjeriti unaprijed, većina zatvorena.',
+    savjet_izlet: 'Charter s lokalnim skiperom je pravo iskustvo u listopadu — tiho, bez turista, NP Kornati u punoj jesenskoj ljepoti.'
+  };
+  if (month >= 11 || month <= 3) return {
+    label: 'VAN SEZONE (studeni–ožujak)',
+    opis: 'Mnogi sadržaji zatvoreni, grad miran i autentičan.',
+    izleti_kornati: 'NEMA organiziranih izleta. Isključivo privatni charter na upit (200+ EUR/dan). Kontakt: Marina Kornati (+385 23 383 800). VAŽNO: sve konobe na otocima zatvorene — nema ručka na otocima.',
+    savjet_izlet: 'Van sezone Kornati su dostupni samo privatnim brodom ili charterom. Preporuča se iskusnijim nautičarima. Divlje, samotan i nezaboravno — ali bez ikakve infrastrukture.'
+  };
+  // month 4-5: predsezone
+  return {
+    label: 'PREDSEZONE (travanj/svibanj)',
+    opis: 'Otvaranje sadržaja, idealno za aktivni odmor bez gužvi.',
+    izleti_kornati: 'Organizirani izleti vikendom (Škver Tours, Biograd Boat Charter) — radnim danom NEMA grupnih izleta, ali privatni charter dostupan. Cijena 40–60 EUR/osobi za vikend izlet; charter 200–400 EUR/dan. Konobe na otocima: Levrnaka i Žakan otvaraju krajem travnja — provjeriti unaprijed.',
+    savjet_izlet: 'Predsezoni charter s iskusnim skiperom nudi autentično iskustvo bez turista. Idealno za parove ili manje grupe.'
+  };
 }
 
 // ===== STRIP BULLET LISTE I MARKDOWN NASLOVA IZ AI ODGOVORA =====
@@ -943,7 +974,10 @@ AKTUALNO VRIJEME (REALNI PODACI — koristi ih konkretno!):
 ${weatherSummary}
 ${weatherDirectives}
 
-SEZONA: ${seasonCtx}
+SEZONA: ${seasonCtx.label} — ${seasonCtx.opis}
+IZLETI NA KORNATE (AKTUALNO ZA OVU SEZONU):
+${seasonCtx.izleti_kornati}
+SAVJET ZA IZLET: ${seasonCtx.savjet_izlet}
 
 TURISTIČKI PROFILI POSJETITELJA:
 - Nautičari (charter, jedriličari, motorni brodovi)
@@ -1036,6 +1070,7 @@ export default async function handler(req, res) {
     const items = getCategoryItems(detectedCategory, message);
 
     const systemPrompt = buildSystemPrompt(lang, context, weather);
+    const seasonCtx = getSeasonContext(); // za [SUSTAV] itinerer note
 
     // Ako kartice postoje, dodajemo eksplicitnu uputu u zadnju user poruku
     const msgLow = message.toLowerCase();
@@ -1061,7 +1096,7 @@ export default async function handler(req, res) {
 
     const itemsNote = items.length > 0
       ? wantsItinerary
-        ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER — napiši strukturiran plan dana po satima koristeći podatke iz baze (itinerer_dan). Format: koristi emoji + vrijeme + kratki opis za svaki korak, npr. "🕖 07:30 — Polazak iz luke Biograd..." Na kraju dodaj praktične savjete (cijena, rezervacija, što ponijeti). SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
+        ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI — uzmi u obzir dostupnost organiziranih izleta, status konoba, cijene i savjete karakteristične za ovu sezonu. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj 2–3 praktična savjeta. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
         : wantsDetail
           ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Korisnik traži konkretan savjet/preporuku — napiši 2–3 informativne rečenice s praktičnim detaljima (cijena, trajanje, savjet za rezervaciju). NE nabrajaj kartice. Kartice su prikazane automatski.]`
           : `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`

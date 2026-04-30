@@ -1054,6 +1054,44 @@ export const db = {
       "opis": "Organizirani izleti brodom polaze svakodnevno iz luke Biograda (lipanj–rujan). Trajanje: 8–10 sati.",
       "sadrzaj_izleta": "Plovidba između otoka, zaustavljanje u providnim zaljevima za kupanje, ribolov, ručak u konobama na otocima (Levrnaka, Mana, Kornat)",
       "cijena_izleta": "Orijentacijska cijena: 50–80 EUR po osobi (ovisno o operatoru, s ručkom)",
+      "sezone": {
+        "vrhunac": {
+          "period": "srpanj–kolovoz",
+          "dostupnost": "svaki dan, više polazaka dnevno",
+          "polazak": "07:30 — preporuča se ukrcaj 15 min ranije",
+          "rezervacija": "OBAVEZNA 2–3 dana unaprijed — mjesta brzo popunjena",
+          "cijena": "65–80 EUR po osobi (s ručkom u konobama)",
+          "konobe": "sve konobe na otocima rade — Levrnaka, Žakan, Kornat",
+          "napomena": "Gužve na brodovima i u konobama, ali nezaboravno iskustvo. SPF zaštita obavezna, nema sjene na otocima."
+        },
+        "sezona": {
+          "period": "lipanj i rujan",
+          "dostupnost": "svaki dan",
+          "polazak": "08:00",
+          "rezervacija": "dan ranije dovoljan",
+          "cijena": "50–70 EUR po osobi (s ručkom)",
+          "konobe": "sve konobe rade",
+          "napomena": "IDEALAN termin — manje gužvi, more toplo (24°C+), sve radi, romantičnija atmosfera nego u kolovozu."
+        },
+        "predsezone": {
+          "period": "travanj–svibanj i listopad",
+          "dostupnost": "organizirani izleti SAMO vikendom (ili na upit), inače privatni charter",
+          "polazak": "08:30 (vikend izleti), charter fleksibilan",
+          "rezervacija": "kontaktirati agenciju unaprijed (Škver Tours, Biograd Boat Charter)",
+          "cijena": "40–60 EUR/osobi za vikend izlet; privatni charter 200–400 EUR/dan (cijeli brod)",
+          "konobe": "PAŽNJA: većina konoba na otocima u predsezoni ne radi — provjeriti unaprijed",
+          "napomena": "Tiho, divlje, bez gužvi — preporuča se iskusnijim nautičarima ili uz lokalnog skipera. NP Kornati je otvoren, jedrilice i charter dostupni."
+        },
+        "van_sezone": {
+          "period": "studeni–ožujak",
+          "dostupnost": "NEMA organiziranih izleta — isključivo privatni charter (na upit)",
+          "polazak": "fleksibilno, ovisno o charter ugovoru",
+          "rezervacija": "kontakt: Marina Kornati (+385 23 383 800) ili Škver Tours (+385 23 383 123)",
+          "cijena": "charter od 200+ EUR/dan (cijeli brod)",
+          "konobe": "ZATVORENO — sve konobe na otocima ne rade",
+          "napomena": "NP Kornati je otvoren, ali samotan i bez sadržaja. Preporuča se ISKLJUČIVO iskusnim nautičarima s vlastitim brodom ili s certificiranim skiperom."
+        }
+      },
       "konobe_na_otocima": [
         {
           "naziv": "Konoba Levrnaka",
