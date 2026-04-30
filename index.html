@@ -652,6 +652,14 @@ width:100%;
       <a id="modal-ext" class="modal-ext" href="#" target="_blank" rel="noopener">Otvori u novoj kartici ↗</a>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
+    <div id="modal-fallback" style="display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;text-align:center;">
+      <div style="font-size:48px;">🔒</div>
+      <p style="font-size:17px;color:#333;margin:0;">Ova stranica ne dopušta prikaz u prozoru.</p>
+      <a id="modal-fallback-btn" href="#" target="_blank" rel="noopener"
+        style="background:#004e89;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:16px;font-weight:bold;">
+        Otvori u novoj kartici ↗
+      </a>
+    </div>
     <iframe id="modal-iframe" class="modal-iframe" src=""
       sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
   </div>
@@ -899,8 +907,7 @@ function addMessage(text, type, suggestions, images, items){
         const a = document.createElement("a");
         a.href = it.web;
         a.textContent = "🌐 Web";
-        a.target = "_blank";
-        a.rel = "noopener";
+        a.onclick = e => { e.preventDefault(); openModal(it.web); };
         links.appendChild(a);
       }
       if(it.karta){
@@ -1051,16 +1058,57 @@ document.getElementById("user-input").addEventListener("keypress", function(e){
 
 // ===== MODAL =====
 function openModal(url){
+  const iframe   = document.getElementById("modal-iframe");
+  const fallback = document.getElementById("modal-fallback");
+  const fbBtn    = document.getElementById("modal-fallback-btn");
+  const extLink  = document.getElementById("modal-ext");
+
+  // Resetiraj stanje
+  iframe.style.display = "block";
+  fallback.style.display = "none";
+
+  // Postavi URL-ove
   document.getElementById("modal-url").textContent = url;
-  document.getElementById("modal-ext").href = url;
-  document.getElementById("modal-iframe").src = url;
+  extLink.href = url;
+  fbBtn.href   = url;
+
+  // Detektira blokiran iframe: ako se učita blank (X-Frame-Options), pokaži fallback
+  let loaded = false;
+  iframe.onload = function(){
+    loaded = true;
+    try {
+      // Pokušaj pristupiti dokumentu — baca SecurityError samo kad je cross-origin
+      // Ali kad X-Frame-Options blokira, iframe ostaje blank (about:blank)
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if(doc && (doc.URL === 'about:blank' || doc.body.innerHTML.trim() === '')){
+        iframe.style.display = "none";
+        fallback.style.display = "flex";
+      }
+    } catch(e){
+      // Cross-origin → stranica je učitana uspješno, samo ne možemo čitati sadržaj
+    }
+  };
+
+  // Ako onload ne okine u 8s → vjerojatno je blokirano
+  setTimeout(function(){
+    if(!loaded){
+      iframe.style.display = "none";
+      fallback.style.display = "flex";
+    }
+  }, 8000);
+
+  iframe.src = url;
   document.getElementById("link-modal").classList.add("open");
 }
 
 function closeModal(){
   const modal = document.getElementById("link-modal");
   modal.classList.remove("open");
-  document.getElementById("modal-iframe").src = "";
+  const iframe = document.getElementById("modal-iframe");
+  iframe.src = "";
+  iframe.onload = null;
+  document.getElementById("modal-fallback").style.display = "none";
+  document.getElementById("modal-iframe").style.display = "block";
 }
 
 document.getElementById("link-modal").addEventListener("click", function(e){

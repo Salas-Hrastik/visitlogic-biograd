@@ -636,7 +636,9 @@ function getCategoryItems(category, message = '') {
       return toItems(pi.servisi);
 
     if (m.includes('market') || m.includes('supermarket') || m.includes('trgovina') || m.includes('kupovina') ||
-        m.includes('konzum') || m.includes('studenac') || m.includes('namirnic') || m.includes('shopping'))
+        m.includes('konzum') || m.includes('studenac') || m.includes('namirnic') || m.includes('shopping') ||
+        m.includes('lidl') || m.includes('kaufland') || m.includes('plodine') || m.includes('tommy') ||
+        m.includes('spar') || m.includes('interspar') || m.includes('namirnice') || m.includes('prehrambeni'))
       return toItems(pi.supermarketi);
 
     if (m.includes('trajekt') || m.includes('ferry') || m.includes('pašman') || m.includes('pasman') ||
