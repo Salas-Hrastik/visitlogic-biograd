@@ -212,6 +212,15 @@ const TR = {
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
 
+  // Prioritet: ako poruka kombinira aktivnosti/plaže + Kornati → uvijek Kornati kategorija
+  const hasKornati = m.includes('kornat');
+  if (hasKornati) {
+    const hasBeach  = m.includes('plaž') || m.includes('plaze') || m.includes('beach') || m.includes('strand') || m.includes('spiagge') || m.includes('strandok') || m.includes('pláž');
+    const hasSport  = m.includes('ronjenj') || m.includes('ronit') || m.includes('diving') || m.includes('snorkel') || m.includes('swim') || m.includes('sport') || m.includes('kayak') || m.includes('ribolov') || m.includes('fishing') || m.includes('tauchen');
+    const hasFood   = m.includes('konob') || m.includes('jesti') || m.includes('hrana') || m.includes('restoran') || m.includes('riba') || m.includes('fish') || m.includes('eat');
+    if (hasBeach || hasSport || hasFood) return 'kornati';
+  }
+
   if (m.includes('plaža') || m.includes('plaze') || m.includes('plaže') || m.includes('plaža') || m.includes('kupanje') || m.includes('kupat') || m.includes('dražica') || m.includes('soline') || m.includes('bošana') || m.includes('kumenat') || m.includes('fkk') || m.includes('nudist') || m.includes('pješčan') || m.includes('sunčan') || m.includes('sunbath') || m.includes('more je') || m.includes('lijeva ruka') || m.includes('plivat')
     || m.includes('beach') || m.includes('swim') || m.includes('sunbathe') || m.includes('sand')
     || m.includes('strand') || m.includes('schwimmen') || m.includes('badestrand'))
