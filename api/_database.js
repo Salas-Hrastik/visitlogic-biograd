@@ -1112,7 +1112,16 @@ export const db = {
           "recenzija_izvor": "yachtscroatia.com"
         }
       ],
-      "savjet": "Rezervirajte izlet dan ranije, posebno u srpnju i kolovozu. Ponesit adekvatan SPF zaštitu jer nema sjene na otocima."
+      "savjet": "Rezervirajte izlet dan ranije, posebno u srpnju i kolovozu. Ponesit adekvatan SPF zaštitu jer nema sjene na otocima.",
+      "itinerer_dan": [
+        { "vrijeme": "07:30", "opis": "Polazak brodom iz luke Biograd (Obala KPK, ispred turističkih agencija). Ukrcaj 15 min ranije." },
+        { "vrijeme": "09:00–09:30", "opis": "Ulazak u NP Kornati — ulaznica uključena u cijenu organiziranog izleta. Prve uvale i dramatični klifovi." },
+        { "vrijeme": "09:30–11:30", "opis": "Plovidba između otoka — zaustavljanja za kupanje u kristalnim uvalama (Levrnaka, Mana). Potpuno divlje, bez turista ni betona." },
+        { "vrijeme": "12:00–13:30", "opis": "Ručak u konobama na otocima — Konoba Levrnaka ili Konoba Žakan. Svježa riba, hobotnica, domaće vino. Rezervacija uključena u paket." },
+        { "vrijeme": "13:30–15:30", "opis": "Posjet otoku Kornatu (crkva Gospa od Tarca, rimska citadela). Slobodno kupanje u providnim uvalama." },
+        { "vrijeme": "15:30–17:00", "opis": "Povratak uz obalu Pašmana. Mogućnost ribolova na povratku." },
+        { "vrijeme": "17:00–17:30", "opis": "Dolazak u luku Biograd." }
+      ]
     },
     "ronilacka_lokacija": "NP Kornati ima zabranjeno ronjenje bez posebne dozvole — kontaktirajte upravu parka"
   },

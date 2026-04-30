@@ -1038,21 +1038,33 @@ export default async function handler(req, res) {
     const systemPrompt = buildSystemPrompt(lang, context, weather);
 
     // Ako kartice postoje, dodajemo eksplicitnu uputu u zadnju user poruku
-    // Detektiramo je li korisnik tražio konkretan/detaljan odgovor
     const msgLow = message.toLowerCase();
-    const wantsDetail = msgLow.includes('prijedlog') || msgLow.includes('konkretan') || msgLow.includes('konkretno') ||
-      msgLow.includes('preporuč') || msgLow.includes('savjet') || msgLow.includes('plan') ||
+
+    // Detektiramo zahtjev za konkretnim itinererom / planom dana
+    const wantsItinerary = msgLow.includes('itinerer') || msgLow.includes('raspored') ||
+      msgLow.includes('plan puta') || msgLow.includes('sat po sat') || msgLow.includes('korak po korak') ||
+      msgLow.includes('detaljan program') || msgLow.includes('itinerary') || msgLow.includes('schedule') ||
+      msgLow.includes('step by step') || msgLow.includes('reiseplan') || msgLow.includes('tagesplan') ||
+      // "konkretan prijedlog" za izletničke kategorije → itinerer
+      ((msgLow.includes('konkretan') || msgLow.includes('konkretno') || msgLow.includes('specific') || msgLow.includes('konkreten')) &&
+       (msgLow.includes('prijedlog') || msgLow.includes('plan') || msgLow.includes('odlazak') || msgLow.includes('izlet') || msgLow.includes('posjet') || msgLow.includes('trip') || msgLow.includes('visit') || msgLow.includes('ausflug')));
+
+    // Detektiramo opći zahtjev za detaljima/preporukom (ali ne itinerer)
+    const wantsDetail = !wantsItinerary && (
+      msgLow.includes('prijedlog') || msgLow.includes('preporuč') || msgLow.includes('savjet') ||
       msgLow.includes('kako') || msgLow.includes('što trebam') || msgLow.includes('detalj') ||
       msgLow.includes('recommend') || msgLow.includes('suggest') || msgLow.includes('advice') ||
       msgLow.includes('how to') || msgLow.includes('what should') || msgLow.includes('best way') ||
-      msgLow.includes('empfehlung') || msgLow.includes('vorschlag') || msgLow.includes('wie') ||
+      msgLow.includes('empfehlung') || msgLow.includes('vorschlag') ||
       msgLow.includes('priporoč') || msgLow.includes('nasvet') || msgLow.includes('predlog') ||
-      msgLow.includes('consig') || msgLow.includes('suggest') || msgLow.includes('javasol');
+      msgLow.includes('consig') || msgLow.includes('javasol'));
 
     const itemsNote = items.length > 0
-      ? wantsDetail
-        ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Korisnik traži KONKRETAN prijedlog/savjet — napiši 2–3 informativne rečenice s praktičnim detaljima (cijena, trajanje, savjet za rezervaciju) koristeći podatke iz baze. NE nabrajaj kartice, NE opisuj svaki objekt zasebno. Kartice su prikazane automatski.]`
-        : `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`
+      ? wantsItinerary
+        ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER — napiši strukturiran plan dana po satima koristeći podatke iz baze (itinerer_dan). Format: koristi emoji + vrijeme + kratki opis za svaki korak, npr. "🕖 07:30 — Polazak iz luke Biograd..." Na kraju dodaj praktične savjete (cijena, rezervacija, što ponijeti). SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
+        : wantsDetail
+          ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Korisnik traži konkretan savjet/preporuku — napiši 2–3 informativne rečenice s praktičnim detaljima (cijena, trajanje, savjet za rezervaciju). NE nabrajaj kartice. Kartice su prikazane automatski.]`
+          : `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`
       : '';
 
     // Poruke za OpenAI (do 10 prethodnih)
