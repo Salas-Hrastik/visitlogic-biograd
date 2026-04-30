@@ -1467,7 +1467,7 @@ export const db = {
         "telefon": "+385 23 384 363",
         "web": "https://bosana.hr/usluge/parking",
         "karta": "https://www.google.com/maps/search/Parking+Biograd+City+Center+Marina+Kornati/@43.9373,15.4444,16z",
-        "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=400&h=220&fit=crop",
         "recenzija": "Centralno parkiralište uz Marinu Kornati, 5 min pješice od rive. Najskuplja zona — €2,60/sat."
       },
       {
@@ -1477,7 +1477,7 @@ export const db = {
         "telefon": "+385 23 384 363",
         "web": "https://bosana.hr/usluge/parking",
         "karta": "https://www.google.com/maps/place/Parking+Plaza+Dražica/@43.9343328,15.4469693,17z",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-drazica.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=400&h=220&fit=crop",
         "recenzija": "Veliki parking tik uz plažu Dražica — idealno za kupanje. €1,50/sat u sezoni, €1,00/sat van sezone."
       },
       {
@@ -1487,7 +1487,7 @@ export const db = {
         "telefon": "+385 23 384 363",
         "web": "https://bosana.hr/usluge/parking",
         "karta": "https://maps.google.com/?q=Parking+Ul+kralja+Petra+Svačića+Biograd",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?w=400&h=220&fit=crop",
         "recenzija": "Parkiralište u centru, korisno za posjet staroj jezgri. Plati parkomat ili m-parking SMS 708237."
       },
       {
@@ -1497,7 +1497,7 @@ export const db = {
         "telefon": "+385 23 384 363",
         "web": "https://bosana.hr/usluge/parking",
         "karta": "https://maps.google.com/?q=Parking+Biograd+Boat+Show+Marina+Kornati",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=400&h=220&fit=crop",
         "recenzija": "Uz Marinu Kornati — korisno za nautičare i posjetitelje sajma. €1,50/sat cijele godine."
       },
       {
@@ -1507,7 +1507,7 @@ export const db = {
         "telefon": "+385 23 384 363",
         "web": "https://bosana.hr/usluge/parking",
         "karta": "https://maps.google.com/?q=Parking+Ul+Tina+Ujevića+33+Biograd",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-bosana.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=400&h=220&fit=crop",
         "recenzija": "Parkiralište u mirnom dijelu grada, dobra alternativa u sezoni. €1,50/sat cijele godine."
       }
     ],
