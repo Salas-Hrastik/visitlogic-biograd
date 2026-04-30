@@ -965,6 +965,9 @@ ljekarne, supermarkete, benzinske, servise, konobe na Kornatima, nautiku, izlete
 sustav će automatski prikazati vizualne kartice sa slikama, opisima, linkovima i recenzijama.
 ZBOG TOGA: u svom tekstu APSOLUTNO NEMOJ individualno nabrajati, navoditi niti opisivati svaki objekt posebno — ni u obliku liste, ni u obliku proze!
 Napiši samo 1–2 kratke uvodne rečenice s općim kontekstom ili savjetom — NE opisuj svaku plažu/restoran/hotel zasebno!
+KRITIČNO: Kada sustav prikazuje kartice za određenu kategoriju (benzinske, parkinge, ljekarne itd.),
+to znači da baza SADRŽI te podatke — NIKAD ne piši "nemam informacije" ili "ne znam" za tu kategoriju!
+Uvijek piši pozitivnu uvodnu rečenicu, npr.: "Biograd ima 3 benzinske postaje — dvije INA i Tifon s LPG-om."
 ZABRANJEN FORMAT: "Plaža Dražica je najpopularnija gradska plaža... Plaža Soline smještena je u borovoj šumi..."
 ZABRANJEN FORMAT: "- Konoba Levrnaka: Smještena na otoku... \n- Konoba Žakan: Ova konoba..."
 ZABRANJEN FORMAT: "1. Restoran... 2. Hotel... 3. Plaža..."
@@ -998,17 +1001,22 @@ export default async function handler(req, res) {
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
     const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito };
 
+    // getCategoryItems je sinkron — pokrećemo PRIJE system prompta da LLM zna o karticama
+    const items = getCategoryItems(detectedCategory, message);
+
     const systemPrompt = buildSystemPrompt(lang, context, weather);
+
+    // Ako kartice postoje, dodajemo eksplicitnu uputu u zadnju user poruku
+    const itemsNote = items.length > 0
+      ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`
+      : '';
 
     // Poruke za OpenAI (do 10 prethodnih)
     const messages = [
       { role: 'system', content: systemPrompt },
       ...(history || []).slice(-10),
-      { role: 'user', content: message }
+      { role: 'user', content: message + itemsNote }
     ];
-
-    // getCategoryItems je sinkron — pokrećemo ga PRIJE API poziva
-    const items = getCategoryItems(detectedCategory, message);
 
     // Paralelno: glavni AI odgovor + prijevod kartica (nema dodatne latencije)
     const [completion, translatedItems] = await Promise.all([

@@ -1617,7 +1617,7 @@ export const db = {
         "telefon": "0800 11 12",
         "web": "https://www.ina.hr",
         "karta": "https://www.google.com/maps/place/Ina+Biograd+na+moru+-+magistrala/@43.9439997,15.455519,17z",
-        "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=220&fit=crop",
         "recenzija": "Najboljše ocijenjena benzinska u Biogradu, radi 0–24h cijele godine. Uz magistralu D8.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1628,7 +1628,7 @@ export const db = {
         "telefon": "091 464 1052",
         "web": "https://www.tifon.hr",
         "karta": "https://maps.google.com/?q=Tifon+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=220&fit=crop",
         "recenzija": "Dobro ocijenjena postaja s povoljnim cijenama, LPG autoplin dostupan.",
         "recenzija_izvor": "Google Maps"
       },
@@ -1638,7 +1638,7 @@ export const db = {
         "adresa": "Obala kralja Petra Krešimira IV 36a, Biograd na Moru",
         "web": "https://www.ina.hr",
         "karta": "https://maps.google.com/?q=INA+Obala+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=220&fit=crop",
         "recenzija": "Benzinska na obali — korisno za nautičare i marine. Manji asortiman.",
         "recenzija_izvor": "Google Maps"
       }
