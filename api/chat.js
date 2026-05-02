@@ -1,8 +1,8 @@
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import { db } from "./_database.js";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY?.trim()
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY?.trim()
 });
 
 // ===== KATEGORIJSKI KONTEKSTI =====
@@ -937,17 +937,16 @@ async function translateItems(items, lang) {
   }));
 
   try {
-    const tr = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+    const tr = await anthropic.messages.create({
+      model: 'claude-opus-4-7',
+      max_tokens: 3000,
       messages: [{
         role: 'user',
         content: `Translate Croatian tourism card texts to ${target}. Return ONLY JSON object {"t":[{"opis":"...","adresa":"...","recenzija":"..."},...]}. Keep proper nouns (place/restaurant names) unchanged. Be concise.\n\n${JSON.stringify(fields)}`
-      }],
-      temperature: 0.1,
-      max_tokens: 3000
+      }]
     });
 
-    const raw = tr.choices[0]?.message?.content || '';
+    const raw = tr.content[0]?.type === 'text' ? tr.content[0].text : '';
     const match = raw.match(/\{[\s\S]*\}/);
     if (!match) return items;
     let parsed;
@@ -1137,25 +1136,25 @@ export default async function handler(req, res) {
           : `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`
       : '';
 
-    // Poruke za OpenAI (do 10 prethodnih)
-    const messages = [
-      { role: 'system', content: systemPrompt },
-      ...(history || []).slice(-10),
-      { role: 'user', content: message + itemsNote }
-    ];
+    // Poruke za Claude (do 10 prethodnih; system ide kao zaseban parametar)
+    const historyMessages = (history || []).slice(-10)
+      .filter(m => m.role === 'user' || m.role === 'assistant');
 
     // Paralelno: glavni AI odgovor + prijevod kartica (nema dodatne latencije)
     const [completion, translatedItems] = await Promise.all([
-      openai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        messages,
-        temperature: 0.4,
-        max_tokens: 800
+      anthropic.messages.create({
+        model: 'claude-opus-4-7',
+        system: systemPrompt,
+        max_tokens: 800,
+        messages: [
+          ...historyMessages,
+          { role: 'user', content: message + itemsNote }
+        ]
       }),
       translateItems(items, lang)
     ]);
 
-    const rawReply = completion.choices[0]?.message?.content || '';
+    const rawReply = completion.content[0]?.type === 'text' ? completion.content[0].text : '';
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
