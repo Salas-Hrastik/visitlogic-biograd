@@ -613,7 +613,63 @@ function getCategoryItems(category, message = '') {
     return filterByMessage(svi, message);
   }
   if (category === 'dogadanja') {
-    return (db.dogadanja?.eventi || []).map(e => item(e, { adresa: e.termin || '' }));
+    const today = new Date();
+    const todayMs = today.getTime();
+
+    // Parsiraj datum iz termina (format "DD.MM.YYYY" ili "DD.MM. – DD.MM.YYYY")
+    function terminToDate(termin) {
+      if (!termin) return null;
+      // Uzmi zadnji datum iz raspona: "29.04. – 03.05.2026" → "03.05.2026"
+      const clean = termin.replace(/\s/g, '');
+      const parts = clean.split('–');
+      const last = parts[parts.length - 1];
+      // Traži DD.MM.YYYY
+      const m = last.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+      if (m) return new Date(parseInt(m[3]), parseInt(m[2]) - 1, parseInt(m[1]));
+      return null;
+    }
+
+    // Filtriraj opće događaje — prikaži samo nadolazeće (s datumom u budućnosti)
+    const eventiAktivni = (db.dogadanja?.eventi || []).filter(e => {
+      const d = terminToDate(e.termin);
+      if (!d) return true; // bez datuma → uvijek prikaži (godišnji eventi bez fiksnog termina)
+      return d.getTime() >= todayMs;
+    });
+
+    // Određeni, mesečni program (kolovoz i dr.) — prikaži samo nadolazeće
+    // "datum" format: "2. 8." → uzimamo mjesec i dan, godina = tekuća ili sljedeća
+    function datumEventToDate(datum) {
+      if (!datum) return null;
+      // Uzmi zadnji dan iz raspona "1.–3. 8." ili "22.–24. 8."
+      const clean = datum.replace(/\s/g, '');
+      const parts = clean.split('–');
+      const last = parts[parts.length - 1];
+      // Format: "3.8." ili "24.8."
+      const m = last.match(/(\d{1,2})\.(\d{1,2})\./);
+      if (!m) return null;
+      const day = parseInt(m[1]), month = parseInt(m[2]) - 1;
+      let year = today.getFullYear();
+      // Ako je taj dan ove godine već prošao, prebaci na sljedeću godinu
+      const candidate = new Date(year, month, day);
+      if (candidate.getTime() < todayMs) year++;
+      return new Date(year, month, day);
+    }
+
+    const kolovozAktivni = (db.dogadanja?.kolovoz_2025 || []).filter(e => {
+      const d = datumEventToDate(e.datum);
+      if (!d) return true;
+      return d.getTime() >= todayMs;
+    });
+
+    // Spoji: specifični program (kolovoz) + opći nadolazeći
+    const svi = [
+      ...kolovozAktivni.map(e => item(
+        { naziv: e.naziv, opis: `${e.datum} u ${e.vrijeme}`, IMAGE_URL: e.IMAGE_URL },
+        { adresa: e.lokacija || '' }
+      )),
+      ...eventiAktivni.map(e => item(e, { adresa: e.termin || '' }))
+    ];
+    return svi;
   }
   if (category === 'prakticno') {
     const m = (message || '').toLowerCase();
