@@ -1440,15 +1440,15 @@ export const db = {
       }
     ],
     "kolovoz_2025": [
-      { "datum": "1.–3. 8.", "vrijeme": "—",    "naziv": "Teniski turnir „30. Oluja"",                                                    "lokacija": "Tenis centar Ilirija" },
-      { "datum": "2. 8.",    "vrijeme": "20:30", "naziv": "Acoustic Kings „Musica Mediterrana"",                                            "lokacija": "Narodni trg / Trg Brce" },
+      { "datum": "1.–3. 8.", "vrijeme": "—",    "naziv": "Teniski turnir '30. Oluja'",                                                    "lokacija": "Tenis centar Ilirija" },
+      { "datum": "2. 8.",    "vrijeme": "20:30", "naziv": "Acoustic Kings 'Musica Mediterrana'",                                            "lokacija": "Narodni trg / Trg Brce" },
       { "datum": "3. 8.",    "vrijeme": "9:00",  "naziv": "14. Memorijalna utrka Dino Eškinja",                                             "lokacija": "Bazen Ilirija" },
       { "datum": "3. 8.",    "vrijeme": "10:00", "naziv": "20. Plivački maraton Biograd 2025.",                                             "lokacija": "Bazen Ilirija" },
       { "datum": "4. 8.",    "vrijeme": "20:30", "naziv": "Biogradska noć / Biograd Night",                                                 "lokacija": "Riva" },
       { "datum": "5. 8.",    "vrijeme": "20:30", "naziv": "Biogradska noć / Biograd Night",                                                 "lokacija": "Ispred Gradske uprave" },
       { "datum": "5. 8.",    "vrijeme": "16:00", "naziv": "Turnir odbojke na pijesku",                                                      "lokacija": "Plaža Soline" },
       { "datum": "6. 8.",    "vrijeme": "20:30", "naziv": "Sjećanje na Hirošimu i Nagasaki",                                               "lokacija": "Riva" },
-      { "datum": "6. 8.",    "vrijeme": "21:00", "naziv": "Nastup japanskih umjetnika — Dokumentarni film „Ždral u srcu Jadrana"",          "lokacija": "Ispred Gradske uprave" },
+      { "datum": "6. 8.",    "vrijeme": "21:00", "naziv": "Nastup japanskih umjetnika — Dokumentarni film 'Ždral u srcu Jadrana'",          "lokacija": "Ispred Gradske uprave" },
       { "datum": "7.–8. 8.", "vrijeme": "21:00", "naziv": "Slastice i vino",                                                               "lokacija": "Riva" },
       { "datum": "9. 8.",    "vrijeme": "19:30", "naziv": "Dječje ljetne igre",                                                             "lokacija": "Glavni mul" },
       { "datum": "10. 8.",   "vrijeme": "21:00", "naziv": "Ribarska noć / Fisherman's Night",                                              "lokacija": "Glavni mul" },
