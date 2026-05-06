@@ -1427,13 +1427,6 @@ export const db = {
         "web": ""
       },
       {
-        "naziv": "Biogradska noć",
-        "opis": "Jedna od najvećih manifestacija u Dalmaciji, posvećena Danu pobjede i domovinske zahvalnosti. Više od 20.000 posjetitelja dolazi uživati u brodovima ukrašenim svjetlima, vatrometu i laserskom showu sinkroniziranom s glazbom, folklornim skupinama, tamburašima i gastronomijom na rivi.",
-        "termin": "kolovoz (Dan pobjede)",
-        "lokacija": "Riva i stara jezgra, Biograd na Moru",
-        "web": ""
-      },
-      {
         "naziv": "Biograd Boat Show",
         "opis": "Jedan od najvećih nautičkih sajmova u jugoistočnoj Europi, koji se tradicionalno održava krajem rujna/početkom listopada u Marini Kornati. Izlaže se nekoliko stotina plovila svih vrsta — jedrilice, motorne jahte, katamarani, gumenjaci. Zlatni član IFBSO mreže (36 najprestižnijih sajmova nautike na svijetu). Privlači desetke tisuća posjetitelja iz regije.",
         "termin": "kraj rujna / početak listopada",
@@ -1441,25 +1434,47 @@ export const db = {
         "web": "http://bbs.com.hr/"
       },
       {
-        "naziv": "Ribarska večer",
-        "opis": "Tradicijska manifestacija s lokalnom ribarskom gastronomijom, glazbom i folklorom. Održava se ljeti na rivi.",
-        "termin": "ljeto (srpanj/kolovoz)"
-      },
-      {
-        "naziv": "Dani kralja Petra Krešimira IV.",
-        "opis": "Kulturna manifestacija koja obilježava bogatu povijest Biograda kao kraljevske prijestolnice — glazba, kostimi, rekonstrukcije.",
-        "termin": "srpanj/kolovoz"
-      },
-      {
-        "naziv": "Ljetni koncerti i zabava",
-        "opis": "Čitavo ljeto na rivi se održavaju koncerti, zabave i manifestacije za turiste i lokalne stanovnike.",
-        "termin": "lipanj–rujan"
-      },
-      {
         "naziv": "Sportska natjecanja (jedriličarska regata)",
         "opis": "Nekoliko jedriličarskih regata godišnje prolazi kroz Biogradski zaljev.",
         "termin": "proljeće i jesen"
       }
+    ],
+    "kolovoz_2025": [
+      { "datum": "1.–3. 8.", "vrijeme": "—",    "naziv": "Teniski turnir „30. Oluja"",                                                    "lokacija": "Tenis centar Ilirija" },
+      { "datum": "2. 8.",    "vrijeme": "20:30", "naziv": "Acoustic Kings „Musica Mediterrana"",                                            "lokacija": "Narodni trg / Trg Brce" },
+      { "datum": "3. 8.",    "vrijeme": "9:00",  "naziv": "14. Memorijalna utrka Dino Eškinja",                                             "lokacija": "Bazen Ilirija" },
+      { "datum": "3. 8.",    "vrijeme": "10:00", "naziv": "20. Plivački maraton Biograd 2025.",                                             "lokacija": "Bazen Ilirija" },
+      { "datum": "4. 8.",    "vrijeme": "20:30", "naziv": "Biogradska noć / Biograd Night",                                                 "lokacija": "Riva" },
+      { "datum": "5. 8.",    "vrijeme": "20:30", "naziv": "Biogradska noć / Biograd Night",                                                 "lokacija": "Ispred Gradske uprave" },
+      { "datum": "5. 8.",    "vrijeme": "16:00", "naziv": "Turnir odbojke na pijesku",                                                      "lokacija": "Plaža Soline" },
+      { "datum": "6. 8.",    "vrijeme": "20:30", "naziv": "Sjećanje na Hirošimu i Nagasaki",                                               "lokacija": "Riva" },
+      { "datum": "6. 8.",    "vrijeme": "21:00", "naziv": "Nastup japanskih umjetnika — Dokumentarni film „Ždral u srcu Jadrana"",          "lokacija": "Ispred Gradske uprave" },
+      { "datum": "7.–8. 8.", "vrijeme": "21:00", "naziv": "Slastice i vino",                                                               "lokacija": "Riva" },
+      { "datum": "9. 8.",    "vrijeme": "19:30", "naziv": "Dječje ljetne igre",                                                             "lokacija": "Glavni mul" },
+      { "datum": "10. 8.",   "vrijeme": "21:00", "naziv": "Ribarska noć / Fisherman's Night",                                              "lokacija": "Glavni mul" },
+      { "datum": "11. 8.",   "vrijeme": "21:00", "naziv": "Gradska glazba Biograd — nastup",                                               "lokacija": "Narodni trg / Trg Brce" },
+      { "datum": "12. 8.",   "vrijeme": "21:00", "naziv": "Arijana Čulina — The Best of… Kakvi smo takvi smo",                             "lokacija": "Ljetno kino" },
+      { "datum": "13. 8.",   "vrijeme": "21:00", "naziv": "Klapa Lanterna — koncert",                                                      "lokacija": "Ispred Gradske uprave" },
+      { "datum": "14. 8.",   "vrijeme": "21:00", "naziv": "4 sprovoda i vjenčanje — kazališna predstava",                                  "lokacija": "Ljetno kino" },
+      { "datum": "15. 8.",   "vrijeme": "20:00", "naziv": "Oživljena povijest Biograda — kostimirano vođenje Ivane Zrilić",                "lokacija": "Ispred TZG Biograd na Moru" },
+      { "datum": "15. 8.",   "vrijeme": "16:00", "naziv": "Turnir odbojke na pijesku",                                                     "lokacija": "Plaža Soline" },
+      { "datum": "16. 8.",   "vrijeme": "21:00", "naziv": "Iva Glori — kazališna predstava",                                               "lokacija": "Ljetno kino" },
+      { "datum": "17. 8.",   "vrijeme": "21:00", "naziv": "Klapa Ultima — koncert",                                                        "lokacija": "Ispred Gradske uprave" },
+      { "datum": "18. 8.",   "vrijeme": "21:00", "naziv": "Gradska glazba Biograd — nastup",                                               "lokacija": "Narodni trg / Trg Brce" },
+      { "datum": "18. 8.",   "vrijeme": "20:30", "naziv": "Biogradske ljetne igre",                                                        "lokacija": "Bazen Ilirija" },
+      { "datum": "19. 8.",   "vrijeme": "21:00", "naziv": "Bodulska noć",                                                                  "lokacija": "Narodni trg / Trg Brce" },
+      { "datum": "20. 8.",   "vrijeme": "20:00", "naziv": "Oživljena povijest Biograda — kostimirano vođenje Ivane Zrilić",                "lokacija": "Ispred TZG Biograd na Moru" },
+      { "datum": "21. 8.",   "vrijeme": "21:00", "naziv": "Hazim Mujčinović: Stendaplija — stand up comedy show",                         "lokacija": "Ljetno kino" },
+      { "datum": "22.–24. 8.","vrijeme": "20:00","naziv": "Oživljena povijest Biograda — kostimirano vođenje Ivane Zrilić",               "lokacija": "Ispred TZG Biograd na Moru" },
+      { "datum": "24. 8.",   "vrijeme": "20:00", "naziv": "Klapa Ultima — koncert",                                                        "lokacija": "Ispred Gradske uprave" },
+      { "datum": "25. 8.",   "vrijeme": "21:00", "naziv": "Gradska glazba Biograd — nastup",                                               "lokacija": "Narodni trg / Trg Brce" },
+      { "datum": "26. 8.",   "vrijeme": "21:00", "naziv": "Škabelin Band — nastup",                                                        "lokacija": "Ispred Gradske uprave" },
+      { "datum": "27. 8.",   "vrijeme": "20:30", "naziv": "Retro Dance Show Lolita",                                                       "lokacija": "Ispred Gradske uprave" },
+      { "datum": "28. 8.",   "vrijeme": "20:00", "naziv": "Kraljevska šetnja kraljevskim gradom — kostimirano vođenje Anite Vukoja",       "lokacija": "Ispred TZG Biograd na Moru" },
+      { "datum": "29. 8.",   "vrijeme": "21:00", "naziv": "Kad u vojsku pođem — kazališna predstava",                                     "lokacija": "Ljetno kino" },
+      { "datum": "30. 8.",   "vrijeme": "20:00", "naziv": "Završni koncert polaznika Ljetne glazbene škole",                               "lokacija": "Ispred Gradske uprave" },
+      { "datum": "30. 8.",   "vrijeme": "20:00", "naziv": "Ljetni karneval",                                                               "lokacija": "Riva" },
+      { "datum": "31. 8.",   "vrijeme": "21:00", "naziv": "Koncert profesora biogradske glazbene škole",                                   "lokacija": "Ispred Gradske uprave" }
     ]
   },
 
