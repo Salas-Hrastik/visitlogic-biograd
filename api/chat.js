@@ -994,7 +994,7 @@ async function translateItems(items, lang) {
 
   try {
     const tr = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: 'claude-opus-4-7',
       max_tokens: 3000,
       messages: [{
         role: 'user',
@@ -1199,7 +1199,7 @@ export default async function handler(req, res) {
     // Paralelno: glavni AI odgovor + prijevod kartica (nema dodatne latencije)
     const [completion, translatedItems] = await Promise.all([
       anthropic.messages.create({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-opus-4-7',
         system: systemPrompt,
         max_tokens: 800,
         messages: [
@@ -1225,10 +1225,9 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    console.error('Chat error:', err.message, err.status, err.error);
-    const debugMsg = `[DEBUG] ${err.status || '?'}: ${err.message || err}`;
+    console.error('Chat error:', err.message);
     return res.status(200).json({
-      reply: debugMsg,
+      reply: 'Došlo je do greške. Molimo pokušajte ponovno ili nas kontaktirajte na ' + db.grad.telefon_tz,
       category: null,
       suggestions: [],
       items: []
