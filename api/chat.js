@@ -1225,9 +1225,10 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    console.error('Chat error:', err.message);
+    console.error('Chat error:', err.message, err.status, err.error);
+    const debugMsg = `[DEBUG] ${err.status || '?'}: ${err.message || err}`;
     return res.status(200).json({
-      reply: 'Došlo je do greške. Molimo pokušajte ponovno ili nas kontaktirajte na ' + db.grad.telefon_tz,
+      reply: debugMsg,
       category: null,
       suggestions: [],
       items: []
