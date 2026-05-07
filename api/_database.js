@@ -569,6 +569,78 @@ export const db = {
         "recenzija": "\"Dobra pizzeria u centru — solidna pizza, brza usluga i prikladna za obitelji. Jedna od popularnijih opcija u gradu.\"",
         "recenzija_izvor": "Google",
         "recenzija_url": "https://maps.google.com/?q=Liburnija+Pizza+Restaurant+Biograd+na+Moru"
+      },
+      {
+        "naziv": "Kaciol",
+        "opis": "Vrhunski ribarski restoran kod marine — najcjenjeniji u gradu prema TripAdvisoru. Svježa riba izravno s ribarskih brodova, plodovi mora, dalmatinska kuhinja.",
+        "tip": "restoran, morska hrana, mediteranska kuhinja",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Kaciol+Biograd+na+Moru",
+        "ocjena": "4.6",
+        "recenzija": "\"Definitivno jedan od best u Biogradu — svježa riba, odlična usluga i pravo lokalno ozračje blizu marine.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Restaurant_Review-g608702-d23647714-Reviews-Kaciol-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+      },
+      {
+        "naziv": "Konoba Vapor",
+        "opis": "Autentična dalmatinska konoba u staroj jezgri — domaća kuhinja, riblji specijaliteti i lokalna vina u opuštenom obiteljskom ozračju.",
+        "tip": "konoba, dalmatinska kuhinja",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Konoba+Vapor+Biograd+na+Moru",
+        "ocjena": "4.5",
+        "recenzija": "\"Prava domaća kuhinja, pristupačne cijene i ljubazni domaćini — skriveni dragulj stare jezgre.\"",
+        "recenzija_izvor": "TripAdvisor",
+        "recenzija_url": "https://www.tripadvisor.com/Restaurant_Review-g608702-d23647714-Reviews-Konoba_Vapor-Biograd_na_Moru.html"
+      },
+      {
+        "naziv": "Konoba MAX",
+        "opis": "Odlična konoba poznata po steakovima i ribljem meniju — kombinacija dalmatinskog i internacionalnog pristupa. Popularna kod nautičara i lokalaca.",
+        "tip": "konoba, steak, morska hrana",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Konoba+MAX+Biograd+na+Moru",
+        "ocjena": "4.6",
+        "recenzija": "\"Odličan steak i svježa riba — konoba MAX je pouzdana adresa za kvalitetan obrok u Biogradu.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Pizzeria Casa Vecchia",
+        "opis": "Najpopularnija pizzeria u Biogradu prema broju recenzija — autentična talijanska pizza iz krušne peći, odlična pasta i brza usluga.",
+        "tip": "pizzeria, talijanska kuhinja",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Pizzeria+Casa+Vecchia+Biograd+na+Moru",
+        "ocjena": "4.5",
+        "recenzija": "\"Najukusnija pizza u gradu — tanka korica, svježi sastojci i uvijek gužva. Vrijedi čekati!\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Pomalo Food & Wine Bar",
+        "opis": "Boutique wine bar s mediteranskim tapasima — savršeno za romantičnu večer ili degustaciju lokalnih vina i delikatesa. Jedini s ocjenom 5.0 na TripAdvisoru.",
+        "tip": "wine bar, tapas, mediteranska kuhinja",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Pomalo+Food+Wine+Bar+Biograd+na+Moru",
+        "ocjena": "5.0",
+        "recenzija": "\"Savršeno iskustvo — pažljivo odabrana vina, kreativni tapasi i topla atmosfera. Apsolutni must za ljubitelje vina!\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Soline Beach Bar",
+        "opis": "Beach bar na prelepoj plaži Soline — hrana, kokteli i glazba uz more. Popularan za ručak i popodnevno uživanje.",
+        "tip": "beach bar, morska hrana, europska kuhinja",
+        "slika": "https://www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp",
+        "karta": "https://maps.google.com/?q=Soline+Beach+Bar+Biograd+na+Moru",
+        "ocjena": "4.1",
+        "recenzija": "\"Jedinstven doživljaj jesti uz more direktno na plaži Soline — dobra hrana i opuštena atmosfera.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Maximus Grill & Bar",
+        "opis": "Grill restoran s mediteranskim i europskim jelima — visoka ocjena, mali ali pažljiv meni s naglaskom na kvalitetu namirnica.",
+        "tip": "grill, mediteranska kuhinja",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Maximus+Grill+Bar+Biograd+na+Moru",
+        "ocjena": "4.7",
+        "recenzija": "\"Odličan grill restoran — kvalitetne namirnice, ljubazno osoblje i odlično za večernji obrok.\"",
+        "recenzija_izvor": "TripAdvisor"
       }
     ],
     "nocni_zivot": [
@@ -607,6 +679,36 @@ export const db = {
         "recenzija": "\"Dobar bar za opuštenu večer — dobra glazba, prijatan ambijent i uvijek veselo društvo u centru Biograda.\"",
         "recenzija_izvor": "Google",
         "recenzija_url": ""
+      },
+      {
+        "naziv": "Shamrock Irish Pub",
+        "opis": "Popularni irski pub s live glazbom i bogatim izborom piva — opuštena atmosfera, dobar za sve uzraste i sportske prijenose.",
+        "tip": "pub, live glazba",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Shamrock+Irish+Pub+Biograd+na+Moru",
+        "ocjena": "4.3",
+        "recenzija": "\"Odlična atmosfera, live glazba i široki izbor piva — pravo irsko iskustvo u srcu Dalmacije.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Club Mirage",
+        "opis": "Noćni klub s DJ-jevima i elektroničkom glazbom — popularan kod mlađe publike, živahne ljetne večeri uz ples.",
+        "tip": "noćni klub, DJ",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Club+Mirage+Biograd+na+Moru",
+        "ocjena": "4.0",
+        "recenzija": "\"Jedino pravo mjesto za ples u Biogradu — dobra glazba, zabavna atmosfera, brz bar.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Beach Bar Donat",
+        "opis": "Savršen beach bar za koktele uz zalazak sunca — opuštena ali svečana atmosfera uz more, idealan za parove i romantične večeri.",
+        "tip": "beach bar, kokteli",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Beach+Bar+Donat+Biograd+na+Moru",
+        "ocjena": "4.4",
+        "recenzija": "\"Spektakularan zalazak sunca uz koktele — romantično, opušteno i savršeno za posebne trenutke.\"",
+        "recenzija_izvor": "TripAdvisor"
       }
     ],
     "savjeti": [
@@ -943,6 +1045,26 @@ export const db = {
         "recenzija": "",
         "recenzija_izvor": "",
         "recenzija_url": ""
+      },
+      {
+        "naziv": "Grande Glamping",
+        "opis": "Luksuzni glamping smještaj u blizini Biograda — luksuzan odmor u prirodi s hotelskim sadržajima.",
+        "tip": "glamping, luksuzni kamp",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Grande+Glamping+Biograd",
+        "ocjena": "4.5",
+        "recenzija": "\"Savršena kombinacija prirode i luksuza — glamping koji se pamti.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Glamp@Camp",
+        "opis": "Glamping uz samu plažu — luksuzni šatori s klima uređajem, dvije spavaće sobe, TV, kuhinjom i terasom direktno na moru.",
+        "tip": "glamping, beachfront",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Glamp+Camp+Biograd",
+        "ocjena": "4.6",
+        "recenzija": "\"Buđenje uz šum mora u luksuznom šatoru — jedinstven doživljaj za sve generacije!\"",
+        "recenzija_izvor": "TripAdvisor"
       }
     ],
     "pansioni": [
@@ -1268,6 +1390,61 @@ export const db = {
         "recenzija": "\"Impresivni kanjoni i planinski pejzaž Velebita s pogledom na Jadran — jedinstven doživljaj za aktivne turiste i planinarenje.\"",
         "recenzija_izvor": "TripAdvisor",
         "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g295369-d3726614-Reviews-Paklenica_National_Park-Starigrad_Paklenica_Zadar_County_Dalmatia.html"
+      },
+      {
+        "naziv": "Just Dive Biograd",
+        "opis": "Ronilački centar na plažama Dražica i Bošana — tečajevi za početnike, vođena ronjenja u akvatoriju Kornata, intro dives. Jedni od najpopularnijih ronilačkih operatera u regiji.",
+        "udaljenost": "lokalno",
+        "tip": "ronjenje, snorkeling, tečajevi",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Just+Dive+Biograd+na+Moru",
+        "ocjena": "4.7",
+        "recenzija": "\"Izvanredni ronilački centar — profesionalni instruktori, sigurna oprema i spektakularna ronilačka mjesta u Kornatima.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "True Boat Croatia — Privatne brodske ture",
+        "opis": "Privatni brodski izleti pola i cijelog dana s lokalnim kapetanom ribičkim stilom. Autentično iskustvo — ribolov, kupanje u uvalama, dalmatinski piknik.",
+        "udaljenost": "lokalno",
+        "tip": "privatni brodski izlet",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=True+Boat+Croatia+Biograd",
+        "ocjena": "4.8",
+        "recenzija": "\"Nezaboravno iskustvo — pravi dalmatinski ribar kao kapetan, kristalne uvale i svježa riba s roštilja na brodu.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Jahanje do Vranskog jezera",
+        "opis": "Jahanje konjima do Vranskog jezera s kupanjem u jezeru, dalmatinski piknik sa šunkom, sirom i lokalnim vinom. Jedinstveno iskustvo dalmatinske prirode.",
+        "udaljenost": "6 km",
+        "tip": "jahanje, eko-turizam",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/0/0f/Lake_Vrana_Croatia.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Horseback+Riding+Biograd+Vransko+Lake",
+        "ocjena": "4.8",
+        "recenzija": "\"Jedno od najljepših iskustava odmora — jahanje kroz dalmatinsku prirodu do jezera, kupanje s konjem i piknik.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "ATV / Buggy terenske ture",
+        "opis": "Adrenalinske ture quadovima i buggyjevima kroz skrivene dalmatinske puteve, šume i polja — tura lokalnom divljinom daleko od turističkih gužvi.",
+        "udaljenost": "lokalno i okolica",
+        "tip": "quad, buggy, adrenalin",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=ATV+Quad+Tour+Biograd+na+Moru",
+        "ocjena": "4.7",
+        "recenzija": "\"Nevjerojatna zabava za cijelu obitelj — vožnja kroz skrivena mjesta Dalmacije koja ne možeš vidjeti iz auta.\"",
+        "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Otok Vrgada — izlet",
+        "opis": "Trajektom iz Biograda do malog otoka bez automobila — pješčane plaže, autentično ribarsko selo, mir i dalmatinski ugođaj bez turista.",
+        "udaljenost": "trajektom ~30 min",
+        "tip": "otočni izlet, trajekt",
+        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Vrgada+Island+Croatia",
+        "ocjena": "4.6",
+        "recenzija": "\"Skriveni dragulj Dalmacije — pješčane plaže bez gužve, mir i autentičan život malog otočnog mjesta.\"",
+        "recenzija_izvor": "TripAdvisor"
       }
     ]
   },
@@ -1884,13 +2061,98 @@ export const db = {
     "internet_i_placanje": {
       "wifi": "Besplatan WiFi u centru, marini i većini restorana i kafića",
       "bankomati": "5+ bankomata u centru Biograda — Erste, ZABA, PBZ, OTP, Kreditna banka Zagreb",
-      "placanje": "Kartice prihvaćene u većini objekata. Euro (EUR) je službena valuta od 2023."
+      "placanje": "Kartice prihvaćene u većini objekata. Euro (EUR) je službena valuta od 2023.",
+      "upozorenje_gotovina": "VAŽNO: Mnogi manji objekti, konobe i beach barovi primaju SAMO gotovinu. Uvijek imajte EUR pri ruci."
     },
     "sezonalnost": {
       "vrhunac": "Srpanj – kolovoz (gužve, visoke cijene, obavezna rezervacija)",
       "visoka_sezona": "Lipanj i rujan (toplo, manje gužve, bolje cijene)",
       "niska_sezona": "Listopad – svibanj (mnogi ugostiteljski objekti zatvoreni, mir i tišina)",
       "savjet_sezona": "Rujan je idealan za posjet: more još toplo (24°C+), gužve se smanjuju, cijene padaju"
+    },
+    "upozorenja_i_savjeti": {
+      "izvor": "TripAdvisor recenzije",
+      "buka_nocna": "Aqua Club i barovi uz plažu puštaju glasnu elektroničku glazbu do ranih jutarnjih sati (3–4h). Gosti u hotelima i apartmanima blizu plaže Dražica mogu biti uznemireni bukom. Preporuči smještaj dalje od plaže onima koji ne žele noćni život.",
+      "guzve_na_plazama": "Plaže Dražica i Soline su prepune u srpnju i kolovozu. Plaža Bošana i Kumenat su mirnije alternative. Preporuči dolazak ujutro (prije 9h) za dobra mjesta.",
+      "gotovina": "Mnogi objekti — konobe, beach barovi i manje prodavaonice — primaju SAMO gotovinu. Savjet: uvijek imajte 50–100 EUR u džepu.",
+      "cijene_u_parkovima": "Hrana u Dalmalandu i na nekim plažama je izrazito skupa. Ponesite vlastitu hranu i piće u Dalmaland.",
+      "rent_a_boat_oprez": "Neki rent-a-boat operateri imaju loše recenzije (prljavi brodovi, loša usluga). Preporuči provjerene operatere: Škver Tours, True Boat Croatia, Marina Kornati Charter.",
+      "parkiranje_ljeto": "Parkiranje u centru je teško u srpnju/kolovozu. Preporuči parking kod marine ili dolazak pješice/biciklom.",
+      "turisticke_zamke": "Neki restorani na rivi imaju skuplje cijene za prosječnu kvalitetu. Konobe malo dalje od rive nude bolju vrijednost."
+    }
+  },
+
+  "faq": [
+    {
+      "pitanje": "Koji su najbolji restorani u Biogradu na Moru?",
+      "odgovor": "Najcjenjeniji su Kaciol (morska hrana kod marine, 4.6⭐), Konoba Kampanel (riblji specijaliteti, 4.7⭐), Konoba MAX (steak i riba, 4.6⭐), Pomalo Food & Wine Bar (wine bar, 5.0⭐) i Carpymore (mediteranska kuhinja, 4.4⭐). Za pizzu: Casa Vecchia (najpopularnija pizzeria) i Mamma Mia."
+    },
+    {
+      "pitanje": "Koje su najbolje plaže?",
+      "odgovor": "Soline — najljepša pješčana plaža, idealna za obitelji s djecom (plitko more, pijesak). Dražica — glavna gradska plaža uz hotel Ilirija. Bošana — mirna obiteljska plaža s borovima. Kumenat — tiša, daleko od gužve. Za FKK: plaža Rakovica."
+    },
+    {
+      "pitanje": "Što mogu raditi s djecom?",
+      "odgovor": "Dalmaland aquapark (tobogani, bazeni, rollercoasteri), plaža Soline (plitko more, pijesak, trampolin), Crvena Luka Resort (dječji bazen, animacija), jahanje konjima, ATV ture za stariju djecu, kayak i SUP."
+    },
+    {
+      "pitanje": "Kako doći do Biograda?",
+      "odgovor": "Letite u Zadar (ZAD), zatim taksijem (~45–50 EUR, 30 min) ili autobusom do Biograda (~10 EUR, 45 min). Iz Zagreba autobusom 4–5 sati. Autom: autocesta A1 do Zadra, pa obalna cesta D8."
+    },
+    {
+      "pitanje": "Koji hotel preporučuješ za obitelj?",
+      "odgovor": "Crvena Luka Resort — all-inclusive opcije, siguran zaljev za djecu, dječji bazen, spa. Hotel IN — odličan 4* hotel s bazenom i spa. Kamp Park Soline — za kampere s djecom, borova šuma, animacija."
+    },
+    {
+      "pitanje": "Gdje mogu ići na ronjenje?",
+      "odgovor": "Just Dive Biograd centar nudi tečajeve za početnike i vođena ronjenja. Lokacije na plažama Dražica i Bošana. Organiziraju izlete u akvatorij Kornata."
+    },
+    {
+      "pitanje": "Koje izlete mogu napraviti iz Biograda?",
+      "odgovor": "NP Kornati (brodom, 1 dan), NP Krka + Skradin (autom 1h), Zadar stari grad (30 min), Plitvička jezera (2h), otoci Pašman i Vrgada (trajektom), Dalmaland aquapark (lokalno), jahanje do Vranskog jezera."
+    },
+    {
+      "pitanje": "Kad je najbolje posjetiti Biograd?",
+      "odgovor": "Svibanj–lipanj i rujan–listopad su idealni — ugodna temperatura, manje gužve, niže cijene. Srpanj–kolovoz je vrhunac sezone: sve je otvoreno ali puno i skuplje. More je najtoplije u kolovozu (24–26°C)."
+    },
+    {
+      "pitanje": "Je li Biograd dobar za jedriličare?",
+      "odgovor": "Da! Marina Kornati je jedna od najvećih na Jadranu s 800+ vezova, charter bazama, servisom brodova i 50+ regata godišnje. Odlična polazna točka za Kornate, Šibenik i Zadar."
+    },
+    {
+      "pitanje": "Kakav je noćni život?",
+      "odgovor": "Biograd nudi opušten mediteranski ugođaj — koktejl barovi uz plažu (Beach Bar Donat), Shamrock Irish Pub (live glazba), Club Mirage (DJ, mlađa publika), Aqua Club (noćni klub). Nije destinacija 'wild nightlife', ali ima dobar izbor za ljetne večeri."
+    },
+    {
+      "pitanje": "Koje su povijesne znamenitosti?",
+      "odgovor": "Zavičajni muzej s kolekcijom potopljenog broda iz 1583. (50.000+ predmeta), Crkva sv. Stjepana, Bazilika sv. Ivana Evanđelista, ostaci starih zidina. Biograd je bio hrvatska kraljevska prijestolnica u 11. st."
+    },
+    {
+      "pitanje": "Što kupiti kao suvenir?",
+      "odgovor": "Na gradskoj tržnici: domaće maslinovo ulje (s Pašmana), lavanda, dalmatinski pršut, lokalno vino (babić, plavac mali), rakija, ručno izrađeni nakit. Ribarnice imaju svježu ribu za uvoz."
+    },
+    {
+      "pitanje": "Je li Biograd prikladan za kućne ljubimce?",
+      "odgovor": "Da, ali s ograničenjima. Plaže: Kumenat i FKK Rakovica dozvoljavaju pse. Soline i Dražica su zabranjene za pse u sezoni. Kamp Park Soline prihvaća kućne ljubimce (ograničene parcele). Uvijek provjerite politiku smještaja."
+    }
+  ],
+
+  "savjeti_putnicima": {
+    "budget_savjeti": {
+      "jeftina_hrana": ["Soline Beach Bar — ekonomična kategorija, dobra hrana", "Pekarnice u centru — burek i pizza na rez", "Konobe dalje od rive — bolja kvaliteta i niže cijene nego na plaži"],
+      "jeftini_smjestaj": ["Kampovi — najjeftinije (vlastiti šator ili mobilna kućica)", "Privatni apartmani izvan centra — 30–50% jeftinije", "Dolazak u predsezoni (lipanj) ili postsezoni (rujan) — značajno niže cijene"],
+      "besplatne_aktivnosti": ["Šetnja starim gradom i rivom", "Kupanje na svim plažama (besplatno)", "Biciklizam uz obalu", "Gledanje zalaska sunca s rive", "Tržnica u centru"],
+      "savjeti_stednje": ["Jedite u konobama dalje od rive", "Ponesite vlastitu hranu u Dalmaland (skupo unutar parka)", "Koristite javni prijevoz ili bicikl umjesto taksija", "Rezervirajte smještaj s kuhinjom i sami pripremajte doručak"]
+    },
+    "romantika": {
+      "romantični_restorani": ["Pomalo Food & Wine Bar (5.0⭐ — wine bar, savršen za parove)", "Dining & Bar Boqueron (4.7⭐ — fine dining)", "Restaurant More (4.6⭐ — elegantna atmosfera)", "Konoba Kampanel (terasa s morskim pogledom)"],
+      "romantične_aktivnosti": ["Zalazak sunca s rive — pogled na Pašman", "Privatna brodska tura do Kornata (cijeli dan, samo za dvoje)", "Večera u konobi na Kornatima", "Šetnja starovalnom i rivom u sumrak", "Kokteli na Beach Bar Donat"],
+      "romantični_smjestaj": ["Hotel Villa Meduza (boutique, direktno na moru)", "Glamp@Camp (luksuzni šator na plaži)", "Crvena Luka villas (privatne vile uz more)"]
+    },
+    "sezonalni_savjeti": {
+      "vrhunac_sezone": "Srpanj–kolovoz: sve otvoreno, najtoplije more (24–26°C), festivali svaki tjedan, ali gužve i visoke cijene. Rezervirajte sve unaprijed!",
+      "ramena_sezona": "Svibanj–lipanj i rujan–listopad: ugodne temperature, manje gužve, niže cijene, more dovoljno toplo (rujan 22–24°C). IDEALAN termin za posjet.",
+      "van_sezone": "Studeni–travanj: najniže cijene, potpuni mir, ali većina restorana i aktivnosti zatvorena."
     }
   }
 };
