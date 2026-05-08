@@ -58,6 +58,24 @@ function detectRequestedLang(msg) {
   if (/auf englisch|antworte auf englisch/i.test(m)) return 'en';
   if (/auf kroatisch|antworte auf kroatisch/i.test(m)) return 'hr';
 
+  // Zahtjevi na slovenskom
+  if (/prosim odgovorite slovensko|v slovenščini prosim|odgovorite v slovenščini/i.test(m)) return 'sl';
+
+  // Zahtjevi na češkom (native)
+  if (/prosím česky|odpovězte česky|odpovídejte česky|v češtině prosím/i.test(m)) return 'cs';
+
+  // Zahtjevi na slovačkom (native)
+  if (/prosím po slovensky|odpovedzte po slovensky|po slovensky prosím/i.test(m)) return 'sk';
+
+  // Zahtjevi na mađarskom (native)
+  if (/kérem magyarul|válaszoljon magyarul|magyarul kérem|magyarül kérem/i.test(m)) return 'hu';
+
+  // Zahtjevi na engleskom za ove jezike
+  if (/respond in slovenian|answer in slovenian|in slovenian please/i.test(m)) return 'sl';
+  if (/respond in hungarian|answer in hungarian|in hungarian please/i.test(m)) return 'hu';
+  if (/respond in czech|answer in czech|in czech please/i.test(m)) return 'cs';
+  if (/respond in slovak|answer in slovak|in slovak please/i.test(m)) return 'sk';
+
   return null; // nije eksplicitni zahtjev
 }
 
@@ -88,11 +106,44 @@ function detectLang(msg, fallback = 'hr') {
     if (has(hrStrong)) return 'hr';
   }
 
-  // HU — ugrofinski, veoma distinktivan
-  if (has(['hol','mikor','hogyan','mennyibe','tenger','étterem','szállás','szálloda',
-           'sziget','kirándulás','köszönöm','kérem','magyarul','magyarország',
-           'strand','nincs','igen','van']))
+  // HU — ugrofinski, najtipičniji jezik — uvijek prepoznatljiv
+  if (has(['hol','mikor','hogyan','miért','mennyibe','mennyit','melyik','étterem',
+           'szállás','szálloda','szálloda','strand','tenger','sziget','kirándulás',
+           'köszönöm','kérem','magyarul','magyarország','igen','nincs','van','nem',
+           'jó','szép','drága','olcsó','étel','enni','inni','hal','bor','reggeli',
+           'ebéd','vacsora','úszás','kerékpározás','búvárkodás','vitorlázás',
+           'apartman','kemping','kikötő','hajó','időjárás','tó','folyó','erdő']))
     return 'hu';
+
+  // SL — PRIJE EN/DE (slavenski, ali distinktivan)
+  if (has(['kje','kdaj','zakaj','koliko','kateri','katere','katera','morje',
+           'nastanitev','restavracija','restavracije','iščem','tukaj','torej',
+           'slovenijo','slovenec','slovenka','slovenija','prosim','hvala',
+           'lepo','dober','dobro','drago','poceni','hrana','jesti','piti',
+           'ribe','vino','zajtrk','kosilo','večerja','plavanje','kolesarjenje',
+           'potapljanje','jadranje','apartma','plaže','plaža','otok','izlet',
+           'izleti','vreme','temperatura','parkirišče','avtobus','trajekt']))
+    return 'sl';
+
+  // CS — PRIJE EN/DE (zapadnoslavenski, háček = distinktivan)
+  if (has(['kde','kdy','proč','restaurace','ubytování','ubytovanie','děkuji',
+           'výlet','počasí','česky','česká','čechy','chci','jaké','kolik',
+           'pláž','moře','jídlo','jíst','pít','ryby','víno','snídaně','oběd',
+           'večeře','plavání','cyklistika','potápění','plachtění','apartmán',
+           'kemp','přístav','loď','ostrov','dovolená','doporučte','prosím',
+           'děkuji','dobrý','pěkný','levný','drahý','parkoviště','autobus',
+           'trajekt','počasí','teplota','pláže','hotel']))
+    return 'cs';
+
+  // SK — PRIJE EN/DE (zapadnoslavenski, diakritika = distinktivna)
+  if (has(['kedy','ako','prečo','reštaurácia','ubytovanie','ďakujem','výlet',
+           'počasie','slovensky','slovenská','slovensko','koľko','pláž','more',
+           'jedlo','jesť','piť','ryby','víno','raňajky','obed','večera',
+           'plávanie','cyklistika','potápanie','plachtenie','apartmán',
+           'kemp','prístav','loď','ostrov','dovolenka','odporúčate','prosím',
+           'dobrý','pekný','lacný','drahý','parkovisko','autobus','trajekt',
+           'teplota','pláže','kde','čo','ktoré','ktorý','som','sme','ste']))
+    return 'sk';
 
   // IT — romanski, distinktivan
   if (has(['dove','quando','come','perché','spiaggia','ristorante','albergo',
@@ -112,22 +163,6 @@ function detectLang(msg, fallback = 'hr') {
            'best','visit','eat','drink','stay','sleep','book','beach','price',
            'open','boat','sailing','island','water','recommend','charter','accommodation']))
     return 'en';
-
-  // SL — južnoslavenski, srodan HR — tražimo distinktivne slovenačke riječi
-  if (has(['kje','kdaj','zakaj','morje','nastanitev','restavracija','iščem',
-           'tukaj','torej','katera','kateri','slovenijo','slovenec','slovenka',
-           'hvala','prosim','lepo']))
-    return 'sl';
-
-  // CS — zapadnoslavenski
-  if (has(['kde','pláž','moře','restaurace','ubytování','děkuji','výlet',
-           'počasí','jsou','česky','česká','čechy','chci','jaké']))
-    return 'cs';
-
-  // SK — zapadnoslavenski
-  if (has(['kedy','reštaurácia','ubytovanie','ďakujem','počasie',
-           'slovensky','slovenská','som','áno','aké','koľko']))
-    return 'sk';
 
   return fallback;
 }
@@ -1076,13 +1111,20 @@ function buildSystemPrompt(lang, context, weatherCtx) {
     ? `Temperatura zraka: ${weatherCtx.temperature}°C | Vjetar: ${weatherCtx.windspeed} km/h${weatherCtx.sea_temp != null ? ` | Mora: ${weatherCtx.sea_temp}°C` : ''}${weatherCtx.wave_height != null ? ` | Val: ${weatherCtx.wave_height} m` : ''} | ${weatherCtx.icon || ''} ${weatherCtx.opis || ''}`
     : 'Vremenski podaci nisu dostupni.';
 
-  const langNote = lang === 'en' ? 'IMPORTANT: Respond in English. If the user explicitly requests a different language, honour that request immediately.'
-    : lang === 'de' ? 'WICHTIG: Antworte auf Deutsch. Falls der Nutzer ausdrücklich eine andere Sprache wünscht, wechsle sofort dazu.'
-    : lang === 'sl' ? 'POMEMBNO: Odgovarjaj v slovenščini. Če uporabnik izrecno zahteva drug jezik, ga takoj uporabi.'
-    : lang === 'it' ? 'IMPORTANTE: Rispondi in italiano. Se l\'utente richiede esplicitamente un\'altra lingua, passa subito a quella.'
-    : lang === 'hu' ? 'FONTOS: Válaszolj magyarul. Ha a felhasználó kifejezetten más nyelvet kér, azonnal válts arra.'
-    : lang === 'cs' ? 'DŮLEŽITÉ: Odpovídej česky. Pokud uživatel výslovně požaduje jiný jazyk, okamžitě přepni.'
-    : lang === 'sk' ? 'DÔLEŽITÉ: Odpovedaj po slovensky. Ak používateľ výslovne požaduje iný jazyk, okamžite prejdi naň.'
+  const langNote = lang === 'en'
+    ? 'IMPORTANT: Respond in English. Translate ALL content (weather, tips, seasons) into English. If the user explicitly requests a different language, switch immediately.'
+    : lang === 'de'
+    ? 'WICHTIG: Antworte ausschließlich auf Deutsch. Übersetze ALLE Inhalte (Wetter, Tipps, Jahreszeiten) ins Deutsche. Falls der Nutzer eine andere Sprache wünscht, wechsle sofort.'
+    : lang === 'sl'
+    ? 'POMEMBNO: Odgovarjaj IZKLJUČNO v slovenščini. Prevedi VSE vsebine (vreme, nasvete, sezone) v slovenščino. Kontekst baze podatkov je na hrvaščini — prevedite vse za gosta. Če uporabnik zahteva drug jezik, ga takoj uporabi.'
+    : lang === 'it'
+    ? 'IMPORTANTE: Rispondi ESCLUSIVAMENTE in italiano. Traduci TUTTI i contenuti (meteo, consigli, stagioni) in italiano. Se l\'utente richiede un\'altra lingua, passa subito a quella.'
+    : lang === 'hu'
+    ? 'FONTOS: Válaszolj KIZÁRÓLAG magyarul. Fordítsd le AZ ÖSSZES tartalmat (időjárás, tippek, szezon) magyarra. Az adatbázis kontextusa horvát — mindent fordíts le a vendég számára. Ha a felhasználó más nyelvet kér, azonnal válts.'
+    : lang === 'cs'
+    ? 'DŮLEŽITÉ: Odpovídej VÝHRADNĚ česky. Přelož VEŠKERÝ obsah (počasí, tipy, sezóna) do češtiny. Kontext databáze je v chorvatštině — vše přelož pro hosta. Pokud uživatel požaduje jiný jazyk, okamžitě přepni.'
+    : lang === 'sk'
+    ? 'DÔLEŽITÉ: Odpovedaj VÝLUČNE po slovensky. Prelož VŠETOK obsah (počasie, tipy, sezóna) do slovenčiny. Kontext databázy je v chorvátčine — všetko prelož pre hosťa. Ak používateľ požaduje iný jazyk, okamžite prejdi naň.'
     : '';
 
   return `Ti si AI turistički informator za Biograd na Moru — primorski grad u Zadarskoj županiji na dalmatinskoj obali između Zadra i Šibenika.
@@ -1140,7 +1182,7 @@ BAZA PODATAKA (koristi ove informacije):
 ${JSON.stringify(context, null, 0).substring(0, 6000)}
 
 PRAVILA ODGOVARANJA:
-- Odgovori na jeziku na kojem korisnik piše (hr/en/de)
+- Odgovori na jeziku na kojem korisnik piše. Podržani jezici: hr, en, de, it, sl, cs, sk, hu. Prevedi SVE — uključujući vremenske uvjete, praktične info i savjete — na jezik korisnika.
 - HIJERARHIJA: REALNI VREMENSKI UVJETI → SEZONA → FUNKCIONALNA PREPORUKA → ATMOSFERA
 - Uvijek integrira aktualne vremenske podatke u preporuku (ne ignoriraj ih!)
 - Budi konkretan i praktičan — turisti žele akcijske informacije
