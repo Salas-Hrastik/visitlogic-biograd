@@ -21,6 +21,46 @@ const CATEGORY_CONTEXTS = {
   klima:       (db) => ({ grad: db.grad, klima: db.klima }),
 };
 
+// ===== EKSPLICITNI ZAHTJEV ZA JEZIKOM (prioritet nad svim ostalim) =====
+// "Molim odgovor na talijanskom", "please respond in Italian", "auf Deutsch antworten"...
+function detectRequestedLang(msg) {
+  const m = msg.toLowerCase();
+
+  // Zahtjevi na hrvatskom
+  if (/na talijanskom|talijanski jezik|odgovori talijanski/i.test(m)) return 'it';
+  if (/na njemačkom|njemački jezik|odgovori njemački|na njema/i.test(m)) return 'de';
+  if (/na engleskom|engleski jezik|odgovori engleski/i.test(m)) return 'en';
+  if (/na slovenskom|slovenski jezik|odgovori slovenski/i.test(m)) return 'sl';
+  if (/na mađarskom|mađarski jezik|odgovori mađarski/i.test(m)) return 'hu';
+  if (/na češkom|češki jezik|odgovori češki/i.test(m)) return 'cs';
+  if (/na slovačkom|slovački jezik|odgovori slovački/i.test(m)) return 'sk';
+  if (/na hrvatskom|hrvatski jezik|odgovori hrvatski/i.test(m)) return 'hr';
+
+  // Zahtjevi na engleskom
+  if (/respond in italian|answer in italian|reply in italian|in italian please/i.test(m)) return 'it';
+  if (/respond in german|answer in german|reply in german|in german please|auf deutsch/i.test(m)) return 'de';
+  if (/respond in english|answer in english|reply in english|in english please/i.test(m)) return 'en';
+  if (/respond in slovenian|answer in slovenian|in slovenian/i.test(m)) return 'sl';
+  if (/respond in hungarian|answer in hungarian|in hungarian/i.test(m)) return 'hu';
+  if (/respond in czech|answer in czech|in czech/i.test(m)) return 'cs';
+  if (/respond in slovak|answer in slovak|in slovak/i.test(m)) return 'sk';
+  if (/respond in croatian|answer in croatian|in croatian/i.test(m)) return 'hr';
+
+  // Zahtjevi na talijanskom
+  if (/rispondi in italiano|risposta in italiano|in italiano per favore/i.test(m)) return 'it';
+  if (/rispondi in tedesco|in tedesco/i.test(m)) return 'de';
+  if (/rispondi in inglese|in inglese/i.test(m)) return 'en';
+  if (/rispondi in croato|in croato/i.test(m)) return 'hr';
+
+  // Zahtjevi na njemačkom
+  if (/auf deutsch|antworte auf deutsch|bitte auf deutsch/i.test(m)) return 'de';
+  if (/auf italienisch|antworte auf italienisch/i.test(m)) return 'it';
+  if (/auf englisch|antworte auf englisch/i.test(m)) return 'en';
+  if (/auf kroatisch|antworte auf kroatisch/i.test(m)) return 'hr';
+
+  return null; // nije eksplicitni zahtjev
+}
+
 // ===== DETEKCIJA JEZIKA =====
 function detectLang(msg, fallback = 'hr') {
   const w = msg.toLowerCase().split(/[\s,?.!;:()\-]+/);
@@ -1036,13 +1076,13 @@ function buildSystemPrompt(lang, context, weatherCtx) {
     ? `Temperatura zraka: ${weatherCtx.temperature}°C | Vjetar: ${weatherCtx.windspeed} km/h${weatherCtx.sea_temp != null ? ` | Mora: ${weatherCtx.sea_temp}°C` : ''}${weatherCtx.wave_height != null ? ` | Val: ${weatherCtx.wave_height} m` : ''} | ${weatherCtx.icon || ''} ${weatherCtx.opis || ''}`
     : 'Vremenski podaci nisu dostupni.';
 
-  const langNote = lang === 'en' ? 'IMPORTANT: The user writes in English — respond ONLY in English.'
-    : lang === 'de' ? 'WICHTIG: Der Nutzer schreibt auf Deutsch — antworte NUR auf Deutsch.'
-    : lang === 'sl' ? 'POMEMBNO: Uporabnik piše v slovenščini — odgovarjaj SAMO v slovenščini.'
-    : lang === 'it' ? 'IMPORTANTE: L\'utente scrive in italiano — rispondi SOLO in italiano.'
-    : lang === 'hu' ? 'FONTOS: A felhasználó magyarul ír — válaszolj CSAK magyarul.'
-    : lang === 'cs' ? 'DŮLEŽITÉ: Uživatel píše česky — odpovídej POUZE česky.'
-    : lang === 'sk' ? 'DÔLEŽITÉ: Používateľ píše po slovensky — odpovedaj IBA po slovensky.'
+  const langNote = lang === 'en' ? 'IMPORTANT: Respond in English. If the user explicitly requests a different language, honour that request immediately.'
+    : lang === 'de' ? 'WICHTIG: Antworte auf Deutsch. Falls der Nutzer ausdrücklich eine andere Sprache wünscht, wechsle sofort dazu.'
+    : lang === 'sl' ? 'POMEMBNO: Odgovarjaj v slovenščini. Če uporabnik izrecno zahteva drug jezik, ga takoj uporabi.'
+    : lang === 'it' ? 'IMPORTANTE: Rispondi in italiano. Se l\'utente richiede esplicitamente un\'altra lingua, passa subito a quella.'
+    : lang === 'hu' ? 'FONTOS: Válaszolj magyarul. Ha a felhasználó kifejezetten más nyelvet kér, azonnal válts arra.'
+    : lang === 'cs' ? 'DŮLEŽITÉ: Odpovídej česky. Pokud uživatel výslovně požaduje jiný jazyk, okamžitě přepni.'
+    : lang === 'sk' ? 'DÔLEŽITÉ: Odpovedaj po slovensky. Ak používateľ výslovne požaduje iný jazyk, okamžite prejdi naň.'
     : '';
 
   return `Ti si AI turistički informator za Biograd na Moru — primorski grad u Zadarskoj županiji na dalmatinskoj obali između Zadra i Šibenika.
@@ -1151,7 +1191,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const lang = detectLang(message, clientLang || 'hr');
+    const lang = detectRequestedLang(message) || detectLang(message, clientLang || 'hr');
     const detectedCategory = detectCategory(message, lastCategory, db);
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
     const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito };
