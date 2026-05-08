@@ -1,0 +1,49 @@
+name: 🗺️ Tjedni OSM Update — Biograd na Moru
+
+on:
+  schedule:
+    # Svaki ponedjeljak u 07:00 po CET-u (06:00 UTC)
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+    # Omogući i ručno pokretanje iz GitHub UI
+
+jobs:
+  osm-update:
+    name: Dohvati promjene iz OpenStreetMap-a
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # potrebno za git push
+
+    steps:
+      - name: ⬇️ Checkout repozitorija
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: ⚙️ Postavi Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📁 Kreiraj data/ folder ako ne postoji
+        run: mkdir -p data
+
+      - name: 🔍 Pokreni OSM updater
+        run: node scripts/osm_updater.js
+
+      - name: 📤 Commit i push promjena
+        run: |
+          git config user.name  "visitlogic-bot"
+          git config user.email "bot@visitlogic.hr"
+
+          git add update_report.md data/osm_snapshot.json
+
+          if git diff --staged --quiet; then
+            echo "✅ Nema promjena za commitati."
+          else
+            DATE=$(date +%Y-%m-%d)
+            git commit -m "OSM tjedni update — ${DATE}"
+            git push
+            echo "🚀 Pushano!"
+          fi
