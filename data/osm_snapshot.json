@@ -203,6 +203,18 @@
     "stars": "",
     "osm_url": "https://www.openstreetmap.org/node/877613118"
   },
+  "930693039": {
+    "osm_id": "930693039",
+    "naziv": "Pizzeria Beštek",
+    "tip": "restaurant",
+    "adresa": "Ulica kraljice Jelene 5",
+    "telefon": "+385 23 367 591",
+    "web": "https://pizzeriabestek.com",
+    "radno": "Mo-Su 15:00 - 23:00",
+    "cuisine": "pizza;regional;salad;dessert",
+    "stars": "",
+    "osm_url": "https://www.openstreetmap.org/way/930693039"
+  },
   "1015079098": {
     "osm_id": "1015079098",
     "naziv": "Fitness centar Baloba",
@@ -263,18 +275,6 @@
     "stars": "",
     "osm_url": "https://www.openstreetmap.org/way/1201629510"
   },
-  "1201629511": {
-    "osm_id": "1201629511",
-    "naziv": "Atlantis",
-    "tip": "attraction",
-    "adresa": "",
-    "telefon": "",
-    "web": "https://www.dalmaland.com/atrakcija/atlantis/20",
-    "radno": "",
-    "cuisine": "",
-    "stars": "",
-    "osm_url": "https://www.openstreetmap.org/way/1201629511"
-  },
   "1201629512": {
     "osm_id": "1201629512",
     "naziv": "Alien",
@@ -322,6 +322,18 @@
     "cuisine": "",
     "stars": "",
     "osm_url": "https://www.openstreetmap.org/way/1454384686"
+  },
+  "1514588387": {
+    "osm_id": "1514588387",
+    "naziv": "Dino World",
+    "tip": "attraction",
+    "adresa": "",
+    "telefon": "",
+    "web": "",
+    "radno": "",
+    "cuisine": "",
+    "stars": "",
+    "osm_url": "https://www.openstreetmap.org/way/1514588387"
   },
   "1700595397": {
     "osm_id": "1700595397",
@@ -1750,5 +1762,41 @@
     "cuisine": "",
     "stars": "",
     "osm_url": "https://www.openstreetmap.org/node/13715724915"
+  },
+  "13835033608": {
+    "osm_id": "13835033608",
+    "naziv": "Horror House",
+    "tip": "attraction",
+    "adresa": "X. jankolovački put",
+    "telefon": "",
+    "web": "https://www.dalmaland.com/atrakcija/horror-house/22",
+    "radno": "",
+    "cuisine": "",
+    "stars": "",
+    "osm_url": "https://www.openstreetmap.org/node/13835033608"
+  },
+  "13835033705": {
+    "osm_id": "13835033705",
+    "naziv": "Fat pirate cave",
+    "tip": "restaurant",
+    "adresa": "X. jankolovački put",
+    "telefon": "",
+    "web": "",
+    "radno": "",
+    "cuisine": "",
+    "stars": "",
+    "osm_url": "https://www.openstreetmap.org/node/13835033705"
+  },
+  "13835033766": {
+    "osm_id": "13835033766",
+    "naziv": "Candyland",
+    "tip": "attraction",
+    "adresa": "",
+    "telefon": "",
+    "web": "",
+    "radno": "",
+    "cuisine": "",
+    "stars": "",
+    "osm_url": "https://www.openstreetmap.org/node/13835033766"
   }
 }
