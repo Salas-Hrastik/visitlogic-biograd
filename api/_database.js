@@ -1587,7 +1587,7 @@ export const db = {
   },
 
   "dogadanja": {
-    "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (rujan/listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Slovenski vikend (travanj/svibanj).",
+    "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (rujan/listopad), Biogradsku noć (kolovoz), Family Festival (lipanj), Dane gitare (svibanj) i Slovenski vikend (travanj/svibanj).",
     "eventi": [
       {
         "naziv": "Slovenski vikend",
@@ -1597,10 +1597,38 @@ export const db = {
         "web": "https://slovenski-vikend.hr/"
       },
       {
+        "naziv": "Dani gitare",
+        "opis": "Višednevni festival gitare s nastupima glazbenika iz Hrvatske i inozemstva — klasična i suvremena gitarska glazba, koncerti i radionice.",
+        "termin": "15.05. – 20.05.2026",
+        "lokacija": "Atrij OŠ Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Koncert Glazbene škole Slovenske Konjice",
+        "opis": "Nastup učenika i profesora Glazbene škole iz Slovenskih Konjica. Početak u 18:00.",
+        "termin": "22.05.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Dalmatinske tradicijske igre",
+        "opis": "Višednevni program u Dalmalandu — natjecanje u skokovima u vodu, pjena party i druge tradicijske aktivnosti. Svakodnevno od 14:00.",
+        "termin": "04.06. – 07.06.2026",
+        "lokacija": "Dalmaland, Biograd na Moru",
+        "web": ""
+      },
+      {
         "naziv": "Biograd Family & Friends Festival",
         "opis": "Dvodnevni ljetni festival na plaži uz bazen Ilirija — vodeni sportovi, SUP utrke, kajak, plivanje, aquathlon i radionice za sve uzraste i razine kondicije.",
         "termin": "20. – 21.06.2026",
         "lokacija": "Plaža uz bazen Ilirija, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Biogradska noć",
+        "opis": "Tradicionalna ljetna večer s bogatim kulturno-zabavnim programom na rivi — glazbeni nastupi, vatromet i noćna šetnja uz more. Jedan od najposjećenijih događaja biogradskog ljeta.",
+        "termin": "04.08.2026",
+        "lokacija": "Riva, Biograd na Moru",
         "web": ""
       },
       {
@@ -1615,43 +1643,6 @@ export const db = {
         "opis": "Nekoliko jedriličarskih regata godišnje prolazi kroz Biogradski zaljev.",
         "termin": "proljeće i jesen"
       }
-    ],
-    "kolovoz_2025": [
-      { "datum": "1.–3. 8.", "vrijeme": "—",    "naziv": "Teniski turnir '30. Oluja'",                                                    "lokacija": "Tenis centar Ilirija" },
-      { "datum": "2. 8.",    "vrijeme": "20:30", "naziv": "Acoustic Kings 'Musica Mediterrana'",                                            "lokacija": "Narodni trg / Trg Brce" },
-      { "datum": "3. 8.",    "vrijeme": "9:00",  "naziv": "14. Memorijalna utrka Dino Eškinja",                                             "lokacija": "Bazen Ilirija" },
-      { "datum": "3. 8.",    "vrijeme": "10:00", "naziv": "20. Plivački maraton Biograd 2025.",                                             "lokacija": "Bazen Ilirija" },
-      { "datum": "4. 8.",    "vrijeme": "20:30", "naziv": "Biogradska noć / Biograd Night",                                                 "lokacija": "Riva" },
-      { "datum": "5. 8.",    "vrijeme": "20:30", "naziv": "Biogradska noć / Biograd Night",                                                 "lokacija": "Ispred Gradske uprave" },
-      { "datum": "5. 8.",    "vrijeme": "16:00", "naziv": "Turnir odbojke na pijesku",                                                      "lokacija": "Plaža Soline" },
-      { "datum": "6. 8.",    "vrijeme": "20:30", "naziv": "Sjećanje na Hirošimu i Nagasaki",                                               "lokacija": "Riva" },
-      { "datum": "6. 8.",    "vrijeme": "21:00", "naziv": "Nastup japanskih umjetnika — Dokumentarni film 'Ždral u srcu Jadrana'",          "lokacija": "Ispred Gradske uprave" },
-      { "datum": "7.–8. 8.", "vrijeme": "21:00", "naziv": "Slastice i vino",                                                               "lokacija": "Riva" },
-      { "datum": "9. 8.",    "vrijeme": "19:30", "naziv": "Dječje ljetne igre",                                                             "lokacija": "Glavni mul" },
-      { "datum": "10. 8.",   "vrijeme": "21:00", "naziv": "Ribarska noć / Fisherman's Night",                                              "lokacija": "Glavni mul" },
-      { "datum": "11. 8.",   "vrijeme": "21:00", "naziv": "Gradska glazba Biograd — nastup",                                               "lokacija": "Narodni trg / Trg Brce" },
-      { "datum": "12. 8.",   "vrijeme": "21:00", "naziv": "Arijana Čulina — The Best of… Kakvi smo takvi smo",                             "lokacija": "Ljetno kino" },
-      { "datum": "13. 8.",   "vrijeme": "21:00", "naziv": "Klapa Lanterna — koncert",                                                      "lokacija": "Ispred Gradske uprave" },
-      { "datum": "14. 8.",   "vrijeme": "21:00", "naziv": "4 sprovoda i vjenčanje — kazališna predstava",                                  "lokacija": "Ljetno kino" },
-      { "datum": "15. 8.",   "vrijeme": "20:00", "naziv": "Oživljena povijest Biograda — kostimirano vođenje Ivane Zrilić",                "lokacija": "Ispred TZG Biograd na Moru" },
-      { "datum": "15. 8.",   "vrijeme": "16:00", "naziv": "Turnir odbojke na pijesku",                                                     "lokacija": "Plaža Soline" },
-      { "datum": "16. 8.",   "vrijeme": "21:00", "naziv": "Iva Glori — kazališna predstava",                                               "lokacija": "Ljetno kino" },
-      { "datum": "17. 8.",   "vrijeme": "21:00", "naziv": "Klapa Ultima — koncert",                                                        "lokacija": "Ispred Gradske uprave" },
-      { "datum": "18. 8.",   "vrijeme": "21:00", "naziv": "Gradska glazba Biograd — nastup",                                               "lokacija": "Narodni trg / Trg Brce" },
-      { "datum": "18. 8.",   "vrijeme": "20:30", "naziv": "Biogradske ljetne igre",                                                        "lokacija": "Bazen Ilirija" },
-      { "datum": "19. 8.",   "vrijeme": "21:00", "naziv": "Bodulska noć",                                                                  "lokacija": "Narodni trg / Trg Brce" },
-      { "datum": "20. 8.",   "vrijeme": "20:00", "naziv": "Oživljena povijest Biograda — kostimirano vođenje Ivane Zrilić",                "lokacija": "Ispred TZG Biograd na Moru" },
-      { "datum": "21. 8.",   "vrijeme": "21:00", "naziv": "Hazim Mujčinović: Stendaplija — stand up comedy show",                         "lokacija": "Ljetno kino" },
-      { "datum": "22.–24. 8.","vrijeme": "20:00","naziv": "Oživljena povijest Biograda — kostimirano vođenje Ivane Zrilić",               "lokacija": "Ispred TZG Biograd na Moru" },
-      { "datum": "24. 8.",   "vrijeme": "20:00", "naziv": "Klapa Ultima — koncert",                                                        "lokacija": "Ispred Gradske uprave" },
-      { "datum": "25. 8.",   "vrijeme": "21:00", "naziv": "Gradska glazba Biograd — nastup",                                               "lokacija": "Narodni trg / Trg Brce" },
-      { "datum": "26. 8.",   "vrijeme": "21:00", "naziv": "Škabelin Band — nastup",                                                        "lokacija": "Ispred Gradske uprave" },
-      { "datum": "27. 8.",   "vrijeme": "20:30", "naziv": "Retro Dance Show Lolita",                                                       "lokacija": "Ispred Gradske uprave" },
-      { "datum": "28. 8.",   "vrijeme": "20:00", "naziv": "Kraljevska šetnja kraljevskim gradom — kostimirano vođenje Anite Vukoja",       "lokacija": "Ispred TZG Biograd na Moru" },
-      { "datum": "29. 8.",   "vrijeme": "21:00", "naziv": "Kad u vojsku pođem — kazališna predstava",                                     "lokacija": "Ljetno kino" },
-      { "datum": "30. 8.",   "vrijeme": "20:00", "naziv": "Završni koncert polaznika Ljetne glazbene škole",                               "lokacija": "Ispred Gradske uprave" },
-      { "datum": "30. 8.",   "vrijeme": "20:00", "naziv": "Ljetni karneval",                                                               "lokacija": "Riva" },
-      { "datum": "31. 8.",   "vrijeme": "21:00", "naziv": "Koncert profesora biogradske glazbene škole",                                   "lokacija": "Ispred Gradske uprave" }
     ]
   },
 
