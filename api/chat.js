@@ -5,6 +5,17 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY?.trim()
 });
 
+// ===== HELPER: parsira krajnji datum termina ("DD.MM.YYYY" ili "DD.MM. – DD.MM.YYYY") =====
+function terminToDate(termin) {
+  if (!termin) return null;
+  const clean = termin.replace(/\s/g, '');
+  const parts = clean.split('–');
+  const last = parts[parts.length - 1];
+  const m = last.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+  if (m) return new Date(parseInt(m[3]), parseInt(m[2]) - 1, parseInt(m[1]));
+  return null;
+}
+
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
   plaze:       (db) => ({ grad: db.grad, plaze: db.plaze }),
@@ -15,7 +26,19 @@ const CATEGORY_CONTEXTS = {
   izleti:      (db) => ({ grad: db.grad, izleti: db.izleti }),
   sport:       (db) => ({ grad: db.grad, sport: db.sport }),
   atrakcije:   (db) => ({ grad: db.grad, atrakcije: db.atrakcije }),
-  dogadanja:   (db) => ({ grad: db.grad, dogadanja: db.dogadanja }),
+  dogadanja:   (db) => {
+    // Proslijedi AI-u SAMO buduće evente — prošli ne smiju biti vidljivi modelu
+    const todayMs = Date.now();
+    const eventiFiltrirani = (db.dogadanja?.eventi || []).filter(e => {
+      const d = terminToDate(e.termin);
+      if (!d) return true; // bez fiksnog datuma → godišnji event, uvijek prikaži
+      return d.getTime() >= todayMs;
+    });
+    return {
+      grad: db.grad,
+      dogadanja: { ...db.dogadanja, eventi: eventiFiltrirani }
+    };
+  },
   opcenito:    (db) => ({ grad: db.grad, opcenito: db.opcenito }),
   prakticno:   (db) => ({ grad: db.grad, prakticne_info: db.prakticne_info }),
   klima:       (db) => ({ grad: db.grad, klima: db.klima }),
@@ -690,19 +713,6 @@ function getCategoryItems(category, message = '') {
   if (category === 'dogadanja') {
     const today = new Date();
     const todayMs = today.getTime();
-
-    // Parsiraj datum iz termina (format "DD.MM.YYYY" ili "DD.MM. – DD.MM.YYYY")
-    function terminToDate(termin) {
-      if (!termin) return null;
-      // Uzmi zadnji datum iz raspona: "29.04. – 03.05.2026" → "03.05.2026"
-      const clean = termin.replace(/\s/g, '');
-      const parts = clean.split('–');
-      const last = parts[parts.length - 1];
-      // Traži DD.MM.YYYY
-      const m = last.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
-      if (m) return new Date(parseInt(m[3]), parseInt(m[2]) - 1, parseInt(m[1]));
-      return null;
-    }
 
     // Filtriraj opće događaje — prikaži samo nadolazeće (s datumom u budućnosti)
     const eventiAktivni = (db.dogadanja?.eventi || []).filter(e => {
