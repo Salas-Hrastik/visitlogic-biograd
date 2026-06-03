@@ -130,6 +130,20 @@ export const db = {
       "recenzija_url": "https://maps.google.com/?q=FKK+Rakovica+Biograd"
     },
     {
+      "naziv": "Plaža Crvena luka",
+      "opis": "Plaža u predjelu Crvena Luka, 2 km sjeverozapadno od centra Biograda. Mirna lokacija uz turističko naselje Crvena Luka, šljunčana obala s čistim morem.",
+      "tip": "šljunčana, resort plaža",
+      "sadrzaji": "tuševi, restoran u blizini (Restoran More), turističko naselje",
+      "pogodna_za": "mir, privatnost, gosti Crvene Luke",
+      "slika": "",
+      "web": "",
+      "karta": "https://maps.google.com/?q=Crvena+Luka+Beach+Biograd",
+      "ocjena": "",
+      "recenzija": "",
+      "recenzija_izvor": "",
+      "recenzija_url": ""
+    },
+    {
       "naziv": "Plaže otoka Pašmana (trajektom)",
       "opis": "Na otoku Pašmanu (10 min trajektom) nalaze se brojne izvrsne plaže s iznimno čistim morem — Ždrelac, Kraj, Dobropoljana. Preporučuje se turistima koji žele mirnije okruženje.",
       "tip": "otočne plaže — trajektom",
@@ -607,6 +621,7 @@ export const db = {
         "opis": "Najpopularnija pizzeria u Biogradu prema broju recenzija — autentična talijanska pizza iz krušne peći, odlična pasta i brza usluga.",
         "tip": "pizzeria, talijanska kuhinja",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://casavecchia.hr",
         "karta": "https://maps.google.com/?q=Pizzeria+Casa+Vecchia+Biograd+na+Moru",
         "ocjena": "4.5",
         "recenzija": "\"Najukusnija pizza u gradu — tanka korica, svježi sastojci i uvijek gužva. Vrijedi čekati!\"",
@@ -641,6 +656,201 @@ export const db = {
         "ocjena": "4.7",
         "recenzija": "\"Odličan grill restoran — kvalitetne namirnice, ljubazno osoblje i odlično za večernji obrok.\"",
         "recenzija_izvor": "TripAdvisor"
+      },
+      {
+        "naziv": "Bistro Europa",
+        "opis": "Bistro na obali s laganim obrocima i mediteranskom ponudom.",
+        "tip": "bistro",
+        "adresa": "Obala Kralja Krešimira IV. 12, Biograd na Moru",
+        "telefon": "+385 23 383 931",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Bistro+Europa+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Bistro Figa",
+        "opis": "Bistro u centru Biograda s laganom ponudom jela i pića.",
+        "tip": "bistro",
+        "adresa": "Kraljice Jelene 33, Biograd na Moru",
+        "telefon": "+385 91 899 1280",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Bistro+Figa+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Konoba Navis",
+        "opis": "Konoba s dalmatinskom kuhinjom — riba, meso i domaća vina u opuštenom okruženju.",
+        "tip": "konoba",
+        "adresa": "Ul. Grubišnog Polja 4, Biograd na Moru",
+        "telefon": "+385 92 290 1381",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Konoba+Navis+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Pizzeria & Bistro Fibra",
+        "opis": "Pizzeria i bistro s pizza i tjesteninom te laganim bistro obrocima.",
+        "tip": "pizzeria, bistro",
+        "adresa": "Kralja Petra Krešimira IV. 19, Biograd na Moru",
+        "telefon": "",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Pizzeria+Bistro+Fibra+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Pizzeria Domestico",
+        "opis": "Pizzeria na obali s autentičnom pizza ponudom i pogledom na more.",
+        "tip": "pizzeria",
+        "adresa": "Obala kralja Petra Krešimira IV 22, Biograd na Moru",
+        "telefon": "+385 99 693 0352",
+        "slika": "",
+        "web": "https://domestiko.hr",
+        "karta": "https://maps.google.com/?q=Pizzeria+Domestico+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Balde Food & Bar",
+        "opis": "Beach bar i restoran direktno na plaži Soline — hrana i piće uz more.",
+        "tip": "restoran, beach bar",
+        "adresa": "Plaža Soline, Biograd na Moru",
+        "telefon": "+385 95 598 7321",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Balde+Food+Bar+Soline+Biograd",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Restoran Guste",
+        "opis": "Riblji restoran na Obali kralja Petra Krešimira IV — svježa riba i plodovi mora.",
+        "tip": "restoran, riblji restoran",
+        "adresa": "Obala kralja Petra Krešimira IV, Biograd na Moru",
+        "telefon": "+385 23 382 025",
+        "slika": "",
+        "web": "https://restoran-guste.com",
+        "karta": "https://maps.google.com/?q=Restoran+Guste+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Restoran Katuša",
+        "opis": "Restoran u centru Biograda s dalmatinskom i mediteranskom kuhinjom.",
+        "tip": "restoran",
+        "adresa": "Fra Lina Pedišića 3, Biograd na Moru",
+        "telefon": "+385 23 327 803",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Restoran+Katuša+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Restoran Roko",
+        "opis": "Restoran na biogradskoj obali s mediteranskom kuhinjom i pogledom na more.",
+        "tip": "restoran",
+        "adresa": "Obala kralja Petra Krešimira IV. 31, Biograd na Moru",
+        "telefon": "+385 97 684 1774",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Restoran+Roko+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Restoran Soline",
+        "opis": "Restoran uz šetalište Dražica s mediteranskom ponudom i pogledom na more.",
+        "tip": "restoran",
+        "adresa": "Šetalište Dražica 13, Biograd na Moru",
+        "telefon": "+385 23 383 348",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Restoran+Soline+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Restoran U Šime",
+        "opis": "Restoran s dalmatinskom kuhinjom — riba, meso i domaće tjestenine.",
+        "tip": "restoran",
+        "adresa": "Zrmanjska 1, Biograd na Moru",
+        "telefon": "+385 23 638 006",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Restoran+U+Šime+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Restoran Orkula",
+        "opis": "Restoran s mediteranskom kuhinjom i naglaskom na svježu ribu i plodove mora.",
+        "tip": "restoran",
+        "adresa": "Fra Lina Pedišića 27, Biograd na Moru",
+        "telefon": "+385 95 904 0067",
+        "slika": "",
+        "web": "https://restaurant-orkula.hr",
+        "karta": "https://maps.google.com/?q=Restoran+Orkula+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Restoran Stari Grad",
+        "opis": "Restoran u staroj jezgri Biograda s dalmatinskom kuhinjom i domaćim specijalitetima.",
+        "tip": "restoran",
+        "adresa": "Grgura Ninskog 11, Biograd na Moru",
+        "telefon": "+385 91 910 9490",
+        "slika": "",
+        "web": "https://restaurant-stari-grad-biograd.eatbu.hr/",
+        "karta": "https://maps.google.com/?q=Restoran+Stari+Grad+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Bistro Laganini",
+        "opis": "Bistro s laganim obrocima i brzom uslugom — dobar izbor za ručak.",
+        "tip": "bistro",
+        "adresa": "Ul. kralja Petra Svačića 20 A, Biograd na Moru",
+        "telefon": "+385 23 334 959",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Bistro+Laganini+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
+      },
+      {
+        "naziv": "Slastičarnica Miami",
+        "opis": "Slastičarnica na obali s domaćim sladoledom i slasticama.",
+        "tip": "slastičarnica",
+        "adresa": "Obala kralja Petra Krešimira IV 1, Biograd na Moru",
+        "telefon": "",
+        "slika": "",
+        "web": "",
+        "karta": "https://maps.google.com/?q=Slastičarnica+Miami+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": ""
       }
     ],
     "nocni_zivot": [
@@ -1587,29 +1797,8 @@ export const db = {
   },
 
   "dogadanja": {
-    "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (rujan/listopad), Biogradsku noć (kolovoz), Family Festival (lipanj), Dane gitare (svibanj) i Slovenski vikend (travanj/svibanj).",
+    "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (rujan/listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Dalmatinske tradicijske igre (lipanj).",
     "eventi": [
-      {
-        "naziv": "Slovenski vikend",
-        "opis": "Dinamičan vikend pun zanimljivih aktivnosti za sve uzraste — sport, glazba, gastronomija i zabava za slovensku zajednicu i sve posjetitelje Biograda.",
-        "termin": "29.04. – 03.05.2026",
-        "lokacija": "Biograd na Moru",
-        "web": "https://slovenski-vikend.hr/"
-      },
-      {
-        "naziv": "Dani gitare",
-        "opis": "Višednevni festival gitare s nastupima glazbenika iz Hrvatske i inozemstva — klasična i suvremena gitarska glazba, koncerti i radionice.",
-        "termin": "15.05. – 20.05.2026",
-        "lokacija": "Atrij OŠ Biograd na Moru",
-        "web": ""
-      },
-      {
-        "naziv": "Koncert Glazbene škole Slovenske Konjice",
-        "opis": "Nastup učenika i profesora Glazbene škole iz Slovenskih Konjica. Početak u 18:00.",
-        "termin": "22.05.2026",
-        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
-        "web": ""
-      },
       {
         "naziv": "Dalmatinske tradicijske igre",
         "opis": "Višednevni program u Dalmalandu — natjecanje u skokovima u vodu, pjena party i druge tradicijske aktivnosti. Svakodnevno od 14:00.",
@@ -1618,11 +1807,25 @@ export const db = {
         "web": ""
       },
       {
+        "naziv": "Koncert učenika glazbene škole Biograd",
+        "opis": "Koncertni nastup učenika glazbene škole Biograd. Besplatno za sve posjetitelje.",
+        "termin": "08.06.2026",
+        "lokacija": "Trg kralja Tomislava 5, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Koncert profesora",
+        "opis": "Koncertni nastup glazbenih profesora s besplatnim ulazom.",
+        "termin": "10.06.2026",
+        "lokacija": "Atrij Osnovne škole Biograd",
+        "web": ""
+      },
+      {
         "naziv": "Biograd Family & Friends Festival",
         "opis": "Dvodnevni ljetni festival na plaži uz bazen Ilirija — vodeni sportovi, SUP utrke, kajak, plivanje, aquathlon i radionice za sve uzraste i razine kondicije.",
         "termin": "20. – 21.06.2026",
         "lokacija": "Plaža uz bazen Ilirija, Biograd na Moru",
-        "web": ""
+        "web": "https://www.discover-biograd.com/dogadanja/biograd-family-friends-festival"
       },
       {
         "naziv": "Biogradska noć",
