@@ -942,12 +942,16 @@ function addMessage(text, type, suggestions, images, items){
           rev.appendChild(document.createTextNode(" " + it.recenzija.substring(0, 130)));
         }
         if(it.recenzija_izvor){
-          const src = document.createElement("a");
-          src.style.cssText = "font-style:normal;font-size:10px;color:#0077a8;font-weight:bold;margin-left:4px";
+          // Link samo ako postoji stvarni URL — inače običan tekst (da se ne stvori "#" link na chatbot)
+          const hasUrl = it.recenzija_url && /^https?:\/\//i.test(it.recenzija_url);
+          const src = document.createElement(hasUrl ? "a" : "span");
+          src.style.cssText = "font-style:normal;font-size:10px;color:" + (hasUrl ? "#0077a8" : "#888") + ";font-weight:bold;margin-left:4px";
           src.textContent = "— " + it.recenzija_izvor;
-          src.href = it.recenzija_url || "#";
-          src.target = "_blank";
-          src.rel = "noopener";
+          if(hasUrl){
+            src.href = it.recenzija_url;
+            src.target = "_blank";
+            src.rel = "noopener";
+          }
           rev.appendChild(src);
         }
         info.appendChild(rev);
