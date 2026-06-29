@@ -659,11 +659,18 @@ function getCategoryItems(category, message = '') {
     const isPansion  = m.includes('pansion') || m.includes('guest house') || m.includes('guesthouse') ||
       m.includes('pension') || m.includes('b&b');
 
-    const hoteli   = (db.smjestaj?.hoteli || []).map(h => item(h, { adresa: h.lokacija || '' }));
-    const kontakti = (db.smjestaj?.direktni_kontakti || []).map(p => item(p, { adresa: p.tip || '' }));
-    const kampovi  = (db.smjestaj?.kampovi || []).map(k => item(k, { adresa: k.lokacija || '' }));
-    const pansioni = (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '' }));
-    const vile     = (db.smjestaj?.vile_i_posebni || []).map(v => item(v, { adresa: v.lokacija || '' }));
+    // "Provjeri cijene i dostupnost" — direktni izvori bez provizije:
+    // vlastiti web objekta ako postoji, inače službeni TZ katalog Biograda.
+    const TZ_KATALOG = 'https://www.discover-biograd.com/en/accommodation';
+    const cijene = (o) => ({
+      cijene_url: (o.web && /^https?:\/\//i.test(o.web)) ? o.web : TZ_KATALOG
+    });
+
+    const hoteli   = (db.smjestaj?.hoteli || []).map(h => item(h, { adresa: h.lokacija || '', ...cijene(h) }));
+    const kontakti = (db.smjestaj?.direktni_kontakti || []).map(p => item(p, { adresa: p.tip || '', ...cijene(p) }));
+    const kampovi  = (db.smjestaj?.kampovi || []).map(k => item(k, { adresa: k.lokacija || '', ...cijene(k) }));
+    const pansioni = (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '', ...cijene(p) }));
+    const vile     = (db.smjestaj?.vile_i_posebni || []).map(v => item(v, { adresa: v.lokacija || '', ...cijene(v) }));
 
     // Miješani upit (2+ tipa) ili generalni smještaj → svi hoteli + direktni kontakti
     const typeCount = [isHotel, isApartman, isKamp, isVila, isPansion].filter(Boolean).length;
