@@ -1837,6 +1837,195 @@ export const db = {
         "web": "https://www.discover-biograd.com/dogadanja/biograd-family-friends-festival"
       },
       {
+        "naziv": "Vojni rok — kazališna predstava",
+        "opis": "Kazališna predstava u sklopu programa Biograd Summer 2026. Početak u 21:00.",
+        "termin": "01.07.2026",
+        "lokacija": "Ljetno kino, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Vođena kostimirana tura",
+        "opis": "Vođena tura u povijesnim kostimima kroz Biograd. Okupljanje ispred Turističke zajednice. Početak u 20:00.",
+        "termin": "02.07.2026",
+        "lokacija": "Okupljanje ispred TZ, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Tomislav Bralić i Klapa Intrade — koncert",
+        "opis": "Koncert popularne klape Intrade s Tomislavom Bralićem. Početak u 20:00.",
+        "termin": "03.07.2026",
+        "lokacija": "Bure centar, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Zabavni program — mažoretkinje i glazba",
+        "opis": "Nastup Biogradskih mažoretkinja, Glazbene udruge Libreto Zadar i K2 Pakoštane. Početak u 20:00.",
+        "termin": "04.07.2026",
+        "lokacija": "Bure centar, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Otvorenje izložbe Rudolfa Švagela-Lešića",
+        "opis": "Otvorenje izložbe radova Rudolfa Švagela-Lešića. Početak u 21:00.",
+        "termin": "04.07.2026",
+        "lokacija": "Gradska galerija Biograd",
+        "web": ""
+      },
+      {
+        "naziv": "Književno-filmska večer u čast Benjamina Tolića",
+        "opis": "Književno-filmska večer posvećena Benjaminu Toliću. Početak u 21:00.",
+        "termin": "05.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Gradska glazba Biograd — nastup",
+        "opis": "Nastup Gradske glazbe Biograd. Početak u 21:00.",
+        "termin": "06.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "13. Revija tradicijske odjeće i izbor najljepše Hrvatice u narodnoj nošnji izvan RH",
+        "opis": "Revija tradicijske odjeće i izbor najljepše Hrvatice u narodnoj nošnji izvan Republike Hrvatske. Početak u 21:00.",
+        "termin": "08.07.2026",
+        "lokacija": "Glavni mul, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Sjećanje na genocid u Srebrenici",
+        "opis": "Memorijalni događaj u znak sjećanja na genocid u Srebrenici. Početak u 21:00.",
+        "termin": "11.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Klapa Adria — koncert",
+        "opis": "Koncert klape Adria. Početak u 21:00.",
+        "termin": "12.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Gradska glazba Biograd — nastup",
+        "opis": "Nastup Gradske glazbe Biograd. Početak u 21:00.",
+        "termin": "13.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Susret klapa — nastup",
+        "opis": "Susret klapa s nastupima na Narodnom trgu. Početak u 21:00.",
+        "termin": "14.07.2026",
+        "lokacija": "Narodni trg (Trg Brce), Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Jazz Festival — koncert (1. večer)",
+        "opis": "Prva večer Jazz Festivala na Narodnom trgu. Početak u 21:00.",
+        "termin": "15.07.2026",
+        "lokacija": "Narodni trg (Trg Brce), Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Jazz Festival — koncert (2. večer)",
+        "opis": "Druga večer Jazz Festivala na Narodnom trgu. Početak u 21:00.",
+        "termin": "16.07.2026",
+        "lokacija": "Narodni trg (Trg Brce), Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Luka Modrić — Moja igra — kazališna predstava",
+        "opis": "Kazališna predstava 'Luka Modrić — Moja igra'. Početak u 21:00.",
+        "termin": "17.07.2026",
+        "lokacija": "Ljetno kino, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Luka i igara — sajam lokalnih proizvoda",
+        "opis": "Sajam lokalnih proizvoda na Vidikovcu Kamenjak. Početak u 18:00.",
+        "termin": "19.07.2026",
+        "lokacija": "Vidikovac Kamenjak, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Oživljena povijest Biograda — vođena kostimirana tura",
+        "opis": "Vođena kostimirana tura kroz povijest Biograda. Okupljanje ispred TZ. Početak u 20:00.",
+        "termin": "19.07.2026",
+        "lokacija": "Okupljanje ispred TZ, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Gradska glazba Biograd — nastup",
+        "opis": "Nastup Gradske glazbe Biograd. Početak u 21:00.",
+        "termin": "20.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Bloger Krule — stand up komedija",
+        "opis": "Stand up komedija s Blogerom Kruleom. Početak u 21:00.",
+        "termin": "21.07.2026",
+        "lokacija": "Ljetno kino, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Vođena kostimirana tura",
+        "opis": "Vođena tura u povijesnim kostimima kroz Biograd. Okupljanje ispred TZ. Početak u 20:00.",
+        "termin": "22.07.2026",
+        "lokacija": "Okupljanje ispred TZ, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Ako sam žena nisam konj — kazališna predstava",
+        "opis": "Kazališna predstava 'Ako sam žena nisam konj'. Početak u 21:00.",
+        "termin": "24.07.2026",
+        "lokacija": "Ljetno kino, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Otvoreni brak — kazališna predstava",
+        "opis": "Kazališna predstava 'Otvoreni brak'. Početak u 21:00.",
+        "termin": "25.07.2026",
+        "lokacija": "Ljetno kino, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Oživljena povijest Biograda — vođena kostimirana tura",
+        "opis": "Vođena kostimirana tura kroz povijest Biograda. Okupljanje ispred TZ. Početak u 20:00.",
+        "termin": "26.07.2026",
+        "lokacija": "Okupljanje ispred TZ, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Gradska glazba Biograd — nastup",
+        "opis": "Nastup Gradske glazbe Biograd. Početak u 21:00.",
+        "termin": "27.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Klapa Adria — koncert",
+        "opis": "Koncert klape Adria. Početak u 21:00.",
+        "termin": "28.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Sjećanje na Olivera: Jazz orkestar Hrvatske vojske i Marko Kutlić",
+        "opis": "Koncert u sjećanje na Olivera Dragojevića — Jazz orkestar Hrvatske vojske i Marko Kutlić. Početak u 21:00.",
+        "termin": "31.07.2026",
+        "lokacija": "Ispred Gradske uprave, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Teniski turnir 31. 'Oluja' — HUT serije 1500",
+        "opis": "Teniski turnir 31. 'Oluja', HUT serije 1500.",
+        "termin": "31.07.2026",
+        "lokacija": "Teniski tereni Ilirija, Biograd na Moru",
+        "web": ""
+      },
+      {
         "naziv": "Biogradska noć",
         "opis": "Tradicionalna ljetna večer s bogatim kulturno-zabavnim programom na rivi — glazbeni nastupi, vatromet i noćna šetnja uz more. Jedan od najposjećenijih događaja biogradskog ljeta.",
         "termin": "04.08.2026",
