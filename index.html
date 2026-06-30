@@ -65,25 +65,25 @@ flex-shrink:0;
 background:none;
 border:none;
 cursor:pointer;
-font-size:19px;
+font-size:27px;
 line-height:1;
-padding:4px 4px;
-border-radius:6px;
-opacity:0.5;
-filter:grayscale(45%);
+padding:3px 5px;
+border-radius:7px;
+opacity:0.72;
+filter:grayscale(25%);
 transition:opacity .15s, filter .15s, transform .15s, background .15s;
 }
 #lang-flags button:hover{
 opacity:1;
 filter:grayscale(0);
-transform:translateY(-1px) scale(1.12);
-background:rgba(255,255,255,0.12);
+transform:translateY(-1px) scale(1.14);
+background:rgba(255,255,255,0.14);
 }
 #lang-flags button.active{
 opacity:1;
 filter:grayscale(0);
-background:rgba(255,255,255,0.16);
-box-shadow:inset 0 -2px 0 #f4a261;
+background:rgba(255,255,255,0.18);
+box-shadow:inset 0 -3px 0 #f4a261;
 }
 
 /* ===== WEATHER / SEA BAR ===== */
@@ -136,6 +136,19 @@ background:#f4a261;
 color:#004e89;
 border-color:#f4a261;
 font-weight:bold;
+}
+
+/* Akcijski gumb (ponovno pokretanje) — vizualno odvojen od kategorija */
+#cat-tabs button.restart-tab{
+margin-left:auto;
+background:rgba(255,255,255,0.06);
+border-color:rgba(255,255,255,0.35);
+font-weight:bold;
+}
+#cat-tabs button.restart-tab:hover{
+background:#fff;
+color:#004e89;
+border-color:#fff;
 }
 
 /* ===== MAIN ===== */
@@ -370,52 +383,23 @@ padding:30px 22px 26px;
 gap:14px;
 }
 
-.welcome-emoji{
-font-size:40px;
-line-height:1;
-filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4));
-}
-
 .welcome-inner h2{
 margin:0;
 color:#fff;
-font-size:27px;
+font-size:36px;
 font-weight:800;
-letter-spacing:-0.3px;
-text-shadow:0 2px 10px rgba(0,0,0,0.45);
+letter-spacing:-0.4px;
+text-shadow:0 2px 12px rgba(0,0,0,0.5);
 }
 
 .welcome-inner .welcome-sub{
 margin:0;
-max-width:540px;
-color:#eaf4fb;
-font-size:16.5px;
-line-height:1.5;
-text-shadow:0 1px 6px rgba(0,0,0,0.5);
+max-width:620px;
+color:#eef6fc;
+font-size:21px;
+line-height:1.55;
+text-shadow:0 1px 8px rgba(0,0,0,0.55);
 }
-
-/* primjeri pitanja (quick starteri) */
-.welcome-chips{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:8px;
-margin-top:4px;
-max-width:560px;
-}
-.welcome-chips button{
-background:rgba(255,255,255,0.92);
-color:#004e89;
-border:none;
-padding:9px 15px;
-border-radius:22px;
-font-size:14.5px;
-font-weight:600;
-cursor:pointer;
-box-shadow:0 2px 8px rgba(0,0,0,0.25);
-transition:transform .12s, background .12s;
-}
-.welcome-chips button:hover{ background:#fff; transform:translateY(-2px); }
 
 /* diskretni multilingvalni red */
 .welcome-langs{
@@ -675,16 +659,14 @@ width:100%;
 
   /* Welcome */
   .welcome{ min-height:0; }
-  .welcome-inner{ padding:22px 16px 20px; gap:11px; }
-  .welcome-emoji{ font-size:32px; }
-  .welcome-inner h2{ font-size:21px; }
-  .welcome-inner .welcome-sub{ font-size:14.5px; }
-  .welcome-chips button{ font-size:13.5px; padding:8px 13px; }
-  .welcome-langs{ font-size:11.5px; }
+  .welcome-inner{ padding:24px 16px 22px; gap:13px; }
+  .welcome-inner h2{ font-size:26px; }
+  .welcome-inner .welcome-sub{ font-size:17px; }
+  .welcome-langs{ font-size:12.5px; }
 
-  /* Zastave — malo manje i s mogućnošću preloma */
-  #lang-flags{ flex-wrap:wrap; justify-content:flex-end; max-width:120px; gap:0; }
-  #lang-flags button{ font-size:16px; padding:3px; }
+  /* Zastave — i na mobilnom dovoljno velike, s mogućnošću preloma */
+  #lang-flags{ flex-wrap:wrap; justify-content:flex-end; max-width:155px; gap:0; }
+  #lang-flags button{ font-size:22px; padding:2px 3px; }
 
   /* Modal — fullscreen na mobilnom */
   #link-modal .modal-box{ width:100%; height:100%; max-width:100%; border-radius:0; }
@@ -732,7 +714,7 @@ width:100%;
   <button data-cat="kornati">🏝 Kornati</button>
   <button data-cat="izleti">🗺 Izleti</button>
   <button data-cat="sport">🤿 Sport</button>
-  <button data-cat="prakticno">ℹ️ Praktično</button>
+  <button id="btn-restart" type="button" class="restart-tab" title="Ponovno pokretanje razgovora">🔄 Ponovno pokretanje</button>
 </nav>
 
 <!-- MAIN -->
@@ -743,10 +725,8 @@ width:100%;
     <div class="chat-messages" id="chat-messages">
       <div class="welcome" id="welcome-block">
         <div class="welcome-inner">
-          <div class="welcome-emoji">💙</div>
           <h2 id="welcome-title">Dobrodošli u Biograd na Moru!</h2>
           <p class="welcome-sub" id="welcome-sub">Vaš osobni AI vodič za odmor — pitajte me o plažama, Kornatima, smještaju, gastronomiji i događanjima.</p>
-          <div class="welcome-chips" id="welcome-chips"></div>
           <div class="welcome-langs">
             <span id="welcome-langhint">Razgovarajte sa mnom na svom jeziku</span>
             <span class="wl-flags">🇭🇷 🇬🇧 🇩🇪 🇸🇮 🇮🇹 🇭🇺 🇨🇿 🇸🇰</span>
@@ -793,6 +773,7 @@ let currentCategory = null;
 let firstMessage = true;
 let currentWeather = null;
 let currentLang = 'hr';
+let lastUserQuery = null;
 
 // ===== UI PRIJEVODI =====
 const UI_LANGS = {
@@ -927,19 +908,17 @@ const UI_LANGS = {
   }
 };
 
-// Višejezični tekstovi naslovnice (welcome)
+// Višejezični tekstovi naslovnice (welcome) + natpis gumba za ponovno pokretanje
 const WELCOME_I18N = {
-  hr: { title:'Dobrodošli u Biograd na Moru!', sub:'Vaš osobni AI vodič za odmor — pitajte me o plažama, Kornatima, smještaju, gastronomiji i događanjima.', hint:'Razgovarajte sa mnom na svom jeziku' },
-  en: { title:'Welcome to Biograd na Moru!', sub:'Your personal AI holiday guide — ask me about beaches, Kornati, accommodation, dining and events.', hint:'Chat with me in your own language' },
-  de: { title:'Willkommen in Biograd na Moru!', sub:'Ihr persönlicher KI-Urlaubsführer — fragen Sie mich zu Stränden, Kornaten, Unterkünften, Gastronomie und Veranstaltungen.', hint:'Sprechen Sie mit mir in Ihrer Sprache' },
-  sl: { title:'Dobrodošli v Biograd na Moru!', sub:'Vaš osebni AI vodnik za počitnice — vprašajte me o plažah, Kornatih, nastanitvah, gastronomiji in dogodkih.', hint:'Pogovarjajte se z mano v svojem jeziku' },
-  it: { title:'Benvenuti a Biograd na Moru!', sub:'La vostra guida AI personale per le vacanze — chiedetemi di spiagge, Kornati, alloggi, gastronomia ed eventi.', hint:'Parla con me nella tua lingua' },
-  hu: { title:'Üdvözöljük Biogradban!', sub:'Személyes AI nyaralási kalauza — kérdezzen strandokról, Kornatiról, szállásról, gasztronómiáról és rendezvényekről.', hint:'Beszéljen velem a saját nyelvén' },
-  cs: { title:'Vítejte v Biogradu na Moru!', sub:'Váš osobní AI průvodce dovolenou — zeptejte se mě na pláže, Kornati, ubytování, gastronomii a akce.', hint:'Mluvte se mnou svým jazykem' },
-  sk: { title:'Vitajte v Biograde na Mori!', sub:'Váš osobný AI sprievodca dovolenkou — spýtajte sa ma na pláže, Kornati, ubytovanie, gastronómiu a podujatia.', hint:'Hovorte so mnou svojím jazykom' }
+  hr: { title:'Dobrodošli u Biograd na Moru!', sub:'Vaš osobni AI vodič za odmor — pitajte me o plažama, Kornatima, smještaju, gastronomiji i događanjima.', hint:'Razgovarajte sa mnom na svom jeziku', restart:'Ponovno pokretanje' },
+  en: { title:'Welcome to Biograd na Moru!', sub:'Your personal AI holiday guide — ask me about beaches, Kornati, accommodation, dining and events.', hint:'Chat with me in your own language', restart:'Restart' },
+  de: { title:'Willkommen in Biograd na Moru!', sub:'Ihr persönlicher KI-Urlaubsführer — fragen Sie mich zu Stränden, Kornaten, Unterkünften, Gastronomie und Veranstaltungen.', hint:'Sprechen Sie mit mir in Ihrer Sprache', restart:'Neustart' },
+  sl: { title:'Dobrodošli v Biograd na Moru!', sub:'Vaš osebni AI vodnik za počitnice — vprašajte me o plažah, Kornatih, nastanitvah, gastronomiji in dogodkih.', hint:'Pogovarjajte se z mano v svojem jeziku', restart:'Ponovni zagon' },
+  it: { title:'Benvenuti a Biograd na Moru!', sub:'La vostra guida AI personale per le vacanze — chiedetemi di spiagge, Kornati, alloggi, gastronomia ed eventi.', hint:'Parla con me nella tua lingua', restart:'Riavvia' },
+  hu: { title:'Üdvözöljük Biogradban!', sub:'Személyes AI nyaralási kalauza — kérdezzen strandokról, Kornatiról, szállásról, gasztronómiáról és rendezvényekről.', hint:'Beszéljen velem a saját nyelvén', restart:'Újraindítás' },
+  cs: { title:'Vítejte v Biogradu na Moru!', sub:'Váš osobní AI průvodce dovolenou — zeptejte se mě na pláže, Kornati, ubytování, gastronomii a akce.', hint:'Mluvte se mnou svým jazykem', restart:'Restartovat' },
+  sk: { title:'Vitajte v Biograde na Mori!', sub:'Váš osobný AI sprievodca dovolenkou — spýtajte sa ma na pláže, Kornati, ubytovanie, gastronómiu a podujatia.', hint:'Hovorte so mnou svojím jazykom', restart:'Reštartovať' }
 };
-// Kategorije korištene kao "quick start" čipovi na naslovnici
-const WELCOME_CHIP_CATS = ['dogadanja','plaze','gastronomija','smjestaj'];
 
 function applyLang(lang) {
   const ui = UI_LANGS[lang] || UI_LANGS.hr;
@@ -961,19 +940,9 @@ function applyLang(lang) {
   setTxt('welcome-sub', w.sub);
   setTxt('welcome-langhint', w.hint);
 
-  // Quick-start čipovi (koristi prijevode iz tabova)
-  const chips = document.getElementById('welcome-chips');
-  if (chips) {
-    chips.innerHTML = '';
-    WELCOME_CHIP_CATS.forEach(cat => {
-      const t = ui.tabs[cat];
-      if (!t) return;
-      const b = document.createElement('button');
-      b.textContent = t.label;
-      b.onclick = () => quickAsk(t.q);
-      chips.appendChild(b);
-    });
-  }
+  // Gumb za ponovno pokretanje
+  const rb = document.getElementById('btn-restart');
+  if (rb) rb.textContent = '🔄 ' + w.restart;
 
   // Aktivna zastava
   document.querySelectorAll('#lang-flags button[data-lang]').forEach(f => {
@@ -981,29 +950,57 @@ function applyLang(lang) {
   });
 }
 
-// Klik na zastavu → prebaci jezik sučelja
-document.querySelectorAll('#lang-flags button[data-lang]').forEach(f => {
-  f.addEventListener('click', () => {
-    const l = f.dataset.lang;
-    if (l === currentLang) { applyLang(l); return; }
-    currentLang = UI_LANGS[l] ? l : 'hr';
-    applyLang(currentLang);
-    if (window.recognition) recognition.lang = UI_LANGS[currentLang].speechLang;
-    const inp = document.getElementById('user-input');
-    if (inp) inp.focus();
-  });
-});
-
-function setLang(lang) {
-  const newLang = UI_LANGS[lang] ? lang : 'hr';
-  if (newLang === currentLang) return;
-  currentLang = newLang;
-  applyLang(newLang);
-  // Mikrofon — ažuriraj jezik prepoznavanja govora
-  if (window.recognition) recognition.lang = UI_LANGS[newLang].speechLang;
+// Ponovno pokretanje razgovora — vraća naslovnicu i čisti stanje
+function resetChat() {
+  chatHistory = [];
+  currentCategory = null;
+  firstMessage = true;
+  lastUserQuery = null;
+  const cm = document.getElementById('chat-messages');
+  if (cm) {
+    cm.innerHTML =
+      '<div class="welcome" id="welcome-block"><div class="welcome-inner">' +
+      '<h2 id="welcome-title"></h2>' +
+      '<p class="welcome-sub" id="welcome-sub"></p>' +
+      '<div class="welcome-langs"><span id="welcome-langhint"></span>' +
+      '<span class="wl-flags">🇭🇷 🇬🇧 🇩🇪 🇸🇮 🇮🇹 🇭🇺 🇨🇿 🇸🇰</span></div>' +
+      '</div></div>';
+  }
+  document.querySelectorAll('#cat-tabs button').forEach(b => b.classList.remove('active'));
+  const inp = document.getElementById('user-input');
+  if (inp) inp.value = '';
+  applyLang(currentLang);
 }
 
-// Inicijaliziraj tabove na HR pri učitavanju
+// Prebaci jezik sučelja + (ako je razgovor počeo) ponovno postavi zadnje pitanje da se odgovor prevede
+function switchLang(l, reask) {
+  const newLang = UI_LANGS[l] ? l : 'hr';
+  const changed = newLang !== currentLang;
+  currentLang = newLang;
+  applyLang(currentLang);
+  if (window.recognition) recognition.lang = UI_LANGS[currentLang].speechLang;
+  if (changed && reask && !firstMessage && lastUserQuery) {
+    const inp = document.getElementById('user-input');
+    if (inp) { inp.value = lastUserQuery; sendMessage(); }
+  }
+}
+
+// Klik na zastavu → prebaci jezik i prevedi prikazani sadržaj
+document.querySelectorAll('#lang-flags button[data-lang]').forEach(f => {
+  f.addEventListener('click', () => switchLang(f.dataset.lang, true));
+});
+
+// Gumb "Ponovno pokretanje"
+const _restartBtn = document.getElementById('btn-restart');
+if (_restartBtn) _restartBtn.addEventListener('click', resetChat);
+
+// Poziva backend kad detektira jezik iz poruke (glas/tekst) — bez ponovnog slanja
+function setLang(lang) {
+  if ((UI_LANGS[lang] ? lang : 'hr') === currentLang) return;
+  switchLang(lang, false);
+}
+
+// Inicijaliziraj sučelje na HR pri učitavanju
 applyLang('hr');
 
 // ===== FORMAT REPLY =====
@@ -1174,6 +1171,7 @@ async function sendMessage(){
   const input = document.getElementById("user-input");
   const message = input.value.trim();
   if(!message) return;
+  lastUserQuery = message;
 
   if(firstMessage){
     firstMessage = false;
