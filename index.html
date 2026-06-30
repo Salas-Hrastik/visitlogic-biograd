@@ -51,6 +51,41 @@ opacity:0.75;
 font-size:15px;
 }
 
+.header-titles{ display:flex; flex-direction:column; min-width:0; }
+
+/* ===== DISKRETNE ZASTAVE (multilingual) ===== */
+#lang-flags{
+margin-left:auto;
+display:flex;
+align-items:center;
+gap:1px;
+flex-shrink:0;
+}
+#lang-flags button{
+background:none;
+border:none;
+cursor:pointer;
+font-size:19px;
+line-height:1;
+padding:4px 4px;
+border-radius:6px;
+opacity:0.5;
+filter:grayscale(45%);
+transition:opacity .15s, filter .15s, transform .15s, background .15s;
+}
+#lang-flags button:hover{
+opacity:1;
+filter:grayscale(0);
+transform:translateY(-1px) scale(1.12);
+background:rgba(255,255,255,0.12);
+}
+#lang-flags button.active{
+opacity:1;
+filter:grayscale(0);
+background:rgba(255,255,255,0.16);
+box-shadow:inset 0 -2px 0 #f4a261;
+}
+
 /* ===== WEATHER / SEA BAR ===== */
 #weather-bar{
 background:#003d6b;
@@ -301,38 +336,101 @@ button.send-btn:hover{ background:#e8894a; }
 
 /* ===== WELCOME ===== */
 .welcome{
-text-align:center;
 flex:1;
 display:flex;
 flex-direction:column;
 border-radius:0 0 14px 14px;
 overflow:hidden;
-}
-
-.welcome-text{
-background:#fff;
-padding:16px 32px;
-}
-
-.welcome-hero{
-flex:1;
-width:100%;
-min-height:220px;
+position:relative;
+min-height:300px;
 background-color:#003d6b;
 background-image:url('https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=1280&output=jpg');
 background-size:cover;
-background-position:center 45%;
+background-position:center 42%;
 }
 
-.welcome p{
-margin:5px 0;
-font-size:18px;
-color:#334;
+/* tamni gradijent preko slike za čitljivost teksta */
+.welcome::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(180deg, rgba(0,40,70,0.30) 0%, rgba(0,40,70,0.55) 55%, rgba(0,40,70,0.82) 100%);
 }
 
-.welcome strong{
+.welcome-inner{
+position:relative;
+z-index:1;
+flex:1;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:30px 22px 26px;
+gap:14px;
+}
+
+.welcome-emoji{
+font-size:40px;
+line-height:1;
+filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
+
+.welcome-inner h2{
+margin:0;
+color:#fff;
+font-size:27px;
+font-weight:800;
+letter-spacing:-0.3px;
+text-shadow:0 2px 10px rgba(0,0,0,0.45);
+}
+
+.welcome-inner .welcome-sub{
+margin:0;
+max-width:540px;
+color:#eaf4fb;
+font-size:16.5px;
+line-height:1.5;
+text-shadow:0 1px 6px rgba(0,0,0,0.5);
+}
+
+/* primjeri pitanja (quick starteri) */
+.welcome-chips{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:8px;
+margin-top:4px;
+max-width:560px;
+}
+.welcome-chips button{
+background:rgba(255,255,255,0.92);
 color:#004e89;
-font-size:20px;
+border:none;
+padding:9px 15px;
+border-radius:22px;
+font-size:14.5px;
+font-weight:600;
+cursor:pointer;
+box-shadow:0 2px 8px rgba(0,0,0,0.25);
+transition:transform .12s, background .12s;
+}
+.welcome-chips button:hover{ background:#fff; transform:translateY(-2px); }
+
+/* diskretni multilingvalni red */
+.welcome-langs{
+margin-top:10px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:5px;
+color:#cfe5f3;
+font-size:12.5px;
+}
+.welcome-langs .wl-flags{
+font-size:17px;
+letter-spacing:3px;
+filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));
 }
 
 /* ===== SUGGESTIONS ===== */
@@ -576,10 +674,17 @@ width:100%;
   .suggestions button{ font-size:14px; padding:7px 12px; }
 
   /* Welcome */
-  .welcome p{ font-size:15px; }
-  .welcome strong{ font-size:17px; }
-  .welcome-hero{ min-height:150px; }
-  .welcome-text{ padding:14px 18px; }
+  .welcome{ min-height:0; }
+  .welcome-inner{ padding:22px 16px 20px; gap:11px; }
+  .welcome-emoji{ font-size:32px; }
+  .welcome-inner h2{ font-size:21px; }
+  .welcome-inner .welcome-sub{ font-size:14.5px; }
+  .welcome-chips button{ font-size:13.5px; padding:8px 13px; }
+  .welcome-langs{ font-size:11.5px; }
+
+  /* Zastave — malo manje i s mogućnošću preloma */
+  #lang-flags{ flex-wrap:wrap; justify-content:flex-end; max-width:120px; gap:0; }
+  #lang-flags button{ font-size:16px; padding:3px; }
 
   /* Modal — fullscreen na mobilnom */
   #link-modal .modal-box{ width:100%; height:100%; max-width:100%; border-radius:0; }
@@ -594,10 +699,20 @@ width:100%;
 <!-- HEADER -->
 <header>
   <img src="/logo_biograd.png" alt="TZ Biograd" style="width:52px;height:52px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.3))">
-  <div>
+  <div class="header-titles">
     <h1>AI turistički informator</h1>
     <small>Biograd na Moru · Zadarska županija · Dalmacija</small>
   </div>
+  <nav id="lang-flags" aria-label="Odaberite jezik / Choose language">
+    <button data-lang="hr" title="Hrvatski" aria-label="Hrvatski">🇭🇷</button>
+    <button data-lang="en" title="English" aria-label="English">🇬🇧</button>
+    <button data-lang="de" title="Deutsch" aria-label="Deutsch">🇩🇪</button>
+    <button data-lang="sl" title="Slovenščina" aria-label="Slovenščina">🇸🇮</button>
+    <button data-lang="it" title="Italiano" aria-label="Italiano">🇮🇹</button>
+    <button data-lang="hu" title="Magyar" aria-label="Magyar">🇭🇺</button>
+    <button data-lang="cs" title="Čeština" aria-label="Čeština">🇨🇿</button>
+    <button data-lang="sk" title="Slovenčina" aria-label="Slovenčina">🇸🇰</button>
+  </nav>
 </header>
 
 <!-- WEATHER / SEA BAR -->
@@ -627,11 +742,16 @@ width:100%;
     <div class="chat-label" id="chat-label">Turistički informator</div>
     <div class="chat-messages" id="chat-messages">
       <div class="welcome" id="welcome-block">
-        <div class="welcome-text">
-          <p><strong>Dobrodošli u Biograd na Moru! 💙</strong></p>
-          <p>Pitajte me o plažama, Kornatima, nautici, smještaju,<br>gastronomiji i svemu što ova ljetna destinacija nudi.</p>
+        <div class="welcome-inner">
+          <div class="welcome-emoji">💙</div>
+          <h2 id="welcome-title">Dobrodošli u Biograd na Moru!</h2>
+          <p class="welcome-sub" id="welcome-sub">Vaš osobni AI vodič za odmor — pitajte me o plažama, Kornatima, smještaju, gastronomiji i događanjima.</p>
+          <div class="welcome-chips" id="welcome-chips"></div>
+          <div class="welcome-langs">
+            <span id="welcome-langhint">Razgovarajte sa mnom na svom jeziku</span>
+            <span class="wl-flags">🇭🇷 🇬🇧 🇩🇪 🇸🇮 🇮🇹 🇭🇺 🇨🇿 🇸🇰</span>
+          </div>
         </div>
-        <div class="welcome-hero"></div>
       </div>
     </div>
   </div>
@@ -807,6 +927,20 @@ const UI_LANGS = {
   }
 };
 
+// Višejezični tekstovi naslovnice (welcome)
+const WELCOME_I18N = {
+  hr: { title:'Dobrodošli u Biograd na Moru!', sub:'Vaš osobni AI vodič za odmor — pitajte me o plažama, Kornatima, smještaju, gastronomiji i događanjima.', hint:'Razgovarajte sa mnom na svom jeziku' },
+  en: { title:'Welcome to Biograd na Moru!', sub:'Your personal AI holiday guide — ask me about beaches, Kornati, accommodation, dining and events.', hint:'Chat with me in your own language' },
+  de: { title:'Willkommen in Biograd na Moru!', sub:'Ihr persönlicher KI-Urlaubsführer — fragen Sie mich zu Stränden, Kornaten, Unterkünften, Gastronomie und Veranstaltungen.', hint:'Sprechen Sie mit mir in Ihrer Sprache' },
+  sl: { title:'Dobrodošli v Biograd na Moru!', sub:'Vaš osebni AI vodnik za počitnice — vprašajte me o plažah, Kornatih, nastanitvah, gastronomiji in dogodkih.', hint:'Pogovarjajte se z mano v svojem jeziku' },
+  it: { title:'Benvenuti a Biograd na Moru!', sub:'La vostra guida AI personale per le vacanze — chiedetemi di spiagge, Kornati, alloggi, gastronomia ed eventi.', hint:'Parla con me nella tua lingua' },
+  hu: { title:'Üdvözöljük Biogradban!', sub:'Személyes AI nyaralási kalauza — kérdezzen strandokról, Kornatiról, szállásról, gasztronómiáról és rendezvényekről.', hint:'Beszéljen velem a saját nyelvén' },
+  cs: { title:'Vítejte v Biogradu na Moru!', sub:'Váš osobní AI průvodce dovolenou — zeptejte se mě na pláže, Kornati, ubytování, gastronomii a akce.', hint:'Mluvte se mnou svým jazykem' },
+  sk: { title:'Vitajte v Biograde na Mori!', sub:'Váš osobný AI sprievodca dovolenkou — spýtajte sa ma na pláže, Kornati, ubytovanie, gastronómiu a podujatia.', hint:'Hovorte so mnou svojím jazykom' }
+};
+// Kategorije korištene kao "quick start" čipovi na naslovnici
+const WELCOME_CHIP_CATS = ['dogadanja','plaze','gastronomija','smjestaj'];
+
 function applyLang(lang) {
   const ui = UI_LANGS[lang] || UI_LANGS.hr;
   // Tabovi — natpis i onclick
@@ -819,7 +953,46 @@ function applyLang(lang) {
   // Chat label
   const lbl = document.getElementById('chat-label');
   if (lbl) lbl.textContent = ui.chatLabel;
+
+  // Naslovnica — naslov, podnaslov, hint
+  const w = WELCOME_I18N[lang] || WELCOME_I18N.hr;
+  const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setTxt('welcome-title', w.title);
+  setTxt('welcome-sub', w.sub);
+  setTxt('welcome-langhint', w.hint);
+
+  // Quick-start čipovi (koristi prijevode iz tabova)
+  const chips = document.getElementById('welcome-chips');
+  if (chips) {
+    chips.innerHTML = '';
+    WELCOME_CHIP_CATS.forEach(cat => {
+      const t = ui.tabs[cat];
+      if (!t) return;
+      const b = document.createElement('button');
+      b.textContent = t.label;
+      b.onclick = () => quickAsk(t.q);
+      chips.appendChild(b);
+    });
+  }
+
+  // Aktivna zastava
+  document.querySelectorAll('#lang-flags button[data-lang]').forEach(f => {
+    f.classList.toggle('active', f.dataset.lang === lang);
+  });
 }
+
+// Klik na zastavu → prebaci jezik sučelja
+document.querySelectorAll('#lang-flags button[data-lang]').forEach(f => {
+  f.addEventListener('click', () => {
+    const l = f.dataset.lang;
+    if (l === currentLang) { applyLang(l); return; }
+    currentLang = UI_LANGS[l] ? l : 'hr';
+    applyLang(currentLang);
+    if (window.recognition) recognition.lang = UI_LANGS[currentLang].speechLang;
+    const inp = document.getElementById('user-input');
+    if (inp) inp.focus();
+  });
+});
 
 function setLang(lang) {
   const newLang = UI_LANGS[lang] ? lang : 'hr';
