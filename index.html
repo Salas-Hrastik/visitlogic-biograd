@@ -791,7 +791,6 @@ let currentCategory = null;
 let firstMessage = true;
 let currentWeather = null;
 let currentLang = 'hr';
-let lastUserQuery = null;
 let lockedLang = null;   // jezik koji je korisnik izričito odabrao zastavom (nadjačava auto-detekciju)
 
 // ===== UI PRIJEVODI =====
@@ -980,7 +979,6 @@ function resetChat() {
   chatHistory = [];
   currentCategory = null;
   firstMessage = true;
-  lastUserQuery = null;
   const cm = document.getElementById('chat-messages');
   if (cm) {
     cm.innerHTML =
@@ -997,24 +995,17 @@ function resetChat() {
   applyLang(currentLang);
 }
 
-// Prebaci jezik sučelja + (ako je razgovor počeo) ponovno postavi zadnje pitanje da se odgovor prevede
-function switchLang(l, reask) {
-  const newLang = UI_LANGS[l] ? l : 'hr';
-  const changed = newLang !== currentLang;
-  currentLang = newLang;
-  applyLang(currentLang);
-  if (window.recognition) recognition.lang = UI_LANGS[currentLang].speechLang;
-  if (changed && reask && !firstMessage && lastUserQuery) {
-    const inp = document.getElementById('user-input');
-    if (inp) { inp.value = lastUserQuery; sendMessage(); }
-  }
-}
-
-// Klik na zastavu → izričit odabir jezika (zaključaj) + prevedi prikazani sadržaj
+// Klik na zastavu → zaključaj jezik + vrati na POČETAK s kompletnim prijevodom frontenda.
+// (resetChat na kraju zove applyLang(currentLang) koji prevodi cijelo sučelje.)
 document.querySelectorAll('#lang-flags button[data-lang]').forEach(f => {
   f.addEventListener('click', () => {
-    lockedLang = UI_LANGS[f.dataset.lang] ? f.dataset.lang : 'hr';
-    switchLang(f.dataset.lang, true);
+    const l = UI_LANGS[f.dataset.lang] ? f.dataset.lang : 'hr';
+    lockedLang = l;
+    currentLang = l;
+    if (window.recognition) recognition.lang = UI_LANGS[l].speechLang;
+    resetChat();
+    const inp = document.getElementById('user-input');
+    if (inp) inp.focus();
   });
 });
 
@@ -1022,10 +1013,13 @@ document.querySelectorAll('#lang-flags button[data-lang]').forEach(f => {
 const _restartBtn = document.getElementById('btn-restart');
 if (_restartBtn) _restartBtn.addEventListener('click', resetChat);
 
-// Poziva backend kad detektira jezik iz poruke (glas/tekst) — bez ponovnog slanja
+// Backend detektirao jezik iz poruke (glas/tekst) — samo prebaci sučelje, bez reseta
 function setLang(lang) {
-  if ((UI_LANGS[lang] ? lang : 'hr') === currentLang) return;
-  switchLang(lang, false);
+  const newLang = UI_LANGS[lang] ? lang : 'hr';
+  if (newLang === currentLang) return;
+  currentLang = newLang;
+  applyLang(currentLang);
+  if (window.recognition) recognition.lang = UI_LANGS[currentLang].speechLang;
 }
 
 // Inicijaliziraj sučelje na HR pri učitavanju
@@ -1199,7 +1193,6 @@ async function sendMessage(){
   const input = document.getElementById("user-input");
   const message = input.value.trim();
   if(!message) return;
-  lastUserQuery = message;
 
   if(firstMessage){
     firstMessage = false;
