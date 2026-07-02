@@ -1,8 +1,8 @@
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import { db } from "./_database.js";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY?.trim()
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY?.trim()
 });
 
 // ===== HELPER: parsira krajnji datum termina ("DD.MM.YYYY" ili "DD.MM. – DD.MM.YYYY") =====
@@ -1294,19 +1294,18 @@ export default async function handler(req, res) {
     const historyMessages = (history || []).slice(-10)
       .filter(m => m.role === 'user' || m.role === 'assistant');
 
-    // Samo jedan AI poziv (itinerer / konverzacijska pitanja). Kartice se NE prevode.
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+    // Samo jedan AI poziv (itinerer / konverzacijska pitanja). Anthropic Opus — elokventniji.
+    const completion = await anthropic.messages.create({
+      model: 'claude-opus-4-7',
+      system: systemPrompt,
       max_tokens: 800,
-      temperature: 0.3,
       messages: [
-        { role: 'system', content: systemPrompt },
         ...historyMessages,
         { role: 'user', content: message + itemsNote }
       ]
     });
 
-    const rawReply = completion.choices[0]?.message?.content || '';
+    const rawReply = completion.content[0]?.type === 'text' ? completion.content[0].text : '';
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
