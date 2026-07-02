@@ -1073,38 +1073,32 @@ const LANG_NAMES = {
   it:'Italian', hu:'Hungarian', cs:'Czech', sk:'Slovak'
 };
 
-async function translateItems(items, lang) {
-  if (lang === 'hr' || !items.length) return items;
-  const target = LANG_NAMES[lang];
-  if (!target) return items;
-
-  const fields = items.map(it => ({
+// Prevede jedan komad (do CHUNK kartica) — vraća prevedeni komad ili original ako ne uspije
+async function translateChunk(chunk, target) {
+  const fields = chunk.map(it => ({
     opis:      it.opis     || '',
     adresa:    it.adresa   || '',
     recenzija: it.recenzija ? it.recenzija.replace(/^["""]+|["""]+$/g, '') : ''
   }));
-
   try {
     const tr = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
-      max_tokens: 3000,
+      max_tokens: 1500,
       temperature: 0.2,
+      response_format: { type: 'json_object' },
       messages: [{
         role: 'user',
-        content: `Translate Croatian tourism card texts to ${target}. Return ONLY JSON object {"t":[{"opis":"...","adresa":"...","recenzija":"..."},...]}. Keep proper nouns (place/restaurant names) unchanged. Be concise.\n\n${JSON.stringify(fields)}`
+        content: `Translate Croatian tourism card texts to ${target}. Return ONLY JSON object {"t":[{"opis":"...","adresa":"...","recenzija":"..."},...]} with exactly ${fields.length} entries in order. Keep proper nouns (place/restaurant names) unchanged. Be concise.\n\n${JSON.stringify(fields)}`
       }]
     });
-
     const raw = tr.choices[0]?.message?.content || '';
     const match = raw.match(/\{[\s\S]*\}/);
-    if (!match) return items;
+    if (!match) return chunk;
     let parsed;
-    try { parsed = JSON.parse(match[0]); } catch { return items; }
+    try { parsed = JSON.parse(match[0]); } catch { return chunk; }
     const tArr = parsed.t || parsed.translations || parsed.items || [];
-    if (!Array.isArray(tArr) || !tArr.length) return items;
-
-    // Per-item merge — preveди što je dostupno, ostatak ostavi HR
-    return items.map((it, i) => {
+    if (!Array.isArray(tArr) || !tArr.length) return chunk;
+    return chunk.map((it, i) => {
       const t = tArr[i];
       if (!t) return it;
       return {
@@ -1115,7 +1109,24 @@ async function translateItems(items, lang) {
       };
     });
   } catch {
-    return items; // fallback na HR kartice ako prijevod ne uspije
+    return chunk; // fallback na HR za ovaj komad
+  }
+}
+
+async function translateItems(items, lang) {
+  if (lang === 'hr' || !items.length) return items;
+  const target = LANG_NAMES[lang];
+  if (!target) return items;
+
+  // Podijeli u manje komade i prevedi ih PARALELNO — kraće ukupno vrijeme
+  const CHUNK = 8;
+  const chunks = [];
+  for (let i = 0; i < items.length; i += CHUNK) chunks.push(items.slice(i, i + CHUNK));
+  try {
+    const translated = await Promise.all(chunks.map(c => translateChunk(c, target)));
+    return translated.flat();
+  } catch {
+    return items;
   }
 }
 
@@ -1303,7 +1314,11 @@ export default async function handler(req, res) {
     const historyMessages = (history || []).slice(-10)
       .filter(m => m.role === 'user' || m.role === 'assistant');
 
-    // Paralelno: glavni AI odgovor + prijevod kartica (nema dodatne latencije)
+    // Prijevod ne smije blokirati odgovor: ako traje >18s, vrati HR kartice
+    const withTimeout = (p, ms, fallback) =>
+      Promise.race([p, new Promise(res => setTimeout(() => res(fallback), ms))]);
+
+    // Paralelno: glavni AI odgovor + prijevod kartica (s vremenskim limitom)
     const [completion, translatedItems] = await Promise.all([
       openai.chat.completions.create({
         model: 'gpt-4o-mini',
@@ -1315,7 +1330,7 @@ export default async function handler(req, res) {
           { role: 'user', content: message + itemsNote }
         ]
       }),
-      translateItems(items, lang)
+      withTimeout(translateItems(items, lang), 18000, items)
     ]);
 
     const rawReply = completion.choices[0]?.message?.content || '';
