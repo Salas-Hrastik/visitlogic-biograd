@@ -1067,69 +1067,6 @@ function stripBulletList(text) {
   return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
-// ===== PRIJEVOD KARTICA =====
-const LANG_NAMES = {
-  en:'English', de:'German', sl:'Slovenian',
-  it:'Italian', hu:'Hungarian', cs:'Czech', sk:'Slovak'
-};
-
-// Prevede jedan komad (do CHUNK kartica) — vraća prevedeni komad ili original ako ne uspije
-async function translateChunk(chunk, target) {
-  const fields = chunk.map(it => ({
-    opis:      it.opis     || '',
-    adresa:    it.adresa   || '',
-    recenzija: it.recenzija ? it.recenzija.replace(/^["""]+|["""]+$/g, '') : ''
-  }));
-  try {
-    const tr = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      max_tokens: 1500,
-      temperature: 0.2,
-      response_format: { type: 'json_object' },
-      messages: [{
-        role: 'user',
-        content: `Translate Croatian tourism card texts to ${target}. Return ONLY JSON object {"t":[{"opis":"...","adresa":"...","recenzija":"..."},...]} with exactly ${fields.length} entries in order. Keep proper nouns (place/restaurant names) unchanged. Be concise.\n\n${JSON.stringify(fields)}`
-      }]
-    });
-    const raw = tr.choices[0]?.message?.content || '';
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (!match) return chunk;
-    let parsed;
-    try { parsed = JSON.parse(match[0]); } catch { return chunk; }
-    const tArr = parsed.t || parsed.translations || parsed.items || [];
-    if (!Array.isArray(tArr) || !tArr.length) return chunk;
-    return chunk.map((it, i) => {
-      const t = tArr[i];
-      if (!t) return it;
-      return {
-        ...it,
-        opis:      t.opis     || it.opis,
-        adresa:    t.adresa   || it.adresa,
-        recenzija: t.recenzija ? `"${t.recenzija}"` : it.recenzija
-      };
-    });
-  } catch {
-    return chunk; // fallback na HR za ovaj komad
-  }
-}
-
-async function translateItems(items, lang) {
-  if (lang === 'hr' || !items.length) return items;
-  const target = LANG_NAMES[lang];
-  if (!target) return items;
-
-  // Podijeli u manje komade i prevedi ih PARALELNO — kraće ukupno vrijeme
-  const CHUNK = 8;
-  const chunks = [];
-  for (let i = 0; i < items.length; i += CHUNK) chunks.push(items.slice(i, i + CHUNK));
-  try {
-    const translated = await Promise.all(chunks.map(c => translateChunk(c, target)));
-    return translated.flat();
-  } catch {
-    return items;
-  }
-}
-
 // ===== SYSTEM PROMPT =====
 function buildSystemPrompt(lang, context, weatherCtx) {
   const weatherDirectives = buildWeatherDirectives(weatherCtx);
@@ -1247,6 +1184,36 @@ ISPRAVAN FORMAT (kornati): "Izlet na Kornate traje 8–10 sati i kreće iz Biogr
 ISPRAVAN FORMAT (konobe): "Kornati su poznati po svježoj ribi i autentičnoj dalmatinskoj kuhinji. Rezervirajte unaprijed — konobe su male i brzo se pune u sezoni."`;
 }
 
+// ===== INSTANT UVOD ZA KATEGORIJE (bez AI poziva — kao Slavonski Brod) =====
+const CAT_LABEL = {
+  dogadanja:    { hr:'Događanja', en:'Events', de:'Veranstaltungen', sl:'Dogodki', it:'Eventi', hu:'Rendezvények', cs:'Akce', sk:'Podujatia' },
+  plaze:        { hr:'Plaže', en:'Beaches', de:'Strände', sl:'Plaže', it:'Spiagge', hu:'Strandok', cs:'Pláže', sk:'Pláže' },
+  gastronomija: { hr:'Restorani i gastronomija', en:'Restaurants & dining', de:'Restaurants & Gastronomie', sl:'Restavracije in gastronomija', it:'Ristoranti e gastronomia', hu:'Éttermek és gasztronómia', cs:'Restaurace a gastronomie', sk:'Reštaurácie a gastronómia' },
+  nautika:      { hr:'Nautika', en:'Boating & sailing', de:'Nautik', sl:'Navtika', it:'Nautica', hu:'Hajózás', cs:'Jachting', sk:'Jachting' },
+  smjestaj:     { hr:'Smještaj', en:'Accommodation', de:'Unterkunft', sl:'Nastanitev', it:'Alloggi', hu:'Szállás', cs:'Ubytování', sk:'Ubytovanie' },
+  kornati:      { hr:'Kornati', en:'Kornati', de:'Kornaten', sl:'Kornati', it:'Kornati', hu:'Kornati', cs:'Kornati', sk:'Kornati' },
+  izleti:       { hr:'Izleti', en:'Excursions', de:'Ausflüge', sl:'Izleti', it:'Escursioni', hu:'Kirándulások', cs:'Výlety', sk:'Výlety' },
+  sport:        { hr:'Sport i aktivnosti', en:'Sports & activities', de:'Sport & Aktivitäten', sl:'Šport in aktivnosti', it:'Sport e attività', hu:'Sport és tevékenységek', cs:'Sport a aktivity', sk:'Šport a aktivity' },
+  atrakcije:    { hr:'Atrakcije', en:'Attractions', de:'Sehenswürdigkeiten', sl:'Znamenitosti', it:'Attrazioni', hu:'Látnivalók', cs:'Atrakce', sk:'Atrakcie' },
+  prakticno:    { hr:'Praktične informacije', en:'Practical info', de:'Praktische Infos', sl:'Praktične informacije', it:'Info pratiche', hu:'Hasznos infók', cs:'Praktické informace', sk:'Praktické informácie' },
+};
+const INTRO_TMPL = {
+  hr: (n, name) => `📍 **${name}** u Biogradu na Moru — ${n} ${n === 1 ? 'rezultat' : 'rezultata'}:`,
+  en: (n, name) => `📍 **${name}** in Biograd na Moru — ${n} ${n === 1 ? 'result' : 'results'}:`,
+  de: (n, name) => `📍 **${name}** in Biograd na Moru — ${n} ${n === 1 ? 'Ergebnis' : 'Ergebnisse'}:`,
+  sl: (n, name) => `📍 **${name}** v Biogradu na Moru — ${n} ${n === 1 ? 'rezultat' : 'rezultatov'}:`,
+  it: (n, name) => `📍 **${name}** a Biograd na Moru — ${n} ${n === 1 ? 'risultato' : 'risultati'}:`,
+  hu: (n, name) => `📍 **${name}** Biogradban — ${n} találat:`,
+  cs: (n, name) => `📍 **${name}** v Biogradu na Moru — ${n} ${n === 1 ? 'výsledek' : 'výsledků'}:`,
+  sk: (n, name) => `📍 **${name}** v Biograde na Mori — ${n} ${n === 1 ? 'výsledok' : 'výsledkov'}:`,
+};
+function buildCategoryIntro(cat, n, lang) {
+  const labelMap = CAT_LABEL[cat];
+  const name = labelMap ? (labelMap[lang] || labelMap.hr) : (CAT_LABEL.atrakcije[lang] || 'Rezultati');
+  const tmpl = INTRO_TMPL[lang] || INTRO_TMPL.hr;
+  return tmpl(n, name);
+}
+
 // ===== GLAVNI HANDLER =====
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -1302,6 +1269,19 @@ export default async function handler(req, res) {
       msgLow.includes('priporoč') || msgLow.includes('nasvet') || msgLow.includes('predlog') ||
       msgLow.includes('consig') || msgLow.includes('javasol'));
 
+    // ⚡ FAST PATH (kao Slavonski Brod): kategorija s karticama → instant odgovor
+    // bez AI poziva i bez prijevoda kartica. AI se koristi samo za itinerer i
+    // slobodna/konverzacijska pitanja (kad nema kartica).
+    if (items.length > 0 && !wantsItinerary && !wantsDetail) {
+      return res.status(200).json({
+        reply: buildCategoryIntro(detectedCategory, items.length, lang),
+        category: detectedCategory,
+        lang,
+        suggestions: getSuggestions(detectedCategory || 'opcenito', lang, message),
+        items
+      });
+    }
+
     const itemsNote = items.length > 0
       ? wantsItinerary
         ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
@@ -1314,37 +1294,30 @@ export default async function handler(req, res) {
     const historyMessages = (history || []).slice(-10)
       .filter(m => m.role === 'user' || m.role === 'assistant');
 
-    // Prijevod ne smije blokirati odgovor: ako traje >18s, vrati HR kartice
-    const withTimeout = (p, ms, fallback) =>
-      Promise.race([p, new Promise(res => setTimeout(() => res(fallback), ms))]);
-
-    // Paralelno: glavni AI odgovor + prijevod kartica (s vremenskim limitom)
-    const [completion, translatedItems] = await Promise.all([
-      openai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        max_tokens: 800,
-        temperature: 0.3,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...historyMessages,
-          { role: 'user', content: message + itemsNote }
-        ]
-      }),
-      withTimeout(translateItems(items, lang), 18000, items)
-    ]);
+    // Samo jedan AI poziv (itinerer / konverzacijska pitanja). Kartice se NE prevode.
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      max_tokens: 800,
+      temperature: 0.3,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        ...historyMessages,
+        { role: 'user', content: message + itemsNote }
+      ]
+    });
 
     const rawReply = completion.choices[0]?.message?.content || '';
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
-    const reply = translatedItems.length > 0 ? stripBulletList(rawReply) : rawReply;
+    const reply = items.length > 0 ? stripBulletList(rawReply) : rawReply;
 
     return res.status(200).json({
       reply,
       category: detectedCategory,
       lang,
       suggestions,
-      items: translatedItems
+      items
     });
 
   } catch (err) {
