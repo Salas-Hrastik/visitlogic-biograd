@@ -1238,7 +1238,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message, history = [], category: lastCategory, weather, clientLang } = req.body || {};
+  const { message, history = [], category: lastCategory, weather, clientLang, forceLang } = req.body || {};
 
   // Warmup ping
   if (message === '__warmup__') {
@@ -1250,7 +1250,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const lang = detectRequestedLang(message) || detectLang(message, clientLang || 'hr');
+    // Prioritet: eksplicitni zahtjev u poruci ("odgovori na X") > korisnikov odabir zastavom
+    // (forceLang) > automatska detekcija iz teksta poruke.
+    const SUPPORTED_LANGS = ['hr','en','de','it','sl','cs','sk','hu'];
+    const lang = detectRequestedLang(message)
+      || (forceLang && SUPPORTED_LANGS.includes(forceLang) ? forceLang : detectLang(message, clientLang || 'hr'));
     const detectedCategory = detectCategory(message, lastCategory, db);
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
     const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito };

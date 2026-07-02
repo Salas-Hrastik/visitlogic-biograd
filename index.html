@@ -774,6 +774,7 @@ let firstMessage = true;
 let currentWeather = null;
 let currentLang = 'hr';
 let lastUserQuery = null;
+let lockedLang = null;   // jezik koji je korisnik izričito odabrao zastavom (nadjačava auto-detekciju)
 
 // ===== UI PRIJEVODI =====
 const UI_LANGS = {
@@ -985,9 +986,12 @@ function switchLang(l, reask) {
   }
 }
 
-// Klik na zastavu → prebaci jezik i prevedi prikazani sadržaj
+// Klik na zastavu → izričit odabir jezika (zaključaj) + prevedi prikazani sadržaj
 document.querySelectorAll('#lang-flags button[data-lang]').forEach(f => {
-  f.addEventListener('click', () => switchLang(f.dataset.lang, true));
+  f.addEventListener('click', () => {
+    lockedLang = UI_LANGS[f.dataset.lang] ? f.dataset.lang : 'hr';
+    switchLang(f.dataset.lang, true);
+  });
 });
 
 // Gumb "Ponovno pokretanje"
@@ -1206,7 +1210,8 @@ async function sendMessage(){
         history: chatHistory.slice(-10),
         category: currentCategory,
         weather: currentWeather,
-        clientLang: currentLang
+        clientLang: currentLang,
+        forceLang: lockedLang
       })
     });
 
