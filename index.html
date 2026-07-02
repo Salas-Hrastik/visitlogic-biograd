@@ -911,14 +911,14 @@ const UI_LANGS = {
 
 // Višejezični tekstovi naslovnice (welcome) + natpis gumba za ponovno pokretanje
 const WELCOME_I18N = {
-  hr: { title:'Dobrodošli u Biograd na Moru!', sub:'Vaš osobni AI vodič za odmor — pitajte me o plažama, Kornatima, smještaju, gastronomiji i događanjima.', hint:'Razgovarajte sa mnom na svom jeziku', restart:'Ponovno pokretanje' },
-  en: { title:'Welcome to Biograd na Moru!', sub:'Your personal AI holiday guide — ask me about beaches, Kornati, accommodation, dining and events.', hint:'Chat with me in your own language', restart:'Restart' },
-  de: { title:'Willkommen in Biograd na Moru!', sub:'Ihr persönlicher KI-Urlaubsführer — fragen Sie mich zu Stränden, Kornaten, Unterkünften, Gastronomie und Veranstaltungen.', hint:'Sprechen Sie mit mir in Ihrer Sprache', restart:'Neustart' },
-  sl: { title:'Dobrodošli v Biograd na Moru!', sub:'Vaš osebni AI vodnik za počitnice — vprašajte me o plažah, Kornatih, nastanitvah, gastronomiji in dogodkih.', hint:'Pogovarjajte se z mano v svojem jeziku', restart:'Ponovni zagon' },
-  it: { title:'Benvenuti a Biograd na Moru!', sub:'La vostra guida AI personale per le vacanze — chiedetemi di spiagge, Kornati, alloggi, gastronomia ed eventi.', hint:'Parla con me nella tua lingua', restart:'Riavvia' },
-  hu: { title:'Üdvözöljük Biogradban!', sub:'Személyes AI nyaralási kalauza — kérdezzen strandokról, Kornatiról, szállásról, gasztronómiáról és rendezvényekről.', hint:'Beszéljen velem a saját nyelvén', restart:'Újraindítás' },
-  cs: { title:'Vítejte v Biogradu na Moru!', sub:'Váš osobní AI průvodce dovolenou — zeptejte se mě na pláže, Kornati, ubytování, gastronomii a akce.', hint:'Mluvte se mnou svým jazykem', restart:'Restartovat' },
-  sk: { title:'Vitajte v Biograde na Mori!', sub:'Váš osobný AI sprievodca dovolenkou — spýtajte sa ma na pláže, Kornati, ubytovanie, gastronómiu a podujatia.', hint:'Hovorte so mnou svojím jazykom', restart:'Reštartovať' }
+  hr: { title:'Dobrodošli u Biograd na Moru!', sub:'Vaš osobni AI vodič za odmor — pitajte me o plažama, Kornatima, smještaju, gastronomiji i događanjima.', hint:'Razgovarajte sa mnom na svom jeziku', restart:'Ponovno pokretanje', placeholder:'Postavite pitanje o Biogradu na Moru...', send:'Pošalji' },
+  en: { title:'Welcome to Biograd na Moru!', sub:'Your personal AI holiday guide — ask me about beaches, Kornati, accommodation, dining and events.', hint:'Chat with me in your own language', restart:'Restart', placeholder:'Ask a question about Biograd na Moru...', send:'Send' },
+  de: { title:'Willkommen in Biograd na Moru!', sub:'Ihr persönlicher KI-Urlaubsführer — fragen Sie mich zu Stränden, Kornaten, Unterkünften, Gastronomie und Veranstaltungen.', hint:'Sprechen Sie mit mir in Ihrer Sprache', restart:'Neustart', placeholder:'Stellen Sie eine Frage über Biograd na Moru...', send:'Senden' },
+  sl: { title:'Dobrodošli v Biograd na Moru!', sub:'Vaš osebni AI vodnik za počitnice — vprašajte me o plažah, Kornatih, nastanitvah, gastronomiji in dogodkih.', hint:'Pogovarjajte se z mano v svojem jeziku', restart:'Ponovni zagon', placeholder:'Vprašajte o Biogradu na Moru...', send:'Pošlji' },
+  it: { title:'Benvenuti a Biograd na Moru!', sub:'La vostra guida AI personale per le vacanze — chiedetemi di spiagge, Kornati, alloggi, gastronomia ed eventi.', hint:'Parla con me nella tua lingua', restart:'Riavvia', placeholder:'Fai una domanda su Biograd na Moru...', send:'Invia' },
+  hu: { title:'Üdvözöljük Biogradban!', sub:'Személyes AI nyaralási kalauza — kérdezzen strandokról, Kornatiról, szállásról, gasztronómiáról és rendezvényekről.', hint:'Beszéljen velem a saját nyelvén', restart:'Újraindítás', placeholder:'Kérdezzen Biogradról...', send:'Küldés' },
+  cs: { title:'Vítejte v Biogradu na Moru!', sub:'Váš osobní AI průvodce dovolenou — zeptejte se mě na pláže, Kornati, ubytování, gastronomii a akce.', hint:'Mluvte se mnou svým jazykem', restart:'Restartovat', placeholder:'Zeptejte se na Biograd na Moru...', send:'Odeslat' },
+  sk: { title:'Vitajte v Biograde na Mori!', sub:'Váš osobný AI sprievodca dovolenkou — spýtajte sa ma na pláže, Kornati, ubytovanie, gastronómiu a podujatia.', hint:'Hovorte so mnou svojím jazykom', restart:'Reštartovať', placeholder:'Opýtajte sa na Biograd na Mori...', send:'Odoslať' }
 };
 
 function applyLang(lang) {
@@ -940,6 +940,12 @@ function applyLang(lang) {
   setTxt('welcome-title', w.title);
   setTxt('welcome-sub', w.sub);
   setTxt('welcome-langhint', w.hint);
+
+  // Input placeholder i gumb "Pošalji"
+  const inp = document.getElementById('user-input');
+  if (inp && w.placeholder) inp.placeholder = w.placeholder;
+  const sendBtn = document.getElementById('send-btn');
+  if (sendBtn && w.send) sendBtn.textContent = w.send;
 
   // Gumb za ponovno pokretanje
   const rb = document.getElementById('btn-restart');
