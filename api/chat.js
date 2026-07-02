@@ -1144,6 +1144,9 @@ function buildSystemPrompt(lang, context, weatherCtx) {
     ? 'DÔLEŽITÉ: Odpovedaj VÝLUČNE po slovensky. Prelož VŠETOK obsah (počasie, tipy, sezóna) do slovenčiny. Kontext databázy je v chorvátčine — všetko prelož pre hosťa. Ak používateľ požaduje iný jazyk, okamžite prejdi naň.'
     : '';
 
+  const LANG_LABEL = { hr:'hrvatskom', en:'engleskom (English)', de:'njemačkom (Deutsch)', sl:'slovenskom (slovenščina)', it:'talijanskom (italiano)', hu:'mađarskom (magyar)', cs:'češkom (čeština)', sk:'slovačkom (slovenčina)' };
+  const targetLangLabel = LANG_LABEL[lang] || 'hrvatskom';
+
   return `Ti si AI turistički informator za Biograd na Moru — primorski grad u Zadarskoj županiji na dalmatinskoj obali između Zadra i Šibenika.
 ${langNote}
 
@@ -1199,7 +1202,7 @@ BAZA PODATAKA (koristi ove informacije):
 ${JSON.stringify(context, null, 0).substring(0, 6000)}
 
 PRAVILA ODGOVARANJA:
-- Odgovori na jeziku na kojem korisnik piše. Podržani jezici: hr, en, de, it, sl, cs, sk, hu. Prevedi SVE — uključujući vremenske uvjete, praktične info i savjete — na jezik korisnika.
+- Odgovori ISKLJUČIVO na ${targetLangLabel} jeziku — ČAK I ako je korisnikova poruka ili prethodni razgovor na drugom jeziku. Prevedi SVE (vremenske uvjete, praktične info, savjete, opise) na taj jezik. Iznimka: samo ako korisnik u ovoj poruci izričito traži drugi jezik. Podržani jezici: hr, en, de, it, sl, cs, sk, hu.
 - HIJERARHIJA: REALNI VREMENSKI UVJETI → SEZONA → FUNKCIONALNA PREPORUKA → ATMOSFERA
 - Uvijek integrira aktualne vremenske podatke u preporuku (ne ignoriraj ih!)
 - Budi konkretan i praktičan — turisti žele akcijske informacije
