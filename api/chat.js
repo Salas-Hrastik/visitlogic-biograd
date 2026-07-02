@@ -1,8 +1,8 @@
-import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import { db } from "./_database.js";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY?.trim()
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY?.trim()
 });
 
 // ===== HELPER: parsira krajnji datum termina ("DD.MM.YYYY" ili "DD.MM. – DD.MM.YYYY") =====
@@ -1085,16 +1085,17 @@ async function translateItems(items, lang) {
   }));
 
   try {
-    const tr = await anthropic.messages.create({
-      model: 'claude-opus-4-7',
+    const tr = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
       max_tokens: 3000,
+      temperature: 0.2,
       messages: [{
         role: 'user',
         content: `Translate Croatian tourism card texts to ${target}. Return ONLY JSON object {"t":[{"opis":"...","adresa":"...","recenzija":"..."},...]}. Keep proper nouns (place/restaurant names) unchanged. Be concise.\n\n${JSON.stringify(fields)}`
       }]
     });
 
-    const raw = tr.content[0]?.type === 'text' ? tr.content[0].text : '';
+    const raw = tr.choices[0]?.message?.content || '';
     const match = raw.match(/\{[\s\S]*\}/);
     if (!match) return items;
     let parsed;
@@ -1304,11 +1305,12 @@ export default async function handler(req, res) {
 
     // Paralelno: glavni AI odgovor + prijevod kartica (nema dodatne latencije)
     const [completion, translatedItems] = await Promise.all([
-      anthropic.messages.create({
-        model: 'claude-opus-4-7',
-        system: systemPrompt,
+      openai.chat.completions.create({
+        model: 'gpt-4o-mini',
         max_tokens: 800,
+        temperature: 0.3,
         messages: [
+          { role: 'system', content: systemPrompt },
           ...historyMessages,
           { role: 'user', content: message + itemsNote }
         ]
@@ -1316,7 +1318,7 @@ export default async function handler(req, res) {
       translateItems(items, lang)
     ]);
 
-    const rawReply = completion.content[0]?.type === 'text' ? completion.content[0].text : '';
+    const rawReply = completion.choices[0]?.message?.content || '';
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
