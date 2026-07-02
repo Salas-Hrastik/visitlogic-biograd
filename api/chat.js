@@ -1086,7 +1086,7 @@ async function translateItems(items, lang) {
 
   try {
     const tr = await anthropic.messages.create({
-      model: 'claude-opus-4-7',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 3000,
       messages: [{
         role: 'user',
@@ -1305,7 +1305,7 @@ export default async function handler(req, res) {
     // Paralelno: glavni AI odgovor + prijevod kartica (nema dodatne latencije)
     const [completion, translatedItems] = await Promise.all([
       anthropic.messages.create({
-        model: 'claude-opus-4-7',
+        model: 'claude-sonnet-4-6',
         system: systemPrompt,
         max_tokens: 800,
         messages: [
