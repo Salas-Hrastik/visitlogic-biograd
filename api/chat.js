@@ -1,5 +1,20 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { db } from "./_database.js";
+import { translations } from "./_translations.js";
+
+// Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
+// Prevodi opis/recenziju/tip/sadržaje; naziv, adresu i telefon ostavlja (vlastita imena).
+function localizeItems(items, lang) {
+  const T = translations[lang];
+  if (lang === 'hr' || !T || !items?.length) return items;
+  const tr = s => (s && typeof s === 'string' && T[s]) ? T[s] : s;
+  return items.map(it => ({
+    ...it,
+    opis:      tr(it.opis),
+    recenzija: tr(it.recenzija),
+    adresa:    tr(it.adresa)
+  }));
+}
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY?.trim()
@@ -1281,7 +1296,7 @@ export default async function handler(req, res) {
         category: detectedCategory,
         lang,
         suggestions: getSuggestions(detectedCategory || 'opcenito', lang, message),
-        items
+        items: localizeItems(items, lang)
       });
     }
 
@@ -1319,7 +1334,7 @@ export default async function handler(req, res) {
       category: detectedCategory,
       lang,
       suggestions,
-      items
+      items: localizeItems(items, lang)
     });
 
   } catch (err) {
