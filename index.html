@@ -788,6 +788,7 @@ width:100%;
 
 let chatHistory = [];
 let currentCategory = null;
+let pendingCat = null;   // kategorija eksplicitno odabrana klikom na tab (nadjačava detekciju)
 let firstMessage = true;
 let currentWeather = null;
 let currentLang = 'hr';
@@ -945,7 +946,7 @@ function applyLang(lang) {
     const t = ui.tabs[btn.dataset.cat];
     if (!t) return;
     btn.textContent = t.label;
-    btn.onclick = () => quickAsk(t.q);
+    btn.onclick = () => quickAsk(t.q, btn.dataset.cat);
   });
   // Chat label
   const lbl = document.getElementById('chat-label');
@@ -1194,6 +1195,9 @@ async function sendMessage(){
   const message = input.value.trim();
   if(!message) return;
 
+  const forcedCategory = pendingCat;  // uhvati pa odmah resetiraj (samo za ovaj klik)
+  pendingCat = null;
+
   if(firstMessage){
     firstMessage = false;
     const welcome = document.getElementById("welcome-block");
@@ -1226,6 +1230,7 @@ async function sendMessage(){
         message,
         history: chatHistory.slice(-10),
         category: currentCategory,
+        forcedCategory,
         weather: currentWeather,
         clientLang: currentLang,
         forceLang: lockedLang
@@ -1266,7 +1271,8 @@ async function sendMessage(){
   }
 }
 
-function quickAsk(text){
+function quickAsk(text, cat){
+  pendingCat = cat || null;
   document.getElementById("user-input").value = text;
   sendMessage();
 }

@@ -1220,7 +1220,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message, history = [], category: lastCategory, weather, clientLang, forceLang } = req.body || {};
+  const { message, history = [], category: lastCategory, forcedCategory, weather, clientLang, forceLang } = req.body || {};
 
   // Warmup ping
   if (message === '__warmup__') {
@@ -1237,7 +1237,10 @@ export default async function handler(req, res) {
     const SUPPORTED_LANGS = ['hr','en','de','it','sl','cs','sk','hu'];
     const lang = detectRequestedLang(message)
       || (forceLang && SUPPORTED_LANGS.includes(forceLang) ? forceLang : detectLang(message, clientLang || 'hr'));
-    const detectedCategory = detectCategory(message, lastCategory, db);
+    // Eksplicitni klik na tab (forcedCategory) ima prioritet nad detekcijom iz teksta —
+    // riješava krivo prepoznavanje kategorije na jezicima koje detekcija ne pokriva (hu, cs, sk, sl, it).
+    const isForced = forcedCategory && CATEGORY_CONTEXTS[forcedCategory];
+    const detectedCategory = isForced ? forcedCategory : detectCategory(message, lastCategory, db);
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
     const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito };
 
@@ -1272,7 +1275,7 @@ export default async function handler(req, res) {
     // ⚡ FAST PATH (kao Slavonski Brod): kategorija s karticama → instant odgovor
     // bez AI poziva i bez prijevoda kartica. AI se koristi samo za itinerer i
     // slobodna/konverzacijska pitanja (kad nema kartica).
-    if (items.length > 0 && !wantsItinerary && !wantsDetail) {
+    if (items.length > 0 && (isForced || (!wantsItinerary && !wantsDetail))) {
       return res.status(200).json({
         reply: buildCategoryIntro(detectedCategory, items.length, lang),
         category: detectedCategory,
