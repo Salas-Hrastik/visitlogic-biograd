@@ -1083,36 +1083,15 @@ function stripBulletList(text) {
 }
 
 // ===== SYSTEM PROMPT =====
-function buildSystemPrompt(lang, context, weatherCtx) {
-  const weatherDirectives = buildWeatherDirectives(weatherCtx);
-  const forecastSummary   = buildForecastSummary(weatherCtx?.forecast);
-  const seasonCtx = getSeasonContext();
-
-  const weatherSummary = weatherCtx?.temperature != null
-    ? `Temperatura zraka: ${weatherCtx.temperature}°C | Vjetar: ${weatherCtx.windspeed} km/h${weatherCtx.sea_temp != null ? ` | Mora: ${weatherCtx.sea_temp}°C` : ''}${weatherCtx.wave_height != null ? ` | Val: ${weatherCtx.wave_height} m` : ''} | ${weatherCtx.icon || ''} ${weatherCtx.opis || ''}`
-    : 'Vremenski podaci nisu dostupni.';
-
-  const langNote = lang === 'en'
-    ? 'IMPORTANT: Respond in English. Translate ALL content (weather, tips, seasons) into English. If the user explicitly requests a different language, switch immediately.'
-    : lang === 'de'
-    ? 'WICHTIG: Antworte ausschließlich auf Deutsch. Übersetze ALLE Inhalte (Wetter, Tipps, Jahreszeiten) ins Deutsche. Falls der Nutzer eine andere Sprache wünscht, wechsle sofort.'
-    : lang === 'sl'
-    ? 'POMEMBNO: Odgovarjaj IZKLJUČNO v slovenščini. Prevedi VSE vsebine (vreme, nasvete, sezone) v slovenščino. Kontekst baze podatkov je na hrvaščini — prevedite vse za gosta. Če uporabnik zahteva drug jezik, ga takoj uporabi.'
-    : lang === 'it'
-    ? 'IMPORTANTE: Rispondi ESCLUSIVAMENTE in italiano. Traduci TUTTI i contenuti (meteo, consigli, stagioni) in italiano. Se l\'utente richiede un\'altra lingua, passa subito a quella.'
-    : lang === 'hu'
-    ? 'FONTOS: Válaszolj KIZÁRÓLAG magyarul. Fordítsd le AZ ÖSSZES tartalmat (időjárás, tippek, szezon) magyarra. Az adatbázis kontextusa horvát — mindent fordíts le a vendég számára. Ha a felhasználó más nyelvet kér, azonnal válts.'
-    : lang === 'cs'
-    ? 'DŮLEŽITÉ: Odpovídej VÝHRADNĚ česky. Přelož VEŠKERÝ obsah (počasí, tipy, sezóna) do češtiny. Kontext databáze je v chorvatštině — vše přelož pro hosta. Pokud uživatel požaduje jiný jazyk, okamžitě přepni.'
-    : lang === 'sk'
-    ? 'DÔLEŽITÉ: Odpovedaj VÝLUČNE po slovensky. Prelož VŠETOK obsah (počasie, tipy, sezóna) do slovenčiny. Kontext databázy je v chorvátčine — všetko prelož pre hosťa. Ak používateľ požaduje iný jazyk, okamžite prejdi naň.'
-    : '';
-
-  const LANG_LABEL = { hr:'hrvatskom', en:'engleskom (English)', de:'njemačkom (Deutsch)', sl:'slovenskom (slovenščina)', it:'talijanskom (italiano)', hu:'mađarskom (magyar)', cs:'češkom (čeština)', sk:'slovačkom (slovenčina)' };
-  const targetLangLabel = LANG_LABEL[lang] || 'hrvatskom';
-
-  return `Ti si AI turistički informator za Biograd na Moru — primorski grad u Zadarskoj županiji na dalmatinskoj obali između Zadra i Šibenika.
-${langNote}
+// ===== SUSTAVSKI PROMPT — DVA BLOKA RADI PROMPT CACHINGA =====
+// 1) SYSTEM_STABLE: nepromjenjiv u svakom upitu (persona, karakter, pravila,
+//    stalne referentne info o gradu). Računa se JEDNOM pri učitavanju modula i
+//    šalje se s cache_control → Anthropic ga kešira (~10x jeftinije/brže na
+//    ponovljenim upitima). Uključuje db.grad + db.opcenito da stabilni prefiks
+//    sigurno prijeđe minimalni prag keširanja.
+// 2) buildDynamicSystem(): mijenja se po upitu (jezik, vrijeme, sezona, kontekst
+//    kategorije) — ide NAKON keširanog bloka (cache je prefiks-podudaranje).
+const SYSTEM_STABLE = `Ti si AI turistički informator za Biograd na Moru — primorski grad u Zadarskoj županiji na dalmatinskoj obali između Zadra i Šibenika.
 
 KARAKTER DESTINACIJE:
 - Primorski turistički grad s izraženom LJETNOM SEZONALNOŠĆU (vrhunac srpanj–kolovoz)
@@ -1123,17 +1102,6 @@ KARAKTER DESTINACIJE:
 - Park prirode Vransko jezero (6 km) — ornitološki rezervat, biciklizam
 - Zadar 28 km, Šibenik 65 km, NP Krka 65 km
 - Topla mediteranska klima, 2700+ sunčanih sati godišnje
-
-AKTUALNO VRIJEME (REALNI PODACI — koristi ih konkretno!):
-${weatherSummary}
-${weatherDirectives}
-
-${forecastSummary}
-
-SEZONA: ${seasonCtx.label} — ${seasonCtx.opis}
-IZLETI NA KORNATE (AKTUALNO ZA OVU SEZONU):
-${seasonCtx.izleti_kornati}
-SAVJET ZA IZLET: ${seasonCtx.savjet_izlet}
 
 TURISTIČKI PROFILI POSJETITELJA:
 - Nautičari (charter, jedriličari, motorni brodovi)
@@ -1162,11 +1130,11 @@ SPECIFIČNI SAVJETI:
 KONTAKT TZ Biograd na Moru:
 ${db.grad.adresa_tz} | Tel: ${db.grad.telefon_tz} | ${db.grad.web_tz}
 
-BAZA PODATAKA (koristi ove informacije):
-${JSON.stringify(context, null, 0).substring(0, 6000)}
+STALNE REFERENTNE INFORMACIJE O GRADU (osnovni i opći podaci — uvijek dostupni):
+${JSON.stringify({ grad: db.grad, opcenito: db.opcenito }, null, 0)}
 
 PRAVILA ODGOVARANJA:
-- Odgovori ISKLJUČIVO na ${targetLangLabel} jeziku — ČAK I ako je korisnikova poruka ili prethodni razgovor na drugom jeziku. Prevedi SVE (vremenske uvjete, praktične info, savjete, opise) na taj jezik. Iznimka: samo ako korisnik u ovoj poruci izričito traži drugi jezik. Podržani jezici: hr, en, de, it, sl, cs, sk, hu.
+- Odgovaraj ISKLJUČIVO na jeziku naznačenom u odjeljku "JEZIK ODGOVORA" (na kraju sustavskog prompta) — ČAK I ako je korisnikova poruka ili prethodni razgovor na drugom jeziku. Prevedi SVE (vremenske uvjete, praktične info, savjete, opise) na taj jezik. Iznimka: samo ako korisnik u ovoj poruci izričito traži drugi jezik. Podržani jezici: hr, en, de, it, sl, cs, sk, hu.
 - HIJERARHIJA: REALNI VREMENSKI UVJETI → SEZONA → FUNKCIONALNA PREPORUKA → ATMOSFERA
 - Uvijek integrira aktualne vremenske podatke u preporuku (ne ignoriraj ih!)
 - Budi konkretan i praktičan — turisti žele akcijske informacije
@@ -1197,6 +1165,53 @@ ZABRANJEN FORMAT: bold naslovi sekcija kao "**Organizacija izleta:**", "**Što v
 ISPRAVAN FORMAT (plaže): "Biograd nudi nekoliko predivnih plaža uz kristalno čisto more — nešto za svačiji ukus."
 ISPRAVAN FORMAT (kornati): "Izlet na Kornate traje 8–10 sati i kreće iz Biograd — idealno rezervirati unaprijed jer su mjesta ograničena."
 ISPRAVAN FORMAT (konobe): "Kornati su poznati po svježoj ribi i autentičnoj dalmatinskoj kuhinji. Rezervirajte unaprijed — konobe su male i brzo se pune u sezoni."`;
+
+// Dinamički dio sustavskog prompta (mijenja se po upitu) — ide NAKON keširanog
+// SYSTEM_STABLE. Sadrži jezik odgovora, aktualno vrijeme/prognozu, sezonu i
+// kontekst baze za konkretnu kategoriju pitanja.
+function buildDynamicSystem(lang, context, weatherCtx) {
+  const weatherDirectives = buildWeatherDirectives(weatherCtx);
+  const forecastSummary   = buildForecastSummary(weatherCtx?.forecast);
+  const seasonCtx = getSeasonContext();
+
+  const weatherSummary = weatherCtx?.temperature != null
+    ? `Temperatura zraka: ${weatherCtx.temperature}°C | Vjetar: ${weatherCtx.windspeed} km/h${weatherCtx.sea_temp != null ? ` | Mora: ${weatherCtx.sea_temp}°C` : ''}${weatherCtx.wave_height != null ? ` | Val: ${weatherCtx.wave_height} m` : ''} | ${weatherCtx.icon || ''} ${weatherCtx.opis || ''}`
+    : 'Vremenski podaci nisu dostupni.';
+
+  const langNote = lang === 'en'
+    ? 'IMPORTANT: Respond in English. Translate ALL content (weather, tips, seasons) into English. If the user explicitly requests a different language, switch immediately.'
+    : lang === 'de'
+    ? 'WICHTIG: Antworte ausschließlich auf Deutsch. Übersetze ALLE Inhalte (Wetter, Tipps, Jahreszeiten) ins Deutsche. Falls der Nutzer eine andere Sprache wünscht, wechsle sofort.'
+    : lang === 'sl'
+    ? 'POMEMBNO: Odgovarjaj IZKLJUČNO v slovenščini. Prevedi VSE vsebine (vreme, nasvete, sezone) v slovenščino. Kontekst baze podatkov je na hrvaščini — prevedite vse za gosta. Če uporabnik zahteva drug jezik, ga takoj uporabi.'
+    : lang === 'it'
+    ? 'IMPORTANTE: Rispondi ESCLUSIVAMENTE in italiano. Traduci TUTTI i contenuti (meteo, consigli, stagioni) in italiano. Se l\'utente richiede un\'altra lingua, passa subito a quella.'
+    : lang === 'hu'
+    ? 'FONTOS: Válaszolj KIZÁRÓLAG magyarul. Fordítsd le AZ ÖSSZES tartalmat (időjárás, tippek, szezon) magyarra. Az adatbázis kontextusa horvát — mindent fordíts le a vendég számára. Ha a felhasználó más nyelvet kér, azonnal válts.'
+    : lang === 'cs'
+    ? 'DŮLEŽITÉ: Odpovídej VÝHRADNĚ česky. Přelož VEŠKERÝ obsah (počasí, tipy, sezóna) do češtiny. Kontext databáze je v chorvatštině — vše přelož pro hosta. Pokud uživatel požaduje jiný jazyk, okamžitě přepni.'
+    : lang === 'sk'
+    ? 'DÔLEŽITÉ: Odpovedaj VÝLUČNE po slovensky. Prelož VŠETOK obsah (počasie, tipy, sezóna) do slovenčiny. Kontext databázy je v chorvátčine — všetko prelož pre hosťa. Ak používateľ požaduje iný jazyk, okamžite prejdi naň.'
+    : '';
+
+  const LANG_LABEL = { hr:'hrvatskom', en:'engleskom (English)', de:'njemačkom (Deutsch)', sl:'slovenskom (slovenščina)', it:'talijanskom (italiano)', hu:'mađarskom (magyar)', cs:'češkom (čeština)', sk:'slovačkom (slovenčina)' };
+  const targetLangLabel = LANG_LABEL[lang] || 'hrvatskom';
+
+  return `JEZIK ODGOVORA: Odgovaraj ISKLJUČIVO na ${targetLangLabel} jeziku. ${langNote}
+
+AKTUALNO VRIJEME (REALNI PODACI — koristi ih konkretno!):
+${weatherSummary}
+${weatherDirectives}
+
+${forecastSummary}
+
+SEZONA: ${seasonCtx.label} — ${seasonCtx.opis}
+IZLETI NA KORNATE (AKTUALNO ZA OVU SEZONU):
+${seasonCtx.izleti_kornati}
+SAVJET ZA IZLET: ${seasonCtx.savjet_izlet}
+
+BAZA PODATAKA ZA OVO PITANJE (koristi ove informacije):
+${JSON.stringify(context, null, 0).substring(0, 6000)}`;
 }
 
 // ===== INSTANT UVOD ZA KATEGORIJE (bez AI poziva — kao Slavonski Brod) =====
@@ -1262,7 +1277,7 @@ export default async function handler(req, res) {
     // getCategoryItems je sinkron — pokrećemo PRIJE system prompta da LLM zna o karticama
     const items = getCategoryItems(detectedCategory, message);
 
-    const systemPrompt = buildSystemPrompt(lang, context, weather);
+    const systemDynamic = buildDynamicSystem(lang, context, weather);
     const seasonCtx = getSeasonContext(); // za [SUSTAV] itinerer note
 
     // Ako kartice postoje, dodajemo eksplicitnu uputu u zadnju user poruku
@@ -1314,14 +1329,26 @@ export default async function handler(req, res) {
 
     // Samo jedan AI poziv (itinerer / konverzacijska pitanja). Anthropic Opus — elokventniji.
     const completion = await anthropic.messages.create({
-      model: 'claude-opus-4-7',
-      system: systemPrompt,
+      model: 'claude-sonnet-5',
       max_tokens: 800,
+      thinking: { type: 'disabled' }, // turistički bot: prioritet je brzina odgovora
+      // Prompt caching: stabilni blok (persona + pravila + stalne info) je keširan,
+      // dinamički (jezik/vrijeme/sezona/baza) ide poslije njega.
+      system: [
+        { type: 'text', text: SYSTEM_STABLE, cache_control: { type: 'ephemeral' } },
+        { type: 'text', text: systemDynamic },
+      ],
       messages: [
         ...historyMessages,
         { role: 'user', content: message + itemsNote }
       ]
     });
+
+    // Mjerenje prompt cachinga (Vercel logovi): read>0 → keširani prefiks se koristi.
+    if (completion.usage) {
+      const u = completion.usage;
+      console.log(`[cache] read=${u.cache_read_input_tokens ?? 0} write=${u.cache_creation_input_tokens ?? 0} input=${u.input_tokens ?? 0} output=${u.output_tokens ?? 0}`);
+    }
 
     const rawReply = completion.content[0]?.type === 'text' ? completion.content[0].text : '';
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
