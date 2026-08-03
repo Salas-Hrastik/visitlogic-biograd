@@ -1243,7 +1243,7 @@
     "telefon": "",
     "web": "",
     "radno": "",
-    "cuisine": "",
+    "cuisine": "fish;grill;steak_house",
     "stars": "",
     "osm_url": "https://www.openstreetmap.org/node/2432262560"
   },
@@ -1267,7 +1267,7 @@
     "telefon": "",
     "web": "",
     "radno": "",
-    "cuisine": "",
+    "cuisine": "fish;grill;pizza;steak_house",
     "stars": "",
     "osm_url": "https://www.openstreetmap.org/node/2432262887"
   },
@@ -1798,5 +1798,17 @@
     "cuisine": "",
     "stars": "",
     "osm_url": "https://www.openstreetmap.org/node/13835033766"
+  },
+  "14017715001": {
+    "osm_id": "14017715001",
+    "naziv": "Frankie Burger Bar",
+    "tip": "bar",
+    "adresa": "",
+    "telefon": "",
+    "web": "",
+    "radno": "",
+    "cuisine": "burger",
+    "stars": "",
+    "osm_url": "https://www.openstreetmap.org/node/14017715001"
   }
 }
