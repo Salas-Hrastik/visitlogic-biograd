@@ -1810,5 +1810,17 @@
     "cuisine": "burger",
     "stars": "",
     "osm_url": "https://www.openstreetmap.org/node/14017715001"
+  },
+  "14086090594": {
+    "osm_id": "14086090594",
+    "naziv": "Grande Glamping",
+    "tip": "camp_site",
+    "adresa": "Put Grande",
+    "telefon": "+38598332168",
+    "web": "https://grande-glamping.com/",
+    "radno": "",
+    "cuisine": "",
+    "stars": "",
+    "osm_url": "https://www.openstreetmap.org/node/14086090594"
   }
 }
