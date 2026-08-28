@@ -296,6 +296,7 @@ export const db = {
         "naziv": "Restoran Marina Kornati",
         "opis": "Restoran unutar marine — popularan kod nautičara i posjetitelja, hrana odlične kvalitete s pogledom na vezove i Kornate.",
         "tip": "marina restoran",
+        "telefon": "+385 23 384 505",
         "slika": "https://www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg",
         "web": "https://www.marinakornati.com/en/homepage",
         "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd",
@@ -397,6 +398,7 @@ export const db = {
         "naziv": "Cocolino",
         "opis": "Pizzeria u centru Biograda s domaćom pizzom, tjesteninom i roštiljem.",
         "tip": "pizzeria",
+        "telefon": "+385 23 385 584",
         "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/7e/ce/fd/biograd-na-moru-cocolino.jpg",
         "web": "",
         "karta": "https://maps.google.com/?q=Cocolino+Biograd+na+Moru",
@@ -632,6 +634,7 @@ export const db = {
         "naziv": "Pizzeria Casa Vecchia",
         "opis": "Najpopularnija pizzeria u Biogradu prema broju recenzija — autentična talijanska pizza iz krušne peći, odlična pasta i brza usluga.",
         "tip": "pizzeria, talijanska kuhinja",
+        "telefon": "+385 23 383 220",
         "slika": "https://www.casavecchia.hr/wp-content/uploads/bg-home-about-us-1024x668.jpg",
         "web": "https://casavecchia.hr",
         "karta": "https://maps.google.com/?q=Pizzeria+Casa+Vecchia+Biograd+na+Moru",
@@ -1028,10 +1031,10 @@ export const db = {
       },
       {
         "naziv": "Hotel Adria ★★★",
-        "opis": "Hotel 350 m od plaže Soline, all-inclusive u sezoni. Tel: +385 97 625 8918 | ameladelic2244@gmail.com",
+        "opis": "Hotel 350 m od plaže Soline, all-inclusive u sezoni. Tel: +385 52 877 300 | reservations@rudan.com",
         "lokacija": "Augusta Šenoe 42, Biograd na Moru",
-        "telefon": "+385 97 625 8918",
-        "email": "ameladelic2244@gmail.com",
+        "telefon": "+385 52 877 300",
+        "email": "reservations@rudan.com",
         "slika": "",
         "web": "https://hoteladria.hr",
         "karta": "https://maps.google.com/?q=Hotel+Adria+Biograd+na+Moru",
@@ -1835,11 +1838,11 @@ export const db = {
     "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (rujan/listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Dalmatinske tradicijske igre (lipanj).",
     "eventi": [
       {
-        "naziv": "Klapa Adria — koncert",
-        "opis": "Koncert klape Adria ispred Gradske vijećnice.",
-        "termin": "26.08.2026",
-        "lokacija": "Trg kralja Tomislava 5, Biograd na Moru",
-        "web": ""
+        "naziv": "Biogradsko ljeto - KOLOVOZ 2026.",
+        "opis": "Bogat kulturno-zabavni program tijekom kolovoza — koncerti, radionice i večernja događanja diljem grada.",
+        "termin": "29.07. – 31.08.2026",
+        "lokacija": "Biograd na Moru",
+        "web": "https://www.discover-biograd.com/storage/media/Biograd_summer_2026_AUGUST_A2_420x594mm_29072026-1.pdf"
       },
       {
         "naziv": "Ljetni karneval",
