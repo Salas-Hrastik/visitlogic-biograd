@@ -1838,18 +1838,39 @@ export const db = {
     "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (rujan/listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Dalmatinske tradicijske igre (lipanj).",
     "eventi": [
       {
-        "naziv": "Biogradsko ljeto - KOLOVOZ 2026.",
-        "opis": "Bogat kulturno-zabavni program tijekom kolovoza — koncerti, radionice i večernja događanja diljem grada.",
-        "termin": "29.07. – 31.08.2026",
-        "lokacija": "Biograd na Moru",
-        "web": "https://www.discover-biograd.com/storage/media/Biograd_summer_2026_AUGUST_A2_420x594mm_29072026-1.pdf"
+        "naziv": "Oživljena povijest Biograda",
+        "opis": "Kostimirano vođenje starom jezgrom grada, s okupljanjem ispred zgrade Turističke zajednice.",
+        "termin": "12.09.2026",
+        "lokacija": "Okupljanje ispred TZG Biograd na Moru",
+        "web": ""
       },
       {
-        "naziv": "Ljetni karneval",
-        "opis": "Ljetni karneval na rivi — zabavni program za sve uzraste s glazbom i povorkom.",
-        "termin": "29.08.2026",
-        "lokacija": "Riva, Biograd na Moru",
+        "naziv": "Ivan Vidović — koncert duhovne glazbe",
+        "opis": "Večernji koncert duhovne glazbe ispred Gradske vijećnice.",
+        "termin": "13.09.2026",
+        "lokacija": "Ispred Gradske vijećnice, Trg kralja Tomislava 5, Biograd na Moru",
         "web": ""
+      },
+      {
+        "naziv": "CRO Race 2026",
+        "opis": "Biograd na Moru domaćin je starta 2. etape međunarodne biciklističke utrke CRO Race.",
+        "termin": "23.09.2026",
+        "lokacija": "Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Biograd family & friends festival",
+        "opis": "Dvodnevni festival zabave i sportskih natjecanja za sve generacije — SUP i kajak utrke, tradicionalne dalmatinske igre, vodeni izazovi te natjecanja u plivanju i akvatlonu.",
+        "termin": "20.06. – 21.06.2026",
+        "lokacija": "Plaža pokraj bazena Ilirija, Biograd na Moru",
+        "web": ""
+      },
+      {
+        "naziv": "Slovenski vikend",
+        "opis": "Manifestacija povodom Praznika rada koja svake godine okuplja brojne posjetitelje iz Hrvatske, Slovenije i drugih zemalja — sportske aktivnosti, tematske večeri, koncerti i gastronomska ponuda.",
+        "termin": "Praznik rada (1. svibnja)",
+        "lokacija": "Biograd na Moru",
+        "web": "https://www.slovenski-vikend.hr"
       },
       {
         "naziv": "Biograd Boat Show",
