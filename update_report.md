@@ -1,4 +1,4 @@
 # 🗺️ OSM Tjedni Update — Biograd na Moru
-**Datum:** 2026-09-07
+**Datum:** 2026-09-14
 
 ✅ **Nema promjena** — baza je aktualna.
