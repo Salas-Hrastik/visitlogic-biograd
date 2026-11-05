@@ -1227,7 +1227,6 @@ function menuContext(message, history, category) {
         return nums.length ? `${k} ${Math.min(...nums)}–${Math.max(...nums)} €` : k;
       });
       blocks.push(`${menuHeader(naziv, m)}\n${parts.join('; ') || 'Stavke nisu izdvojene; gosta uputi na poveznicu jelovnika.'}`);
-      names.push(naziv);
     }
   }
   const withMenu = Object.keys(menus).join(', ');
@@ -1543,7 +1542,7 @@ export default async function handler(req, res) {
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
-    const reply = cardItems.length > 0 ? stripBulletList(rawReply) : rawReply;
+    const reply = cardItems.length > 0 && !menuInfo.note ? stripBulletList(rawReply) : rawReply;
 
     return res.status(200).json({
       reply,
