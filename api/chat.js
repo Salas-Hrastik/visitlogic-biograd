@@ -42,7 +42,12 @@ const CATEGORY_CONTEXTS = {
   plaze:       (db) => ({ grad: db.grad, plaze: db.plaze }),
   gastronomija:(db) => ({ grad: db.grad, gastronomija: db.gastronomija }),
   nautika:     (db) => ({ grad: db.grad, nautika: db.nautika }),
-  smjestaj:    (db) => ({ grad: db.grad, smjestaj: db.smjestaj }),
+  smjestaj:    (db) => ({
+    grad: db.grad,
+    smjestaj: Object.fromEntries(Object.entries(db.smjestaj || {}).map(([k, v]) => [k, Array.isArray(v)
+      ? v.map(({ naziv, opis, lokacija, telefon, telefon2, email, web }) => ({ naziv, opis, lokacija, telefon, telefon2, email, web }))
+      : v]))
+  }),
   kornati:     (db) => ({ grad: db.grad, kornati: db.kornati }),
   izleti:      (db) => ({ grad: db.grad, izleti: db.izleti }),
   sport:       (db) => ({ grad: db.grad, sport: db.sport }),
@@ -710,7 +715,8 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
       [/bazen|pool|piscin|medenc|bazén/, 'bazen'],
       [/ljubim|\bpets?\b|haustier|animali|háziállat|mazl|zvierat/, 'ljubimci'],
       [/pogled na more|sea view|meerblick|vista mare|pogled na morje|tengerre|výhled na moře|výhľad na more/, 'pogled na more'],
-      [/invalid|wheelchair|rollstuhl|rotelle|kerekesszék|bezbariér/, 'invalidsk']
+      [/invalid|wheelchair|rollstuhl|rotelle|kerekesszék|bezbariér/, 'invalidsk'],
+      [/kuć\\w* za odmor|ferienh|holiday home|počitniš|casa vacanze|nyaraló|rekreačn/, 'kuća za odmor']
     ];
     const wanted = FEATURES.filter(([re]) => re.test(m)).map(([, word]) => word);
     if (wanted.length) {
