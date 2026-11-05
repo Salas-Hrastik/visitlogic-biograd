@@ -1056,7 +1056,7 @@ function nameAliases(naziv) {
   const short = base
     .replace(/^turistička agencija\s+/i, '')
     .replace(/\s+turistička agencija$/i, '')
-    .replace(/^(restaurant|restoran|pizzeria)\s+/i, '')
+    .replace(/^(restaurant|restoran|pizzeria|plaža|konoba|bistro)\s+/i, '')
     .trim();
   if (short !== base && short.length >= 3) aliases.push(short);
   return aliases;
