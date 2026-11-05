@@ -45,7 +45,8 @@ const CATEGORY_CONTEXTS = {
   smjestaj:    (db) => ({
     grad: db.grad,
     smjestaj: Object.fromEntries(Object.entries(db.smjestaj || {}).map(([k, v]) => [k, Array.isArray(v)
-      ? v.map(({ naziv, opis, lokacija, telefon, telefon2, email, web }) => ({ naziv, opis, lokacija, telefon, telefon2, email, web }))
+      ? v.map(({ naziv, opis, lokacija, telefon, telefon2, email, web }) =>
+          Object.fromEntries(Object.entries({ naziv, opis, lokacija, telefon, telefon2, email, web }).filter(([, x]) => x)))
       : v]))
   }),
   kornati:     (db) => ({ grad: db.grad, kornati: db.kornati }),
@@ -1033,6 +1034,19 @@ function getSeasonContext() {
 // stripBulletList briše bullets, ali ostavlja prazan bold naslov.
 // Rješenje: bold naslove (redak koji je samo **Tekst:** ili ### Tekst)
 // brišemo zajedno s njihovim sadržajem.
+const NAME_STOPWORDS = new Set(['turistička', 'turistica', 'agencija', 'agency', 'tourist', 'travel', 'poslovnica', 'biograd', 'online', 'apartman', 'apartmani', 'apartments', 'hotel', 'kamp', 'camp', 'villa', 'vila', 'pansion', 'guest', 'house', 'resort', 'mobile', 'homes', 'park', 'turistički', 'd.o.o.', 'the']);
+
+// Model zna previdjeti kontakt jednog objekta u dugom popisu, pa objekt koji gost imenuje dobiva izravan redak.
+function namedObjectsNote(items, message) {
+  const words = (message || '').toLowerCase().split(/[^\p{L}\p{N}@.]+/u).filter(Boolean);
+  const named = items.filter(o => (o.naziv || '').toLowerCase().split(/[^\p{L}\p{N}.]+/u)
+    .filter(t => t.length >= 3 && !NAME_STOPWORDS.has(t))
+    .some(t => words.some(w => t.length <= 3 ? w === t : w.startsWith(t))));
+  if (!named.length || named.length > 3) return '';
+  const lines = named.map(o => [o.naziv, o.adresa, o.telefon && `tel. ${o.telefon}`, o.telefon2 && `tel. ${o.telefon2}`, o.email && `e-mail ${o.email}`, o.web].filter(Boolean).join(' | '));
+  return `\n[SUSTAV: Točni podaci iz baze za objekt koji gost spominje — navedi ih doslovno:\n${lines.join('\n')}]`;
+}
+
 function stripBulletList(text) {
   const lines = text.split('\n');
   const out = [];
@@ -1301,6 +1315,7 @@ export default async function handler(req, res) {
         ? `\n[SUSTAV: Automatski će biti prikazano ${cardItems.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
         : `\n[SUSTAV: Ispod odgovora automatski će biti prikazano ${cardItems.length} vizualnih kartica. Odgovori IZRAVNO na korisnikovo pitanje u 1–3 rečenice koristeći podatke iz baze (npr. cijena, datum, udaljenost, preporuka). Ako traženog podatka nema u bazi, reci to i uputi na TZ. NE nabrajaj kartice.]`
       : '';
+    const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
 
     // Poruke za Claude (do 10 prethodnih; system ide kao zaseban parametar)
     const historyMessages = (history || []).slice(-10)
@@ -1318,7 +1333,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote }
+        { role: 'user', content: message + itemsNote + namedNote }
       ]
     });
 
