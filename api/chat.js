@@ -1047,6 +1047,68 @@ function namedObjectsNote(items, message) {
   return `\n[SUSTAV: Točni podaci iz baze za objekt koji gost spominje — navedi ih doslovno:\n${lines.join('\n')}]`;
 }
 
+const MAX_REPLY_LINKS = 6;
+let linkableObjects = null;
+
+function nameAliases(naziv) {
+  const base = naziv.replace(/★/g, '').replace(/\([^)]*\)/g, '').split(/\s[—–-]\s/)[0].replace(/\bd\.o\.o\.?/gi, '').trim();
+  const aliases = [base];
+  const short = base
+    .replace(/^turistička agencija\s+/i, '')
+    .replace(/\s+turistička agencija$/i, '')
+    .replace(/^(restaurant|restoran|pizzeria)\s+/i, '')
+    .trim();
+  if (short !== base && short.length >= 3) aliases.push(short);
+  return aliases;
+}
+
+// Jednorječna imena koja su i obične riječi (restoran "More", trgovina "Konzum") ne smiju pogađati tekst.
+const COMMON_NAME_WORDS = new Set(['parking', 'more', 'riva', 'slad', 'barba', 'fešta', 'guste', 'dupin', 'zadar', 'šibenik', 'nin', 'rent-a-car', 'soline', 'ina', 'studenac', 'konzum', 'arkada']);
+
+function nameRegex(alias) {
+  const words = alias.split(/\s+/).filter(Boolean);
+  const singleWord = words.length === 1;
+  if (singleWord && COMMON_NAME_WORDS.has(alias.toLowerCase())) return null;
+  const parts = words.map(w => {
+    const esc = (x) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return w.length <= 3 ? `${esc(w)}(?![\\p{L}\\p{N}])` : `${esc(w.length > 4 ? w.slice(0, -1) : w)}\\p{L}*`;
+  });
+  return new RegExp(`(?<![\\p{L}\\p{N}])${parts.join('\\s+')}`, singleWord ? 'u' : 'iu');
+}
+
+function getLinkableObjects() {
+  if (linkableObjects) return linkableObjects;
+  const found = new Map();
+  (function walk(v) {
+    if (Array.isArray(v)) return v.forEach(walk);
+    if (!v || typeof v !== 'object') return;
+    if (v.naziv && (v.karta || v.web) && !found.has(v.naziv)) found.set(v.naziv, v);
+    Object.values(v).forEach(walk);
+  })(db);
+  linkableObjects = [...found.values()].flatMap(o => nameAliases(o.naziv).map(alias => ({ o, alias, re: nameRegex(alias) })))
+    .filter(x => x.re)
+    .sort((a, b) => b.alias.length - a.alias.length || Number(!!(b.o.karta && b.o.web)) - Number(!!(a.o.karta && a.o.web)));
+  return linkableObjects;
+}
+
+// Duža imena idu prva i izrezuju se iz teksta, inače "Villa Biograd 2" pogodi i "Villa Biograd".
+function replyLinks(reply) {
+  let text = reply || '';
+  const hits = new Map();
+  for (const { o, re } of getLinkableObjects()) {
+    const g = new RegExp(re.source, re.flags + 'g');
+    let m;
+    while ((m = g.exec(text))) {
+      const prev = hits.get(o.naziv);
+      if (!prev || m.index < prev.at) hits.set(o.naziv, { at: m.index, naziv: o.naziv, karta: o.karta || '', web: o.web || '' });
+      text = text.slice(0, m.index) + ' '.repeat(m[0].length) + text.slice(m.index + m[0].length);
+      g.lastIndex = m.index + m[0].length;
+    }
+  }
+  return [...hits.values()].sort((a, b) => a.at - b.at).slice(0, MAX_REPLY_LINKS)
+    .map(({ naziv, karta, web }) => ({ naziv, karta, web }));
+}
+
 function stripBulletList(text) {
   const lines = text.split('\n');
   const out = [];
@@ -1354,6 +1416,7 @@ export default async function handler(req, res) {
       category: detectedCategory,
       lang,
       suggestions,
+      links: replyLinks(reply),
       items: localizeItems(cardItems, lang)
     });
 

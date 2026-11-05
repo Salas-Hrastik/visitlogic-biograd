@@ -435,6 +435,38 @@ letter-spacing:3px;
 filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));
 }
 
+.reply-links{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid #d6e4ec;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.reply-link-row{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px 10px;
+}
+.reply-link-name{
+  font-weight:600;
+  color:#004e89;
+  flex:1 1 180px;
+  min-width:0;
+}
+.reply-link-row a{
+  padding:5px 12px;
+  border-radius:16px;
+  background:#e6f1f7;
+  color:#004e89;
+  font-size:.9em;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.reply-link-row a:hover{
+  background:#cfe4f0;
+}
 .item-group-title{
 flex-shrink:0;
 font-weight:bold;
@@ -1093,12 +1125,41 @@ function formatReply(text){
 }
 
 // ===== ADD MESSAGE =====
-function addMessage(text, type, suggestions, images, items){
+function addMessage(text, type, suggestions, images, items, replyLinks){
   const chatMessages = document.getElementById("chat-messages");
 
   const div = document.createElement("div");
   div.className = type === "user" ? "user-message" : "bot-message";
   div.innerHTML = type === "user" ? text : formatReply(text);
+  if(type === "bot" && replyLinks && replyLinks.length){
+    const box = document.createElement("div");
+    box.className = "reply-links";
+    replyLinks.forEach(l => {
+      const row = document.createElement("div");
+      row.className = "reply-link-row";
+      const name = document.createElement("span");
+      name.className = "reply-link-name";
+      name.textContent = l.naziv;
+      row.appendChild(name);
+      if(l.karta){
+        const a = document.createElement("a");
+        a.href = l.karta;
+        a.textContent = "🗺 " + uiText().map;
+        a.target = "_blank";
+        a.rel = "noopener";
+        row.appendChild(a);
+      }
+      if(l.web){
+        const a = document.createElement("a");
+        a.href = l.web;
+        a.textContent = "🌐 Web";
+        a.onclick = e => { e.preventDefault(); openModal(l.web); };
+        row.appendChild(a);
+      }
+      box.appendChild(row);
+    });
+    div.appendChild(box);
+  }
   chatMessages.appendChild(div);
 
   if(type === "bot" && items && items.length){
@@ -1324,7 +1385,7 @@ async function sendMessage(){
     }
 
     if(data.reply){
-      addMessage(data.reply, "bot", data.suggestions, data.images, data.items);
+      addMessage(data.reply, "bot", data.suggestions, data.images, data.items, data.links);
       chatHistory.push({ role: "assistant", content: data.reply });
       if(chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
     } else {
