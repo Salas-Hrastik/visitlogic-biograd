@@ -1164,7 +1164,7 @@ function menuLine(it) {
 }
 
 function menuHeader(naziv, m) {
-  const notes = [m.izvor, m.stari_podaci ? 'STARIJI PODACI, cijene su možda promijenjene' : '', m.bez_cijena ? 'BEZ CIJENA' : '', m.napomena].filter(Boolean);
+  const notes = [m.izvor, `provjereno ${m.provjereno}`, m.stari_podaci ? 'STARIJI PODACI, cijene su možda promijenjene' : '', m.bez_cijena ? 'BEZ CIJENA' : '', m.napomena].filter(Boolean);
   return `${naziv} (${notes.join('; ')})`;
 }
 
@@ -1231,7 +1231,7 @@ function menuContext(message, history, category) {
     }
   }
   const withMenu = Object.keys(menus).join(', ');
-  const note = `\n[SUSTAV: JELOVNICI s vlastitih stranica objekata, provjereno ${Object.values(menus)[0].provjereno}. Cijene navodi točno kako pišu, nikad ih ne procjenjuj i ne izmišljaj. Uz cijene jednom kratko reci da su s jelovnika objekta i da ih je dobro potvrditi. Ako piše STARIJI PODACI, to izričito napomeni. Ako piše BEZ CIJENA, reci da cijene nemamo. Jelovnik imamo samo za: ${withMenu}. Za druge objekte reci da nemamo jelovnik i uputi na njihov kontakt.\n${blocks.join('\n\n').slice(0, 14000)}]`;
+  const note = `\n[SUSTAV: JELOVNICI s vlastitih stranica objekata. Cijene navodi točno kako pišu, nikad ih ne procjenjuj i ne izmišljaj. Uz cijene jednom kratko reci da su s jelovnika objekta i da ih je dobro potvrditi. Ako piše STARIJI PODACI, to izričito napomeni. Ako piše BEZ CIJENA, reci da cijene nemamo. Jelovnik imamo samo za: ${withMenu}. Za druge objekte reci da nemamo jelovnik i uputi na njihov kontakt.\n${blocks.join('\n\n').slice(0, 14000)}]`;
   return { note, names };
 }
 
