@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { db } from "./_database.js";
 import { translations } from "./_translations.js";
+import { menus } from "./_menus.js";
 
 // Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
 // Prevodi opis/recenziju/tip/sadržaje; naziv, adresu i telefon ostavlja (vlastita imena).
@@ -331,6 +332,9 @@ const GENERIC_EVENT_WORDS = new Set(['biograd', 'biogradu', 'biograda', 'moru', 
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
 
+  if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
+  if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
+
   // Sajam je događanje; bez ovoga "boat" završava u nautici. Parking uz sajam ostaje praktična info.
   if (/turističk\w* agencij|turistične agencij|tourist agenc|travel agenc|reiseagentur|reisebüro|agenzi\w* (turistic|di viaggi)|utazási iroda|cestovn\w* agent/.test(m)) return 'smjestaj';
   if (/\bleut\b|adriagate|ilirija travel|my way travel|moreta/.test(m)) return 'smjestaj';
@@ -590,6 +594,7 @@ function item(o, extra = {}) {
     telefon2:        o.telefon2 || '',
     email:           o.email || '',
     web:             o.web || '',
+    jelovnik:        menus[o.naziv]?.url || '',
     karta:           o.karta || '',
     recenzija:       o.recenzija || '',
     ocjena:          o.ocjena || '',
@@ -1100,13 +1105,134 @@ function replyLinks(reply) {
     let m;
     while ((m = g.exec(text))) {
       const prev = hits.get(o.naziv);
-      if (!prev || m.index < prev.at) hits.set(o.naziv, { at: m.index, naziv: o.naziv, karta: o.karta || '', web: o.web || '' });
+      if (!prev || m.index < prev.at) hits.set(o.naziv, { at: m.index, naziv: o.naziv, karta: o.karta || '', web: o.web || '', jelovnik: menus[o.naziv]?.url || '' });
       text = text.slice(0, m.index) + ' '.repeat(m[0].length) + text.slice(m.index + m[0].length);
       g.lastIndex = m.index + m[0].length;
     }
   }
   return [...hits.values()].sort((a, b) => a.at - b.at).slice(0, MAX_REPLY_LINKS)
-    .map(({ naziv, karta, web }) => ({ naziv, karta, web }));
+    .map(({ naziv, karta, web, jelovnik }) => ({ naziv, karta, web, jelovnik }));
+}
+
+const MENU_NAMES = {
+  'Peperino': /peperin/i,
+  'Restoran-Pizzeria Šare': /(^|[^\p{L}])(šare|sare)([^\p{L}]|$)/iu,
+  'Pizzeria Beštek': /be[šs]tek/i,
+  'Pizzeria Domestico': /domesti[ck]/i,
+  'Pizzeria Casa Vecchia': /casa vecchi/i,
+  'Restoran Arkada': /arkad/i,
+  'Restaurant More': /restoran\p{L}* more|restaurant more/iu,
+  'Barba': /(konob|restoran|gostion)\p{L}* barb|kod barb/iu,
+  'Restaurant Riva': /(restoran|restaurant)\p{L}* riv/iu,
+  'Bistro Europa': /bistr\p{L}* europ/iu,
+};
+
+const MENU_TERMS = [
+  [/pizz|pice\b|pizu/i, ['pizza', 'pizze', 'margherita', 'margarita', 'capricciosa', 'vesuvio', 'vezuvio', 'calzone', 'funghi']],
+  [/\bpiv|beer|bier|birra|\bs[öo]r\b/i, ['pivo', 'piva', 'karlovačko', 'ožujsko', 'pan ', 'heineken', 'carlsberg', 'budweiser', 'staropramen', 'guinness']],
+  [/\bvin[oa]?\b|vina\b|wine|wein|\bbor\b|v[ií]no/i, ['vino', 'vina', 'graševina', 'pošip', 'maraština', 'žlahtina', 'plavac', 'merlot', 'chardonnay', 'cabernet', 'prosecco', 'champagne']],
+  [/\bkav[aeu]|coffee|kaffee|caff[eè]|k[aá]v[ée]|espresso|cappuccino/i, ['kava', 'espresso', 'macchiato', 'cappuccino']],
+  [/\bpić|\bpic[ae]\b|drink|getränk|bevand|bevera|ital|n[aá]poj|pijač|alkohol/i, ['pivo', 'vino', 'kava', 'espresso', 'cola', 'voda', 'sok', 'spritz']],
+  [/\bsok|juice|\bsaft|succo|gyümölcslé|d[žz]us/i, ['sok', 'juice', 'cappy', 'naranč', 'limunada']],
+  [/koktel|cocktail|spritz|\bgin\b|whisk/i, ['spritz', 'mojito', 'negroni', 'cuba libre', 'moscow mule', 'gin', 'whisk']],
+  [/\bvod[aeu]\b|water|wasser|acqua/i, ['voda', 'water']],
+  [/\brib[aeuo]|riblj|fish|fisch|pesce|\bhal|ryb/i, ['riba', 'riblj', 'plodov', 'brancin', 'orada', 'tuna', 'tunj', 'škarpina', 'kovač', 'srdel', 'skuša']],
+  [/lign|calamar|squid|tintenfisch|kalmar|kalm[aá]r/i, ['lignj', 'squid']],
+  [/škamp|skamp|kozic|shrimp|prawn|garnel|gamber|scamp|krevet|krevetk/i, ['škamp', 'kozic', 'shrimp', 'gamberi']],
+  [/hobotnic|octopus|oktopus|polpo|poln[aá]|chobotnic/i, ['hobotnic', 'octopus']],
+  [/školjk|skoljk|dagnj|mussel|muschel|cozze|shell/i, ['školjk', 'dagnj', 'kunjk', 'mussel']],
+  [/\bmes[oa]|mesn|meat|fleisch|carne|\bh[uú]s|m[aä]so/i, ['mesn', 'meso', 'odrezak', 'ćevap', 'cevap', 'pljeskav', 'biftek', 'steak', 'kotlet', 'ražnji']],
+  [/biftek|steak|bistecc/i, ['biftek', 'steak', 'beefsteak', 'chateaubriand']],
+  [/ćevap|cevap/i, ['ćevap', 'cevap']],
+  [/piletin|chicken|hühn|hahn|pollo|csirke|kuřec|kurac/i, ['piletin', 'pileć', 'chicken', 'pollo']],
+  [/burger|hamburger/i, ['burger']],
+  [/tjestenin|pasta|špaget|spaghetti|spaget|nudel|těstovin|testovin|tészta/i, ['špaget', 'pasta', 'tjestenin', 'pljukanc', 'njoki', 'lazanj', 'lasagne']],
+  [/rižot|rizot|risott|rizott/i, ['rižot', 'risotto']],
+  [/salat|salad|insalat|sal[aá]t/i, ['salat', 'salad', 'caprese', 'dalmatina', 'greca']],
+  [/\bjuh|soup|suppe|zuppa|leves|polévk|polievk/i, ['juha', 'soup']],
+  [/desert|dessert|slatk|kolač|palačink|sweet|süß|dolc|édes|pancake/i, ['desert', 'palačink', 'pancake', 'kolač', 'tiramisu', 'sladoled', 'fritul', 'cheesecake']],
+  [/sladoled|ice cream|\beis\b|gelato|fagylalt|zmrzlin/i, ['sladoled', 'ice cream']],
+  [/predjel|starter|appetizer|vorspeis|antipast|előétel|predjed/i, ['pršut', 'sir', 'inćun', 'bruschett', 'pijat', 'plata', 'predjel']],
+  [/vegetar|vegan/i, ['vegetar', 'veggie', 'vege', 'vegan', 'margherita']],
+  [/\bdjec|dječj|kids|kinder|bambin|gyerek|d[ěe]ts/i, ['djec', 'mali goste', 'menu za djecu']],
+];
+
+const MENU_INTENT = /jelovnik|\bmeni\b|\bmenu\b|cjenik|cijen|košta|koštaju|koliko je|preis|kostet|speisekarte|price|cost|how much|prezz|quanto cost|\bár\b|ára\b|árak|mennyibe|étlap|\bcen[aey]\b|kolik stoj|koľko stoj|jídeln|jedáln|jedilnik|imaju li|ima li|nude li/i;
+
+function menuLine(it) {
+  return `${it.n}${it.o ? ` (${it.o})` : ''}${it.c ? `: ${it.c}` : ''}`;
+}
+
+function menuHeader(naziv, m) {
+  const notes = [m.izvor, m.stari_podaci ? 'STARIJI PODACI, cijene su možda promijenjene' : '', m.bez_cijena ? 'BEZ CIJENA' : '', m.napomena].filter(Boolean);
+  return `${naziv} (${notes.join('; ')})`;
+}
+
+function menuItemMatches(it, stems) {
+  const t = `${it.n} ${it.k || ''}`.toLowerCase();
+  return stems.some(s => t.includes(s));
+}
+
+// "pizza margherita" treba margheritu, a ne prvih osam pizza s jelovnika.
+function narrowToNamedDish(hits, text) {
+  const words = text.toLowerCase().split(/[^\p{L}]+/u).filter(w => w.length >= 5);
+  const exact = hits.filter(it => words.some(w => it.n.toLowerCase().includes(w.slice(0, -1))));
+  return exact.length ? exact : hits;
+}
+
+// Vraća bilješku za model i objekte čije su stavke relevantne za pitanje.
+function menuContext(message, history, category) {
+  const text = message || '';
+  const stems = MENU_TERMS.filter(([re]) => re.test(text)).flatMap(([, s]) => s);
+  const intent = MENU_INTENT.test(text);
+  let named = Object.keys(MENU_NAMES).filter(n => MENU_NAMES[n].test(text));
+  if (!named.length && (intent || stems.length)) {
+    const recent = (history || []).slice(-2).map(h => h.content || '').join(' ');
+    named = Object.keys(MENU_NAMES).filter(n => MENU_NAMES[n].test(recent));
+  }
+  if (!named.length && !(category === 'gastronomija' && (intent || stems.length))) return { note: '', names: [] };
+
+  const blocks = [];
+  const names = [];
+  if (named.length) {
+    for (const naziv of named.slice(0, 2)) {
+      const m = menus[naziv];
+      const hits = narrowToNamedDish(stems.length ? m.stavke.filter(it => menuItemMatches(it, stems)) : [], text);
+      if (stems.length && !hits.length) {
+        const cats = [...new Set(m.stavke.map(it => it.k).filter(Boolean))].join(', ');
+        blocks.push(`${menuHeader(naziv, m)}\nNa ovom jelovniku nema tražene stavke. Jelovnik sadrži: ${cats || 'stavke nisu izdvojene'}.`);
+        names.push(naziv);
+        continue;
+      }
+      const list = (hits.length ? hits : m.stavke);
+      const byCat = {};
+      for (const it of list) (byCat[it.k || ''] ||= []).push(menuLine(it));
+      const body = Object.entries(byCat).map(([k, v]) => `${k}: ${v.join('; ')}`).join('\n');
+      blocks.push(`${menuHeader(naziv, m)}\n${body || 'Stavke nisu izdvojene; gosta uputi na poveznicu jelovnika.'}`);
+      names.push(naziv);
+    }
+  } else if (stems.length) {
+    for (const [naziv, m] of Object.entries(menus)) {
+      const hits = narrowToNamedDish(m.stavke.filter(it => menuItemMatches(it, stems)), text);
+      if (!hits.length) continue;
+      blocks.push(`${menuHeader(naziv, m)}\n${hits.slice(0, 8).map(menuLine).join('; ')}`);
+      names.push(naziv);
+    }
+  } else {
+    for (const [naziv, m] of Object.entries(menus)) {
+      const byCat = {};
+      for (const it of m.stavke) (byCat[it.k || ''] ||= []).push(it.c ? parseFloat(it.c.replace(',', '.')) : null);
+      const parts = Object.entries(byCat).map(([k, v]) => {
+        const nums = v.filter(x => x !== null);
+        return nums.length ? `${k} ${Math.min(...nums)}–${Math.max(...nums)} €` : k;
+      });
+      blocks.push(`${menuHeader(naziv, m)}\n${parts.join('; ') || 'Stavke nisu izdvojene; gosta uputi na poveznicu jelovnika.'}`);
+      names.push(naziv);
+    }
+  }
+  const withMenu = Object.keys(menus).join(', ');
+  const note = `\n[SUSTAV: JELOVNICI s vlastitih stranica objekata, provjereno ${Object.values(menus)[0].provjereno}. Cijene navodi točno kako pišu, nikad ih ne procjenjuj i ne izmišljaj. Uz cijene jednom kratko reci da su s jelovnika objekta i da ih je dobro potvrditi. Ako piše STARIJI PODACI, to izričito napomeni. Ako piše BEZ CIJENA, reci da cijene nemamo. Jelovnik imamo samo za: ${withMenu}. Za druge objekte reci da nemamo jelovnik i uputi na njihov kontakt.\n${blocks.join('\n\n').slice(0, 14000)}]`;
+  return { note, names };
 }
 
 function stripBulletList(text) {
@@ -1371,7 +1497,15 @@ export default async function handler(req, res) {
     }
 
     // Popis tražene vrste smještaja prikazuje se cijeli: to je ono što gost i pita.
-    const cardItems = detectedCategory === 'smjestaj' ? items : items.slice(0, MAX_CARDS_WITH_ANSWER);
+    const menuInfo = menuContext(message, history, detectedCategory);
+    const menuFirst = menuInfo.names.flatMap(n => {
+      const known = items.find(i => i.naziv === n);
+      if (known) return [known];
+      const raw = (db.gastronomija?.restorani || []).find(r => r.naziv === n);
+      return raw ? [item(raw)] : [];
+    });
+    const rankedItems = menuFirst.length ? [...menuFirst, ...items.filter(i => !menuInfo.names.includes(i.naziv))] : items;
+    const cardItems = detectedCategory === 'smjestaj' ? rankedItems : rankedItems.slice(0, MAX_CARDS_WITH_ANSWER);
     const itemsNote = cardItems.length > 0
       ? wantsItinerary
         ? `\n[SUSTAV: Automatski će biti prikazano ${cardItems.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
@@ -1395,7 +1529,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote }
+        { role: 'user', content: message + itemsNote + namedNote + menuInfo.note }
       ]
     });
 
