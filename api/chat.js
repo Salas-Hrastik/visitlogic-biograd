@@ -332,7 +332,7 @@ function detectCategory(msg, lastCategory, db) {
 
   // Sajam je događanje; bez ovoga "boat" završava u nautici. Parking uz sajam ostaje praktična info.
   if (/turističk\w* agencij|turistične agencij|tourist agenc|travel agenc|reiseagentur|reisebüro|agenzi\w* (turistic|di viaggi)|utazási iroda|cestovn\w* agent/.test(m)) return 'smjestaj';
-  if (/pansion|pension|penzion|panzió|privatni smještaj|private accommodation|apartm|appartament|szállás|ubytov|nastanit|alloggi|unterkunft|ferienwohnung|ferienh|mediteransko selo|mediterranean village|san antonio|crvena luka|bungalov|kuć\w* za odmor|\bkemp/.test(m)) return 'smjestaj';
+  if (/pansion|pension|penzion|panzió|privatni smještaj|private accommodation|apartm|appartament|szállás|ubytov|nastanit|alloggi|unterkunft|ferienwohnung|ferienh|mediteransk\w* sel|mediterranean village|san antonij?\w*|crven\w* luk|bungalov|kuć\w* za odmor|\bkemp/.test(m)) return 'smjestaj';
 
   if (/škver|skver/.test(m) && !/izlet|brod|kornat|trip|boat/.test(m)) return 'smjestaj';
 
@@ -683,7 +683,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     const isApartman = has('apartm', 'appartament', 'privat', 'privát', 'zasebn', 'soukrom', 'súkrom', 'magán', 'soba', 'stanza', 'szoba', 'pokoj', 'izba',
       'rent', 'room', 'wohnung', 'zimmer', 'kuća za odmor', 'kuće za odmor', 'holiday home', 'ferienh');
     const isKamp     = has('kamp', 'kemp', 'camp', 'šator', 'karavan', 'mobile home', 'zelt');
-    const isVila     = has('vila', 'villa', 'bungalov', 'bungalow', 'crvena luka', 'san antonio', 'mediteransko selo', 'mediterranean village');
+    const isVila     = has('vila', 'villa', 'bungalov', 'bungalow', 'crven', 'san anton', 'mediteransk', 'mediterranean village');
     const isPansion  = has('pansion', 'pension', 'penzion', 'panzió', 'guest house', 'guesthouse', 'b&b');
 
     // Gumb za cijene vodi samo na vlastitu stranicu objekta: TZ stranice ne prikazuju cijene.
