@@ -79,7 +79,7 @@ export const db = {
       "naziv": "Plaža Soline",
       "opis": "Plaža u borovoj šumi — kombinacija plaže i hladovine borova. Mirno obiteljsko okruženje s čistim morem, tuševima i sadržajima. Posebno popularna u podne zbog sjene.",
       "tip": "šljunčana, uz borovu šumu",
-      "sadrzaji": "tuševi, ležaljke, restoran/bar u blizini",
+      "sadrzaji": "tuševi, ležaljke, restoran/bar u blizini, Aqualifter (pristup moru za osobe s invaliditetom)",
       "pogodna_za": "obitelji, opuštanje, djeca",
       "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwerifmqz9VhepFhPLc70PdeMSWfXUCPp5SdB71-ir28340XoxpqmYpR_f5Ry9ud-t_ZQNaXpLyCzsBmG02opUkZlQ7aKBKmGIrqswgJ4JNdaxqwzudVy_jG0Lvkzre5d6iRWskk4hjMfWubS=w400-h220-k-no",
       "web": "",
@@ -138,6 +138,20 @@ export const db = {
       "slika": "",
       "web": "",
       "karta": "https://maps.google.com/?q=Crvena+Luka+Beach+Biograd",
+      "ocjena": "",
+      "recenzija": "",
+      "recenzija_izvor": "",
+      "recenzija_url": ""
+    },
+    {
+      "naziv": "Bazen Ilirija",
+      "opis": "Bazen uz more, na početku niza biogradskih plaža povezanih uređenom šetnicom. Ispred bazena postavljen je Aqualifter, pomagalo koje osobama s invaliditetom omogućuje lakši i sigurniji ulazak u more.",
+      "tip": "bazen, uz more",
+      "sadrzaji": "bazen, Aqualifter (pristup moru za osobe s invaliditetom)",
+      "pogodna_za": "kupanje, osobe s invaliditetom",
+      "slika": "",
+      "web": "",
+      "karta": "https://maps.google.com/?q=Bazen+Ilirija+Biograd+na+Moru",
       "ocjena": "",
       "recenzija": "",
       "recenzija_izvor": "",
@@ -1327,7 +1341,7 @@ export const db = {
       {
         "naziv": "Pansion Gašpar",
         "opis": "Pansion u mirnom dijelu Biograda. info@pension-gaspar.com",
-        "lokacija": "Portoruša 11, Biograd na Moru",
+        "lokacija": "Portoruša 11 i 13, Biograd na Moru",
         "telefon": "",
         "email": "info@pension-gaspar.com",
         "slika": "",
@@ -1853,25 +1867,11 @@ export const db = {
         "web": "https://bnm-portal.com/biograd-slavi-peto-jubilarno-izdanje-bozicne-utrke-prijave-su-pocele/"
       },
       {
-        "naziv": "Oživljena povijest Biograda",
-        "opis": "Kostimirano vođenje starom jezgrom grada, s okupljanjem ispred zgrade Turističke zajednice.",
-        "termin": "12.09.2026",
-        "lokacija": "Okupljanje ispred TZG Biograd na Moru",
-        "web": ""
-      },
-      {
-        "naziv": "Ivan Vidović — koncert duhovne glazbe",
-        "opis": "Večernji koncert duhovne glazbe ispred Gradske vijećnice.",
-        "termin": "13.09.2026",
-        "lokacija": "Ispred Gradske vijećnice, Trg kralja Tomislava 5, Biograd na Moru",
-        "web": ""
-      },
-      {
-        "naziv": "CRO Race 2026",
-        "opis": "Biograd na Moru domaćin je starta 2. etape međunarodne biciklističke utrke CRO Race.",
-        "termin": "23.09.2026",
-        "lokacija": "Biograd na Moru",
-        "web": ""
+        "naziv": "Biogradska noć",
+        "opis": "Tradicionalna ljetna manifestacija posvećena Danu pobjede i domovinske zahvalnosti, koja na biogradskoj rivi okuplja tisuće posjetitelja — koncerti, gastronomska ponuda, defile osvijetljenih brodova i piromuzički vatromet.",
+        "termin": "kolovoz (tradicionalno 4. kolovoza; sljedeći program još nije objavljen)",
+        "lokacija": "Riva, Biograd na Moru",
+        "web": "https://www.discover-biograd.com/dogadanja/biogradska-noc-0408"
       },
       {
         "naziv": "Biograd family & friends festival",
