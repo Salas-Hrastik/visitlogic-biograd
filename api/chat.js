@@ -1175,8 +1175,9 @@ function menuItemMatches(it, stems) {
 
 // "pizza margherita" treba margheritu, a ne prvih osam pizza s jelovnika.
 function narrowToNamedDish(hits, text) {
-  const words = text.toLowerCase().split(/[^\p{L}]+/u).filter(w => w.length >= 5);
-  const exact = hits.filter(it => words.some(w => it.n.toLowerCase().includes(w.slice(0, -1))));
+  const spelling = t => t.toLowerCase().replace(/margherit/g, 'margarit').replace(/vesuvio/g, 'vezuvio');
+  const words = spelling(text).split(/[^\p{L}]+/u).filter(w => w.length >= 5);
+  const exact = hits.filter(it => words.some(w => spelling(it.n).includes(w.slice(0, -1))));
   return exact.length ? exact : hits;
 }
 
