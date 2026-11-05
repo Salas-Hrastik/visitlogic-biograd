@@ -2,10 +2,10 @@ export const db = {
   "grad": {
     "naziv": "Biograd na Moru",
     "opis": "Biograd na Moru je primorski grad u Zadarskoj županiji, smješten na dalmatinskoj obali između Zadra i Šibenika. Nekadašnja hrvatska kraljevska prijestolnica danas je jedno od najpopularnijih turističkih odredišta na Jadranu — poznat po Nacionalnom parku Kornati, marini Kornati (jedna od najvećih marina u Hrvatskoj), predivnim plažama i bogatoj dalmatinskoj gastronomiji.",
-    "adresa_tz": "Trg kralja Tomislava 1, 23210 Biograd na Moru",
+    "adresa_tz": "Put Solina 4, 23210 Biograd na Moru",
     "telefon_tz": "+385 23 383 123",
-    "email_tz": "info@biograd-na-moru.hr",
-    "web_tz": "https://www.biograd-na-moru.hr",
+    "email_tz": "info@tzg-biograd.hr",
+    "web_tz": "https://www.discover-biograd.com",
     "web_grad": "https://www.grad-biograd.hr",
     "koordinate": "43°56′ N, 15°26′ E",
     "koordinate_decimalne": { "lat": 43.9397, "lng": 15.4455 }

@@ -385,7 +385,7 @@ function detectCategory(msg, lastCategory, db) {
     if (eventWords.some(w => m.includes(w))) return 'dogadanja';
   }
 
-  if (m.includes('događaj') || m.includes('dogadaj') || m.includes('festival') || m.includes('boat show') || m.includes('manifestac') || m.includes('program') || m.includes('što se događa') || m.includes('što ima') || m.includes('ribarska večer') || m.includes('krešimir') || m.includes('ljetna zabava') || m.includes('koncerti')
+  if (m.includes('događaj') || m.includes('dogadaj') || m.includes('događanj') || m.includes('dogadanj') || m.includes('festival') || m.includes('boat show') || m.includes('manifestac') || m.includes('program') || m.includes('što se događa') || m.includes('što ima') || m.includes('ribarska večer') || m.includes('krešimir') || m.includes('ljetna zabava') || m.includes('koncerti')
     || m.includes('vikend') || m.includes('noć') || m.includes('biogradska noć') || m.includes('slovenski') || m.includes('slovenian') || m.includes('family') || m.includes('friends') || m.includes('priredba') || m.includes('smotra') || m.includes('sajam') || m.includes('karneval') || m.includes('praznik') || m.includes('blagdan') || m.includes('proslava') || m.includes('nastup') || m.includes('kada je') || m.includes('kad je') || m.includes('datum')
     || m.includes('event') || m.includes('what\'s on') || m.includes('upcoming') || m.includes('celebration') || m.includes('weekend') || m.includes('night') || m.includes('when is')
     || m.includes('veranstaltung') || m.includes('fest') || m.includes('bootsmesse') || m.includes('wann') || m.includes('wochenende')
