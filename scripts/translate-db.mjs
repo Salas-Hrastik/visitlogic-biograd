@@ -26,7 +26,9 @@ function extract() {
     if (Array.isArray(o)) return o.forEach(walk);
     if (o && typeof o === 'object') {
       for (const [k,v] of Object.entries(o)) {
-        if (TRANSLATE_FIELDS.has(k) && typeof v === 'string' && v.trim()) set.add(v.trim());
+        // Termin se prevodi samo kad je opisan riječima; datumi ("04.06.2026") ostaju kakvi jesu.
+        const isTextTermin = k === 'termin' && typeof v === 'string' && !/\d{1,2}\.\s*\d{1,2}\./.test(v);
+        if ((TRANSLATE_FIELDS.has(k) || isTextTermin) && typeof v === 'string' && v.trim()) set.add(v.trim());
         else walk(v);
       }
     }

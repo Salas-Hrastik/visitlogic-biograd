@@ -43,7 +43,7 @@ const CATEGORY_CONTEXTS = {
   atrakcije:   (db) => ({ grad: db.grad, atrakcije: db.atrakcije }),
   dogadanja:   (db) => {
     // Proslijedi AI-u SAMO buduće evente — prošli ne smiju biti vidljivi modelu
-    const todayMs = Date.now();
+    const todayMs = new Date().setHours(0, 0, 0, 0);
     const eventiFiltrirani = (db.dogadanja?.eventi || []).filter(e => {
       const d = terminToDate(e.termin);
       if (!d) return true; // bez fiksnog datuma → godišnji event, uvijek prikaži
@@ -322,8 +322,14 @@ const TR = {
 };
 
 // ===== DETEKCIJA KATEGORIJE IZ PORUKE =====
+// Riječi iz naziva događanja koje se javljaju i u običnim pitanjima pa ne smiju birati kategoriju.
+const GENERIC_EVENT_WORDS = new Set(['biograd', 'biogradu', 'biograda', 'moru', 'boat', 'show', 'koncert', 'friends', 'family', 'sportska', 'natjecanja', 'povijest', 'race']);
+
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
+
+  // Sajam je događanje; bez ovoga "boat" završava u nautici. Parking uz sajam ostaje praktična info.
+  if ((m.includes('boat show') || m.includes('bootsmesse')) && !m.includes('park')) return 'dogadanja';
 
   // Prioritet: ako poruka kombinira aktivnosti/plaže + Kornati → uvijek Kornati kategorija
   const hasKornati = m.includes('kornat');
@@ -375,7 +381,7 @@ function detectCategory(msg, lastCategory, db) {
   if (db?.dogadanja?.eventi?.length) {
     const eventWords = db.dogadanja.eventi
       .flatMap(e => (e.naziv || '').toLowerCase().split(/[\s\-&]+/))
-      .filter(w => w.length > 3);
+      .filter(w => w.length > 3 && !GENERIC_EVENT_WORDS.has(w));
     if (eventWords.some(w => m.includes(w))) return 'dogadanja';
   }
 
@@ -734,7 +740,7 @@ function getCategoryItems(category, message = '') {
   }
   if (category === 'dogadanja') {
     const today = new Date();
-    const todayMs = today.getTime();
+    const todayMs = new Date().setHours(0, 0, 0, 0);
 
     // Filtriraj opće događaje — prikaži samo nadolazeće (s datumom u budućnosti)
     const eventiAktivni = (db.dogadanja?.eventi || []).filter(e => {
@@ -1244,6 +1250,9 @@ function buildCategoryIntro(cat, n, lang) {
   return tmpl(n, name);
 }
 
+// Uz tekstualni odgovor kartice su dopuna; puni popis je na tabu kategorije.
+const MAX_CARDS_WITH_ANSWER = 8;
+
 // ===== GLAVNI HANDLER =====
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -1292,20 +1301,9 @@ export default async function handler(req, res) {
       ((msgLow.includes('konkretan') || msgLow.includes('konkretno') || msgLow.includes('specific') || msgLow.includes('konkreten')) &&
        (msgLow.includes('prijedlog') || msgLow.includes('plan') || msgLow.includes('odlazak') || msgLow.includes('izlet') || msgLow.includes('posjet') || msgLow.includes('trip') || msgLow.includes('visit') || msgLow.includes('ausflug')));
 
-    // Detektiramo opći zahtjev za detaljima/preporukom (ali ne itinerer)
-    const wantsDetail = !wantsItinerary && (
-      msgLow.includes('prijedlog') || msgLow.includes('preporuč') || msgLow.includes('savjet') ||
-      msgLow.includes('kako') || msgLow.includes('što trebam') || msgLow.includes('detalj') ||
-      msgLow.includes('recommend') || msgLow.includes('suggest') || msgLow.includes('advice') ||
-      msgLow.includes('how to') || msgLow.includes('what should') || msgLow.includes('best way') ||
-      msgLow.includes('empfehlung') || msgLow.includes('vorschlag') ||
-      msgLow.includes('priporoč') || msgLow.includes('nasvet') || msgLow.includes('predlog') ||
-      msgLow.includes('consig') || msgLow.includes('javasol'));
-
-    // ⚡ FAST PATH (kao Slavonski Brod): kategorija s karticama → instant odgovor
-    // bez AI poziva i bez prijevoda kartica. AI se koristi samo za itinerer i
-    // slobodna/konverzacijska pitanja (kad nema kartica).
-    if (items.length > 0 && (isForced || (!wantsItinerary && !wantsDetail))) {
+    // Klik na tab je pregled kategorije: instant lista bez AI poziva.
+    // Tipkano pitanje uvijek ide kroz AI jer traži odgovor, a ne popis.
+    if (items.length > 0 && isForced) {
       return res.status(200).json({
         reply: buildCategoryIntro(detectedCategory, items.length, lang),
         category: detectedCategory,
@@ -1315,19 +1313,17 @@ export default async function handler(req, res) {
       });
     }
 
-    const itemsNote = items.length > 0
+    const cardItems = items.slice(0, MAX_CARDS_WITH_ANSWER);
+    const itemsNote = cardItems.length > 0
       ? wantsItinerary
-        ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
-        : wantsDetail
-          ? `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Korisnik traži konkretan savjet/preporuku — napiši 2–3 informativne rečenice s praktičnim detaljima (cijena, trajanje, savjet za rezervaciju). NE nabrajaj kartice. Kartice su prikazane automatski.]`
-          : `\n[SUSTAV: Automatski će biti prikazano ${items.length} vizualnih kartica s detaljima. Napiši SAMO kratku pozitivnu uvodnu rečenicu — NE govori da nemaš informacije, jer ih imaš u bazi.]`
+        ? `\n[SUSTAV: Automatski će biti prikazano ${cardItems.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
+        : `\n[SUSTAV: Ispod odgovora automatski će biti prikazano ${cardItems.length} vizualnih kartica. Odgovori IZRAVNO na korisnikovo pitanje u 1–3 rečenice koristeći podatke iz baze (npr. cijena, datum, udaljenost, preporuka). Ako traženog podatka nema u bazi, reci to i uputi na TZ. NE nabrajaj kartice.]`
       : '';
 
     // Poruke za Claude (do 10 prethodnih; system ide kao zaseban parametar)
     const historyMessages = (history || []).slice(-10)
       .filter(m => m.role === 'user' || m.role === 'assistant');
 
-    // Samo jedan AI poziv (itinerer / konverzacijska pitanja). Anthropic Opus — elokventniji.
     const completion = await anthropic.messages.create({
       model: 'claude-sonnet-5',
       max_tokens: 800,
@@ -1354,14 +1350,14 @@ export default async function handler(req, res) {
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
-    const reply = items.length > 0 ? stripBulletList(rawReply) : rawReply;
+    const reply = cardItems.length > 0 ? stripBulletList(rawReply) : rawReply;
 
     return res.status(200).json({
       reply,
       category: detectedCategory,
       lang,
       suggestions,
-      items: localizeItems(items, lang)
+      items: localizeItems(cardItems, lang)
     });
 
   } catch (err) {

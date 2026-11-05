@@ -46,7 +46,7 @@ export const db = {
       },
       {
         "razdoblje": "Suvremeni turizam",
-        "opis": "Danas je Biograd jedno od vodećih turističkih odredišta srednje Dalmacije. Marina Kornati je nautičko središte, a NP Kornati privlači posjetitelje iz cijelog svijeta. Biograd Boat Show (rujan) jedan je od najvećih sajmova nautike u jugoistočnoj Europi."
+        "opis": "Danas je Biograd jedno od vodećih turističkih odredišta srednje Dalmacije. Marina Kornati je nautičko središte, a NP Kornati privlači posjetitelje iz cijelog svijeta. Biograd Boat Show (listopad) jedan je od najvećih sajmova nautike u jugoistočnoj Europi."
       }
     ],
     "zanimljivosti": [
@@ -54,7 +54,7 @@ export const db = {
       "Nasuprot Biograda nalazi se otok Pašman, povezan trajektom (10 min vožnje)",
       "NP Kornati — 140 otoka, 89 otočića i hridi — idealno za izlete brodom iz Biograda",
       "Marina Kornati jedna je od najvećih marina na Jadranu s preko 800 vezova",
-      "Biograd Boat Show (rujan/listopad) — jedan od najvećih nautičkih sajmova u regiji",
+      "Biograd Boat Show (listopad) — jedan od najvećih nautičkih sajmova u regiji",
       "Vransko jezero (6 km od Biograda) — najveće prirodno jezero u Hrvatskoj, park prirode",
       "Zadarska županija ima više sunčanih sati od većine europskih destinacija (2700+ h/godišnje)"
     ]
@@ -1835,7 +1835,7 @@ export const db = {
   },
 
   "dogadanja": {
-    "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (rujan/listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Dalmatinske tradicijske igre (lipanj).",
+    "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Dalmatinske tradicijske igre (lipanj).",
     "eventi": [
       {
         "naziv": "Oživljena povijest Biograda",
@@ -1874,8 +1874,8 @@ export const db = {
       },
       {
         "naziv": "Biograd Boat Show",
-        "opis": "Jedan od najvećih nautičkih sajmova u jugoistočnoj Europi, koji se tradicionalno održava krajem rujna/početkom listopada u Marini Kornati. Izlaže se nekoliko stotina plovila svih vrsta — jedrilice, motorne jahte, katamarani, gumenjaci. Zlatni član IFBSO mreže (36 najprestižnijih sajmova nautike na svijetu). Privlači desetke tisuća posjetitelja iz regije.",
-        "termin": "kraj rujna / početak listopada",
+        "opis": "Jedan od najvećih nautičkih sajmova u jugoistočnoj Europi, koji se održava u Marini Kornati (zadnje izdanje: 21.–25. listopada 2026.). Izlaže se nekoliko stotina plovila svih vrsta — jedrilice, motorne jahte, katamarani, gumenjaci. Zlatni član IFBSO mreže (36 najprestižnijih sajmova nautike na svijetu). Privlači desetke tisuća posjetitelja iz regije.",
+        "termin": "listopad (sljedeći termin još nije objavljen)",
         "lokacija": "Marina Kornati, Biograd na Moru",
         "web": "http://bbs.com.hr/"
       },
