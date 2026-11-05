@@ -1009,7 +1009,7 @@ export const db = {
         "lokacija": "Tina Ujevića 7, 23210 Biograd na Moru",
         "telefon": "+385 23 358 333",
         "email": "reservations@ilirijabiograd.com",
-        "slika": "https://ilirijabiograd.com/media/image/5/7s9a0120.webp",
+        "slika": "https://www.discover-biograd.com/attachments/preview/682c780d2cb59/kornati.jpeg",
         "web": "https://ilirijabiograd.com/en/hotel-kornati",
         "karta": "https://maps.google.com/?q=Hotel+Kornati+Biograd",
         "ocjena": "4.2",
