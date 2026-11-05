@@ -1634,20 +1634,6 @@ export const db = {
         "recenzija_url": ""
       },
       {
-        "naziv": "Vila Smirna ★★★★",
-        "opis": "Vila s apartmanima, 4★ kategorija.",
-        "lokacija": "Biograd na Moru",
-        "telefon": "",
-        "email": "",
-        "slika": "",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Vila+Smirna+Biograd+na+Moru",
-        "ocjena": "4★",
-        "recenzija": "",
-        "recenzija_izvor": "",
-        "recenzija_url": ""
-      },
-      {
         "naziv": "Guest House Dia",
         "opis": "Guest house otvoren 0–24h.",
         "lokacija": "Biograd na Moru",
