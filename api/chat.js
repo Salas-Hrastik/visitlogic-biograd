@@ -1196,7 +1196,7 @@ ${seasonCtx.izleti_kornati}
 SAVJET ZA IZLET: ${seasonCtx.savjet_izlet}
 
 BAZA PODATAKA ZA OVO PITANJE (koristi ove informacije):
-${JSON.stringify(context, null, 0).substring(0, 14000)}`;
+${JSON.stringify(context, null, 0).substring(0, 20000)}`;
 }
 
 // ===== INSTANT UVOD ZA KATEGORIJE (bez AI poziva — kao Slavonski Brod) =====
