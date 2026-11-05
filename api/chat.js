@@ -1548,13 +1548,26 @@ export default async function handler(req, res) {
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
     const reply = cardItems.length > 0 && !menuInfo.note ? stripBulletList(rawReply) : rawReply;
 
+    // Objekti koje odgovor spominje idu prvi među kartice, i kad nisu bili u izboru.
+    const links = replyLinks(reply);
+    const mentioned = cardItems.length ? links.flatMap(l => {
+      const known = rankedItems.find(i => i.naziv === l.naziv);
+      if (known) return [known];
+      const raw = detectedCategory === 'gastronomija' && (db.gastronomija?.restorani || []).find(r => r.naziv === l.naziv);
+      return raw ? [item(raw)] : [];
+    }) : [];
+    const shownItems = mentioned.length
+      ? [...mentioned, ...cardItems.filter(i => !mentioned.includes(i) && !mentioned.some(x => x.naziv === i.naziv))]
+          .slice(0, Math.max(cardItems.length, mentioned.length))
+      : cardItems;
+
     return res.status(200).json({
       reply,
       category: detectedCategory,
       lang,
       suggestions,
-      links: replyLinks(reply),
-      items: localizeItems(cardItems, lang)
+      links,
+      items: localizeItems(shownItems, lang)
     });
 
   } catch (err) {
