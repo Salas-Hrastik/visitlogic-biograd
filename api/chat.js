@@ -31,6 +31,12 @@ function terminToDate(termin) {
   return null;
 }
 
+// Termin opisan riječima nema datum: vidljivo_do određuje kad takvo događanje nestaje.
+function isEventActive(e) {
+  const end = terminToDate(e.vidljivo_do || e.termin);
+  return !end || end.getTime() >= new Date().setHours(0, 0, 0, 0);
+}
+
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
   plaze:       (db) => ({ grad: db.grad, plaze: db.plaze }),
@@ -41,19 +47,10 @@ const CATEGORY_CONTEXTS = {
   izleti:      (db) => ({ grad: db.grad, izleti: db.izleti }),
   sport:       (db) => ({ grad: db.grad, sport: db.sport }),
   atrakcije:   (db) => ({ grad: db.grad, atrakcije: db.atrakcije }),
-  dogadanja:   (db) => {
-    // Proslijedi AI-u SAMO buduće evente — prošli ne smiju biti vidljivi modelu
-    const todayMs = new Date().setHours(0, 0, 0, 0);
-    const eventiFiltrirani = (db.dogadanja?.eventi || []).filter(e => {
-      const d = terminToDate(e.termin);
-      if (!d) return true; // bez fiksnog datuma → godišnji event, uvijek prikaži
-      return d.getTime() >= todayMs;
-    });
-    return {
-      grad: db.grad,
-      dogadanja: { ...db.dogadanja, eventi: eventiFiltrirani }
-    };
-  },
+  dogadanja:   (db) => ({
+    grad: db.grad,
+    dogadanja: { ...db.dogadanja, eventi: (db.dogadanja?.eventi || []).filter(isEventActive) }
+  }),
   opcenito:    (db) => ({ grad: db.grad, opcenito: db.opcenito }),
   prakticno:   (db) => ({ grad: db.grad, prakticne_info: db.prakticne_info }),
   klima:       (db) => ({ grad: db.grad, klima: db.klima }),
@@ -323,7 +320,7 @@ const TR = {
 
 // ===== DETEKCIJA KATEGORIJE IZ PORUKE =====
 // Riječi iz naziva događanja koje se javljaju i u običnim pitanjima pa ne smiju birati kategoriju.
-const GENERIC_EVENT_WORDS = new Set(['biograd', 'biogradu', 'biograda', 'moru', 'boat', 'show', 'koncert', 'friends', 'family', 'sportska', 'natjecanja', 'povijest', 'race']);
+const GENERIC_EVENT_WORDS = new Set(['biograd', 'biogradu', 'biograda', 'moru', 'boat', 'show', 'koncert', 'friends', 'family', 'sportska', 'natjecanja', 'povijest', 'race', '2026']);
 
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
@@ -739,50 +736,9 @@ function getCategoryItems(category, message = '') {
     return filterByMessage(svi, message);
   }
   if (category === 'dogadanja') {
-    const today = new Date();
-    const todayMs = new Date().setHours(0, 0, 0, 0);
-
-    // Filtriraj opće događaje — prikaži samo nadolazeće (s datumom u budućnosti)
-    const eventiAktivni = (db.dogadanja?.eventi || []).filter(e => {
-      const d = terminToDate(e.termin);
-      if (!d) return true; // bez datuma → uvijek prikaži (godišnji eventi bez fiksnog termina)
-      return d.getTime() >= todayMs;
-    });
-
-    // Određeni, mesečni program (kolovoz i dr.) — prikaži samo nadolazeće
-    // "datum" format: "2. 8." → uzimamo mjesec i dan, godina = tekuća ili sljedeća
-    function datumEventToDate(datum) {
-      if (!datum) return null;
-      // Uzmi zadnji dan iz raspona "1.–3. 8." ili "22.–24. 8."
-      const clean = datum.replace(/\s/g, '');
-      const parts = clean.split('–');
-      const last = parts[parts.length - 1];
-      // Format: "3.8." ili "24.8."
-      const m = last.match(/(\d{1,2})\.(\d{1,2})\./);
-      if (!m) return null;
-      const day = parseInt(m[1]), month = parseInt(m[2]) - 1;
-      let year = today.getFullYear();
-      // Ako je taj dan ove godine već prošao, prebaci na sljedeću godinu
-      const candidate = new Date(year, month, day);
-      if (candidate.getTime() < todayMs) year++;
-      return new Date(year, month, day);
-    }
-
-    const kolovozAktivni = (db.dogadanja?.kolovoz_2025 || []).filter(e => {
-      const d = datumEventToDate(e.datum);
-      if (!d) return true;
-      return d.getTime() >= todayMs;
-    });
-
-    // Spoji: specifični program (kolovoz) + opći nadolazeći
-    const svi = [
-      ...kolovozAktivni.map(e => item(
-        { naziv: e.naziv, opis: `${e.datum} u ${e.vrijeme}`, IMAGE_URL: e.IMAGE_URL },
-        { adresa: e.lokacija || '' }
-      )),
-      ...eventiAktivni.map(e => item(e, { adresa: e.termin || '' }))
-    ];
-    return svi;
+    return (db.dogadanja?.eventi || [])
+      .filter(isEventActive)
+      .map(e => item(e, { adresa: e.termin || '', lokacija: e.lokacija || '' }));
   }
   if (category === 'prakticno') {
     const m = (message || '').toLowerCase();
@@ -1205,6 +1161,8 @@ function buildDynamicSystem(lang, context, weatherCtx) {
 
   return `JEZIK ODGOVORA: Odgovaraj ISKLJUČIVO na ${targetLangLabel} jeziku. ${langNote}
 
+DANAŠNJI DATUM: ${new Date().toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Zagreb' })}
+
 AKTUALNO VRIJEME (REALNI PODACI — koristi ih konkretno!):
 ${weatherSummary}
 ${weatherDirectives}
@@ -1281,7 +1239,7 @@ export default async function handler(req, res) {
     const isForced = forcedCategory && CATEGORY_CONTEXTS[forcedCategory];
     const detectedCategory = isForced ? forcedCategory : detectCategory(message, lastCategory, db);
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
-    const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito };
+    const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito, atrakcije: db.atrakcije };
 
     // getCategoryItems je sinkron — pokrećemo PRIJE system prompta da LLM zna o karticama
     const items = getCategoryItems(detectedCategory, message);

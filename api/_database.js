@@ -1838,6 +1838,21 @@ export const db = {
     "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Dalmatinske tradicijske igre (lipanj).",
     "eventi": [
       {
+        "naziv": "Advent u Biogradu",
+        "opis": "Tradicionalni Božićni sajam s kućicama, blagdanskim delicijama, koncertima i programom za djecu, koji se prema Programu rada Turističke zajednice održava četiri subote tijekom adventa. Detaljan program za 2026. još nije objavljen; prošle godine održavao se od 18 sati u centralnom parku na Trgu hrvatskih velikana.",
+        "termin": "prosinac 2026. (subotom, točni datumi još nisu objavljeni)",
+        "vidljivo_do": "31.12.2026",
+        "lokacija": "Biograd na Moru",
+        "web": "https://www.discover-biograd.com/dogadanja/kalendar-dogadanja"
+      },
+      {
+        "naziv": "Božićna utrka 2026",
+        "opis": "Peto, jubilarno izdanje utrke Atletskog kluba Biograd. Program počinje u 11:00 dječjim utrkama (100–500 m), a u 12:30 startaju odrasli na 1 km, 5 km i memorijalnoj utrci \"Ten for Jole\" na 10 km. Kotizacija: 10 € za djecu, 20 € za odrasle. Kontakt: aklubbiograd@gmail.com.",
+        "termin": "12.12.2026",
+        "lokacija": "Riva, ispred zgrade gradske uprave, Biograd na Moru",
+        "web": "https://bnm-portal.com/biograd-slavi-peto-jubilarno-izdanje-bozicne-utrke-prijave-su-pocele/"
+      },
+      {
         "naziv": "Oživljena povijest Biograda",
         "opis": "Kostimirano vođenje starom jezgrom grada, s okupljanjem ispred zgrade Turističke zajednice.",
         "termin": "12.09.2026",
