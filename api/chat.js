@@ -326,6 +326,9 @@ function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
 
   // Sajam je događanje; bez ovoga "boat" završava u nautici. Parking uz sajam ostaje praktična info.
+  if (/turističk\w* agencij|turistične agencij|tourist agenc|travel agenc|reiseagentur|reisebüro|agenzi\w* (turistic|di viaggi)|utazási iroda|cestovn\w* agent/.test(m)) return 'smjestaj';
+  if (/pansion|pension|penzion|panzió|privatni smještaj|private accommodation|apartm|appartament|szállás|ubytov|nastanit|alloggi|unterkunft|ferienwohnung|ferienhaus|kuć\w* za odmor|\bkemp/.test(m)) return 'smjestaj';
+
   if ((m.includes('boat show') || m.includes('bootsmesse')) && !m.includes('park')) return 'dogadanja';
 
   // Prioritet: ako poruka kombinira aktivnosti/plaže + Kornati → uvijek Kornati kategorija
@@ -574,6 +577,8 @@ function item(o, extra = {}) {
     slika:           proxyImg(o.slika || ''),
     adresa:          o.adresa || o.lokacija || o.tip || o.udaljenost || '',
     telefon:         o.telefon || '',
+    telefon2:        o.telefon2 || '',
+    email:           o.email || '',
     web:             o.web || '',
     karta:           o.karta || '',
     recenzija:       o.recenzija || '',
@@ -611,7 +616,7 @@ function filterByMessage(lista, msg) {
   return matched.length > 0 ? matched : lista;
 }
 
-function getCategoryItems(category, message = '') {
+function getCategoryItems(category, message = '', { full = false } = {}) {
   if (category === 'plaze') {
     const svi = (db.plaze || []).map(p => item(p, { adresa: p.tip || '' }));
     return filterByMessage(svi, message);
@@ -665,45 +670,40 @@ function getCategoryItems(category, message = '') {
   if (category === 'smjestaj') {
     const m = (message || '').toLowerCase();
 
-    // Definiraj sve tipove unaprijed
-    const isHotel    = m.includes('hotel') || m.includes('hotels');
-    const isApartman = m.includes('apartman') || m.includes('privat') || m.includes('soba') ||
-      m.includes('rent') || m.includes('apartment') || m.includes('private') || m.includes('room') ||
-      m.includes('wohnung') || m.includes('ferienwohnung');
-    const isKamp     = m.includes('kamp') || m.includes('camping') || m.includes('šator') ||
-      m.includes('karavan') || m.includes('mobile home') || m.includes('zelt');
-    const isVila     = m.includes('vila') || m.includes('bungalov') || m.includes('villa') ||
-      m.includes('crvena luka') || m.includes('san antonio');
-    const isPansion  = m.includes('pansion') || m.includes('guest house') || m.includes('guesthouse') ||
-      m.includes('pension') || m.includes('b&b');
+    const has = (...w) => w.some(x => m.includes(x));
+    const isAgencija = has('agencij', 'agenc', 'agentur', 'agenzi', 'reisebüro', 'utazási iroda');
+    const isHotel    = has('hotel', 'szálloda');
+    const isApartman = has('apartm', 'appartament', 'privat', 'privát', 'zasebn', 'soukrom', 'súkrom', 'magán', 'soba', 'stanza', 'szoba', 'pokoj', 'izba',
+      'rent', 'room', 'wohnung', 'zimmer', 'kuća za odmor', 'kuće za odmor', 'holiday home', 'ferienhaus');
+    const isKamp     = has('kamp', 'kemp', 'camp', 'šator', 'karavan', 'mobile home', 'zelt');
+    const isVila     = has('vila', 'villa', 'bungalov', 'bungalow', 'crvena luka', 'san antonio', 'mediteransko selo', 'mediterranean village');
+    const isPansion  = has('pansion', 'pension', 'penzion', 'panzió', 'guest house', 'guesthouse', 'b&b');
 
-    // "Provjeri cijene i dostupnost" — direktni izvori bez provizije:
-    // vlastiti web objekta ako postoji, inače službeni TZ katalog Biograda.
-    const TZ_KATALOG = 'https://www.discover-biograd.com/en/accommodation';
-    const cijene = (o) => ({
-      cijene_url: (o.web && /^https?:\/\//i.test(o.web)) ? o.web : TZ_KATALOG
-    });
+    // Gumb za cijene vodi samo na vlastitu stranicu objekta: TZ stranice ne prikazuju cijene.
+    const cijene = (o) => (o.web && /^https?:\/\//i.test(o.web) && !o.web.includes('discover-biograd.com')) ? { cijene_url: o.web } : {};
+    const group = (arr, grupa, adresa = o => o.lokacija || '') =>
+      (arr || []).map(o => item(o, { adresa: adresa(o), grupa, ...cijene(o) }));
 
-    const hoteli   = (db.smjestaj?.hoteli || []).map(h => item(h, { adresa: h.lokacija || '', ...cijene(h) }));
-    const kontakti = (db.smjestaj?.direktni_kontakti || []).map(p => item(p, { adresa: p.tip || '', ...cijene(p) }));
-    const kampovi  = (db.smjestaj?.kampovi || []).map(k => item(k, { adresa: k.lokacija || '', ...cijene(k) }));
-    const pansioni = (db.smjestaj?.pansioni || []).map(p => item(p, { adresa: p.lokacija || '', ...cijene(p) }));
-    const vile     = (db.smjestaj?.vile_i_posebni || []).map(v => item(v, { adresa: v.lokacija || '', ...cijene(v) }));
+    const S = db.smjestaj || {};
+    const hoteli   = group(S.hoteli, 'hoteli');
+    const kampovi  = group(S.kampovi, 'kampovi');
+    const pansioni = group(S.pansioni, 'pansioni');
+    const privatni = [...group(S.privatni_smjestaj, 'privatni'), ...group(S.vile_i_posebni, 'privatni')];
+    const selo     = group(S.mediteransko_selo, 'selo');
+    const luka     = group(S.crvena_luka, 'luka');
+    const agencije = (S.turisticke_agencije || []).map(o => item(o, { adresa: o.lokacija || '', grupa: 'agencije' }));
+    const kontakti = group(S.direktni_kontakti, 'katalozi', o => o.tip || '');
 
-    // Miješani upit (2+ tipa) ili generalni smještaj → svi hoteli + direktni kontakti
+    if (full) return [...hoteli, ...kampovi, ...pansioni, ...privatni, ...selo, ...luka, ...agencije, ...kontakti];
+
+    if (isAgencija) return agencije;
     const typeCount = [isHotel, isApartman, isKamp, isVila, isPansion].filter(Boolean).length;
-    if (typeCount >= 2 || (!isHotel && !isApartman && !isKamp && !isVila && !isPansion)) {
-      return [...hoteli, ...kontakti];
-    }
-
-    // Specifični upiti
+    if (typeCount !== 1) return [...hoteli, ...kontakti];
     if (isHotel)    return filterByMessage(hoteli, message);
     if (isKamp)     return filterByMessage(kampovi, message);
-    if (isVila)     return vile;
     if (isPansion)  return pansioni;
-    if (isApartman) return filterByMessage([...kontakti, ...pansioni], message);
-
-    return [...hoteli, ...kontakti];
+    if (isVila)     return [...selo, ...luka, ...privatni.filter(p => /vil+a/i.test(p.naziv))];
+    return filterByMessage([...privatni, ...kontakti], message);
   }
   if (category === 'kornati') {
     const m = (message || '').toLowerCase();
@@ -986,7 +986,7 @@ function getSeasonContext() {
   if (month === 10) return {
     label: 'JESEN (listopad)',
     opis: 'Sezona se zatvara, dio sadržaja zatvoren, mirno i autentično.',
-    izleti_kornati: 'Organizirani izleti SAMO vikendom. Inače privatni charter (200–400 EUR/dan za cijeli brod). Kontakt: Škver Tours (+385 23 383 123) ili Marina Kornati (+385 23 383 800). Konobe na otocima: provjeriti unaprijed, većina zatvorena.',
+    izleti_kornati: 'Organizirani izleti SAMO vikendom. Inače privatni charter (200–400 EUR/dan za cijeli brod). Kontakt: Škver Tours (+385 23 384 457) ili Marina Kornati (+385 23 383 800). Konobe na otocima: provjeriti unaprijed, većina zatvorena.',
     savjet_izlet: 'Charter s lokalnim skiperom je pravo iskustvo u listopadu — tiho, bez turista, NP Kornati u punoj jesenskoj ljepoti.'
   };
   if (month >= 11 || month <= 3) return {
@@ -1074,9 +1074,10 @@ TURISTIČKI PROFILI POSJETITELJA:
 
 PRIVATNI SMJEŠTAJ — DIREKTNI KONTAKTI (bez provizije):
 Biograd ima 1000+ privatnih apartmana. Uvijek upućuj na DIREKTNE kontakte — bez Booking.com/Airbnb:
-- TZ katalog: https://www.discover-biograd.com/en/accommodation (hoteli, kampovi, privatni smještaj)
+- Vrste smještaja prema TZ-u: hoteli, kampovi, pansioni, privatni smještaj, Mediteransko selo San Antonio, Crvena Luka i turističke agencije (svi kontakti su u bazi)
+- TZ katalog privatnog smještaja: https://www.discover-biograd.com/smjestaj/privatni-smjestaj
 - BiogradBooking: https://www.biogradbooking.com (privatni smještaj, direktni kontakti vlasnika)
-- Škver Tours: https://www.skver-tours.com/?l=hr&ispis=ponuda&vrsta=apart&id=672 | Tel: +385 233 844 57
+- Škver Tours: https://skver-tours.com/?l=hr | Tel: +385 23 384 457
 - Ilirija Resort: reservations@ilirijabiograd.com | Tel: +385 23 383 556
 - Cijenovno: 48–170+ EUR/noć ovisno o veličini i sezoni
 - Rezervacija: srpanj/kolovoz → 3–4 mj. unaprijed, rujan/lipanj → 2–4 tjedna
@@ -1175,7 +1176,7 @@ ${seasonCtx.izleti_kornati}
 SAVJET ZA IZLET: ${seasonCtx.savjet_izlet}
 
 BAZA PODATAKA ZA OVO PITANJE (koristi ove informacije):
-${JSON.stringify(context, null, 0).substring(0, 6000)}`;
+${JSON.stringify(context, null, 0).substring(0, 14000)}`;
 }
 
 // ===== INSTANT UVOD ZA KATEGORIJE (bez AI poziva — kao Slavonski Brod) =====
@@ -1242,7 +1243,7 @@ export default async function handler(req, res) {
     const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito, atrakcije: db.atrakcije };
 
     // getCategoryItems je sinkron — pokrećemo PRIJE system prompta da LLM zna o karticama
-    const items = getCategoryItems(detectedCategory, message);
+    const items = getCategoryItems(detectedCategory, message, { full: !!isForced });
 
     const systemDynamic = buildDynamicSystem(lang, context, weather);
     const seasonCtx = getSeasonContext(); // za [SUSTAV] itinerer note
@@ -1271,7 +1272,8 @@ export default async function handler(req, res) {
       });
     }
 
-    const cardItems = items.slice(0, MAX_CARDS_WITH_ANSWER);
+    // Popis tražene vrste smještaja prikazuje se cijeli: to je ono što gost i pita.
+    const cardItems = detectedCategory === 'smjestaj' ? items : items.slice(0, MAX_CARDS_WITH_ANSWER);
     const itemsNote = cardItems.length > 0
       ? wantsItinerary
         ? `\n[SUSTAV: Automatski će biti prikazano ${cardItems.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`

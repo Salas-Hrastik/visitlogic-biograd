@@ -435,6 +435,17 @@ letter-spacing:3px;
 filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));
 }
 
+.item-group-title{
+grid-column:1 / -1;
+flex-basis:100%;
+font-weight:bold;
+font-size:20px;
+color:#004e89;
+margin:14px 0 2px;
+border-bottom:2px solid #f4a261;
+padding-bottom:3px;
+}
+
 /* ===== SUGGESTIONS ===== */
 .suggestions{
 margin-top:8px;
@@ -951,6 +962,16 @@ const UI_TEXT = {
   sk: { h1:'AI turistický informátor', region:'Biograd na Moru · Zadarská župa · Dalmácia', now:'Biograd teraz:', loading:'⏳ načítava sa...', sea:'More', map:'Mapa', prices:'Overiť ceny', pricesTitle:'Aktuálne ceny a dostupnosť (priama rezervácia)', more:'Viac', moreTitle:'Zistiť viac (Google)', voice:'Hovorte (hlasový vstup)', voiceNo:'hlasový vstup nie je podporovaný', openTab:'Otvoriť na novej karte ↗', frameBlocked:'Túto stránku nemožno zobraziť v okne.', noAnswer:'Asistent neodpovedal.', slow:'Odpoveď trvá dlhšie, než sa čakalo. Skúste to znova.', serverErr:'Server nie je dostupný.' }
 };
 const uiText = () => UI_TEXT[currentLang] || UI_TEXT.hr;
+const SMJESTAJ_GRUPE = {
+  hoteli:   { hr:'Hoteli', en:'Hotels', de:'Hotels', sl:'Hoteli', it:'Hotel', hu:'Szállodák', cs:'Hotely', sk:'Hotely' },
+  kampovi:  { hr:'Kampovi', en:'Campsites', de:'Campingplätze', sl:'Kampi', it:'Campeggi', hu:'Kempingek', cs:'Kempy', sk:'Kempy' },
+  pansioni: { hr:'Pansioni', en:'Guesthouses', de:'Pensionen', sl:'Penzioni', it:'Pensioni', hu:'Panziók', cs:'Penziony', sk:'Penzióny' },
+  privatni: { hr:'Privatni smještaj', en:'Private accommodation', de:'Privatunterkünfte', sl:'Zasebne nastanitve', it:'Alloggi privati', hu:'Magánszállások', cs:'Soukromé ubytování', sk:'Súkromné ubytovanie' },
+  selo:     { hr:'Mediteransko selo', en:'Mediterranean village', de:'Mediterranes Dorf', sl:'Sredozemska vas', it:'Villaggio mediterraneo', hu:'Mediterrán falu', cs:'Středomořská vesnice', sk:'Stredomorská dedina' },
+  luka:     { hr:'Crvena Luka', en:'Crvena Luka', de:'Crvena Luka', sl:'Crvena Luka', it:'Crvena Luka', hu:'Crvena Luka', cs:'Crvena Luka', sk:'Crvena Luka' },
+  agencije: { hr:'Turističke agencije', en:'Tourist agencies', de:'Reiseagenturen', sl:'Turistične agencije', it:'Agenzie turistiche', hu:'Utazási irodák', cs:'Cestovní agentury', sk:'Cestovné agentúry' },
+  katalozi: { hr:'Katalozi smještaja', en:'Accommodation catalogues', de:'Unterkunftskataloge', sl:'Katalogi nastanitev', it:'Cataloghi di alloggi', hu:'Szálláskatalógusok', cs:'Katalogy ubytování', sk:'Katalógy ubytovania' }
+};
 
 function applyLang(lang) {
   const ui = UI_LANGS[lang] || UI_LANGS.hr;
@@ -1084,7 +1105,16 @@ function addMessage(text, type, suggestions, images, items){
   if(type === "bot" && items && items.length){
     const cards = document.createElement("div");
     cards.className = "item-cards";
+    let lastGroup = null;
     items.forEach(it => {
+      if(it.grupa && it.grupa !== lastGroup){
+        lastGroup = it.grupa;
+        const label = SMJESTAJ_GRUPE[it.grupa];
+        const title = document.createElement("div");
+        title.className = "item-group-title";
+        title.textContent = label ? (label[currentLang] || label.hr) : it.grupa;
+        cards.appendChild(title);
+      }
       const card = document.createElement("div");
       card.className = "item-card";
 
@@ -1131,6 +1161,19 @@ function addMessage(text, type, suggestions, images, items){
         a.className = "tel";
         a.href = "tel:" + it.telefon.replace(/\s/g,'');
         a.textContent = "📞 " + it.telefon;
+        links.appendChild(a);
+      }
+      if(it.telefon2){
+        const a = document.createElement("a");
+        a.className = "tel";
+        a.href = "tel:" + it.telefon2.replace(/\s/g,'');
+        a.textContent = "📞 " + it.telefon2;
+        links.appendChild(a);
+      }
+      if(it.email){
+        const a = document.createElement("a");
+        a.href = "mailto:" + it.email;
+        a.textContent = "✉️ " + it.email;
         links.appendChild(a);
       }
       if(it.web){
