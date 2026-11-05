@@ -332,6 +332,8 @@ function detectCategory(msg, lastCategory, db) {
 
   // Sajam je događanje; bez ovoga "boat" završava u nautici. Parking uz sajam ostaje praktična info.
   if (/turističk\w* agencij|turistične agencij|tourist agenc|travel agenc|reiseagentur|reisebüro|agenzi\w* (turistic|di viaggi)|utazási iroda|cestovn\w* agent/.test(m)) return 'smjestaj';
+  if (/\bleut\b|adriagate|ilirija travel|my way travel|moreta/.test(m)) return 'smjestaj';
+  if (/agencij/.test(m) && !/charter|čarter|jedr|nautič|izlet|kornat/.test(m)) return 'smjestaj';
   if (/pansion|pension|penzion|panzió|privatni smještaj|private accommodation|apartm|appartament|szállás|ubytov|nastanit|alloggi|unterkunft|ferienwohnung|ferienh|mediteransk\w* sel|mediterranean village|san antonij?\w*|crven\w* luk|bungalov|kuć\w* za odmor|\bkemp/.test(m)) return 'smjestaj';
 
   if (/škver|skver/.test(m) && !/izlet|brod|kornat|trip|boat/.test(m)) return 'smjestaj';
@@ -678,7 +680,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     const m = (message || '').toLowerCase();
 
     const has = (...w) => w.some(x => m.includes(x));
-    const isAgencija = has('agencij', 'agenc', 'škver', 'skver', 'agentur', 'agenzi', 'reisebüro', 'utazási iroda');
+    const isAgencija = has('agencij', 'agenc', 'škver', 'skver', 'agentur', 'agenzi', 'reisebüro', 'utazási iroda', 'leut', 'adriagate', 'ilirija travel', 'my way travel', 'moreta');
     const isHotel    = has('hotel', 'szálloda');
     const isApartman = has('apartm', 'appartament', 'privat', 'privát', 'zasebn', 'soukrom', 'súkrom', 'magán', 'soba', 'stanza', 'szoba', 'pokoj', 'izba',
       'rent', 'room', 'wohnung', 'zimmer', 'kuća za odmor', 'kuće za odmor', 'holiday home', 'ferienh');
