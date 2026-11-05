@@ -327,7 +327,9 @@ function detectCategory(msg, lastCategory, db) {
 
   // Sajam je događanje; bez ovoga "boat" završava u nautici. Parking uz sajam ostaje praktična info.
   if (/turističk\w* agencij|turistične agencij|tourist agenc|travel agenc|reiseagentur|reisebüro|agenzi\w* (turistic|di viaggi)|utazási iroda|cestovn\w* agent/.test(m)) return 'smjestaj';
-  if (/pansion|pension|penzion|panzió|privatni smještaj|private accommodation|apartm|appartament|szállás|ubytov|nastanit|alloggi|unterkunft|ferienwohnung|ferienhaus|kuć\w* za odmor|\bkemp/.test(m)) return 'smjestaj';
+  if (/pansion|pension|penzion|panzió|privatni smještaj|private accommodation|apartm|appartament|szállás|ubytov|nastanit|alloggi|unterkunft|ferienwohnung|ferienh|mediteransko selo|mediterranean village|san antonio|crvena luka|bungalov|kuć\w* za odmor|\bkemp/.test(m)) return 'smjestaj';
+
+  if (/škver|skver/.test(m) && !/izlet|brod|kornat|trip|boat/.test(m)) return 'smjestaj';
 
   if ((m.includes('boat show') || m.includes('bootsmesse')) && !m.includes('park')) return 'dogadanja';
 
@@ -671,10 +673,10 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     const m = (message || '').toLowerCase();
 
     const has = (...w) => w.some(x => m.includes(x));
-    const isAgencija = has('agencij', 'agenc', 'agentur', 'agenzi', 'reisebüro', 'utazási iroda');
+    const isAgencija = has('agencij', 'agenc', 'škver', 'skver', 'agentur', 'agenzi', 'reisebüro', 'utazási iroda');
     const isHotel    = has('hotel', 'szálloda');
     const isApartman = has('apartm', 'appartament', 'privat', 'privát', 'zasebn', 'soukrom', 'súkrom', 'magán', 'soba', 'stanza', 'szoba', 'pokoj', 'izba',
-      'rent', 'room', 'wohnung', 'zimmer', 'kuća za odmor', 'kuće za odmor', 'holiday home', 'ferienhaus');
+      'rent', 'room', 'wohnung', 'zimmer', 'kuća za odmor', 'kuće za odmor', 'holiday home', 'ferienh');
     const isKamp     = has('kamp', 'kemp', 'camp', 'šator', 'karavan', 'mobile home', 'zelt');
     const isVila     = has('vila', 'villa', 'bungalov', 'bungalow', 'crvena luka', 'san antonio', 'mediteransko selo', 'mediterranean village');
     const isPansion  = has('pansion', 'pension', 'penzion', 'panzió', 'guest house', 'guesthouse', 'b&b');
@@ -703,6 +705,18 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     if (isKamp)     return filterByMessage(kampovi, message);
     if (isPansion)  return pansioni;
     if (isVila)     return [...selo, ...luka, ...privatni.filter(p => /vil+a/i.test(p.naziv))];
+    // Sadržaj se traži u hrvatskom opisu, a pitanje može biti na bilo kojem jeziku.
+    const FEATURES = [
+      [/bazen|pool|piscin|medenc|bazén/, 'bazen'],
+      [/ljubim|\bpets?\b|haustier|animali|háziállat|mazl|zvierat/, 'ljubimci'],
+      [/pogled na more|sea view|meerblick|vista mare|pogled na morje|tengerre|výhled na moře|výhľad na more/, 'pogled na more'],
+      [/invalid|wheelchair|rollstuhl|rotelle|kerekesszék|bezbariér/, 'invalidsk']
+    ];
+    const wanted = FEATURES.filter(([re]) => re.test(m)).map(([, word]) => word);
+    if (wanted.length) {
+      const matching = privatni.filter(p => wanted.every(w => p.opis.toLowerCase().includes(w)));
+      if (matching.length) return matching;
+    }
     return filterByMessage([...privatni, ...kontakti], message);
   }
   if (category === 'kornati') {
