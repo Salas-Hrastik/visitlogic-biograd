@@ -3657,42 +3657,42 @@ export const menus = {
     "c": "0,80 €"
    },
    {
-    "k": "Topli napici",
+    "k": "Bezalkoholna pića",
     "n": "Gazirana pića 0,25 l",
     "c": "4,50 €"
    },
    {
-    "k": "Topli napici",
+    "k": "Bezalkoholna pića",
     "n": "San Pelegrino 0,20 l",
     "c": "5,00 €"
    },
    {
-    "k": "Topli napici",
+    "k": "Bezalkoholna pića",
     "n": "Negazirana pića 0,20 l",
     "c": "4,50 €"
    },
    {
-    "k": "Topli napici",
+    "k": "Bezalkoholna pića",
     "n": "Cedevita 0,20 l",
     "c": "4,00 €"
    },
    {
-    "k": "Topli napici",
+    "k": "Bezalkoholna pića",
     "n": "Ice tea 0,33 l",
     "c": "4,00 €"
    },
    {
-    "k": "Topli napici",
+    "k": "Bezalkoholna pića",
     "n": "Red Bull 0,25 l",
     "c": "6,00 €"
    },
    {
-    "k": "Topli napici",
+    "k": "Bezalkoholna pića",
     "n": "Sviježe cijeđena narančada 0,20 l",
     "c": "6,00 €"
    },
    {
-    "k": "Topli napici",
+    "k": "Bezalkoholna pića",
     "n": "Sviježe cijeđena limunada 0,20 l",
     "c": "5,00 €"
    },
