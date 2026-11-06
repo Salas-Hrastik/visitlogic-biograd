@@ -631,6 +631,20 @@ function proxyImg(url) {
   return 'https://wsrv.nl/?url=' + encodeURIComponent(url) + '&w=200&h=150&fit=cover&output=jpg&errorredirect=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F5%2F51%2FKornati.jpg';
 }
 
+// Karta vodi na navigaciju: bez polazišta Google Maps kreće od trenutne lokacije gosta.
+function directionsUrl(karta) {
+  if (!karta || !/google\.[a-z.]+\/maps|maps\.google\./.test(karta) || /\/maps\/dir\//.test(karta)) return karta || '';
+  let dest = '';
+  try {
+    const u = new URL(karta);
+    const at = u.pathname.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || karta.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);
+    const place = u.pathname.match(/\/maps\/(?:place|search)\/([^/@]+)/);
+    // Koordinate su točnije od imena ("Lidl" postoji u svakom gradu).
+    dest = u.searchParams.get('q') || u.searchParams.get('query') || (at ? `${at[1]},${at[2]}` : '') || (place ? decodeURIComponent(place[1].replace(/\+/g, ' ')) : '');
+  } catch { return karta; }
+  return dest ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}` : karta;
+}
+
 // ===== ITEM KARTICE — uzima sve dostupne podatke iz baze =====
 function item(o, extra = {}) {
   return {
@@ -643,7 +657,7 @@ function item(o, extra = {}) {
     email:           o.email || '',
     web:             o.web || '',
     jelovnik:        menus[o.naziv]?.url || '',
-    karta:           o.karta || '',
+    karta:           directionsUrl(o.karta),
     recenzija:       o.recenzija || '',
     ocjena:          o.ocjena || '',
     recenzija_izvor: o.recenzija_izvor || '',
@@ -1152,7 +1166,7 @@ function replyLinks(reply) {
     let m;
     while ((m = g.exec(text))) {
       const prev = hits.get(o.naziv);
-      if (!prev || m.index < prev.at) hits.set(o.naziv, { at: m.index, naziv: o.naziv, karta: o.karta || '', web: o.web || '', jelovnik: menus[o.naziv]?.url || '' });
+      if (!prev || m.index < prev.at) hits.set(o.naziv, { at: m.index, naziv: o.naziv, karta: directionsUrl(o.karta), web: o.web || '', jelovnik: menus[o.naziv]?.url || '' });
       text = text.slice(0, m.index) + ' '.repeat(m[0].length) + text.slice(m.index + m[0].length);
       g.lastIndex = m.index + m[0].length;
     }
@@ -1593,7 +1607,8 @@ export default async function handler(req, res) {
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
-    const reply = cardItems.length > 0 && !menuInfo.note ? stripBulletList(rawReply) : rawReply;
+    const reply = (cardItems.length > 0 && !menuInfo.note ? stripBulletList(rawReply) : rawReply)
+      .replace(/https?:\/\/(?:www\.)?(?:google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)[^\s)\]]*/g, u => directionsUrl(u));
 
     // Objekti koje odgovor spominje idu prvi među kartice, i kad nisu bili u izboru.
     const links = replyLinks(reply);
