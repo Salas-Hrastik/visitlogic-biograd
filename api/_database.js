@@ -2470,13 +2470,82 @@ export const db = {
     "zdravstvo": [
       {
         "naziv": "Dom zdravlja Biograd na Moru",
-        "tip": "🏥 opća medicina · hitna pomoć",
-        "adresa": "Šibuljina bb, Biograd na Moru",
-        "telefon": "+385 23 383 150",
-        "karta": "https://maps.google.com/?q=Dom+zdravlja+Biograd+na+Moru",
+        "tip": "🏥 Dom zdravlja Zadarske županije · ambulante",
+        "adresa": "Matije Ivanića 6, Biograd na Moru",
+        "telefon": "+385 23 385 566",
+        "web": "https://www.dzzdzup.hr",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9399524,15.4467651",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Hitna pomoć: 194 · Policija: 192 · Vatrogasci: 193 · Europski broj: 112",
-        "recenzija_izvor": "Hitne službe HR"
+        "opis": "Dom zdravlja u centru grada: 5 ordinacija opće medicine, 4 stomatološke, ginekološka i pedijatrijska ordinacija, sve s ugovorom HZZO-a. Gosti iz EU-a ponesu europsku karticu zdravstvenog osiguranja (EKZO). Radno vrijeme provjerite telefonom prije dolaska.",
+        "recenzija": "Hitna medicinska pomoć: 194 · Europski broj za hitne službe: 112",
+        "recenzija_izvor": "Hitne službe HR",
+        "izvor": "mojausluga.hr, provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Ordinacije opće medicine (Dom zdravlja)",
+        "tip": "🩺 opća/obiteljska medicina",
+        "adresa": "Matije Ivanića 6, Biograd na Moru",
+        "telefon": "+385 23 385 566",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9399524,15.4467651",
+        "opis": "Liječnici opće medicine: dr. med. Andrija Čakarun (+385 23 385 566); dr. med. Eddie Stamičar (+385 23 386 185); dr. med. Marica Polegubić (+385 23 383 390); dr. med. Tatjana Ferber-Garofulić (+385 23 383 362; pon 08:00–14:00, uto 13:00–20:00, sri 08:00–14:00, čet 13:00–20:00); dr. med. Vera Hamš (+385 23 385 561).",
+        "izvor": "mojausluga.hr, provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Stomatološke ordinacije (Dom zdravlja)",
+        "tip": "🦷 stomatologija",
+        "adresa": "Matije Ivanića 6, Biograd na Moru",
+        "telefon": "+385 23 385 605",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9399524,15.4467651",
+        "opis": "Stomatolozi s ugovorom HZZO-a: dr. med. dent. Branimir Knez (+385 23 385 605); dr. med. dent. Irena Knez (+385 23 383 355); dr. med. dent. Ivan Babara (+385 23 646 813); dr. med. dent. Ivica Šarić (+385 23 385 312).",
+        "izvor": "mojausluga.hr, provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Pedijatrijska ordinacija dr. Fatma Kevrić",
+        "tip": "👶 pedijatrija",
+        "adresa": "Matije Ivanića 6, Biograd na Moru",
+        "telefon": "+385 23 384 074",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9399524,15.4467651",
+        "opis": "Pedijatrijska ordinacija u Domu zdravlja, dr. med. spec. ped. Fatma Kevrić. Kod otežanog disanja, konvulzija ili naglog teškog pogoršanja zovite 194 ili 112.",
+        "izvor": "mojausluga.hr, provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Ginekološka ordinacija dr. Slavko Marić",
+        "tip": "🩺 ginekologija",
+        "adresa": "Matije Ivanića 6, Biograd na Moru",
+        "telefon": "+385 23 385 304",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9399524,15.4467651",
+        "opis": "Ginekološka ordinacija u Domu zdravlja, dr. med. Slavko Marić, specijalist ginekologije i opstetricije. Radno vrijeme: pon 13:00–20:30, uto 07:00–14:30, sri 07:00–14:30, čet 13:00–20:30, pet 07:00–14:30.",
+        "izvor": "mojausluga.hr, provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Specijalna bolnica za ortopediju Biograd na Moru",
+        "tip": "🏥 bolnica · ortopedija · hitni prijem 0–24",
+        "adresa": "Zadarska 62, Biograd na Moru",
+        "telefon": "+385 23 206 050",
+        "telefon2": "+385 23 206 062",
+        "email": "uredravnatelja@ortopedija-biograd.hr",
+        "web": "https://ortopedija-biograd.hr/",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.947608,15.4473141",
+        "opis": "Specijalna bolnica za ortopediju s hitnom ambulantom koja dežura 0–24 sata, specijalističkim ambulantama, fizikalnom medicinom i rehabilitacijom. Za pregled s uputnicom naručuje se na mjestu upisa radnim danom od 7 do 15 sati, e-poštom ili online.",
+        "izvor": "mojausluga.hr, provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Poliklinika Optimum-Visus",
+        "tip": "🏥 poliklinika (privatna)",
+        "adresa": "Ulica dr. Franje Tuđmana 82, Biograd na Moru",
+        "telefon": "+385 91 205 9360",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9416107,15.4534131",
+        "opis": "Privatna poliklinika. Radno vrijeme: pon 08:00–20:00, uto 08:00–20:00, sri 08:00–20:00, čet 08:00–20:00, pet 08:00–20:00, sub 08:00–13:00.",
+        "izvor": "mojausluga.hr, provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Ordinacija dentalne medicine Natalie Šangulin",
+        "tip": "🦷 stomatologija (privatna)",
+        "adresa": "Ribarska 2, Biograd na Moru",
+        "telefon": "+385 23 386 166",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9404005,15.4475879",
+        "opis": "Privatna stomatološka ordinacija u centru, oko 100 m od ljekarne; za pregled nije potrebna uputnica, termin dogovorite telefonom.",
+        "izvor": "mojausluga.hr, provjereno 6.11.2026."
       }
     ],
     "banke_atm": [

@@ -420,8 +420,12 @@ const TR = {
 // Riječi iz naziva događanja koje se javljaju i u običnim pitanjima pa ne smiju birati kategoriju.
 const GENERIC_EVENT_WORDS = new Set(['biograd', 'biogradu', 'biograda', 'moru', 'boat', 'show', 'koncert', 'friends', 'family', 'sportska', 'natjecanja', 'povijest', 'race', '2026']);
 
+// Liječnik, zubar, pedijatar, bolnica... na svih 8 jezika: gost s tegobom treba kontakt, ne opis grada.
+const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar|zubobolj|stomatolog|pedijat|ginekolog|bolnic|ortoped|hitn\w* (pomoć|služb|medicin)|\bhitna\b|zdravstv|doctor|dentist|toothache|paediatr|pediatr|gyn[ae]?ec|clinic|hospital|emergency|\barzt|ärzt|zahnarzt|krankenhaus|notarzt|notaufnahme|medico|dentista|ospedale|pronto soccorso|orvos|fogorvos|kórház|lékař|zubař|nemocnic|lekár|zubár|zdravnik|zobozdravnik|bolnišnic/;
+
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
+  if (HEALTH_RE.test(m)) return 'prakticno';
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
   if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
@@ -896,10 +900,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
         m.includes('pharmacy') || m.includes('apotheke'))
       return toItems(pi.ljekarne);
 
-    if (m.includes('hitna') || m.includes('zdravstvo') || m.includes('doktor') || m.includes('liječnik') ||
-        m.includes('bolnica') || m.includes('ambulanta') || m.includes('hitne') || m.includes('hospital') ||
-        m.includes('doctor') || m.includes('arzt'))
-      return toItems(pi.zdravstvo);
+    if (HEALTH_RE.test(m)) return toItems(pi.zdravstvo);
 
     if (m.includes('bankomat') || m.includes('banka') || m.includes('atm') || m.includes('novac') ||
         m.includes('gotovina') || m.includes('isplat') || m.includes('bank') || m.includes('geldautomat'))
