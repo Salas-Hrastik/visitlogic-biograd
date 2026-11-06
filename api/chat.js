@@ -1560,7 +1560,7 @@ export default async function handler(req, res) {
       : `\n[SUSTAV: Ispod ovog odgovora NEMA kartica. Ne spominji kartice niti "detalje ispod"; sve što gost treba napiši u odgovoru.]`;
     const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
     const eventsNote = detectedCategory === 'dogadanja'
-      ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, redom po mjesecima, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
+      ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
       : '';
 
     // Poruke za Claude (do 10 prethodnih; system ide kao zaseban parametar)
@@ -1597,7 +1597,8 @@ export default async function handler(req, res) {
 
     // Objekti koje odgovor spominje idu prvi među kartice, i kad nisu bili u izboru.
     const links = replyLinks(reply);
-    const mentioned = cardItems.length ? links.flatMap(l => {
+    // Događanja već idu kronološki pa ih spominjanje ne presložuje.
+    const mentioned = cardItems.length && detectedCategory !== 'dogadanja' ? links.flatMap(l => {
       const known = rankedItems.find(i => i.naziv === l.naziv);
       if (known) return [known];
       const raw = detectedCategory === 'gastronomija' && (db.gastronomija?.restorani || []).find(r => r.naziv === l.naziv);
