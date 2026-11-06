@@ -308,7 +308,8 @@ for (const st of db.prakticne_info?.benzinska || []) {
   if (!f) continue;
   st.radno_vrijeme = f.radno;
   st.cijene_goriva = Object.fromEntries(f.cijene.map(([n, c]) => [n, c]));
-  st.recenzija = `⏰ ${f.radno} · ${f.cijene.map(([n, c]) => `${n} ${fmtEur(c)}`).join(' · ')}`;
+  // Kartica prikazuje najviše 130 znakova, pa je jedinica navedena jednom.
+  st.recenzija = `⏰ ${f.radno.replace('00:00–24:00', '0–24')} · €/L: ${f.cijene.map(([n, c]) => `${n} ${c.toFixed(2).replace('.', ',')}`).join(' · ')}`;
   st.recenzija_izvor = `mzoe-gor.hr, ${f.provjereno || fuel.provjereno}`;
   st.recenzija_url = f.url;
 }
