@@ -40,7 +40,7 @@ function isEventActive(e) {
 
 // Sljedeći termin događanja, i kad je zadan riječima ("kolovoz", "1. svibnja", "proljeće i jesen").
 const MONTH_STEMS = ['siječ', 'velj', 'ožuj', 'trav', 'svib', 'lip', 'srp', 'kolovoz', 'ruj', 'listopad', 'studen', 'prosin'];
-const SEASON_MONTHS = { 'proljeć': 3, 'ljet': 6, 'jesen': 8, 'zim': 11 };
+const SEASON_MONTHS = { 'proljeć': [3, 'proljeće'], 'ljet': [6, 'ljeto'], 'jesen': [8, 'jesen'], 'zim': [11, 'zima'] };
 const MONTH_NAMES_HR = ['siječanj', 'veljača', 'ožujak', 'travanj', 'svibanj', 'lipanj', 'srpanj', 'kolovoz', 'rujan', 'listopad', 'studeni', 'prosinac'];
 const SOON_DAYS = 60;
 
@@ -59,16 +59,16 @@ function nextEventDate(e) {
     const day = t.slice(Math.max(0, at - 5), at).match(/(\d{1,2})\.\s*$/);
     candidates.push({ month: i, day: day ? +day[1] : 1 });
   });
-  for (const [s, month] of Object.entries(SEASON_MONTHS)) if (t.includes(s)) candidates.push({ month, day: 1 });
+  for (const [s, [month, label]] of Object.entries(SEASON_MONTHS)) if (t.includes(s)) candidates.push({ month, day: 1, label });
   if (!candidates.length) return null;
   const year = (/\b(20\d\d)\b/.exec(t) || [])[1];
-  const dates = candidates.map(({ month, day }) => {
+  const dates = candidates.map(({ month, day, label }) => {
     let y = year ? +year : today.getFullYear();
     // Mjesec koji je u tijeku računa se kao sadašnji, a prošli prelazi u sljedeću godinu.
     if (!year && (month < today.getMonth() || (month === today.getMonth() && day < today.getDate() && day > 1))) y++;
-    return new Date(y, month, day);
+    return { date: new Date(y, month, day), label: `${label || MONTH_NAMES_HR[month]} ${y}.` };
   });
-  return { date: dates.sort((a, b) => a - b)[0], exact: false };
+  return { ...dates.sort((a, b) => a.date - b.date)[0], exact: false };
 }
 
 function sortedUpcomingEvents(eventi) {
@@ -78,7 +78,7 @@ function sortedUpcomingEvents(eventi) {
     .sort((a, b) => (a.next?.date ?? Infinity) - (b.next?.date ?? Infinity))
     .map(({ e, next }) => ({
       ...e,
-      sljedeci_termin: next ? (next.exact ? e.termin : `${MONTH_NAMES_HR[next.date.getMonth()]} ${next.date.getFullYear()}.`) : e.termin,
+      sljedeci_termin: next ? (next.exact ? e.termin : next.label) : e.termin,
       skupina: next && next.date <= soonLimit ? 'USKORO' : 'TIJEKOM GODINE',
     }));
 }
