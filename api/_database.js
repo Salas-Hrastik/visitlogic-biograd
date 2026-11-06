@@ -2478,6 +2478,64 @@ export const db = {
         "recenzija_izvor": "Ljekarna Zadar"
       }
     ],
+    "hitne_sluzbe": [
+      {
+        "naziv": "Hitni brojevi u Hrvatskoj",
+        "tip": "🚨 besplatno, 0–24",
+        "adresa": "S bilo kojeg telefona, i bez SIM kartice (112)",
+        "telefon": "112",
+        "opis": "112 — jedinstveni europski broj za sve hitne slučajeve (govore se strani jezici). 192 — policija. 193 — vatrogasci. 194 — hitna medicinska pomoć. 195 — traganje i spašavanje na moru. 1987 — pomoć na cesti (HAK; iz strane mreže +385 1 1987).",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Policijska postaja Biograd na Moru",
+        "tip": "👮 policija · hitno 192",
+        "adresa": "Put Solina 6, Biograd na Moru",
+        "telefon": "+385 23 345 739",
+        "telefon2": "+385 23 383 016",
+        "karta": "https://maps.google.com/?q=Put+Solina+6,+Biograd+na+Moru",
+        "opis": "Policijska postaja za prijavu krađe, izgubljenih dokumenata, prometnih nesreća i drugih događaja. U hitnim slučajevima zovite 192 ili 112.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Vatrogasci Biograd na Moru",
+        "tip": "🚒 vatrogasci · hitno 193",
+        "adresa": "Splitska 58, Biograd na Moru",
+        "telefon": "193",
+        "karta": "https://maps.google.com/?q=Splitska+58,+Biograd+na+Moru",
+        "opis": "Za požar, prometnu nesreću s ozlijeđenima ili zaglavljenima i druge tehničke intervencije zovite 193 ili 112. Ljeti je opasnost od požara visoka: ne palite vatru u prirodi i ne bacajte opuške.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "HAK — pomoć na cesti",
+        "tip": "🚗 pomoć na cesti 0–24",
+        "adresa": "Cijela Hrvatska",
+        "telefon": "1987",
+        "telefon2": "+385 1 1987",
+        "web": "https://www.hak.hr",
+        "opis": "Pomoć pri kvaru ili nezgodi vozila i vuča. Iz hrvatske mreže zovite 1987, sa stranog mobitela +385 1 1987. Pri nesreći s ozlijeđenima zovite 112.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Traganje i spašavanje na moru",
+        "tip": "⚓ hitno na moru 195 · 0–24",
+        "adresa": "Jadransko more",
+        "telefon": "195",
+        "telefon2": "+385 1 195",
+        "opis": "Za nesreću na moru, nestalog kupača ili plovilo u nevolji zovite 195 ili 112; na VHF radiju kanal 16.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Lučka kapetanija Zadar — lučka ispostava Biograd",
+        "tip": "⚓ lučka ispostava",
+        "adresa": "Obala kralja Petra Krešimira IV. 30, Biograd na Moru",
+        "telefon": "+385 23 383 210",
+        "email": "li-ispostava@pomorstvo.hr",
+        "karta": "https://maps.google.com/?q=Obala+kralja+Petra+Krešimira+IV+30,+Biograd+na+Moru",
+        "opis": "Pomorska uprava u Biogradu: prijava plovila, dozvole i sigurnost plovidbe. Za hitne slučajeve na moru zovite 195.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      }
+    ],
     "veterinari": [
       {
         "naziv": "Veterinarska ambulanta Nova",

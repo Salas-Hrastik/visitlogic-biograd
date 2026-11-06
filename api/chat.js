@@ -201,6 +201,9 @@ function pharmacyNote() {
   return `\n[SUSTAV — LJEKARNE (izračun iz službenog radnog vremena, provjereno ${pharmacies.provjereno}; službeni raspored dežurstava za Biograd nije objavljen):\n${lines.join('\n')}\nOdgovori izravno tko je otvoren kad gost treba, s adresom i telefonom; preporuči da prije dolaska nazove.]`;
 }
 
+// Policija, vatrogasci, pomoć na cesti, spašavanje na moru (8 jezika). "kvar" sam ostaje servisima.
+const EMERGENCY_RE = /policij|polici[aj]|policie|polícia|polizei|polizia|rendőr|\bpolice\b|vatrogas|požar|gasilc|feuerwehr|vigili del fuoco|incendio|tűzolt|hasič|\bfire\b|pomoć na cesti|vučn\w* služb|šlep|\bhak\b|roadside|breakdown|broke down|\btow|pannenhilfe|abschlepp|soccorso stradale|carro attrezzi|autómentő|odtah|odťah|vlečn|prometn\w* nesreć|nesreć|accident|unfall|incidente|baleset|nehod|ukraden|ukral|ukrad|krađ|stolen|theft|gestohlen|diebstahl|rubat|furto|ellopt|ukraden|spašavanj\w* na moru|sea rescue|coast guard|seenot|kapetanij|hitn\w* (služb|broj)|emergency number|notruf|numero di emergenza|segélyhív|tísňov|núdzov|\b112\b/;
+
 // Veterinar: izravno ili ljubimac uz tegobu (samo "pas" ne smije, jer gosti pitaju i za smještaj sa psom).
 const VET_RE = /veterin|tierarzt|tierärzt|tierklinik|állatorvos|\bvets?\b|(ljubim|\bpas\b|\bpsa\b|\bpsu\b|mačk|\bdog\b|\bcat\b|\bpet\b|\bhund|katze|haustier|\bcane\b|gatto|kutya|macska|\bpes\b|kočk|mačk).{0,40}(bolest|bolestan|ozlij|ozljed|hitn|ugriz|krpelj|povra|proljev|sick|ill\b|injur|emergenc|vomit|tick|krank|verletz|notfall|zecke|malat|\bmale\b|ferit|emergenz|beteg|sérül|nemocn|zraněn|bolan|poškod)|(bolest|ozlij|ozljed|hitn|sick|injur|emergenc|krank|verletz|notfall).{0,40}(ljubim|\bpas\b|\bpsa\b|mačk|\bdog\b|\bcat\b|\bhund|katze|\bcane\b|gatto)/;
 
@@ -503,7 +506,7 @@ const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar
 
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
-  if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m)) return 'prakticno';
+  if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
   if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
@@ -975,6 +978,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
       return toItems(pi.prijevoz);
 
     if (VET_RE.test(m)) return toItems(pi.veterinari);
+    if (EMERGENCY_RE.test(m) && !HEALTH_RE.test(m)) return toItems(pi.hitne_sluzbe);
 
     if (PHARMACY_RE.test(m) || m.includes('lijek') ||
         m.includes('pharmacy') || m.includes('apotheke'))
@@ -1708,6 +1712,9 @@ export default async function handler(req, res) {
         + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message, lang) : '')
         + (lang !== 'hr' ? `\n[SYSTEM: the notes above are for the system only; write the answer ONLY in the guest's language (${lang}), never in Croatian.]` : '')
       : '';
+    const emergencyNote = EMERGENCY_RE.test(msgLow)
+      ? `\n[SUSTAV: Za policiju, vatrogasce, pomoć na cesti i spašavanje na moru koristi samo prakticne_info.hitne_sluzbe. U opasnosti uvijek prvo navedi broj (112 za sve, 192 policija, 193 vatrogasci, 194 hitna pomoć, 195 more, 1987 pomoć na cesti, sa stranog mobitela +385 1 1987), zatim lokalni kontakt.]`
+      : '';
     const vetNote = VET_RE.test(msgLow)
       ? `\n[SUSTAV: Za veterinara koristi samo prakticne_info.veterinari. U Biogradu rade ambulanta Nova i praksa Dado; službeni raspored dežurstva za Biograd nije objavljen. Izvan radnog vremena, nedjeljom i za hitne slučajeve uputi na dežurni mobitel Veterinarske stanice Zadar (+385 98 33 94 00) ili ambulantu Bokanjac u Zadru (0–24, +385 91 511 5092) i savjetuj da prije polaska nazovu. Ne postavljaj dijagnozu.]`
       : '';
@@ -1735,7 +1742,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + pharmacyInfo + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + pharmacyInfo + menuInfo.note }
       ]
     });
 
