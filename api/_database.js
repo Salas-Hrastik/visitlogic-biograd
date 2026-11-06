@@ -2480,7 +2480,7 @@ export const db = {
         "email": "info@skver-tours.com",
         "web": "https://www.skver-tours.com/?l=hr&ispis=ponuda&vrsta=rent&id=1091&objekt=73",
         "karta": "https://maps.google.com/?q=Kornatska+1,+Biograd+na+Moru",
-        "opis": "Gradska vozila i limuzine (npr. Renault Twingo, Fiat 500, Škoda Fabia, VW T-Cross, Dacia Duster). Cjenik na stranici: od 61 € (od studenoga do prosinca) do 90 € (sezona), uz napomenu o najmu od najmanje 2 dana; osnovno osiguranje uključeno, gorivo nije. Točnu cijenu i trajanje najma potvrdite s agencijom.",
+        "opis": "Gradska vozila i limuzine (npr. Renault Twingo, Fiat 500, Škoda Fabia, VW T-Cross, Dacia Duster). Cjenik na stranici navodi iznose od 61 € (od studenoga do prosinca) do 90 € (sezona), bez oznake je li to cijena po danu, uz napomenu o najmu od najmanje 2 dana; osnovno osiguranje uključeno, gorivo nije. Točnu cijenu i trajanje najma potvrdite s agencijom.",
         "izvor": "skver-tours.com; provjereno 6.11.2026."
       }
     ],

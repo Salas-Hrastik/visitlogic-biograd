@@ -1758,7 +1758,7 @@ export default async function handler(req, res) {
       ? `\n[SUSTAV: Gost treba taksi. Navedi u odgovoru sve taksije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /taxi|taksi/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Cijenu i transfer (npr. do Zračne luke Zadar) gost dogovara telefonom; ne navodi cijene ni udaljenosti kojih nema u bazi.]`
       : '';
     const rentNote = RENT_RE.test(msgLow)
-      ? `\n[SUSTAV: Gost traži rent-a-car. Navedi agencije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /rent/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Cijene navedi samo kako stoje u bazi i savjetuj potvrdu s agencijom.]`
+      ? `\n[SUSTAV: Gost traži rent-a-car. Navedi agencije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /rent/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Telefone napiši u odgovoru. Cijene navedi samo kako stoje u bazi: ne tvrdi da su po danu, jer agencija to ne navodi, i savjetuj potvrdu s agencijom.]`
       : '';
     const vetNote = VET_RE.test(msgLow)
       ? `\n[SUSTAV: Za veterinara koristi samo prakticne_info.veterinari. U Biogradu rade ambulanta Nova i praksa Dado; službeni raspored dežurstva za Biograd nije objavljen. Izvan radnog vremena, nedjeljom i za hitne slučajeve uputi na dežurni mobitel Veterinarske stanice Zadar (+385 98 33 94 00) ili ambulantu Bokanjac u Zadru (0–24, +385 91 511 5092) i savjetuj da prije polaska nazovu. Ne postavljaj dijagnozu.]`
