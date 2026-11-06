@@ -209,6 +209,22 @@ const VET_RE = /veterin|tierarzt|tierärzt|tierklinik|állatorvos|\bvets?\b|(lju
 
 const PHARMACY_RE = /ljekarn|apotek|dežurn\w* ljek|pharmac|chemist|apothek|farmaci|gyógyszert|patik|lékárn|lekáreň|lekarn/;
 
+const PRAKTICNO_SECTIONS = [
+  [{ test: m => VET_RE.test(m) }, 'veterinari'],
+  [{ test: m => EMERGENCY_RE.test(m) }, 'hitne_sluzbe'],
+  [{ test: m => HEALTH_RE.test(m) }, 'zdravstvo', 'ljekarne'],
+  [{ test: m => PHARMACY_RE.test(m) }, 'ljekarne'],
+  [/parking|parkir|parkplatz|parcheggi|parkol|parkov/, 'parking', 'parking_info'],
+  [/benzin|gorivo|petrol|tankstell|fuel|gas station|carburant|üzemanyag|čerpac|tank/, 'benzinska'],
+  [/servis|mehaničar|vulkanizer|guma|gume|kvar|popravak|mechanic|werkstatt|tyre|tire|reifen|officina|gomm|szerviz|autoservis|pneu/, 'servisi', 'hitne_sluzbe'],
+  [/bankomat|banka|\batm\b|\bbank|novac|geld|cash|contanti|pénz|peníze|peniaze/, 'banke_atm'],
+  [/trajekt|ferry|fähre|traghett|komp|pašman|tkon/, 'trajekt_pasmanskim_kanalom', 'prijevoz'],
+  [/autobus|\bbus|taksi|taxi|prijevoz|transport|rent|flixbus|zračn|airport|aerodrom|flughafen|aeroport|repülő|letišt/, 'prijevoz'],
+  [/supermarket|konzum|lidl|kaufland|plodine|tommy|studenac|tifon|trgovin|namirnic|shopping|dućan|einkauf|spesa|bolt|obchod/, 'supermarketi'],
+  [/tržnic|trznic|ribarnic|suvenir|butik|lokaln|souvenir|markt|mercato|piac|trh/, 'lokalne_trgovine'],
+  [/wifi|wi-fi|internet|kartic|plaćanj|valuta|\beur|card|payment|zahlung|pagament|fizet|platb/, 'internet_i_placanje'],
+];
+
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
   plaze:       (db) => ({ grad: db.grad, plaze: db.plaze }),
@@ -231,7 +247,15 @@ const CATEGORY_CONTEXTS = {
     dogadanja: { ...db.dogadanja, eventi: sortedUpcomingEvents(db.dogadanja?.eventi) }
   }),
   opcenito:    (db) => ({ grad: db.grad, opcenito: db.opcenito }),
-  prakticno:   (db) => ({ grad: db.grad, prakticne_info: db.prakticne_info }),
+  // Cijele praktične informacije imaju 30 000+ znakova; model dobiva samo dijelove za ovo pitanje.
+  prakticno:   (db, message = '') => {
+    const pi = db.prakticne_info || {};
+    const m = message.toLowerCase();
+    const keys = PRAKTICNO_SECTIONS.filter(([re]) => re.test(m)).flatMap(([, ...k]) => k);
+    if (!keys.length) return { grad: db.grad, prakticne_info: pi };
+    const picked = Object.fromEntries([...new Set([...keys, 'sezonalnost', 'upozorenja_i_savjeti'])].filter(k => pi[k]).map(k => [k, pi[k]]));
+    return { grad: db.grad, prakticne_info: picked };
+  },
   klima:       (db) => ({ grad: db.grad, klima: db.klima }),
 };
 
@@ -1551,6 +1575,9 @@ ISPRAVAN FORMAT (konobe): "Kornati su poznati po svježoj ribi i autentičnoj da
 // Dinamički dio sustavskog prompta (mijenja se po upitu) — ide NAKON keširanog
 // SYSTEM_STABLE. Sadrži jezik odgovora, aktualno vrijeme/prognozu, sezonu i
 // kontekst baze za konkretnu kategoriju pitanja.
+// Gastronomija i smještaj imaju preko 30 000 znakova; prijašnjih 20 000 odrezalo bi dio objekata.
+const CONTEXT_LIMIT = 45000;
+
 function buildDynamicSystem(lang, context, weatherCtx) {
   const weatherDirectives = buildWeatherDirectives(weatherCtx);
   const forecastSummary   = buildForecastSummary(weatherCtx?.forecast);
@@ -1595,7 +1622,7 @@ ${seasonCtx.izleti_kornati}
 SAVJET ZA IZLET: ${seasonCtx.savjet_izlet}
 
 BAZA PODATAKA ZA OVO PITANJE (koristi ove informacije):
-${JSON.stringify(context, null, 0).substring(0, 20000)}`;
+${JSON.stringify(context, null, 0).substring(0, CONTEXT_LIMIT)}`;
 }
 
 // ===== INSTANT UVOD ZA KATEGORIJE (bez AI poziva — kao Slavonski Brod) =====
@@ -1659,7 +1686,7 @@ export default async function handler(req, res) {
     const isForced = forcedCategory && CATEGORY_CONTEXTS[forcedCategory];
     const detectedCategory = isForced ? forcedCategory : detectCategory(message, lastCategory, db);
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
-    const context = ctxFn ? ctxFn(db) : { grad: db.grad, opcenito: db.opcenito, atrakcije: db.atrakcije };
+    const context = ctxFn ? ctxFn(db, message) : { grad: db.grad, opcenito: db.opcenito, atrakcije: db.atrakcije };
 
     // getCategoryItems je sinkron — pokrećemo PRIJE system prompta da LLM zna o karticama
     const items = getCategoryItems(detectedCategory, message, { full: !!isForced });
