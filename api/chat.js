@@ -201,6 +201,9 @@ function pharmacyNote() {
   return `\n[SUSTAV — LJEKARNE (izračun iz službenog radnog vremena, provjereno ${pharmacies.provjereno}; službeni raspored dežurstava za Biograd nije objavljen):\n${lines.join('\n')}\nOdgovori izravno tko je otvoren kad gost treba, s adresom i telefonom; preporuči da prije dolaska nazove.]`;
 }
 
+// Veterinar: izravno ili ljubimac uz tegobu (samo "pas" ne smije, jer gosti pitaju i za smještaj sa psom).
+const VET_RE = /veterin|tierarzt|tierärzt|tierklinik|állatorvos|\bvets?\b|(ljubim|\bpas\b|\bpsa\b|\bpsu\b|mačk|\bdog\b|\bcat\b|\bpet\b|\bhund|katze|haustier|\bcane\b|gatto|kutya|macska|\bpes\b|kočk|mačk).{0,40}(bolest|bolestan|ozlij|ozljed|hitn|ugriz|krpelj|povra|proljev|sick|ill\b|injur|emergenc|vomit|tick|krank|verletz|notfall|zecke|malat|\\bmale\\b|ferit|emergenz|beteg|sérül|nemocn|zraněn|bolan|poškod)|(bolest|ozlij|ozljed|hitn|sick|injur|emergenc|krank|verletz|notfall).{0,40}(ljubim|\bpas\b|\bpsa\b|mačk|\bdog\b|\bcat\b|\bhund|katze|\bcane\b|gatto)/;
+
 const PHARMACY_RE = /ljekarn|apotek|dežurn\w* ljek|pharmac|chemist|apothek|farmaci|gyógyszert|patik|lékárn|lekáreň|lekarn/;
 
 // ===== KATEGORIJSKI KONTEKSTI =====
@@ -500,7 +503,7 @@ const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar
 
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
-  if (HEALTH_RE.test(m) || PHARMACY_RE.test(m)) return 'prakticno';
+  if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m)) return 'prakticno';
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
   if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
@@ -970,6 +973,8 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
         m.includes('prijevoz') || m.includes('rent') || m.includes('automobil') || m.includes('dolaz') ||
         m.includes('javni') || m.includes('bus') || m.includes('flixbus'))
       return toItems(pi.prijevoz);
+
+    if (VET_RE.test(m)) return toItems(pi.veterinari);
 
     if (PHARMACY_RE.test(m) || m.includes('lijek') ||
         m.includes('pharmacy') || m.includes('apotheke'))
@@ -1703,7 +1708,10 @@ export default async function handler(req, res) {
         + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message, lang) : '')
         + (lang !== 'hr' ? `\n[SYSTEM: the notes above are for the system only; write the answer ONLY in the guest's language (${lang}), never in Croatian.]` : '')
       : '';
-    const healthNote = detectedCategory === 'prakticno' && HEALTH_RE.test(msgLow)
+    const vetNote = VET_RE.test(msgLow)
+      ? `\n[SUSTAV: Za veterinara koristi samo prakticne_info.veterinari. U Biogradu rade ambulanta Nova i praksa Dado; službeni raspored dežurstva za Biograd nije objavljen. Izvan radnog vremena, nedjeljom i za hitne slučajeve uputi na dežurni mobitel Veterinarske stanice Zadar (+385 98 33 94 00) ili ambulantu Bokanjac u Zadru (0–24, +385 91 511 5092) i savjetuj da prije polaska nazovu. Ne postavljaj dijagnozu.]`
+      : '';
+    const healthNote = detectedCategory === 'prakticno' && HEALTH_RE.test(msgLow) && !VET_RE.test(msgLow)
       ? `\n[SUSTAV: Za zdravstvo koristi samo kontakte iz baze (prakticne_info.zdravstvo). Specijalnu bolnicu za ortopediju preporuči SAMO za ozljede kostiju, zglobova i sustava za kretanje; za zubobolju, temperaturu, bolest djeteta i ostalo uputi na odgovarajuću ordinaciju u Domu zdravlja, a za hitna stanja ili izvan radnog vremena na 194 ili 112. Ne postavljaj dijagnozu i ne savjetuj lijekove.]`
       : '';
     const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
@@ -1727,7 +1735,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + pharmacyInfo + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + pharmacyInfo + menuInfo.note }
       ]
     });
 

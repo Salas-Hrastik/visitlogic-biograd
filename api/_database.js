@@ -2478,6 +2478,48 @@ export const db = {
         "recenzija_izvor": "Ljekarna Zadar"
       }
     ],
+    "veterinari": [
+      {
+        "naziv": "Veterinarska ambulanta Nova",
+        "tip": "🐾 veterinarska ambulanta",
+        "adresa": "Bračka ulica 2, Biograd na Moru",
+        "telefon": "+385 23 385 005",
+        "email": "veterinarska.biograd@gmail.com",
+        "karta": "https://maps.google.com/?q=Bračka+ulica+2,+Biograd+na+Moru",
+        "opis": "Veterinarska ambulanta za kućne ljubimce u Biogradu (područje Biograda, Sv. Filipa i Jakova, Tkona, Pašmana i Pakoštana). Radno vrijeme prema katalogu: pon–pet 8–20, sub 8–13, nedjeljom zatvoreno; provjerite telefonom.",
+        "izvor": "discover-biograd.com (TZ), veterina.com.hr; provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Veterinarska praksa Dado",
+        "tip": "🐾 veterinarska praksa",
+        "adresa": "Kralja Petra Svačića 22, Biograd na Moru",
+        "telefon": "+385 23 383 985",
+        "karta": "https://maps.google.com/?q=Kralja+Petra+Svačića+22,+Biograd+na+Moru",
+        "opis": "Veterinarska praksa u Biogradu. Radno vrijeme nije objavljeno; prije dolaska nazovite.",
+        "izvor": "discover-biograd.com (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Veterinarska stanica Zadar — dežurni veterinar",
+        "tip": "🐾 dežurstvo izvan radnog vremena i vikendom",
+        "adresa": "Skročini 2b, Zadar (oko 30 km)",
+        "telefon": "+385 98 33 94 00",
+        "telefon2": "+385 23 322 877",
+        "web": "https://veterinarskastanicazadar.hr/",
+        "karta": "https://maps.google.com/?q=Skročini+2b,+Zadar",
+        "opis": "Za hitne slučajeve izvan radnog vremena i vikendom: dežurni mobitel +385 98 33 94 00. Redovno radno vrijeme: pon–pet 7:30–20, sub 7:30–12:30, nedjeljom zatvoreno.",
+        "izvor": "veterinarskastanicazadar.hr; provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Veterinarska ambulanta Bokanjac — hitna 0–24",
+        "tip": "🐾 hitna veterinarska služba 0–24",
+        "adresa": "Put Vrela 2A, Zadar (oko 30 km)",
+        "telefon": "+385 91 511 5092",
+        "web": "https://veterinarskaambulantabokanjac.hr/",
+        "karta": "https://maps.google.com/?q=Put+Vrela+2A,+Zadar",
+        "opis": "Ambulanta za kućne ljubimce koja nudi hitne veterinarske usluge i dežurnog veterinara 0–24; za hitnu intervenciju nazovite prije polaska.",
+        "izvor": "veterinarskaambulantabokanjac.hr; provjereno 6.11.2026."
+      }
+    ],
     "zdravstvo": [
       {
         "naziv": "Dom zdravlja Biograd na Moru",
