@@ -2296,9 +2296,14 @@ export const db = {
     "trajekt_pasmanskim_kanalom": {
       "naziv": "Trajekt Biograd — Tkon",
       "ruta": "Biograd — Tkon (otok Pašman)",
-      "ucestalost": "Više polazaka dnevno (10–15 min vožnje)",
+      "ucestalost": "Linija 432: 11 polazaka dnevno izvan sezone, 12 u niskoj i 19 u visokoj sezoni (srpanj–kolovoz); vožnja 15 minuta",
+    "tip": "⛴ trajekt Jadrolinija · linija 432 · 15 min",
+    "adresa": "Trajektno pristanište Biograd na Moru (Jadrolinija, Obala Petra Krešimira IV 38A)",
+    "telefon": "+385 23 384 589",
+    "opis": "Trajekt za otok Pašman (Tkon). Karta za osobu 2,20 € izvan sezone i 3,50 € u sezoni (29.5.–27.9.), osobni automobil 10,40 € odnosno 14,60 €. Karta vrijedi cijeli dan i za druge polaske; kućni ljubimci se ne naplaćuju. Red plovidbe je privremen i podložan promjenama.",
+    "izvor": "jadrolinija.hr, red plovidbe 2026.; provjereno 6.11.2026.",
       "operater": "Jadrolinija",
-      "web": "https://www.jadrolinija.hr",
+      "web": "https://www.jadrolinija.hr/hr/putovanje/biograd_-_tkon_pasman",
       "karta": "https://maps.google.com/?q=Ferry+Terminal+Biograd+na+Moru"
     },
     "parking_info": {

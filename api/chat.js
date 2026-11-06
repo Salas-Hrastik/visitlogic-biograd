@@ -4,6 +4,7 @@ import { translations } from "./_translations.js";
 import { menus } from "./_menus.js";
 import { npKornati } from "./_np_kornati.js";
 import { pharmacies } from "./_ljekarne.js";
+import { ferry } from "./_trajekt.js";
 
 // Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
 // Prevodi opis/recenziju/tip/sadržaje; naziv, adresu i telefon ostavlja (vlastita imena).
@@ -223,12 +224,51 @@ const PRAKTICNO_SECTIONS = [
   [/benzin|gorivo|petrol|tankstell|fuel|gas station|carburant|üzemanyag|čerpac|tank/, 'benzinska'],
   [/servis|mehaničar|vulkanizer|guma|gume|kvar|popravak|mechanic|werkstatt|tyre|tire|reifen|officina|gomm|szerviz|autoservis|pneu/, 'servisi', 'hitne_sluzbe'],
   [/bankomat|banka|\batm\b|\bbank|novac|gotovin|geld|cash|withdraw|bancomat|prelevare|contanti|pénz|peníze|peniaze/, 'banke_atm'],
-  [/trajekt|ferry|fähre|traghett|komp|pašman|tkon/, 'trajekt_pasmanskim_kanalom', 'prijevoz'],
+  [{ test: m => FERRY_RE.test(m) }, 'trajekt_pasmanskim_kanalom'],
   [/autobus|\bbus|taksi|taxi|prijevoz|transport|rent|flixbus|zračn|airport|aerodrom|flughafen|aeroport|repülő|letišt/, 'prijevoz'],
   [/supermarket|konzum|lidl|kaufland|plodine|tommy|studenac|tifon|trgovin|namirnic|shopping|dućan|einkauf|spesa|bolt|obchod/, 'supermarketi'],
   [/tržnic|trznic|ribarnic|suvenir|butik|lokaln|souvenir|markt|mercato|piac|trh/, 'lokalne_trgovine'],
   [/wifi|wi-fi|internet|kartic|plaćanj|valuta|\beur|card|payment|zahlung|pagament|fizet|platb/, 'internet_i_placanje'],
 ];
+
+// ===== TRAJEKT BIOGRAD – TKON: polasci za dan iz reda plovidbe (api/_trajekt.js) =====
+const inPeriods = (periods, d) => {
+  const n = dmNum(dmKey(d));
+  return periods.some(([a, b]) => n >= dmNum(a) && n <= dmNum(b));
+};
+
+function ferryDepartures(d, side) {
+  const season = ferry.sezone.find(s => inPeriods(s.razdoblja, d));
+  if (!season) return { season: null, times: [] };
+  const hol = croatianHoliday(d), sunOrHol = d.getUTCDay() === 0 || !!hol, key = dmKey(d), dow = d.getUTCDay();
+  const times = season[side].filter(t => {
+    const flags = (t.match(/\*+$/) || [''])[0];
+    if (flags === '*') return !sunOrHol;
+    if (flags === '**') return key !== '01.01.' && key !== '25.12.';
+    if (flags === '***') return inPeriods([['20.03.', '24.05.']], d) && (dow === 5 || dow === 6 || sunOrHol);
+    return true;
+  }).map(t => t.replace(/\*+$/, ''));
+  return { season: season.naziv, times };
+}
+
+function ferryNote() {
+  const { day, time } = zagrebNow();
+  const tomorrow = new Date(day.getTime() + 864e5);
+  const label = d => { const h = croatianHoliday(d); return `${DAY_NAMES_HR[d.getUTCDay()]} ${d.getUTCDate()}.${d.getUTCMonth() + 1}.${h ? ` (blagdan: ${h})` : ''}`; };
+  const line = (d, side, from) => { const r = ferryDepartures(d, side); const t = from ? r.times.filter(x => x > from) : r.times; return t.length ? t.join(', ') : 'nema više polazaka'; };
+  const seasonal = inPeriods([ferry.cjenik_sezonski_od_do], day);
+  const prices = ferry.cjenik.map(c => `${c.stavka} ${(seasonal ? c.sezona : c.izvan).toFixed(2).replace('.', ',')} €`).join('; ');
+  return `\n[SUSTAV — TRAJEKT ${ferry.linija} (${ferry.operater}, red plovidbe ${ferry.godina}., provjereno ${ferry.provjereno}):\n` +
+    `Sada je ${label(day)}, ${time}; razdoblje: ${ferryDepartures(day, 'biograd').season}.\n` +
+    `Sljedeći polasci danas iz Biograda: ${line(day, 'biograd', time)}. Iz Tkona: ${line(day, 'tkon', time)}.\n` +
+    `Svi polasci danas iz Biograda: ${line(day, 'biograd')}. Iz Tkona: ${line(day, 'tkon')}.\n` +
+    `Sutra (${label(tomorrow)}) iz Biograda: ${line(tomorrow, 'biograd')}. Iz Tkona: ${line(tomorrow, 'tkon')}.\n` +
+    `Cijene (${seasonal ? 'sezonski' : 'izvansezonski'} cjenik, jednako u oba smjera): ${prices}. ${ferry.djeca}\n` +
+    `${ferry.napomena} Iz Biograda Jadrolinija nema drugih redovnih brodskih linija; izleti na Kornate idu turističkim brodovima.\n` +
+    `Odgovori izravno sljedećim polascima i cijenom, uz napomenu da je red plovidbe privremen i podložan promjenama (${ferry.izvor}). Ne izmišljaj polaske za druge datume: za njih uputi na izvor.]`;
+}
+
+const FERRY_RE = /trajekt|ferry|ferries|fähre|faehre|traghett|kompj|komp\b|pašman|pasman|tkon|jadrolinij|brodsk\w* linij|boat line|katamaran|catamaran|galešnjak/;
 
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
@@ -536,7 +576,7 @@ const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
   if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
-  if (TAXI_RE.test(m) || RENT_RE.test(m)) return 'prakticno';
+  if (TAXI_RE.test(m) || RENT_RE.test(m) || (FERRY_RE.test(m) && !/kornat|izlet/.test(m))) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
@@ -1054,7 +1094,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
         m.includes('trgovin') || m.includes('prodavaonice') || m.includes('dućan'))
       return [...toItems(pi.lokalne_trgovine), ...toItems(pi.supermarketi)];
 
-    if (m.includes('trajekt') || m.includes('ferry') || m.includes('pašman') || m.includes('pasman') ||
+    if (FERRY_RE.test(m) || m.includes('trajekt') || m.includes('ferry') || m.includes('pašman') || m.includes('pasman') ||
         m.includes('tkon') || m.includes('jadrolinija'))
       return pi.trajekt_pasmanskim_kanalom
         ? [item(pi.trajekt_pasmanskim_kanalom, { adresa: pi.trajekt_pasmanskim_kanalom.ruta || '' })]
@@ -1767,6 +1807,7 @@ export default async function handler(req, res) {
       ? `\n[SUSTAV: Za zdravstvo koristi samo kontakte iz baze (prakticne_info.zdravstvo). Specijalnu bolnicu za ortopediju preporuči SAMO za ozljede kostiju, zglobova i sustava za kretanje; za zubobolju, temperaturu, bolest djeteta i ostalo uputi na odgovarajuću ordinaciju u Domu zdravlja, a za hitna stanja ili izvan radnog vremena na 194 ili 112. Ne postavljaj dijagnozu i ne savjetuj lijekove.]`
       : '';
     const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
+    const ferryInfo = FERRY_RE.test(msgLow) && !/kornat|izlet/.test(msgLow) ? ferryNote() : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
       : '';
@@ -1787,7 +1828,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + pharmacyInfo + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + pharmacyInfo + ferryInfo + menuInfo.note }
       ]
     });
 
