@@ -999,8 +999,11 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
 
     if (m.includes('autobus') || m.includes('bus') || m.includes('taksi') || m.includes('taxi') ||
         m.includes('prijevoz') || m.includes('rent') || m.includes('automobil') || m.includes('dolaz') ||
-        m.includes('javni') || m.includes('bus') || m.includes('flixbus'))
-      return toItems(pi.prijevoz);
+        m.includes('javni') || m.includes('bus') || m.includes('flixbus')) {
+      // Za taksi samo taksiji; ostala pitanja o prijevozu dobivaju cijeli popis.
+      const taxi = /tax|taks/.test(m);
+      return toItems(taxi ? (pi.prijevoz || []).filter(x => /taxi|taksi/i.test(x.naziv)) : pi.prijevoz);
+    }
 
     if (VET_RE.test(m)) return toItems(pi.veterinari);
     if (EMERGENCY_RE.test(m) && !HEALTH_RE.test(m)) return toItems(pi.hitne_sluzbe);

@@ -2391,23 +2391,64 @@ export const db = {
       {
         "naziv": "Autobusni kolodvor Biograd",
         "tip": "🚌 Zadar (45 min) · Šibenik (60 min) · Zagreb (5h)",
-        "adresa": "Šibuljina bb, Biograd na Moru",
-        "telefon": "+385 23 383 935",
+        "adresa": "Trg hrvatskih velikana 19, Biograd na Moru",
+        "telefon": "+385 60 350 350",
         "web": "https://www.autotrans.hr",
-        "karta": "https://maps.google.com/?q=Autobusni+kolodvor+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Trg+hrvatskih+velikana+19,+Biograd+na+Moru",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Redovite veze prema Zadru, Šibeniku i Zagrebu. Fleksibilna opcija za izlete bez auta.",
         "recenzija_izvor": "Autotrans"
       },
       {
         "naziv": "Taxi Biograd",
-        "tip": "🚖 taksi · dostupno 0–24h",
-        "adresa": "Centar i marina, Biograd na Moru",
-        "telefon": "+385 98 344 677",
-        "karta": "https://maps.google.com/?q=Taxi+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Taxi dostupan 24h — u centru, marini i na zahtjev do hotela ili kampa.",
-        "recenzija_izvor": "TZ Biograd"
+        "tip": "🚖 taksi · Biograd na Moru",
+        "adresa": "Biograd na Moru (dolazak na poziv)",
+        "telefon": "+385 99 355 1070",
+        "opis": "Taksi prijevoz u Biogradu i okolici. Cijenu, dostupnost i eventualni transfer (npr. do zračne luke) dogovorite telefonom prije vožnje.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Auto taxi Erstić",
+        "tip": "🚖 taksi · Biograd na Moru",
+        "adresa": "Biograd na Moru (dolazak na poziv)",
+        "telefon": "+385 91 507 8111",
+        "email": "auto.taxi@zd.t-com.hr",
+        "opis": "Taksi prijevoz u Biogradu i okolici. Cijenu, dostupnost i eventualni transfer (npr. do zračne luke) dogovorite telefonom prije vožnje.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Taxi Keky",
+        "tip": "🚖 taksi · Biograd na Moru",
+        "adresa": "Biograd na Moru (dolazak na poziv)",
+        "telefon": "+385 99 291 9607",
+        "email": "kresodosen@protonmail.com",
+        "opis": "Taksi prijevoz u Biogradu i okolici. Cijenu, dostupnost i eventualni transfer (npr. do zračne luke) dogovorite telefonom prije vožnje.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Taxi Zara",
+        "tip": "🚖 taksi · Biograd na Moru",
+        "adresa": "Biograd na Moru (dolazak na poziv)",
+        "telefon": "+385 99 316 8785",
+        "email": "info@taxi-zara-biograd.hr",
+        "opis": "Taksi prijevoz u Biogradu i okolici. Cijenu, dostupnost i eventualni transfer (npr. do zračne luke) dogovorite telefonom prije vožnje.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Taxi LT",
+        "tip": "🚖 taksi · Biograd na Moru",
+        "adresa": "Biograd na Moru (dolazak na poziv)",
+        "telefon": "+385 98 792 450",
+        "opis": "Taksi prijevoz u Biogradu i okolici. Cijenu, dostupnost i eventualni transfer (npr. do zračne luke) dogovorite telefonom prije vožnje.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Taxi Ivica",
+        "tip": "🚖 taksi · Biograd na Moru",
+        "adresa": "Biograd na Moru (dolazak na poziv)",
+        "telefon": "+385 92 176 7471",
+        "opis": "Taksi prijevoz u Biogradu i okolici. Cijenu, dostupnost i eventualni transfer (npr. do zračne luke) dogovorite telefonom prije vožnje.",
+        "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
       },
       {
         "naziv": "Rent-a-car — Marina Kornati",
