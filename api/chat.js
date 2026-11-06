@@ -96,7 +96,7 @@ const MONTH_WORDS = [
   /studen|november|novemb|novembre|listopadu|november/, /prosin|december|dezember|dicembre|prosinec|prosince|decemb/,
 ];
 
-function kornatiPriceNote(message) {
+function kornatiPriceNote(message, lang = 'hr') {
   const m = (message || '').toLowerCase();
   const c = npKornati.cjenik;
   let len = null;
@@ -112,6 +112,14 @@ function kornatiPriceNote(message) {
   const idx = len === null ? 0 : KORNATI_LIMITS.findIndex(l => len < l);
   const row = c.pojedinacne_po_plovilu[idx], joint = c.zajednicka_kornati_telascica_po_plovilu[idx];
   const f = v => `${v.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+  if (lang !== 'hr') {
+    return `\n[SYSTEM PRICE CALCULATION (Kornati NP price list ${c.godina}) — use exactly these amounts and reply only in the guest's language (${lang}):` +
+      ` ${len === null ? 'no boat length given, amounts are for the smallest boat' : `boat ${len.toFixed(2)} m`} → category ${row.duljina};` +
+      ` ${monthGiven ? 'requested month' : 'today'} (month ${month + 1}) is ${season ? 'HIGH SEASON (June–September)' : 'OFF-SEASON (October–May)'}.` +
+      ` Bought outside the park: 1 day ${f(row.izvan_parka_1_dan[key])}, 3 days ${f(row.izvan_parka_3_dana[key])}, 5 days ${f(row.izvan_parka_5_dana[key])}.` +
+      ` Bought inside the park (1 day only): ${f(row.u_parku_1_dan[key])}. Joint ticket with Telašćica Nature Park (3 days, mySea only): ${f(joint['3_dana'][key])}.` +
+      ` Price is per boat, not per person.]`;
+  }
   return `\n[IZRAČUN SUSTAVA (cjenik NP Kornati ${c.godina}.) — koristi točno ove iznose:` +
     ` ${len === null ? 'gost nije naveo duljinu plovila, iznosi su za najmanje plovilo' : `plovilo ${len.toFixed(2).replace('.', ',')} m`} → kategorija ${row.duljina};` +
     ` ${monthGiven ? MONTH_NAMES_HR[month] : `danas (${MONTH_NAMES_HR[month]})`} je ${season ? 'SEZONA (lipanj–rujan)' : 'VAN SEZONE (listopad–svibanj)'}.` +
@@ -1616,8 +1624,8 @@ export default async function handler(req, res) {
     const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
     const kornatiNote = detectedCategory === 'kornati'
       ? `\n[SUSTAV: Za ulaznice, cijene, bove, sidrenje, ronjenje, ribolov i pravila NP Kornati koristi ISKLJUČIVO blok np_kornati (službeni podaci parka, cjenik ${npKornati.cjenik.godina}., provjereno ${npKornati.provjereno}). Ulaznica se plaća po plovilu prema duljini; sezona je lipanj–rujan. Ako gost navede duljinu plovila i razdoblje, izračunaj točnu cijenu i reci da je kupnja izvan parka jeftinija nego u parku. Ako ne navede duljinu ili datum, navedi cijenu za najmanje plovilo (do 6,99 m) i pitaj za duljinu. Za izlet organiziranim brodom reci da cijena izleta obično već uključuje ulaznicu. Ne izmišljaj podatke kojih u bloku nema; za ostalo uputi na ${npKornati.izvor} ili +385 22 435 740.]`
-        + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message) : '')
-        + (lang !== 'hr' ? `\n[SUSTAV: Bilješke iznad su na hrvatskom samo radi sustava; odgovor napiši ISKLJUČIVO na jeziku gosta (${lang}).]` : '')
+        + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message, lang) : '')
+        + (lang !== 'hr' ? `\n[SYSTEM: the notes above are for the system only; write the answer ONLY in the guest's language (${lang}), never in Croatian.]` : '')
       : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
