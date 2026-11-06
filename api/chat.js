@@ -84,6 +84,42 @@ function sortedUpcomingEvents(eventi) {
     }));
 }
 
+// ===== NP KORNATI: izračun ulaznice =====
+// Model zna pomiješati stupce cjenika (sezona / van sezone), pa iznos računa sustav.
+const KORNATI_LIMITS = [7, 11, 18, 25, 35, 50, 75, 100, Infinity];
+const MONTH_WORDS = [
+  /siječ|januar|january|jänner|gennaio|január|leden|ledna|január/, /veljač|februar|february|febbraio|február|únor|února|február/,
+  /ožuj|\bmarc|march|märz|marzo|március|březen|března|marec/, /trav|april|aprile|április|duben|dubna|apríl/,
+  /svib|\bmaj\b|\bmay\b|\bmai\b|maggio|május|květen|května|máj/, /lipan|lipnj|\bjun|june|giugno|június|červen|června|jún/,
+  /srpan|srpnj|\bjul|july|luglio|július|červenec|července|júl/, /kolovoz|august|agosto|augusztus|srpen|srpna/,
+  /rujan|rujn|september|settembre|szeptember|září|septemb/, /listopad|október|october|oktober|ottobre|říjen|října|októb/,
+  /studen|november|novemb|novembre|listopadu|november/, /prosin|december|dezember|dicembre|prosinec|prosince|decemb/,
+];
+
+function kornatiPriceNote(message) {
+  const m = (message || '').toLowerCase();
+  const c = npKornati.cjenik;
+  let len = null;
+  const ft = m.match(/(\d+(?:[.,]\d+)?)\s*(ft\b|feet|foot|stop[ae]?\b|fuß|fuss|piedi|láb)/);
+  const mt = m.match(/(\d+(?:[.,]\d+)?)\s*(m\b|metar|metr|meter|métr|mét)/);
+  if (ft) len = parseFloat(ft[1].replace(',', '.')) * 0.3048;
+  else if (mt) len = parseFloat(mt[1].replace(',', '.'));
+  let month = MONTH_WORDS.findIndex(re => re.test(m));
+  const monthGiven = month >= 0;
+  if (!monthGiven) month = new Date().getMonth();
+  const season = month >= 5 && month <= 8;
+  const key = season ? 'sezona' : 'van_sezone';
+  const idx = len === null ? 0 : KORNATI_LIMITS.findIndex(l => len < l);
+  const row = c.pojedinacne_po_plovilu[idx], joint = c.zajednicka_kornati_telascica_po_plovilu[idx];
+  const f = v => `${v.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+  return `\n[IZRAČUN SUSTAVA (cjenik NP Kornati ${c.godina}.) — koristi točno ove iznose:` +
+    ` ${len === null ? 'gost nije naveo duljinu plovila, iznosi su za najmanje plovilo' : `plovilo ${len.toFixed(2).replace('.', ',')} m`} → kategorija ${row.duljina};` +
+    ` ${monthGiven ? MONTH_NAMES_HR[month] : `danas (${MONTH_NAMES_HR[month]})`} je ${season ? 'SEZONA (lipanj–rujan)' : 'VAN SEZONE (listopad–svibanj)'}.` +
+    ` Kupljeno izvan parka: 1 dan ${f(row.izvan_parka_1_dan[key])}, 3 dana ${f(row.izvan_parka_3_dana[key])}, 5 dana ${f(row.izvan_parka_5_dana[key])}.` +
+    ` Kupljeno u parku (samo 1 dan): ${f(row.u_parku_1_dan[key])}. Zajednička s PP Telašćica (3 dana, samo mySea): ${f(joint['3_dana'][key])}.` +
+    ` Cijena je po plovilu, ne po osobi.]`;
+}
+
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
   plaze:       (db) => ({ grad: db.grad, plaze: db.plaze }),
@@ -1580,6 +1616,7 @@ export default async function handler(req, res) {
     const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
     const kornatiNote = detectedCategory === 'kornati'
       ? `\n[SUSTAV: Za ulaznice, cijene, bove, sidrenje, ronjenje, ribolov i pravila NP Kornati koristi ISKLJUČIVO blok np_kornati (službeni podaci parka, cjenik ${npKornati.cjenik.godina}., provjereno ${npKornati.provjereno}). Ulaznica se plaća po plovilu prema duljini; sezona je lipanj–rujan. Ako gost navede duljinu plovila i razdoblje, izračunaj točnu cijenu i reci da je kupnja izvan parka jeftinija nego u parku. Ako ne navede duljinu ili datum, navedi cijenu za najmanje plovilo (do 6,99 m) i pitaj za duljinu. Za izlet organiziranim brodom reci da cijena izleta obično već uključuje ulaznicu. Ne izmišljaj podatke kojih u bloku nema; za ostalo uputi na ${npKornati.izvor} ili +385 22 435 740.]`
+        + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message) : '')
       : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
