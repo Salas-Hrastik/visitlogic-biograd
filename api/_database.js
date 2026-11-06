@@ -2424,18 +2424,18 @@ export const db = {
     "ljekarne": [
       {
         "naziv": "Ljekarna Švaljek — Obala (br. 1)",
-        "tip": "💊 ljekarna · ⭐ 4,6 (34 recenzije) · pon–sub 07h",
-        "adresa": "Šetalište kneza Branimira bb, 23210 Biograd na Moru",
+        "tip": "💊 ljekarna · pon–sub 07–20 (ljeti do 21) · nedjelja i blagdan 08–14",
+        "adresa": "Obala kneza Branimira bb, 23210 Biograd na Moru",
         "telefon": "023 385 111",
         "web": "https://www.ljekarnesvaljek.com",
         "karta": "https://www.google.com/maps/place/Ljekarna+Švaljek+Biograd+na+Moru+1/@43.9386817,15.4447922,17z",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Na samoj obali u centru grada — najlakše dostupna ljekarna turistima.",
+        "recenzija": "Na obali u centru grada; jedina u Biogradu radi i nedjeljom i blagdanom izvan sezone (08–14, osim Božića, Nove godine i Uskrsa).",
         "recenzija_izvor": "Google Maps"
       },
       {
         "naziv": "Ljekarna Avicenna",
-        "tip": "💊 ljekarna · ⭐ 4,7 (30 recenzija) · pon–sub 08h",
+        "tip": "💊 ljekarna · pon–pet 07–20 · sub 08–13",
         "adresa": "Matije Ivanića 4, 23210 Biograd na Moru",
         "telefon": "023 385 358",
         "web": "https://www.ljekarne-joukhadar.hr",
@@ -2446,7 +2446,7 @@ export const db = {
       },
       {
         "naziv": "Ljekarna Švaljek — br. 2",
-        "tip": "💊 ljekarna · ⭐ 4,9 (12 recenzija) · pon–sub 08h",
+        "tip": "💊 ljekarna · pon–pet 07–20 (ljeti do 21) · sub 08–15",
         "adresa": "Matije Ivanića 2, 23210 Biograd na Moru",
         "telefon": "023 385 444",
         "web": "https://www.ljekarnesvaljek.com",
@@ -2457,7 +2457,7 @@ export const db = {
       },
       {
         "naziv": "Ljekarna Švaljek — Park&Shop (br. 3)",
-        "tip": "💊 ljekarna · ⭐ 4,7 (27 recenzija) · pon–sub 08h",
+        "tip": "💊 ljekarna · pon–pet 07:30–20:30 · sub 08–20 · nedjelja 09–17 ljeti (zimi samo 20. i 27.12.)",
         "adresa": "Žutska 1, 23210 Biograd na Moru",
         "telefon": "023 385 042",
         "web": "https://www.ljekarnesvaljek.com",
@@ -2465,6 +2465,17 @@ export const db = {
         "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "U trgovačkom centru Park&Shop — praktično uz kupovinu.",
         "recenzija_izvor": "Google Maps"
+      },
+      {
+        "naziv": "Ljekarna Jadran — dežurna 0–24 (Zadar)",
+        "tip": "💊 dežurna ljekarna · non-stop 0–24",
+        "adresa": "Put Murvice 2, Zadar (oko 30 km)",
+        "telefon": "023 211 743",
+        "email": "jadran@ljekarna-zadar.hr",
+        "web": "https://ljekarna-zadar.hr/lokacije/",
+        "karta": "https://maps.google.com/?q=Put+Murvice+2,+Zadar",
+        "recenzija": "Najbliža noćna dežurna ljekarna kad su biogradske zatvorene (noću, nedjeljom popodne, na blagdane).",
+        "recenzija_izvor": "Ljekarna Zadar"
       }
     ],
     "zdravstvo": [

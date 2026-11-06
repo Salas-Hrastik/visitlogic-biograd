@@ -3,6 +3,7 @@ import { db } from "./_database.js";
 import { translations } from "./_translations.js";
 import { menus } from "./_menus.js";
 import { npKornati } from "./_np_kornati.js";
+import { pharmacies } from "./_ljekarne.js";
 
 // Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
 // Prevodi opis/recenziju/tip/sadržaje; naziv, adresu i telefon ostavlja (vlastita imena).
@@ -127,6 +128,80 @@ function kornatiPriceNote(message, lang = 'hr') {
     ` Kupljeno u parku (samo 1 dan): ${f(row.u_parku_1_dan[key])}. Zajednička s PP Telašćica (3 dana, samo mySea): ${f(joint['3_dana'][key])}.` +
     ` Cijena je po plovilu, ne po osobi.]`;
 }
+
+// ===== LJEKARNE: tko je otvoren sada, danas i sljedećih dana =====
+// Raspored dežurstava za Biograd nije objavljen; računamo iz radnog vremena ljekarni (api/_ljekarne.js).
+const DAY_NAMES_HR = ['nedjelja', 'ponedjeljak', 'utorak', 'srijeda', 'četvrtak', 'petak', 'subota'];
+
+function easterSunday(y) {
+  const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4;
+  const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31), day = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(Date.UTC(y, month - 1, day));
+}
+
+function croatianHoliday(d) {
+  const dm = `${String(d.getUTCDate()).padStart(2, '0')}.${String(d.getUTCMonth() + 1).padStart(2, '0')}.`;
+  const fixed = { '01.01.': 'nova godina', '06.01.': 'sveta tri kralja', '01.05.': 'praznik rada', '30.05.': 'dan državnosti', '22.06.': 'dan antifašističke borbe', '05.08.': 'dan pobjede', '15.08.': 'velika gospa', '01.11.': 'svi sveti', '18.11.': 'dan sjećanja', '25.12.': 'božić', '26.12.': 'sveti stjepan' };
+  if (fixed[dm]) return fixed[dm];
+  const e = easterSunday(d.getUTCFullYear()).getTime(), t = d.getTime(), day = 864e5;
+  if (t === e) return 'uskrs';
+  if (t === e + day) return 'uskrsni ponedjeljak';
+  if (t === e + 60 * day) return 'tijelovo';
+  return null;
+}
+
+const dmKey = d => `${String(d.getUTCDate()).padStart(2, '0')}.${String(d.getUTCMonth() + 1).padStart(2, '0')}.`;
+const dmNum = s => { const [dd, mm] = s.split('.').map(Number); return mm * 100 + dd; };
+
+// Vraća [od, do], null (zatvoreno) ili 'nepoznato'. d je datum u UTC ponoći za lokalni dan.
+function pharmacyHours(ph, d) {
+  const key = dmKey(d), n = dmNum(key);
+  if ((ph.zatvoreno || []).includes(`${key}${d.getUTCFullYear()}.`)) return null;
+  const p = ph.razdoblja.find(r => dmNum(r.od) <= dmNum(r.do) ? n >= dmNum(r.od) && n <= dmNum(r.do) : n >= dmNum(r.od) || n <= dmNum(r.do));
+  if (!p) return 'nepoznato';
+  const hol = croatianHoliday(d), dow = d.getUTCDay();
+  if (hol) {
+    if (p.blagdan && !(p.osim_blagdana || []).includes(hol)) return p.blagdan;
+    if (p.blagdan || !ph.blagdan_nepoznat) return null;
+    return 'nepoznato';
+  }
+  if (dow === 0) return p.nedjelja || (p.nedjelja_samo?.datumi.includes(key) ? p.nedjelja_samo.sati : null);
+  return dow === 6 ? (p.subota || null) : (p.radni || null);
+}
+
+function zagrebNow() {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Zagreb', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })
+    .formatToParts(new Date()).map(x => [x.type, x.value]));
+  return { day: new Date(Date.UTC(+parts.year, +parts.month - 1, +parts.day)), time: `${parts.hour === '24' ? '00' : parts.hour}:${parts.minute}` };
+}
+
+function pharmacyNote() {
+  const { day, time } = zagrebNow();
+  const label = d => { const h = croatianHoliday(d); return `${DAY_NAMES_HR[d.getUTCDay()]} ${d.getUTCDate()}.${d.getUTCMonth() + 1}.${h ? ` (blagdan: ${h})` : ''}`; };
+  const fmt = h => h === null ? 'zatvoreno' : h === 'nepoznato' ? 'radno vrijeme za taj dan nije objavljeno, provjeriti telefonom' : `${h[0]}–${h[1]}`;
+  const lines = [];
+  const openNow = pharmacies.ljekarne.filter(ph => { const h = pharmacyHours(ph, day); return Array.isArray(h) && time >= h[0] && time < h[1]; });
+  lines.push(`Sada je ${label(day)}, ${time} (Biograd). Otvoreno SADA: ${openNow.length ? openNow.map(ph => `${ph.naziv} (${ph.adresa}, tel. ${ph.telefon}, do ${pharmacyHours(ph, day)[1]})`).join('; ') : 'nijedna ljekarna u Biogradu'}.`);
+  for (let i = 0; i < 4; i++) {
+    const d = new Date(day.getTime() + i * 864e5);
+    lines.push(`${i === 0 ? 'Danas' : label(d)}: ${pharmacies.ljekarne.map(ph => `${ph.naziv} ${fmt(pharmacyHours(ph, d))}`).join('; ')}.`);
+  }
+  // Prva sljedeća nedjelja ili blagdan: to gosti najčešće pitaju kao "dežurna ljekarna".
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(day.getTime() + i * 864e5);
+    if (d.getUTCDay() !== 0 && !croatianHoliday(d)) continue;
+    const open = pharmacies.ljekarne.map(ph => [ph, pharmacyHours(ph, d)]).filter(([, h]) => Array.isArray(h));
+    lines.push(`Sljedeća nedjelja/blagdan, ${label(d)}: ${open.length ? open.map(([ph, h]) => `${ph.naziv} ${h[0]}–${h[1]}`).join('; ') : 'u Biogradu nijedna ljekarna ne radi'}.`);
+    break;
+  }
+  const z = pharmacies.nocna;
+  lines.push(`Kad su biogradske ljekarne zatvorene (noću, nedjeljom popodne, blagdanom): ${z.naziv}, ${z.adresa}, tel. ${z.telefon}, ${z.sati}. Za hitna stanja 194 ili 112.`);
+  return `\n[SUSTAV — LJEKARNE (izračun iz službenog radnog vremena, provjereno ${pharmacies.provjereno}; službeni raspored dežurstava za Biograd nije objavljen):\n${lines.join('\n')}\nOdgovori izravno tko je otvoren kad gost treba, s adresom i telefonom; preporuči da prije dolaska nazove.]`;
+}
+
+const PHARMACY_RE = /ljekarn|apotek|dežurn\w* ljek|pharmac|chemist|apothek|farmaci|gyógyszert|patik|lékárn|lekáreň|lekarn/;
 
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
@@ -425,7 +500,7 @@ const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar
 
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
-  if (HEALTH_RE.test(m)) return 'prakticno';
+  if (HEALTH_RE.test(m) || PHARMACY_RE.test(m)) return 'prakticno';
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
   if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
@@ -896,7 +971,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
         m.includes('javni') || m.includes('bus') || m.includes('flixbus'))
       return toItems(pi.prijevoz);
 
-    if (m.includes('ljekarn') || m.includes('lijek') || m.includes('apoteka') || m.includes('farmac') ||
+    if (PHARMACY_RE.test(m) || m.includes('lijek') ||
         m.includes('pharmacy') || m.includes('apotheke'))
       return toItems(pi.ljekarne);
 
@@ -1631,6 +1706,7 @@ export default async function handler(req, res) {
     const healthNote = detectedCategory === 'prakticno' && HEALTH_RE.test(msgLow)
       ? `\n[SUSTAV: Za zdravstvo koristi samo kontakte iz baze (prakticne_info.zdravstvo). Specijalnu bolnicu za ortopediju preporuči SAMO za ozljede kostiju, zglobova i sustava za kretanje; za zubobolju, temperaturu, bolest djeteta i ostalo uputi na odgovarajuću ordinaciju u Domu zdravlja, a za hitna stanja ili izvan radnog vremena na 194 ili 112. Ne postavljaj dijagnozu i ne savjetuj lijekove.]`
       : '';
+    const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
       : '';
@@ -1651,7 +1727,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + pharmacyInfo + menuInfo.note }
       ]
     });
 
