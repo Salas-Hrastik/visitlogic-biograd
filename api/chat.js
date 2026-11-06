@@ -38,6 +38,51 @@ function isEventActive(e) {
   return !end || end.getTime() >= new Date().setHours(0, 0, 0, 0);
 }
 
+// Sljedeći termin događanja, i kad je zadan riječima ("kolovoz", "1. svibnja", "proljeće i jesen").
+const MONTH_STEMS = ['siječ', 'velj', 'ožuj', 'trav', 'svib', 'lip', 'srp', 'kolovoz', 'ruj', 'listopad', 'studen', 'prosin'];
+const SEASON_MONTHS = { 'proljeć': 3, 'ljet': 6, 'jesen': 8, 'zim': 11 };
+const MONTH_NAMES_HR = ['siječanj', 'veljača', 'ožujak', 'travanj', 'svibanj', 'lipanj', 'srpanj', 'kolovoz', 'rujan', 'listopad', 'studeni', 'prosinac'];
+const SOON_DAYS = 60;
+
+function nextEventDate(e) {
+  const today = new Date(new Date().setHours(0, 0, 0, 0));
+  const t = (e.termin || '').toLowerCase();
+  const exact = t.replace(/\s/g, '').match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+  if (exact) {
+    const start = new Date(+exact[3], +exact[2] - 1, +exact[1]);
+    return { date: start < today ? today : start, exact: true };
+  }
+  const candidates = [];
+  MONTH_STEMS.forEach((s, i) => {
+    const at = t.indexOf(s);
+    if (at < 0) return;
+    const day = t.slice(Math.max(0, at - 5), at).match(/(\d{1,2})\.\s*$/);
+    candidates.push({ month: i, day: day ? +day[1] : 1 });
+  });
+  for (const [s, month] of Object.entries(SEASON_MONTHS)) if (t.includes(s)) candidates.push({ month, day: 1 });
+  if (!candidates.length) return null;
+  const year = (/\b(20\d\d)\b/.exec(t) || [])[1];
+  const dates = candidates.map(({ month, day }) => {
+    let y = year ? +year : today.getFullYear();
+    // Mjesec koji je u tijeku računa se kao sadašnji, a prošli prelazi u sljedeću godinu.
+    if (!year && (month < today.getMonth() || (month === today.getMonth() && day < today.getDate() && day > 1))) y++;
+    return new Date(y, month, day);
+  });
+  return { date: dates.sort((a, b) => a - b)[0], exact: false };
+}
+
+function sortedUpcomingEvents(eventi) {
+  const soonLimit = new Date().setHours(0, 0, 0, 0) + SOON_DAYS * 864e5;
+  return (eventi || []).filter(isEventActive)
+    .map(e => ({ e, next: nextEventDate(e) }))
+    .sort((a, b) => (a.next?.date ?? Infinity) - (b.next?.date ?? Infinity))
+    .map(({ e, next }) => ({
+      ...e,
+      sljedeci_termin: next ? (next.exact ? e.termin : `${MONTH_NAMES_HR[next.date.getMonth()]} ${next.date.getFullYear()}.`) : e.termin,
+      skupina: next && next.date <= soonLimit ? 'USKORO' : 'TIJEKOM GODINE',
+    }));
+}
+
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
   plaze:       (db) => ({ grad: db.grad, plaze: db.plaze }),
@@ -56,7 +101,7 @@ const CATEGORY_CONTEXTS = {
   atrakcije:   (db) => ({ grad: db.grad, atrakcije: db.atrakcije }),
   dogadanja:   (db) => ({
     grad: db.grad,
-    dogadanja: { ...db.dogadanja, eventi: (db.dogadanja?.eventi || []).filter(isEventActive) }
+    dogadanja: { ...db.dogadanja, eventi: sortedUpcomingEvents(db.dogadanja?.eventi) }
   }),
   opcenito:    (db) => ({ grad: db.grad, opcenito: db.opcenito }),
   prakticno:   (db) => ({ grad: db.grad, prakticne_info: db.prakticne_info }),
@@ -767,8 +812,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     return filterByMessage(svi, message);
   }
   if (category === 'dogadanja') {
-    return (db.dogadanja?.eventi || [])
-      .filter(isEventActive)
+    return sortedUpcomingEvents(db.dogadanja?.eventi)
       .map(e => item(e, { adresa: e.termin || '', lokacija: e.lokacija || '' }));
   }
   if (category === 'prakticno') {
@@ -1515,6 +1559,9 @@ export default async function handler(req, res) {
         : `\n[SUSTAV: Ispod odgovora automatski će biti prikazano ${cardItems.length} vizualnih kartica. Odgovori IZRAVNO na korisnikovo pitanje u 1–3 rečenice koristeći podatke iz baze (npr. cijena, datum, udaljenost, preporuka). Ako traženog podatka nema u bazi, reci to i uputi na TZ. NE nabrajaj kartice.]`
       : `\n[SUSTAV: Ispod ovog odgovora NEMA kartica. Ne spominji kartice niti "detalje ispod"; sve što gost treba napiši u odgovoru.]`;
     const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
+    const eventsNote = detectedCategory === 'dogadanja'
+      ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, redom po mjesecima, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
+      : '';
 
     // Poruke za Claude (do 10 prethodnih; system ide kao zaseban parametar)
     const historyMessages = (history || []).slice(-10)
@@ -1532,7 +1579,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + menuInfo.note }
       ]
     });
 
