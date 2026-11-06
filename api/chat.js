@@ -210,6 +210,8 @@ const VET_RE = /veterin|tierarzt|tierärzt|tierklinik|állatorvos|\bvets?\b|(lju
 // Taksi ima prednost pred odredištem: "taxi to Zadar airport" nije izlet u Zadar.
 const TAXI_RE = /\btax[iíy]|taksi|taxis/;
 
+const RENT_RE = /rent[ -]?a[ -]?car|car rental|rental car|hire a car|car hire|najam (auto|vozil)|iznajm\w* (auto|vozil)|unajmi\w* auto|mietwagen|autovermietung|auto mieten|noleggio auto|autonoleggio|autókölcsönz|půjčovn\w* aut|požičovň\w* áut|najem avtomobil/;
+
 const PHARMACY_RE = /ljekarn|apotek|dežurn\w* ljek|pharmac|chemist|apothek|farmaci|gyógyszert|patik|lékárn|lekáreň|lekarn/;
 
 const PRAKTICNO_SECTIONS = [
@@ -534,7 +536,7 @@ const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
   if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
-  if (TAXI_RE.test(m)) return 'prakticno';
+  if (TAXI_RE.test(m) || RENT_RE.test(m)) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
@@ -1003,10 +1005,11 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
 
     if (m.includes('autobus') || m.includes('bus') || m.includes('taksi') || m.includes('taxi') ||
         m.includes('prijevoz') || m.includes('rent') || m.includes('automobil') || m.includes('dolaz') ||
-        m.includes('javni') || m.includes('bus') || m.includes('flixbus')) {
+        m.includes('javni') || m.includes('bus') || m.includes('flixbus') || RENT_RE.test(m)) {
       // Za taksi samo taksiji; ostala pitanja o prijevozu dobivaju cijeli popis.
       const taxi = /tax|taks/.test(m);
-      return toItems(taxi ? (pi.prijevoz || []).filter(x => /taxi|taksi/i.test(x.naziv)) : pi.prijevoz);
+      const car = RENT_RE.test(m);
+      return toItems((pi.prijevoz || []).filter(x => taxi ? /taxi|taksi/i.test(x.naziv) : car ? /rent/i.test(x.naziv) : true));
     }
 
     if (VET_RE.test(m)) return toItems(pi.veterinari);
@@ -1754,6 +1757,9 @@ export default async function handler(req, res) {
     const taxiNote = TAXI_RE.test(msgLow)
       ? `\n[SUSTAV: Gost treba taksi. Navedi u odgovoru sve taksije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /taxi|taksi/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Cijenu i transfer (npr. do Zračne luke Zadar) gost dogovara telefonom; ne navodi cijene ni udaljenosti kojih nema u bazi.]`
       : '';
+    const rentNote = RENT_RE.test(msgLow)
+      ? `\n[SUSTAV: Gost traži rent-a-car. Navedi agencije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /rent/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Cijene navedi samo kako stoje u bazi i savjetuj potvrdu s agencijom.]`
+      : '';
     const vetNote = VET_RE.test(msgLow)
       ? `\n[SUSTAV: Za veterinara koristi samo prakticne_info.veterinari. U Biogradu rade ambulanta Nova i praksa Dado; službeni raspored dežurstva za Biograd nije objavljen. Izvan radnog vremena, nedjeljom i za hitne slučajeve uputi na dežurni mobitel Veterinarske stanice Zadar (+385 98 33 94 00) ili ambulantu Bokanjac u Zadru (0–24, +385 91 511 5092) i savjetuj da prije polaska nazovu. Ne postavljaj dijagnozu.]`
       : '';
@@ -1781,7 +1787,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + pharmacyInfo + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + pharmacyInfo + menuInfo.note }
       ]
     });
 

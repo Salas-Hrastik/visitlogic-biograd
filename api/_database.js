@@ -2451,15 +2451,37 @@ export const db = {
         "izvor": "discover-biograd.com/korisno/servisne-informacije (TZ); provjereno 6.11.2026."
       },
       {
-        "naziv": "Rent-a-car — Marina Kornati",
-        "tip": "🚗 iznajmljivanje automobila",
-        "adresa": "Marina Kornati, Šibuljina bb, Biograd na Moru",
-        "telefon": "+385 23 383 800",
-        "web": "https://www.marinakornati.com",
-        "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd",
-        "slika": "https://wsrv.nl/?url=www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Dostupno na marini i u centru. Rezervirajte unaprijed u sezoni — potražnja je velika.",
-        "recenzija_izvor": "Marina Kornati"
+        "naziv": "Lager Rent a car (Look.ing)",
+        "tip": "🚗 rent-a-car",
+        "adresa": "Ul. kralja Petra Svačića 17, Biograd na Moru",
+        "telefon": "+385 95 880 9040",
+        "email": "info@looking-rent.com",
+        "web": "https://www.rentacarlager.com/hr/rent-a-car-biograd-na-moru",
+        "karta": "https://maps.google.com/?q=Ul.+kralja+Petra+Svačića+17,+Biograd+na+Moru",
+        "opis": "Najam automobila u Biogradu; vozilo se može preuzeti i u zračnim lukama Zadar i Split. Rezervacija online ili telefonom.",
+        "izvor": "rentacarlager.com; provjereno 6.11.2026."
+      },
+      {
+        "naziv": "AVIA Rent a Car — Biograd (Meet & Greet)",
+        "tip": "🚗 rent-a-car · dostava vozila · 08–16 h",
+        "adresa": "Biograd na Moru (preuzimanje na dogovorenom mjestu)",
+        "telefon": "+385 95 348 4020",
+        "email": "zadar.ap@avia-rentacar.hr",
+        "web": "https://www.avia-rentacar.hr/hr/poslovnice/biograd-na-moru/",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9378,15.4437",
+        "opis": "Meet & Greet: djelatnik vas čeka na dogovorenom mjestu (zračna luka, autobusni kolodvor ili centar grada) i odmah predaje ključeve. Radno vrijeme 08–16 h.",
+        "izvor": "avia-rentacar.hr; provjereno 6.11.2026."
+      },
+      {
+        "naziv": "Škver Tours — rent a car",
+        "tip": "🚗 rent-a-car · turistička agencija",
+        "adresa": "Kornatska 1, Biograd na Moru",
+        "telefon": "+385 23 384 457",
+        "email": "info@skver-tours.com",
+        "web": "https://www.skver-tours.com/?l=hr&ispis=ponuda&vrsta=rent&id=1091&objekt=73",
+        "karta": "https://maps.google.com/?q=Kornatska+1,+Biograd+na+Moru",
+        "opis": "Gradska vozila i limuzine (npr. Renault Twingo, Fiat 500, Škoda Fabia, VW T-Cross, Dacia Duster). Cjenik na stranici: od 61 € (od studenoga do prosinca) do 90 € (sezona), uz napomenu o najmu od najmanje 2 dana; osnovno osiguranje uključeno, gorivo nije. Točnu cijenu i trajanje najma potvrdite s agencijom.",
+        "izvor": "skver-tours.com; provjereno 6.11.2026."
       }
     ],
     "ljekarne": [
