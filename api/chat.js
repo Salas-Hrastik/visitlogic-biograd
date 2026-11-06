@@ -214,6 +214,8 @@ const TAXI_RE = /\btax[iíy]|taksi|taxis/;
 
 const RENT_RE = /rent[ -]?a[ -]?car|car rental|rental car|hire a car|car hire|najam (auto|vozil)|iznajm\w* (auto|vozil)|unajmi\w* auto|mietwagen|autovermietung|auto mieten|noleggio auto|autonoleggio|autókölcsönz|půjčovn\w* aut|požičovň\w* áut|najem avtomobil/;
 
+const FUEL_RE = /benzin|gorivo|goriva|nafta|tifon|autoplin|\blpg\b|\bunp\b|tankir|dizel|diesel|petrol station|gas station|\bfuel|refuel|tankstell|tanken|carburant|distributore|benzinkút|üzemanyag|čerpac|pumpa|bencinsk/;
+
 const PHARMACY_RE = /ljekarn|apotek|dežurn\w* ljek|pharmac|chemist|apothek|farmaci|gyógyszert|patik|lékárn|lekáreň|lekarn/;
 
 const PRAKTICNO_SECTIONS = [
@@ -222,7 +224,7 @@ const PRAKTICNO_SECTIONS = [
   [{ test: m => HEALTH_RE.test(m) }, 'zdravstvo', 'ljekarne'],
   [{ test: m => PHARMACY_RE.test(m) }, 'ljekarne'],
   [/parking|parkir|parkplatz|parcheggi|parkol|parkov/, 'parking', 'parking_info'],
-  [/benzin|gorivo|petrol|tankstell|fuel|gas station|carburant|üzemanyag|čerpac|tank/, 'benzinska'],
+  [{ test: m => FUEL_RE.test(m) }, 'benzinska'],
   [/servis|mehaničar|vulkanizer|guma|gume|kvar|popravak|mechanic|werkstatt|tyre|tire|reifen|officina|gomm|szerviz|autoservis|pneu/, 'servisi', 'hitne_sluzbe'],
   [/bankomat|banka|\batm\b|\bbank|novac|gotovin|geld|cash|withdraw|bancomat|prelevare|contanti|pénz|peníze|peniaze/, 'banke_atm'],
   [{ test: m => FERRY_RE.test(m) }, 'trajekt_pasmanskim_kanalom'],
@@ -603,6 +605,7 @@ const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
   if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
+  if (FUEL_RE.test(m)) return 'prakticno';
   if (TAXI_RE.test(m) || RENT_RE.test(m) || (FERRY_RE.test(m) && !/kornat|izlet/.test(m))) return 'prakticno';
   if (BUS_RE.test(m) && !/izlet|excursion|ausflug|escursion/.test(m)) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
@@ -1095,9 +1098,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
         /withdraw|\bcash\b|bancomat|prelevare|pénzfelvét|peníze|peniaze|denar/.test(m))
       return toItems(pi.banke_atm);
 
-    if (m.includes('benzin') || m.includes('gorivo') || m.includes('nafta') || m.includes('tifon') ||
-        m.includes('autoplin') || m.includes('tankiranje') || m.includes('tankstelle') ||
-        (m.includes('ina') && !m.includes('marina')))
+    if (FUEL_RE.test(m) || (/\bina\b/.test(m) && !m.includes('marina')))
       return toItems(pi.benzinska);
 
     if (m.includes('servis') || m.includes('mehaničar') || m.includes('kvar') || m.includes('vulkanizer') ||
@@ -1829,6 +1830,9 @@ export default async function handler(req, res) {
     const rentNote = RENT_RE.test(msgLow)
       ? `\n[SUSTAV: Gost traži rent-a-car. Navedi agencije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /rent/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Telefone napiši u odgovoru. Cijene navedi samo kako stoje u bazi: ne tvrdi da su po danu, jer agencija to ne navodi, i savjetuj potvrdu s agencijom.]`
       : '';
+    const fuelNote = FUEL_RE.test(msgLow)
+      ? `\n[SUSTAV: Za benzinske postaje koristi samo prakticne_info.benzinska (službeni podaci mzoe-gor.hr). U Biogradu su tri INA postaje; 0–24 radi samo INA Magistrala; autoplin u Biogradu nema, najbliži je Petrol Pakoštane (06–22). Cijene su od 6.11.2026. i mijenjaju se svaka dva tjedna: navedi ih s tim datumom i uputi na mzoe-gor.hr za aktualne. Radno vrijeme može se razlikovati vikendom i u sezoni.]`
+      : '';
     const vetNote = VET_RE.test(msgLow)
       ? `\n[SUSTAV: Za veterinara koristi samo prakticne_info.veterinari. U Biogradu rade ambulanta Nova i praksa Dado; službeni raspored dežurstva za Biograd nije objavljen. Izvan radnog vremena, nedjeljom i za hitne slučajeve uputi na dežurni mobitel Veterinarske stanice Zadar (+385 98 33 94 00) ili ambulantu Bokanjac u Zadru (0–24, +385 91 511 5092) i savjetuj da prije polaska nazovu. Ne postavljaj dijagnozu.]`
       : '';
@@ -1858,7 +1862,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + pharmacyInfo + ferryInfo + busInfo + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + busInfo + menuInfo.note }
       ]
     });
 
