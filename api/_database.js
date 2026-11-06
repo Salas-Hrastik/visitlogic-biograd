@@ -2395,14 +2395,16 @@ export const db = {
     "prijevoz": [
       {
         "naziv": "Autobusni kolodvor Biograd",
-        "tip": "🚌 Zadar (45 min) · Šibenik (60 min) · Zagreb (5h)",
+        "tip": "🚌 Liburnija 120 za Zadar · FlixBus i Arriva za Zagreb, Split, Šibenik",
         "adresa": "Trg hrvatskih velikana 19, Biograd na Moru",
         "telefon": "+385 60 350 350",
-        "web": "https://www.autotrans.hr",
+        "web": "https://liburnija-zadar.hr/prigradski-prijevoz/",
         "karta": "https://maps.google.com/?q=Trg+hrvatskih+velikana+19,+Biograd+na+Moru",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
         "recenzija": "Redovite veze prema Zadru, Šibeniku i Zagrebu. Fleksibilna opcija za izlete bez auta.",
-        "recenzija_izvor": "Autotrans"
+    "opis": "Prigradska linija Liburnije 120 Zadar – Biograd vozi radnim danom (18 polazaka iz Biograda) i subotom (7), nedjeljom i blagdanom ne vozi. Međugradske i međunarodne linije FlixBusa i Arrive staju na kolodvoru i kod motela na Jadranskoj magistrali. Vozni red podložan je promjenama.",
+    "izvor": "liburnija-zadar.hr, flixbus.hr, TZ Biograd; provjereno 6.11.2026.",
+        "recenzija_izvor": "Liburnija / FlixBus"
       },
       {
         "naziv": "Taxi Biograd",

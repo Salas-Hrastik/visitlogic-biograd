@@ -5,6 +5,7 @@ import { menus } from "./_menus.js";
 import { npKornati } from "./_np_kornati.js";
 import { pharmacies } from "./_ljekarne.js";
 import { ferry } from "./_trajekt.js";
+import { buses } from "./_autobus.js";
 
 // Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
 // Prevodi opis/recenziju/tip/sadržaje; naziv, adresu i telefon ostavlja (vlastita imena).
@@ -269,6 +270,32 @@ function ferryNote() {
 }
 
 const FERRY_RE = /trajekt|ferry|ferries|fähre|faehre|traghett|kompj|komp\b|pašman|pasman|tkon|jadrolinij|brodsk\w* linij|boat line|katamaran|catamaran|galešnjak/;
+
+// ===== AUTOBUS: linija 120 Zadar – Biograd i međugradske veze (api/_autobus.js) =====
+function busDepartures(d, dir) {
+  const l = buses.linija_120;
+  if (d.getUTCDay() === 0 || croatianHoliday(d)) return [];
+  const list = d.getUTCDay() === 6 ? l[dir].subota : l[dir].radni;
+  const holidays = inPeriods([l.skolski_praznici], d);
+  return list.filter(t => !(holidays && t.endsWith('°'))).map(t => t.replace('°', ''));
+}
+
+function busNote() {
+  const { day, time } = zagrebNow();
+  const label = d => { const h = croatianHoliday(d); return `${DAY_NAMES_HR[d.getUTCDay()]} ${d.getUTCDate()}.${d.getUTCMonth() + 1}.${h ? ` (blagdan: ${h})` : ''}`; };
+  const fmt = arr => arr.length ? arr.join(', ') : 'nema polazaka (nedjeljom i blagdanom linija ne vozi)';
+  const l = buses.linija_120, k = buses.kolodvor;
+  let next = null;
+  for (let i = 1; i < 5 && !next; i++) { const d = new Date(day.getTime() + i * 864e5); if (busDepartures(d, 'iz_biograda').length) next = d; }
+  return `\n[SUSTAV — AUTOBUS (provjereno ${buses.provjereno}):\n` +
+    `Sada je ${label(day)}, ${time}. ${l.naziv}, vozni red od ${l.vrijedi_od}, tel. ${l.telefon}.\n` +
+    `Sljedeći polasci danas iz Biograda prema Zadru: ${fmt(busDepartures(day, 'iz_biograda').filter(t => t > time))}. Iz Zadra prema Biogradu: ${fmt(busDepartures(day, 'iz_zadra').filter(t => t > time))}.\n` +
+    (next ? `Prvi sljedeći dan s polascima (${label(next)}) iz Biograda: ${fmt(busDepartures(next, 'iz_biograda'))}.\n` : '') +
+    `${buses.pakostane}\n${buses.lokalne}\n${buses.medugradske}\nKolodvor: ${k.adresa}, tel. ${k.telefon}.\n` +
+    `Odgovori izravno sljedećim polascima; za međugradske linije ne izmišljaj vremena ni cijene, nego uputi na flixbus.hr, arriva.com.hr ili kolodvor. Napomeni da je vozni red podložan promjenama.]`;
+}
+
+const BUS_RE = /autobus|\bbus\b|\bbuses\b|flixbus|arriva|autotrans|liburnij|bushalte|busbahnhof|autobusz|kolodvor|javni prijevoz|public transport|öffentliche|mezzi pubblici/;
 
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
@@ -577,6 +604,7 @@ function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
   if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
   if (TAXI_RE.test(m) || RENT_RE.test(m) || (FERRY_RE.test(m) && !/kornat|izlet/.test(m))) return 'prakticno';
+  if (BUS_RE.test(m) && !/izlet|excursion|ausflug|escursion/.test(m)) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
@@ -1049,7 +1077,8 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
       // Za taksi samo taksiji; ostala pitanja o prijevozu dobivaju cijeli popis.
       const taxi = /tax|taks/.test(m);
       const car = RENT_RE.test(m);
-      return toItems((pi.prijevoz || []).filter(x => taxi ? /taxi|taksi/i.test(x.naziv) : car ? /rent/i.test(x.naziv) : true));
+      const bus = !taxi && !car && BUS_RE.test(m);
+      return toItems((pi.prijevoz || []).filter(x => taxi ? /taxi|taksi/i.test(x.naziv) : car ? /rent/i.test(x.naziv) : bus ? /autobus/i.test(x.naziv) : true));
     }
 
     if (VET_RE.test(m)) return toItems(pi.veterinari);
@@ -1808,6 +1837,7 @@ export default async function handler(req, res) {
       : '';
     const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
     const ferryInfo = FERRY_RE.test(msgLow) && !/kornat|izlet/.test(msgLow) ? ferryNote() : '';
+    const busInfo = BUS_RE.test(msgLow) ? busNote() : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
       : '';
@@ -1828,7 +1858,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + pharmacyInfo + ferryInfo + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + pharmacyInfo + ferryInfo + busInfo + menuInfo.note }
       ]
     });
 
