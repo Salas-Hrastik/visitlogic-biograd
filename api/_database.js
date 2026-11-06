@@ -2744,7 +2744,7 @@ export const db = {
         "web": "https://www.ina.hr",
         "karta": "https://maps.google.com/?q=INA+Jadranska+cesta+2,+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=220&fit=crop",
-        "opis": "Cijene 6.11.2026.: Eurosuper 95 1,69 €/L, Eurosuper 95 Premium 1,84 €/L, Eurosuper 100 2,23 €/L, Eurodizel 1,89 €/L, Eurodizel Premium 2,14 €/L. Jedina postaja u Biogradu otvorena 0–24. Autoplina nema.",
+        "opis": "Jedina postaja u Biogradu otvorena 0–24, uz magistralu D8. Benzin i dizel, autoplina nema.",
         "izvor": "mzoe-gor.hr (Ministarstvo gospodarstva, službena tražilica cijena goriva); provjereno 6.11.2026."
       },
       {
@@ -2755,7 +2755,7 @@ export const db = {
         "web": "https://www.ina.hr",
         "karta": "https://maps.google.com/?q=INA+Obala+kralja+Petra+Krešimira+IV+36a,+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=220&fit=crop",
-        "opis": "Cijene 6.11.2026.: Eurosuper 95 1,69 €/L, Eurodizel 1,89 €/L, Eurodizel Premium 2,14 €/L, plavi dizel 1,45 €/L. Na obali uz luku, korisno nautičarima.",
+        "opis": "Na obali uz luku, korisno nautičarima; ima i plavi dizel.",
         "izvor": "mzoe-gor.hr (Ministarstvo gospodarstva, službena tražilica cijena goriva); provjereno 6.11.2026."
       },
       {
@@ -2766,7 +2766,7 @@ export const db = {
         "web": "https://www.ina.hr",
         "karta": "https://maps.google.com/?q=INA+Franje+Tuđmana+45,+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=220&fit=crop",
-        "opis": "Cijene 6.11.2026.: Eurosuper 95 1,69 €/L, Eurodizel 1,89 €/L, Eurodizel Premium 2,14 €/L.",
+        "opis": "Gradska postaja u ulici Franje Tuđmana; benzin i dizel.",
         "izvor": "mzoe-gor.hr (Ministarstvo gospodarstva, službena tražilica cijena goriva); provjereno 6.11.2026."
       },
       {
@@ -2776,7 +2776,7 @@ export const db = {
         "web": "https://www.petrol.hr",
         "karta": "https://maps.google.com/?q=Petrol+Jadranska+magistrala+15,+Pakoštane",
         "slika": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=220&fit=crop",
-        "opis": "Cijene 6.11.2026.: Eurosuper 95 1,69 €/L, Eurosuper 100 2,26 €/L, Eurodizel 1,89 €/L, Q Max Eurodizel 2,17 €/L, autoplin 1,09 €/L. Najbliža postaja s autoplinom (u Biogradu ga nema). Kafić, trgovina, mjenjačnica, WC i Wi-Fi.",
+        "opis": "Najbliža postaja s autoplinom (u Biogradu ga nema). Kafić, trgovina, mjenjačnica, WC i Wi-Fi.",
         "izvor": "mzoe-gor.hr (Ministarstvo gospodarstva, službena tražilica cijena goriva); provjereno 6.11.2026."
       }
     ],

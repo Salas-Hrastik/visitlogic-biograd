@@ -6,6 +6,7 @@ import { npKornati } from "./_np_kornati.js";
 import { pharmacies } from "./_ljekarne.js";
 import { ferry } from "./_trajekt.js";
 import { buses } from "./_autobus.js";
+import { fuel } from "./_gorivo.js";
 
 // Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
 // Prevodi opis/recenziju/tip/sadržaje; naziv, adresu i telefon ostavlja (vlastita imena).
@@ -298,6 +299,19 @@ function busNote() {
 }
 
 const BUS_RE = /autobus|\bbus\b|\bbuses\b|flixbus|arriva|autotrans|liburnij|bushalte|busbahnhof|autobusz|kolodvor|javni prijevoz|public transport|öffentliche|mezzi pubblici/;
+
+// Cijene goriva i radno vrijeme iz api/_gorivo.js (mjesečna provjera) idu u kartice i kontekst.
+// Cijene su u polju recenzija: brojevi i nazivi goriva čitljivi su na svim jezicima.
+const fmtEur = v => `${v.toFixed(2).replace('.', ',')} €/L`;
+for (const st of db.prakticne_info?.benzinska || []) {
+  const f = fuel.postaje[st.naziv];
+  if (!f) continue;
+  st.radno_vrijeme = f.radno;
+  st.cijene_goriva = Object.fromEntries(f.cijene.map(([n, c]) => [n, c]));
+  st.recenzija = `⏰ ${f.radno} · ${f.cijene.map(([n, c]) => `${n} ${fmtEur(c)}`).join(' · ')}`;
+  st.recenzija_izvor = `mzoe-gor.hr, ${f.provjereno || fuel.provjereno}`;
+  st.recenzija_url = f.url;
+}
 
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
@@ -1831,7 +1845,7 @@ export default async function handler(req, res) {
       ? `\n[SUSTAV: Gost traži rent-a-car. Navedi agencije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /rent/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Telefone napiši u odgovoru. Cijene navedi samo kako stoje u bazi: ne tvrdi da su po danu, jer agencija to ne navodi, i savjetuj potvrdu s agencijom.]`
       : '';
     const fuelNote = FUEL_RE.test(msgLow)
-      ? `\n[SUSTAV: Za benzinske postaje koristi samo prakticne_info.benzinska (službeni podaci mzoe-gor.hr). U Biogradu su tri INA postaje; 0–24 radi samo INA Magistrala; autoplin u Biogradu nema, najbliži je Petrol Pakoštane (06–22). Cijene su od 6.11.2026. i mijenjaju se svaka dva tjedna: navedi ih s tim datumom i uputi na mzoe-gor.hr za aktualne. Radno vrijeme može se razlikovati vikendom i u sezoni.]`
+      ? `\n[SUSTAV: Za benzinske postaje koristi samo prakticne_info.benzinska (službeni podaci mzoe-gor.hr). U Biogradu su tri INA postaje; 0–24 radi samo INA Magistrala; autoplin u Biogradu nema, najbliži je Petrol Pakoštane (06–22). Cijene su od ${fuel.provjereno} i mijenjaju se svaka dva tjedna: navedi ih s tim datumom i uputi na mzoe-gor.hr za aktualne. Radno vrijeme može se razlikovati vikendom i u sezoni.]`
       : '';
     const vetNote = VET_RE.test(msgLow)
       ? `\n[SUSTAV: Za veterinara koristi samo prakticne_info.veterinari. U Biogradu rade ambulanta Nova i praksa Dado; službeni raspored dežurstva za Biograd nije objavljen. Izvan radnog vremena, nedjeljom i za hitne slučajeve uputi na dežurni mobitel Veterinarske stanice Zadar (+385 98 33 94 00) ili ambulantu Bokanjac u Zadru (0–24, +385 91 511 5092) i savjetuj da prije polaska nazovu. Ne postavljaj dijagnozu.]`
