@@ -1628,6 +1628,9 @@ export default async function handler(req, res) {
         + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message, lang) : '')
         + (lang !== 'hr' ? `\n[SYSTEM: the notes above are for the system only; write the answer ONLY in the guest's language (${lang}), never in Croatian.]` : '')
       : '';
+    const healthNote = detectedCategory === 'prakticno' && HEALTH_RE.test(msgLow)
+      ? `\n[SUSTAV: Za zdravstvo koristi samo kontakte iz baze (prakticne_info.zdravstvo). Specijalnu bolnicu za ortopediju preporuči SAMO za ozljede kostiju, zglobova i sustava za kretanje; za zubobolju, temperaturu, bolest djeteta i ostalo uputi na odgovarajuću ordinaciju u Domu zdravlja, a za hitna stanja ili izvan radnog vremena na 194 ili 112. Ne postavljaj dijagnozu i ne savjetuj lijekove.]`
+      : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
       : '';
@@ -1648,7 +1651,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + menuInfo.note }
       ]
     });
 

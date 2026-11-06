@@ -2526,7 +2526,7 @@ export const db = {
         "email": "uredravnatelja@ortopedija-biograd.hr",
         "web": "https://ortopedija-biograd.hr/",
         "karta": "https://www.google.com/maps/search/?api=1&query=43.947608,15.4473141",
-        "opis": "Specijalna bolnica za ortopediju s hitnom ambulantom koja dežura 0–24 sata, specijalističkim ambulantama, fizikalnom medicinom i rehabilitacijom. Za pregled s uputnicom naručuje se na mjestu upisa radnim danom od 7 do 15 sati, e-poštom ili online.",
+        "opis": "Specijalizirana bolnica za ortopediju (kosti, zglobovi, ozljede sustava za kretanje) s hitnom ambulantom koja dežura 0–24 sata, specijalističkim ambulantama, fizikalnom medicinom i rehabilitacijom. Nije opća bolnica: za ostala hitna stanja zovite 194 ili 112. Za pregled s uputnicom naručuje se na mjestu upisa radnim danom od 7 do 15 sati, e-poštom ili online.",
         "izvor": "mojausluga.hr, provjereno 6.11.2026."
       },
       {
