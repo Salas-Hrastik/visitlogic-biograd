@@ -1807,9 +1807,9 @@ export const db = {
 
   "kornati": {
     "naziv": "Nacionalni park Kornati",
-    "opis": "NP Kornati je najgušći arhipelag u Jadranu — 140 otoka, 89 otočića i 26 grebena na površini od 320 km². Poznat po dramatičnim vapnenačkim klifovima, izuzetno čistom moru i divljom mediteranskom vegetacijom. Biograd je najbliže kopneno odredište za posjet Kornatima.",
+    "opis": "NP Kornati najgušće je otočje u Jadranu: 89 otoka, otočića i hridi na oko 217 km², od čega je većina more. Poznat je po strmim vapnenačkim klifovima (krunama), iznimno čistom moru i kamenjarskim pašnjacima. Park je otvoren cijele godine, a ulaznica se plaća po plovilu.",
     "polaziste": "Biograd na Moru — luka i marina Kornati",
-    "ulaznica": "Ulaznica za NP potrebna za plovidbu unutar parka — kupuje se u marini ili online",
+    "ulaznica": "Ulaznica je obvezna za svaki dan boravka u parku i plaća se po plovilu prema duljini; izvan parka (webshop, mySea, Parkovi Hrvatske, komisiona prodaja, npr. Marina Kornati i Euronautic u Biogradu) jeftinija je nego u parku.",
     "slika": "https://upload.wikimedia.org/wikipedia/commons/5/51/Kornati.jpg",
     "web": "https://www.np-kornati.hr",
     "ta_url": "https://www.tripadvisor.com/Attraction_Review-g303811-d1449349-Reviews-Kornati_National_Park-Kornati_Islands_National_Park_Sibenik_Knin_County_Dalmatia.html",

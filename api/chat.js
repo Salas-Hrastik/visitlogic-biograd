@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { db } from "./_database.js";
 import { translations } from "./_translations.js";
 import { menus } from "./_menus.js";
+import { npKornati } from "./_np_kornati.js";
 
 // Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
 // Prevodi opis/recenziju/tip/sadržaje; naziv, adresu i telefon ostavlja (vlastita imena).
@@ -95,7 +96,8 @@ const CATEGORY_CONTEXTS = {
           Object.fromEntries(Object.entries({ naziv, opis, lokacija, telefon, telefon2, email, web }).filter(([, x]) => x)))
       : v]))
   }),
-  kornati:     (db) => ({ grad: db.grad, kornati: db.kornati }),
+  // np_kornati: službeni podaci parka (cjenik, prodajna mjesta, pravila), osvježava ih mjesečna provjera.
+  kornati:     (db) => ({ grad: db.grad, kornati: db.kornati, np_kornati: npKornati }),
   izleti:      (db) => ({ grad: db.grad, izleti: db.izleti }),
   sport:       (db) => ({ grad: db.grad, sport: db.sport }),
   atrakcije:   (db) => ({ grad: db.grad, atrakcije: db.atrakcije }),
@@ -379,6 +381,9 @@ function detectCategory(msg, lastCategory, db) {
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
   if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
+
+  // Ulaznice, bove i dozvole parka: bez ovoga "brod od 8 m" odvede pitanje u nautiku.
+  if (/np kornat|nacionaln\w* park\w* kornat|park\w* kornat|kornat\w*.{0,60}(ulaznic|cjenik|cijen|košta|bov[aeiu]|sidri|ronjen|ribolov|dozvol|ticket|eintritt|biglietto|jegy|vstupn|vstopnin)|(ulaznic|cjenik|bov[aeiu]|sidri|ribolov|dozvol|ticket|eintritt|biglietto|jegy|vstupn|vstopnin)\w*.{0,60}kornat/.test(m) && !/marin\w* kornati/.test(m)) return 'kornati';
 
   // Sajam je događanje; bez ovoga "boat" završava u nautici. Parking uz sajam ostaje praktična info.
   if (/turističk\w* agencij|turistične agencij|tourist agenc|travel agenc|reiseagentur|reisebüro|agenzi\w* (turistic|di viaggi)|utazási iroda|cestovn\w* agent/.test(m)) return 'smjestaj';
@@ -1573,6 +1578,9 @@ export default async function handler(req, res) {
         : `\n[SUSTAV: Ispod odgovora automatski će biti prikazano ${cardItems.length} vizualnih kartica. Odgovori IZRAVNO na korisnikovo pitanje u 1–3 rečenice koristeći podatke iz baze (npr. cijena, datum, udaljenost, preporuka). Ako traženog podatka nema u bazi, reci to i uputi na TZ. NE nabrajaj kartice.]`
       : `\n[SUSTAV: Ispod ovog odgovora NEMA kartica. Ne spominji kartice niti "detalje ispod"; sve što gost treba napiši u odgovoru.]`;
     const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
+    const kornatiNote = detectedCategory === 'kornati'
+      ? `\n[SUSTAV: Za ulaznice, cijene, bove, sidrenje, ronjenje, ribolov i pravila NP Kornati koristi ISKLJUČIVO blok np_kornati (službeni podaci parka, cjenik ${npKornati.cjenik.godina}., provjereno ${npKornati.provjereno}). Ulaznica se plaća po plovilu prema duljini; sezona je lipanj–rujan. Ako gost navede duljinu plovila i razdoblje, izračunaj točnu cijenu i reci da je kupnja izvan parka jeftinija nego u parku. Ako ne navede duljinu ili datum, navedi cijenu za najmanje plovilo (do 6,99 m) i pitaj za duljinu. Za izlet organiziranim brodom reci da cijena izleta obično već uključuje ulaznicu. Ne izmišljaj podatke kojih u bloku nema; za ostalo uputi na ${npKornati.izvor} ili +385 22 435 740.]`
+      : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
       : '';
@@ -1593,7 +1601,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + menuInfo.note }
       ]
     });
 
