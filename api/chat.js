@@ -202,7 +202,7 @@ function pharmacyNote() {
 }
 
 // Veterinar: izravno ili ljubimac uz tegobu (samo "pas" ne smije, jer gosti pitaju i za smještaj sa psom).
-const VET_RE = /veterin|tierarzt|tierärzt|tierklinik|állatorvos|\bvets?\b|(ljubim|\bpas\b|\bpsa\b|\bpsu\b|mačk|\bdog\b|\bcat\b|\bpet\b|\bhund|katze|haustier|\bcane\b|gatto|kutya|macska|\bpes\b|kočk|mačk).{0,40}(bolest|bolestan|ozlij|ozljed|hitn|ugriz|krpelj|povra|proljev|sick|ill\b|injur|emergenc|vomit|tick|krank|verletz|notfall|zecke|malat|\\bmale\\b|ferit|emergenz|beteg|sérül|nemocn|zraněn|bolan|poškod)|(bolest|ozlij|ozljed|hitn|sick|injur|emergenc|krank|verletz|notfall).{0,40}(ljubim|\bpas\b|\bpsa\b|mačk|\bdog\b|\bcat\b|\bhund|katze|\bcane\b|gatto)/;
+const VET_RE = /veterin|tierarzt|tierärzt|tierklinik|állatorvos|\bvets?\b|(ljubim|\bpas\b|\bpsa\b|\bpsu\b|mačk|\bdog\b|\bcat\b|\bpet\b|\bhund|katze|haustier|\bcane\b|gatto|kutya|macska|\bpes\b|kočk|mačk).{0,40}(bolest|bolestan|ozlij|ozljed|hitn|ugriz|krpelj|povra|proljev|sick|ill\b|injur|emergenc|vomit|tick|krank|verletz|notfall|zecke|malat|\bmale\b|ferit|emergenz|beteg|sérül|nemocn|zraněn|bolan|poškod)|(bolest|ozlij|ozljed|hitn|sick|injur|emergenc|krank|verletz|notfall).{0,40}(ljubim|\bpas\b|\bpsa\b|mačk|\bdog\b|\bcat\b|\bhund|katze|\bcane\b|gatto)/;
 
 const PHARMACY_RE = /ljekarn|apotek|dežurn\w* ljek|pharmac|chemist|apothek|farmaci|gyógyszert|patik|lékárn|lekáreň|lekarn/;
 
