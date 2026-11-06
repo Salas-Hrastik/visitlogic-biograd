@@ -217,7 +217,7 @@ const PRAKTICNO_SECTIONS = [
   [/parking|parkir|parkplatz|parcheggi|parkol|parkov/, 'parking', 'parking_info'],
   [/benzin|gorivo|petrol|tankstell|fuel|gas station|carburant|üzemanyag|čerpac|tank/, 'benzinska'],
   [/servis|mehaničar|vulkanizer|guma|gume|kvar|popravak|mechanic|werkstatt|tyre|tire|reifen|officina|gomm|szerviz|autoservis|pneu/, 'servisi', 'hitne_sluzbe'],
-  [/bankomat|banka|\batm\b|\bbank|novac|geld|cash|contanti|pénz|peníze|peniaze/, 'banke_atm'],
+  [/bankomat|banka|\batm\b|\bbank|novac|gotovin|geld|cash|withdraw|bancomat|prelevare|contanti|pénz|peníze|peniaze/, 'banke_atm'],
   [/trajekt|ferry|fähre|traghett|komp|pašman|tkon/, 'trajekt_pasmanskim_kanalom', 'prijevoz'],
   [/autobus|\bbus|taksi|taxi|prijevoz|transport|rent|flixbus|zračn|airport|aerodrom|flughafen|aeroport|repülő|letišt/, 'prijevoz'],
   [/supermarket|konzum|lidl|kaufland|plodine|tommy|studenac|tifon|trgovin|namirnic|shopping|dućan|einkauf|spesa|bolt|obchod/, 'supermarketi'],
@@ -531,6 +531,7 @@ const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
   if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
+  if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
   if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
@@ -1011,7 +1012,8 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     if (HEALTH_RE.test(m)) return toItems(pi.zdravstvo);
 
     if (m.includes('bankomat') || m.includes('banka') || m.includes('atm') || m.includes('novac') ||
-        m.includes('gotovina') || m.includes('isplat') || m.includes('bank') || m.includes('geldautomat'))
+        m.includes('gotovin') || m.includes('isplat') || m.includes('bank') || m.includes('geldautomat') ||
+        /withdraw|\bcash\b|bancomat|prelevare|pénzfelvét|peníze|peniaze|denar/.test(m))
       return toItems(pi.banke_atm);
 
     if (m.includes('benzin') || m.includes('gorivo') || m.includes('nafta') || m.includes('tifon') ||
