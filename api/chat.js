@@ -273,7 +273,7 @@ function ferryNote() {
 }
 
 // Pitanje o plažama na Pašmanu traži plaže, a ne trajekt.
-const BEACH_WORDS = /plaž|plaz|beach|strand|spiagg|pláž|plaj|kupa|swim|baden|fkk|nudist/;
+const BEACH_WORDS = /plaž|plaz|beach|strand|strän|spiagg|pláž|plaj|kupa|swim|baden|fkk|nudist/;
 
 const FERRY_RE = /trajekt|ferry|ferries|fähre|faehre|traghett|kompj|komp\b|pašman|pasman|tkon|jadrolinij|brodsk\w* linij|boat line|katamaran|catamaran|galešnjak/;
 
@@ -656,7 +656,7 @@ function detectCategory(msg, lastCategory, db) {
   if (/plaž\w* za pse|dog beach|dog-friendly beach|hundestrand|spiaggia per cani|kutyás strand|pláž\w* pro psy|pláž\w* pre psy|pasja plaž|aqualifter|pristup\w* moru|invalid\w*.{0,40}(mor|plaž|kupa)|wheelchair.{0,40}(beach|sea)|rollstuhl.{0,40}(strand|meer)|disabled.{0,40}(beach|sea)/.test(m)) return 'plaze';
   if (m.includes('plaža') || m.includes('plaze') || m.includes('plaže') || m.includes('plaža') || m.includes('kupanje') || m.includes('kupat') || m.includes('dražica') || m.includes('soline') || m.includes('bošana') || m.includes('kumenat') || m.includes('fkk') || m.includes('nudist') || m.includes('pješčan') || m.includes('sunčan') || m.includes('sunbath') || m.includes('more je') || m.includes('lijeva ruka') || m.includes('plivat')
     || m.includes('beach') || m.includes('swim') || m.includes('sunbathe') || m.includes('sand')
-    || m.includes('strand') || m.includes('schwimmen') || m.includes('badestrand'))
+    || m.includes('strand') || m.includes('strän') || m.includes('schwimmen') || m.includes('badestrand'))
     return 'plaze';
 
   if (m.includes('noćni') || m.includes('nocni') || m.includes('klub') || m.includes('disco') || m.includes('party') || m.includes('cocktail') || m.includes('kokteli') || m.includes('nightlife') || m.includes('nachtleben') || m.includes('izlazak') || m.includes('zabav') || m.includes('ples'))
