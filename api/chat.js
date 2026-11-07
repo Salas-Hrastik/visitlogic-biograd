@@ -650,6 +650,7 @@ function detectCategory(msg, lastCategory, db) {
     if (hasBeach || hasSport || hasFood) return 'kornati';
   }
 
+  if (/aqualifter|pristup\w* moru|invalid\w*.{0,40}(mor|plaž|kupa)|wheelchair.{0,40}(beach|sea)|rollstuhl.{0,40}(strand|meer)|disabled.{0,40}(beach|sea)/.test(m)) return 'plaze';
   if (m.includes('plaža') || m.includes('plaze') || m.includes('plaže') || m.includes('plaža') || m.includes('kupanje') || m.includes('kupat') || m.includes('dražica') || m.includes('soline') || m.includes('bošana') || m.includes('kumenat') || m.includes('fkk') || m.includes('nudist') || m.includes('pješčan') || m.includes('sunčan') || m.includes('sunbath') || m.includes('more je') || m.includes('lijeva ruka') || m.includes('plivat')
     || m.includes('beach') || m.includes('swim') || m.includes('sunbathe') || m.includes('sand')
     || m.includes('strand') || m.includes('schwimmen') || m.includes('badestrand'))
