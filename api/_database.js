@@ -2955,60 +2955,30 @@ export const db = {
       },
       {
         "naziv": "JYSK Biograd",
-        "tip": "🛋️ namještaj i dom · pon–sub 08–20h, ned zatvoreno",
-        "adresa": "Ul. fra Lina Pedišića 4, 23210 Biograd na Moru",
+        "tip": "🛋️ namještaj i oprema za dom · pon–sub 08–20 h · ned zatvoreno",
+        "adresa": "Ul. fra Lina Pedišića 4, Biograd na Moru",
         "telefon": "01 444 00 55",
         "web": "https://jysk.hr/trgovine/biograd-na-moru/ul-fra-lina-pedisica",
-        "karta": "https://maps.google.com/?q=JYSK+Biograd+na+Moru",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.9410724,15.4542426",
         "slika": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=220&fit=crop",
-        "recenzija": "Namještaj, madraci, tekstil i proizvodi za dom i vrt. Skandinavski dizajn po pristupačnim cijenama."
+        "recenzija": "",
+        "opis": "Namještaj, madraci, tekstil i oprema za dom i vrt. Radno vrijeme ponedjeljak–subota 08–20 h, nedjeljom zatvoreno.",
+        "recenzija_izvor": "",
+        "ocjena": "",
+        "izvor": "jysk.hr; provjereno 7.11.2026."
       },
       {
-        "naziv": "Tržnica Biograd",
+        "naziv": "Tržnica i ribarnica Biograd",
         "tip": "🥦 gradska tržnica i ribarnica",
-        "adresa": "Dr. Franje Tuđmana, 23210 Biograd na Moru",
-        "karta": "https://maps.google.com/?q=Tržnica+Biograd+na+Moru",
+        "adresa": "Centar Biograda (lokacija prema TZ-u)",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.938227,15.444223",
         "slika": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=220&fit=crop",
         "recenzija": "",
         "opis": "Biogradska tržnica i ribarnica: voće, povrće i drugi domaći sezonski proizvodi lokalnih proizvođača te svježa riba i plodovi mora (srdele, brancini, orade, škampi, hobotnica, dagnje). Radno vrijeme nije službeno objavljeno; najživlje je ujutro.",
         "recenzija_izvor": "",
         "ocjena": "",
-        "izvor": "discover-biograd.com (Tržnica i ribarnica); provjereno 7.11.2026."
-      },
-      {
-        "naziv": "Di Maris — Ribarnica",
-        "tip": "🐟 ribarnica · pon–pet 07–14h, sub–ned 07–12h",
-        "adresa": "Šetalište kneza Branimira 6, 23210 Biograd na Moru",
-        "telefon": "098 996 2240",
-        "karta": "https://maps.google.com/?q=Di+Maris+Ribarnica+Biograd+na+Moru",
-        "slika": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=220&fit=crop",
-        "recenzija": "Svježa riba i plodovi mora direktno s broda. Uz obalu — idealno za konobe i kuhanje na plovilu."
-      },
-      {
-        "naziv": "Marinera — Ribarska i lovačka oprema",
-        "tip": "🎣 ribarska oprema · uz obalu",
-        "adresa": "Obala kralja Petra Krešimira IV 11, 23210 Biograd na Moru",
-        "telefon": "+385 23 384 882",
-        "karta": "https://maps.google.com/?q=Marinera+Biograd+na+Moru+Obala+Krešimira",
-        "slika": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=220&fit=crop",
-        "recenzija": "Ribarska i lovačka oprema uz samu obalu — idealno za nautičare i ribiče koji dolaze brodom."
-      },
-      {
-        "naziv": "Hermes Nautika",
-        "tip": "⚓ nautička oprema · moda i oprema za more",
-        "adresa": "Dr. Franje Tuđmana 18, 23210 Biograd na Moru",
-        "karta": "https://maps.google.com/?q=Hermes+Nautika+Biograd+na+Moru",
-        "slika": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=220&fit=crop",
-        "recenzija": "Nautička oprema, odjeća i pribor za more. U središtu grada, blizu rive."
-      },
-      {
-        "naziv": "Full Team — Nautička oprema",
-        "tip": "⚓ nautička oprema · pon–pet 08–17h",
-        "adresa": "Šetalište kneza Branimira 1, 23210 Biograd na Moru",
-        "telefon": "023 384 502",
-        "karta": "https://maps.google.com/?q=Full+Team+Nautika+Biograd+na+Moru",
-        "slika": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=220&fit=crop",
-        "recenzija": "Profesionalna nautička oprema uz Marinu Kornati. Servisna podrška za jedriličare i motoriste."
+        "izvor": "discover-biograd.com (Tržnica i ribarnica); provjereno 7.11.2026.",
+        "web": "https://www.discover-biograd.com/okusite/trznica-i-ribarnica"
       },
       {
         "naziv": "UJE — maslinovo ulje i delikatese",
