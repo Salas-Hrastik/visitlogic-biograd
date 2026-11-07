@@ -114,29 +114,33 @@ export const db = {
     },
     {
       "naziv": "Plaža Kumenat",
-      "opis": "Popularna plaža u uvali Kumenat, 2 km sjeverozapadno od Biograda. Šljunčana plaža s uređenim sadržajima, čistim morem i sportskim sadržajima.",
-      "tip": "šljunčana, uvala",
-      "sadrzaji": "tuševi, sportski tereni, caffe bar",
-      "pogodna_za": "sport na vodi, obitelji",
-      "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweoYWebgthRyQ8Y4yriYrQOe4sQXttwibDsctFGwbKWNukgawp0fXeATu2o6uLJcpDmicHXJn9dB9Kfe-YVcOYAsu3AddflvEMLZX5or01O_vBayG10TDNL9Au1ooHWS_MUsm9v2tw=w400-h220-k-no",
-      "karta": "https://maps.google.com/?q=Kumenat+Beach+Biograd",
-      "ocjena": "4.3",
-      "recenzija": "\"Lijepa uvala, kristalno čisto more i dobra ponuda za sportaše na vodi. Mirnije od gradskih plaža.\"",
-      "recenzija_izvor": "Google",
-      "recenzija_url": "https://maps.google.com/?q=Kumenat+Beach+Biograd"
+      "opis": "Mirna plaža sa sitnim svijetlim šljunkom i tirkiznim morem na južnom rubu Biograda, između Solina i Crvene Luke, ispod malog naselja. Do nje se stiže šetnicom uz more, oko 1,5 km od centra. TZ Biograd je ne navodi među službenim plažama, pa sadržaji (tuševi, ugostiteljstvo) nisu potvrđeni.",
+      "tip": "šljunčana, mirna, izvan centra",
+      "sadrzaji": "nisu službeno navedeni",
+      "pogodna_za": "mir, opuštanje",
+      "slika": "",
+      "web": "",
+      "karta": "https://maps.google.com/?q=Pla%C5%BEa+Kumenat+Biograd+na+Moru",
+      "ocjena": "",
+      "recenzija": "",
+      "recenzija_izvor": "",
+      "recenzija_url": "",
+      "izvor": "placesofjuma.com i oglasi smještaja u Kumentu; nije na popisu plaža TZ Biograd; provjereno 7.11.2026."
     },
     {
-      "naziv": "FKK plaža Rakovica",
-      "opis": "Naturistička plaža u uvali Rakovica, udaljeno i mirno mjesto okruženo vegetacijom. Dostupno brodom ili šetnicom.",
-      "tip": "naturistička, šljunčana",
-      "sadrzaji": "prirodno okruženje, miran zaljev",
-      "pogodna_za": "naturisti, mir i privatnost",
-      "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwer__utc77Jeznf8VzUBwwOSbQ2oMNC-kMddN3rdgEq0jgcTRUfLemLecrTOh7NAlZVYCAX26q6APcqzrbrpJW7RIdSnfJ_k6_gjoAkOk1AA7Ejv1GA5QYpPO1y3-nnoupA05kkXfw=w400-h220-k-no",
-      "karta": "https://maps.google.com/?q=FKK+Rakovica+Biograd",
-      "ocjena": "4.2",
-      "recenzija": "\"Skrivena naturistička plaža u mirnoj uvali — izvrsna za odmor i privatnost daleko od turista.\"",
-      "recenzija_izvor": "Google",
-      "recenzija_url": "https://maps.google.com/?q=FKK+Rakovica+Biograd"
+      "naziv": "FKK Sovinje (Tkon, otok Pašman)",
+      "opis": "Službeno naturističko odredište najbliže Biogradu: prirodna pješčana plaža uz FKK autokamp Sovinje kraj Tkona, okružena mediteranskom vegetacijom. Do Tkona trajektom iz Biograda (15 min), zatim oko 2 km. Prema TZ Tkona naturisti tradicionalno posjećuju i otočić Sv. Katarina u Pašmanskom kanalu (bez sadržaja, dolazak brodom ili kajakom). TZ Biograd ne navodi naturističku plažu u samom Biogradu.",
+      "tip": "naturistička (FKK), pješčana",
+      "sadrzaji": "FKK autokamp Sovinje",
+      "pogodna_za": "naturisti",
+      "slika": "",
+      "web": "https://tzo-tkon.hr/vodi%C4%8D/pla%C5%BEe",
+      "karta": "https://maps.google.com/?q=FKK+Sovinje+Tkon",
+      "ocjena": "",
+      "recenzija": "",
+      "recenzija_izvor": "",
+      "recenzija_url": "",
+      "izvor": "tzo-tkon.hr (TZ općine Tkon); provjereno 7.11.2026."
     },
     {
       "naziv": "Plaža Crvena luka",
@@ -169,18 +173,19 @@ export const db = {
       "izvor": "discover-biograd.com (TZ Biograd); provjereno 7.11.2026."
     },
     {
-      "naziv": "Plaže otoka Pašmana (trajektom)",
-      "opis": "Na otoku Pašmanu (15 min trajektom iz Biograda) nalaze se brojne izvrsne plaže s iznimno čistim morem — Ždrelac, Kraj, Dobropoljana. Preporučuje se turistima koji žele mirnije okruženje.",
-      "tip": "otočne plaže — trajektom",
-      "sadrzaji": "različiti ovisno o plaži",
-      "pogodna_za": "nautičari, izletnici",
+      "naziv": "Plaže u Tkonu (otok Pašman, trajektom)",
+      "opis": "Tkon, 15 minuta trajektom iz Biograda, ima niz prirodnih pješčanih plaža, uglavnom plitkih s pješčanim dnom, pogodnih za obitelji s malom djecom i vodene sportove. Središnja plaža Vruljice je najposjećenija; slijede Studenac (Južnja), Plažine i Poljane (ljetni beach party jednom godišnje). Bartovica je jedina službena plaža za pse u općini Tkon, a novouređena plaža Ugrinić bogato je opremljena. Na južnoj strani otoka su skrivene uvale: pješčana Vitane i Zaklopica s restoranom.",
+      "tip": "pješčane, plitke · otok Pašman",
+      "sadrzaji": "plaža za pse (Bartovica), opremljena plaža Ugrinić, skrivene uvale",
+      "pogodna_za": "obitelji s malom djecom, vlasnici pasa, vodeni sportovi",
       "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Pasman_from_Biograd_na_Moru.jpg/1280px-Pasman_from_Biograd_na_Moru.jpg",
-      "web": "",
-      "karta": "https://maps.google.com/?q=Pasman+island+beaches",
-      "ocjena": "4.6",
-      "recenzija": "\"Netaknuta priroda, tirkizno more i gotovo nikakve gužve — Pašman je skriveni biser nasuprot Biograda.\"",
-      "recenzija_izvor": "TripAdvisor",
-      "recenzija_url": "https://www.tripadvisor.com/Tourism-g608699-Pasman_Zadar_County_Dalmatia-Vacations.html"
+      "web": "https://tzo-tkon.hr/vodi%C4%8D/pla%C5%BEe",
+      "karta": "https://maps.google.com/?q=Pla%C5%BEa+Vruljice+Tkon",
+      "ocjena": "",
+      "recenzija": "",
+      "recenzija_izvor": "",
+      "recenzija_url": "",
+      "izvor": "tzo-tkon.hr (TZ općine Tkon); provjereno 7.11.2026."
     }
   ],
 
@@ -3042,7 +3047,7 @@ export const db = {
     },
     {
       "pitanje": "Koje su najbolje plaže?",
-      "odgovor": "Soline — najljepša pješčana plaža, idealna za obitelji s djecom (plitko more, pijesak). Dražica — glavna gradska plaža uz hotel Ilirija. Bošana — mirna obiteljska plaža s borovima. Kumenat — tiša, daleko od gužve. Za FKK: plaža Rakovica."
+      "odgovor": "Prema TZ Biograd: Soline — šljunak i pijesak u borovoj šumi, ograđena zona za kupače, idealna za obitelji s malom djecom. Dražica — gradska plaža s Plavom zastavom i vodenim sadržajima za djecu. Bošana — prostrana šljunčana plaža s postupnim ulazom u more, bez hlada. Crvena Luka — pješčana, ulaz se plaća ako niste gost hotela. Kumenat — tiša plaža južno od centra. Službena naturistička plaža najbliža Biogradu je FKK Sovinje kraj Tkona na Pašmanu."
     },
     {
       "pitanje": "Što mogu raditi s djecom?",
@@ -3086,7 +3091,7 @@ export const db = {
     },
     {
       "pitanje": "Je li Biograd prikladan za kućne ljubimce?",
-      "odgovor": "Da, ali s ograničenjima. Plaže: Kumenat i FKK Rakovica dozvoljavaju pse. Soline i Dražica su zabranjene za pse u sezoni. Kamp Park Soline prihvaća kućne ljubimce (ograničene parcele). Uvijek provjerite politiku smještaja."
+      "odgovor": "Da, ali provjerite pravila prije dolaska. TZ Biograd ne objavljuje posebnu plažu za pse u Biogradu, pa se za pravila na gradskim plažama raspitajte u TZ-u (+385 23 383 123). Najbliža službena plaža za pse je Bartovica u Tkonu na Pašmanu (15 min trajektom; psi se na trajektu ne naplaćuju). Za smještaj s ljubimcima provjerite uvjete izravno kod objekta."
     }
   ],
 

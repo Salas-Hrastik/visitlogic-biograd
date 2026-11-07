@@ -650,7 +650,7 @@ function detectCategory(msg, lastCategory, db) {
     if (hasBeach || hasSport || hasFood) return 'kornati';
   }
 
-  if (/aqualifter|pristup\w* moru|invalid\w*.{0,40}(mor|plaž|kupa)|wheelchair.{0,40}(beach|sea)|rollstuhl.{0,40}(strand|meer)|disabled.{0,40}(beach|sea)/.test(m)) return 'plaze';
+  if (/plaž\w* za pse|dog beach|dog-friendly beach|hundestrand|spiaggia per cani|kutyás strand|pláž\w* pro psy|pláž\w* pre psy|pasja plaž|aqualifter|pristup\w* moru|invalid\w*.{0,40}(mor|plaž|kupa)|wheelchair.{0,40}(beach|sea)|rollstuhl.{0,40}(strand|meer)|disabled.{0,40}(beach|sea)/.test(m)) return 'plaze';
   if (m.includes('plaža') || m.includes('plaze') || m.includes('plaže') || m.includes('plaža') || m.includes('kupanje') || m.includes('kupat') || m.includes('dražica') || m.includes('soline') || m.includes('bošana') || m.includes('kumenat') || m.includes('fkk') || m.includes('nudist') || m.includes('pješčan') || m.includes('sunčan') || m.includes('sunbath') || m.includes('more je') || m.includes('lijeva ruka') || m.includes('plivat')
     || m.includes('beach') || m.includes('swim') || m.includes('sunbathe') || m.includes('sand')
     || m.includes('strand') || m.includes('schwimmen') || m.includes('badestrand'))
@@ -1599,11 +1599,11 @@ const SYSTEM_STABLE = `Ti si AI turistički informator za Biograd na Moru — pr
 
 KARAKTER DESTINACIJE:
 - Primorski turistički grad s izraženom LJETNOM SEZONALNOŠĆU (vrhunac srpanj–kolovoz)
-- Nautički centar: Marina Kornati (800+ vezova), charter centar, polazište za NP Kornati
-- Plaže: Dražica, Soline, Bošana, Kumenat, FKK Rakovica — šljunčane i kamenite
+- Nautički centar: biogradske marine (1000 vezova u moru, 200 na kopnu), charter centar, polazište za NP Kornati
+- Plaže: Dražica (Plava zastava), Soline (šljunak i pijesak), Bošana, Crvena Luka (pješčana), Kumenat; službena FKK plaža najbliža Biogradu je Sovinje kraj Tkona
 - Gastronomija: svježa riba i plodovi mora (brancin, lignje, hobotnica, dagnje, brudet, peka)
-- Blizina NP Kornati (140 otoka — obavezni izlet brodom)
-- Park prirode Vransko jezero (6 km) — ornitološki rezervat, biciklizam
+- Blizina NP Kornati (89 otoka, otočića i hridi — obavezni izlet brodom)
+- Park prirode Vransko jezero (oko 7 km) — ornitološki rezervat, biciklizam
 - Zadar 28 km, Šibenik 65 km, NP Krka 65 km
 - Topla mediteranska klima, 2700+ sunčanih sati godišnje
 
