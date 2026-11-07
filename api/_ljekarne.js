@@ -34,11 +34,11 @@ export const pharmacies = {
       telefon: '023 385 042',
       izvor: 'https://www.ljekarnesvaljek.com/o-nama/ljekarne/',
       razdoblja: [
-        { od: '01.09.', do: '31.05.', radni: ['07:30', '20:30'], subota: ['08:00', '20:00'], nedjelja_samo: { datumi: ['20.12.', '27.12.'], sati: ['09:00', '17:00'] } },
+        { od: '01.09.', do: '31.05.', radni: ['07:30', '20:30'], subota: ['08:00', '20:00'], nedjelja_samo: { datumi: ['18.10.', '20.12.', '27.12.'], sati: ['09:00', '17:00'] } },
         { od: '01.06.', do: '31.08.', radni: ['07:30', '20:30'], subota: ['08:00', '20:00'], nedjelja: ['09:00', '17:00'], blagdan: ['09:00', '17:00'] },
       ],
       zatvoreno: ['01.11.2026.', '18.11.2026.', '26.12.2026.'],
-      blagdan_nepoznat: true,
+      // Park&Shop (29.9.2026.): od listopada nedjeljom i praznicima zatvoreno, osim navedenih nedjelja.
     },
     {
       naziv: 'Ljekarna Avicenna',

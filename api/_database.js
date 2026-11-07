@@ -2843,93 +2843,115 @@ export const db = {
     "supermarketi": [
       {
         "naziv": "Kaufland Biograd",
-        "tip": "🛒 hipermarket · ⭐ 4,5 (1.821 recenzija) · pon–sub 07–22h, ned zatvoreno",
-        "adresa": "Magistralna ulica 1, 23210 Biograd na Moru",
+        "tip": "🛒 hipermarket · pon–sub 07–22 h · ned zatvoreno",
+        "adresa": "Magistralna ulica 1, Biograd na Moru",
         "telefon": "0800 223 223",
         "web": "https://www.kaufland.hr/usluge/poslovnica/biograd-na-moru-6530.html",
-        "karta": "https://www.google.com/maps/place/Kaufland+Biograd+na+moru/@43.945218,15.4532205,17z",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.945218,15.4532205",
         "slika": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=220&fit=crop",
-        "recenzija": "Najveći hipermarket u Biogradu, uz magistralu D8. Svježi mesni pult, sirevi, delikatesni odjel, širok asortiman."
+        "opis": "Najveći hipermarket u Biogradu, uz magistralu: pultovi sa svježim mesom, sirom, suhomesnatim i delikatesama. Radno vrijeme ponedjeljak–subota 07–22 h, nedjeljom zatvoreno.",
+        "izvor": "kaufland.hr; provjereno 7.11.2026."
       },
       {
         "naziv": "Lidl Biograd",
-        "tip": "🛒 supermarket · ⭐ 4,4 (3.636 recenzija) · pon–sub 07–21h, ned 08–18h",
-        "adresa": "Jadranska magistrala 1a, 23210 Biograd na Moru",
+        "tip": "🛒 supermarket · pon–sub 07–21 h · ned zatvoreno",
+        "adresa": "Jadranska magistrala 1a, Biograd na Moru",
         "telefon": "0800 200 220",
-        "web": "https://www.lidl.hr",
-        "karta": "https://www.google.com/maps/place/Lidl/@43.94502,15.4539,17z",
+        "web": "https://www.lidl.hr/s/hr-HR/trazilica-trgovina/biograd-na-moru/jadranska-magistrala-1a/",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.94502,15.4539",
         "slika": "https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=400&h=220&fit=crop",
-        "recenzija": "Uz Kaufland na magistrali — izvrsne cijene, radi i nedjeljom. Najpopularniji izbor turista."
+        "opis": "Supermarket uz magistralu, kraj Kauflanda. Parkiralište, mjesto za osobe s invaliditetom, punionica za električna vozila i WC za kupce. Radno vrijeme ponedjeljak–subota 07–21 h, nedjeljom zatvoreno.",
+        "izvor": "lidl.hr; provjereno 7.11.2026."
       },
       {
         "naziv": "Plodine Biograd",
-        "tip": "🛒 supermarket · ⭐ 4,2 (1.592 recenzija) · svaki dan 07–22h",
-        "adresa": "Dr. Franje Tuđmana 3, 23210 Biograd na Moru",
-        "telefon": "023 301 001",
-        "web": "https://www.plodine.hr/supermarketi/2/supermarket-biograd",
-        "karta": "https://www.google.com/maps/place/Plodine/@43.9424758,15.4555539,17z",
+        "tip": "🛒 supermarket · pon–sub 07–22 h · ned zatvoreno",
+        "adresa": "Blaženog Alojzija Stepinca 3, Biograd na Moru",
+        "web": "https://www.plodine.hr/supermarketi",
+        "karta": "https://maps.google.com/?q=Plodine+Bla%C5%BEenog+Alojzija+Stepinca+3+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=220&fit=crop",
-        "recenzija": "Dobro snabdjeven supermarket, radi svaki dan. Blizu Bure centra u centru grada."
-      },
-      {
-        "naziv": "Tommy Maximarket",
-        "tip": "🛒 supermarket · ⭐ 4,3 (389 recenzija) · svaki dan 07–21h",
-        "adresa": "Ul. Dr. Franje Tuđmana 80, 23210 Biograd na Moru",
-        "telefon": "023 400 774",
-        "web": "https://www.tommy.hr",
-        "karta": "https://maps.google.com/?q=Tommy+Maximarket+Biograd+na+Moru",
-        "slika": "https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=400&h=220&fit=crop",
-        "recenzija": "Dalmatinski lanac poznat po svježoj robi i lokalnim proizvodima. Radi svaki dan."
-      },
-      {
-        "naziv": "Konzum — Kneza Branimira (Riva)",
-        "tip": "🛒 supermarket · pon–sub 07–21h, ned 07–20h",
-        "adresa": "Kneza Branimira 7, 23210 Biograd na Moru",
-        "telefon": "0800 400 000",
-        "web": "https://www.konzum.hr",
-        "karta": "https://maps.google.com/?q=Konzum+Kneza+Branimira+7+Biograd+na+Moru",
-        "slika": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=220&fit=crop",
-        "recenzija": "Uz rivu i marinu — najpristupačniji za pješake i nautičare. Radi i nedjeljom."
+        "opis": "Supermarket s radnim vremenom ponedjeljak–subota 07–22 h; nedjeljom zatvoreno.",
+        "izvor": "plodine.hr; provjereno 7.11.2026."
       },
       {
         "naziv": "Konzum — Bure Centar",
-        "tip": "🛒 supermarket · pon–sub 07–21h, ned 07–20h",
-        "adresa": "Dr. Franje Tuđmana 82, 23210 Biograd na Moru",
+        "tip": "🛒 supermarket · pon–sub 07–21 h · ned zatvoreno",
+        "adresa": "Dr. Franje Tuđmana 82 (Bure Centar), Biograd na Moru",
         "telefon": "0800 400 000",
-        "web": "https://www.konzum.hr",
-        "karta": "https://maps.google.com/?q=Konzum+Bure+Centar+Biograd+na+Moru",
+        "web": "https://www.bure-centar.hr/hr",
+        "karta": "https://maps.google.com/?q=Bure+Centar+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=220&fit=crop",
-        "recenzija": "Konzum unutar Bure Shopping Centra. Radi i nedjeljom, veliki parking u centru."
+        "opis": "Konzum u trgovačkom centru Bure: ponedjeljak–subota 07–21 h, nedjeljom zatvoreno. Prva dva sata parkiranja u centru su besplatna.",
+        "izvor": "bure-centar.hr; provjereno 7.11.2026."
       },
       {
-        "naziv": "Studenac — 5 lokacija",
-        "tip": "🛒 supermarket · svaki dan 07–22h",
-        "adresa": "Ivana Raosa 10 · Splitska 43 · Put Solina 13 · Zadarska 11 · Slanica 5A",
+        "naziv": "Tommy Maximarket Biograd",
+        "tip": "🛒 supermarket",
+        "adresa": "Franje Tuđmana 82, Biograd na Moru",
+        "web": "https://www.tommy.hr/prodavaonice",
+        "karta": "https://www.google.com/maps/search/?api=1&query=43.94049,15.44831",
+        "slika": "https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=400&h=220&fit=crop",
+        "opis": "Maximarket dalmatinskog lanca Tommy. Radno vrijeme nije objavljeno na stranici lanca; provjerite na tommy.hr.",
+        "izvor": "tommy.hr; provjereno 7.11.2026."
+      },
+      {
+        "naziv": "Eurospin — Park&Shop",
+        "tip": "🛒 diskontni supermarket · pon–sub 07–21 h · ned zatvoreno",
+        "adresa": "Žutska 1 (Park&Shop), Biograd na Moru",
+        "web": "https://www.park-shop.hr/i/o-centru/radno-vrijeme",
+        "karta": "https://maps.google.com/?q=Park+Shop+%C5%BDutska+1+Biograd+na+Moru",
+        "opis": "Eurospin u trgovačkom centru Park&Shop: ponedjeljak–subota 07–21 h, nedjeljom zatvoreno (radne nedjelje 20. i 27. 12. 2026. od 08 do 20 h). U istom centru su BIPA, TEDi, Sinsay i ljekarna Švaljek.",
+        "izvor": "park-shop.hr; provjereno 7.11.2026."
+      },
+      {
+        "naziv": "Konzum — Kneza Branimira (riva)",
+        "tip": "🛒 supermarket uz rivu",
+        "adresa": "Kneza Branimira 7, Biograd na Moru",
+        "telefon": "0800 400 000",
+        "web": "https://www.konzum.hr/trgovine",
+        "karta": "https://maps.google.com/?q=Konzum+Kneza+Branimira+7+Biograd+na+Moru",
+        "slika": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=400&h=220&fit=crop",
+        "opis": "Supermarket uz rivu i marinu, najbliži pješacima i nautičarima. Radno vrijeme nisam mogao potvrditi u službenom izvoru; provjerite na konzum.hr.",
+        "izvor": "nepotvrđeno u službenom izvoru; provjereno 7.11.2026."
+      },
+      {
+        "naziv": "Studenac — 10 prodavaonica",
+        "tip": "🛒 supermarketi u kvartovima · uglavnom 07–21 h",
+        "adresa": "Franje Tuđmana 7A · Zadarska 11 · Osječka 2 · Trg kralja Tomislava 2 · Put Solina 13 · Slanica 5A · Zadarska 62 · Splitska 43 · Kralja Petra Svačića 20 · Ivana Raosa 10",
         "web": "https://www.studenac.hr/trgovine",
         "karta": "https://maps.google.com/?q=Studenac+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=400&h=220&fit=crop",
-        "recenzija": "5 lokacija raspoređenih po cijelom gradu — uvijek jedna blizu tvog smještaja. Sitno i bitno!"
+        "opis": "Deset manjih prodavaonica po cijelom gradu, uvijek je jedna blizu smještaja. Većina radi 07–21 h, Osječka 2 do 22 h, Zadarska 62 do 20 h; prodavaonica na Trgu kralja Tomislava 2 bila je zatvorena u vrijeme provjere.",
+        "izvor": "studenac.hr; provjereno 7.11.2026."
       }
     ],
     "lokalne_trgovine": [
       {
         "naziv": "Bure Shopping Centar",
-        "tip": "🏬 shopping centar · 30+ trgovina · pon–sub 08–21h",
+        "tip": "🏬 trgovački centar · 30+ trgovina · pon–sub 08–20 h · ned zatvoreno",
         "adresa": "Dr. Franje Tuđmana 82, 23210 Biograd na Moru",
         "telefon": "+385 23 286 886",
-        "web": "https://www.bure-centar.hr",
+        "web": "https://www.bure-centar.hr/hr",
         "karta": "https://maps.google.com/?q=Bure+Shopping+Centar+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=400&h=220&fit=crop",
-        "recenzija": "Prvi i najveći shopping centar u Zadarskoj županiji. 30+ dućana: Konzum, Intersport, Benetton, Kik, Farmacia, Müller, Argentum nakit, optika, bankomati. Parking 2h besplatno."
+        "recenzija": "",
+        "opis": "Prvi trgovački centar u Zadarskoj županiji (2011.) s više od 30 trgovina, među njima Konzum, Müller, Intersport, Pepco i KiK, te kafići, restoran, frizerski salon, salon ljepote i specijalizirana prodavaonica lijekova i medicinskih proizvoda (Farmacia Argentum). Trgovine rade ponedjeljak–subota 08–20 h, nedjeljom zatvoreno. Prva dva sata parkiranja su besplatna.",
+        "recenzija_izvor": "",
+        "ocjena": "",
+        "izvor": "bure-centar.hr, discover-biograd.com; provjereno 7.11.2026."
       },
       {
         "naziv": "Park & Shop",
-        "tip": "🏬 shopping centar · 5 trgovina · novo 2025.",
+        "tip": "🏬 trgovački centar · Eurospin, BIPA, TEDi, Sinsay, ljekarna",
         "adresa": "Žutska 1, 23210 Biograd na Moru",
         "web": "https://www.park-shop.hr",
         "karta": "https://maps.google.com/?q=Park+Shop+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=400&h=220&fit=crop",
-        "recenzija": "Novi shopping centar (otvoren travanj 2025.). Eurospin, Sinsay (moda), TEDi (dom i hobi), Bipa (kozmetika), Ljekarna Švaljek. Prostran parking."
+        "recenzija": "",
+        "opis": "Trgovački centar s velikim parkiralištem: Eurospin (pon–sub 07–21 h), BIPA, TEDi i Sinsay (pon–sub 08–21 h) te ljekarna Švaljek (pon–pet 07:30–20:30, sub 08–20 h). Nedjeljom zatvoreno, osim radnih nedjelja 20. i 27. 12. 2026.",
+        "recenzija_izvor": "",
+        "ocjena": "",
+        "izvor": "park-shop.hr; provjereno 7.11.2026."
       },
       {
         "naziv": "JYSK Biograd",
@@ -2943,11 +2965,15 @@ export const db = {
       },
       {
         "naziv": "Tržnica Biograd",
-        "tip": "🥦 gradska tržnica · svaki dan 07–14h (sub/ned do 12h)",
+        "tip": "🥦 gradska tržnica i ribarnica",
         "adresa": "Dr. Franje Tuđmana, 23210 Biograd na Moru",
         "karta": "https://maps.google.com/?q=Tržnica+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=220&fit=crop",
-        "recenzija": "Svježe voće, povrće, cvijeće, kruh, med i lokalni domaći proizvodi. Plaćanje gotovinom."
+        "recenzija": "",
+        "opis": "Biogradska tržnica i ribarnica: voće, povrće i drugi domaći sezonski proizvodi lokalnih proizvođača te svježa riba i plodovi mora (srdele, brancini, orade, škampi, hobotnica, dagnje). Radno vrijeme nije službeno objavljeno; najživlje je ujutro.",
+        "recenzija_izvor": "",
+        "ocjena": "",
+        "izvor": "discover-biograd.com (Tržnica i ribarnica); provjereno 7.11.2026."
       },
       {
         "naziv": "Di Maris — Ribarnica",
@@ -2983,6 +3009,24 @@ export const db = {
         "karta": "https://maps.google.com/?q=Full+Team+Nautika+Biograd+na+Moru",
         "slika": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=220&fit=crop",
         "recenzija": "Profesionalna nautička oprema uz Marinu Kornati. Servisna podrška za jedriličare i motoriste."
+      },
+      {
+        "naziv": "UJE — maslinovo ulje i delikatese",
+        "tip": "🫒 suveniri i domaći proizvodi",
+        "adresa": "Obala kralja Petra Krešimira IV 16, Biograd na Moru",
+        "telefon": "+385 91 605 0111",
+        "email": "shop@uje.hr",
+        "karta": "https://maps.google.com/?q=Obala+kralja+Petra+Kre%C5%A1imira+IV+16+Biograd+na+Moru",
+        "opis": "Prodavaonica maslinovog ulja i dalmatinskih delikatesa na rivi; TZ je preporučuje za suvenire („Ponesi sjećanje”).",
+        "izvor": "discover-biograd.com (Ponesi sjećanje); provjereno 7.11.2026."
+      },
+      {
+        "naziv": "Lavanda shop",
+        "tip": "💜 suveniri",
+        "adresa": "Obala kralja Petra Krešimira IV 21, Biograd na Moru",
+        "karta": "https://maps.google.com/?q=Obala+kralja+Petra+Kre%C5%A1imira+IV+21+Biograd+na+Moru",
+        "opis": "Trgovina suvenira od lavande na rivi; TZ je preporučuje za suvenire („Ponesi sjećanje”).",
+        "izvor": "discover-biograd.com (Ponesi sjećanje); provjereno 7.11.2026."
       }
     ],
     "servisi": [

@@ -230,7 +230,7 @@ const PRAKTICNO_SECTIONS = [
   [/bankomat|banka|\batm\b|\bbank|novac|gotovin|geld|cash|withdraw|bancomat|prelevare|contanti|pénz|peníze|peniaze/, 'banke_atm'],
   [{ test: m => FERRY_RE.test(m) }, 'trajekt_pasmanskim_kanalom'],
   [/autobus|\bbus|taksi|taxi|prijevoz|transport|rent|flixbus|zračn|airport|aerodrom|flughafen|aeroport|repülő|letišt/, 'prijevoz'],
-  [/supermarket|konzum|lidl|kaufland|plodine|tommy|studenac|tifon|trgovin|namirnic|shopping|dućan|einkauf|spesa|bolt|obchod/, 'supermarketi'],
+  [/supermarket|konzum|lidl|kaufland|plodine|tommy|studenac|eurospin|park ?& ?shop|bure|tifon|trgovin|namirnic|shopping|dućan|einkauf|spesa|bolt|obchod|grocer|nedjelj\w* radi|sunday|sonntag|domenica|vasárnap|neděl|nedeľ/, 'supermarketi', 'lokalne_trgovine'],
   [/tržnic|trznic|ribarnic|suvenir|butik|lokaln|souvenir|markt|mercato|piac|trh/, 'lokalne_trgovine'],
   [/wifi|wi-fi|internet|kartic|plaćanj|valuta|\beur|card|payment|zahlung|pagament|fizet|platb/, 'internet_i_placanje'],
 ];
@@ -720,7 +720,7 @@ function detectCategory(msg, lastCategory, db) {
 
   if (m.includes('parking') || m.includes('parkir') || m.includes('trajekt') || m.includes('autobus') || m.includes('ljekar') || m.includes('bolnic') || m.includes('hitna') || m.includes('bankomat') || m.includes('banka') || m.includes('taksi') || m.includes('prijevoz') || m.includes('rent a car') || m.includes('wifi') || m.includes('euro') || m.includes('valuta') || m.includes('radno vrij')
     || m.includes('benzin') || m.includes('gorivo') || m.includes('servis') || m.includes('mehaničar') || m.includes('vulkanizer') || m.includes('guma') || m.includes('kvar') || m.includes('supermarket') || m.includes('konzum') || m.includes('lidl') || m.includes('kaufland') || m.includes('plodine') || m.includes('tommy') || m.includes('studenac') || m.includes('tifon')
-    || m.includes('trgovin') || m.includes('kupovin') || m.includes('namirnic') || m.includes('shopping')
+    || m.includes('trgovin') || m.includes('kupovin') || m.includes('namirnic') || m.includes('shopping') || /eurospin|park ?& ?shop|\bbure\b|grocer|supermarch|supermercat|élelmiszer|potravin/.test(m)
     || m.includes('pharmacy') || m.includes('hospital') || m.includes('atm') || m.includes('bank') || m.includes('taxi') || m.includes('bus') || m.includes('transport') || m.includes('practical') || m.includes('petrol') || m.includes('mechanic')
     || m.includes('parkplatz') || m.includes('apotheke') || m.includes('tankstelle') || m.includes('werkstatt') || m.includes('reifenservice'))
     return 'prakticno';
@@ -1139,12 +1139,14 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     if (m.includes('market') || m.includes('supermarket') || m.includes('namirnic') || m.includes('namirnice') ||
         m.includes('konzum') || m.includes('studenac') || m.includes('kupovina') || m.includes('prehrambeni') ||
         m.includes('lidl') || m.includes('kaufland') || m.includes('plodine') || m.includes('tommy') ||
-        m.includes('spar') || m.includes('interspar') || m.includes('hrana') || m.includes('živežne'))
+        m.includes('spar') || m.includes('interspar') || m.includes('hrana') || m.includes('živežne') ||
+        /eurospin|grocer|supermarch|supermercat|potravin|élelmiszer/.test(m))
       return toItems(pi.supermarketi);
 
     if (m.includes('shopping') || m.includes('kupiti') || m.includes('kupnja') || m.includes('gdje kupiti') ||
         m.includes('trgovin') || m.includes('prodavaonice') || m.includes('dućan'))
-      return [...toItems(pi.lokalne_trgovine), ...toItems(pi.supermarketi)];
+      // Opće pitanje o trgovinama: najprije supermarketi (najčešća potreba gosta), zatim centri i specijalizirane trgovine.
+      return [...toItems(pi.supermarketi), ...toItems(pi.lokalne_trgovine)];
 
     if (FERRY_RE.test(m) || m.includes('trajekt') || m.includes('ferry') || m.includes('pašman') || m.includes('pasman') ||
         m.includes('tkon') || m.includes('jadrolinija'))
