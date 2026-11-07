@@ -6,7 +6,8 @@ export const db = {
     "telefon_tz": "+385 23 383 123",
     "email_tz": "info@tzg-biograd.hr",
     "web_tz": "https://www.discover-biograd.com",
-    "web_grad": "https://www.grad-biograd.hr",
+    "web_grad": "https://www.biogradnamoru.hr",
+    "gradska_uprava": "Trg kralja Tomislava 5, tel. +385 23 383 150, info@biogradnamoru.hr, radno vrijeme 07–15 h",
     "koordinate": "43°56′ N, 15°26′ E",
     "koordinate_decimalne": { "lat": 43.9397, "lng": 15.4455 }
   },
@@ -29,34 +30,39 @@ export const db = {
     },
     "povijest": [
       {
-        "razdoblje": "Prapovijest i antika",
-        "opis": "Područje Biograda bilo je naseljeno još u prapovijesti. Rimljani su na ovom prostoru imali utvrde i plovne rute duž dalmatinske obale."
+        "razdoblje": "Antika",
+        "opis": "Antički pisci spominju liburnsko naselje Blandona, čiji položaj nije pouzdano utvrđen. Na predjelu Bošana potvrđeni su antička lučica i ladanjska vila."
       },
       {
-        "razdoblje": "Hrvatska kraljevska prijestolnica (10.–12. st.)",
-        "opis": "Biograd je bio jedna od najvažnijih prijestolnica hrvatskih vladara. Kralj Petar Krešimir IV. i Dmitar Zvonimir su ovdje vladali. Godine 1059. u Biogradu je papa Nikola II. okrunio hrvatskog kralja. Biograd je bio i sjedište biskupa."
+        "razdoblje": "Hrvatski kraljevski grad (10.–12. st.)",
+        "opis": "Biograd se prvi put spominje sredinom 10. st. u spisu cara Konstantina Porfirogeneta. Za kralja Krešimira III. 1018. postaje hrvatski kraljevski grad i upravno-političko središte države. Za Petra Krešimira IV. osnovana je biogradska biskupija i podignuti benediktinski samostani sv. Ivana Evanđelista i sv. Tome. U Biogradu je 1102. okrunjen ugarski kralj Koloman za kralja Hrvatske."
       },
       {
-        "razdoblje": "Mletačko i osmansko doba",
-        "opis": "Mlečani su 1125. razrušili Biograd kako ne bi pao u ruke Ugara. Grad je obnavljan, ali je kroz osmanske upade stagnirao. Ovo je dugo razdoblje borbe za dalmatinsku obalu."
+        "razdoblje": "Mletačko razaranje i Zaravecchia (1125.–1409.)",
+        "opis": "Mletačke snage pod duždom Domenicom Michaelijem razorile su grad 1125.; biskup i građani pobjegli su u Šibenik, a benediktinci na Ćokovac kraj Tkona na Pašmanu. Od 1202. grad se naziva i Zaravecchia (Stari Zadar). U 13. i 14. st. njime upravljaju cetinski knezovi, vranski templari i Šubići Bribirski."
       },
       {
-        "razdoblje": "Austrijska uprava i moderno doba (19.–20. st.)",
-        "opis": "Pod austrijskom upravom Biograd se razvija kao malo ribarsko i pomorsko mjesto. U 20. st. turistički razvoj donosi veliku promjenu — grade se hoteli, marina i turistička infrastruktura."
+        "razdoblje": "Venecija i turski ratovi (1409.–1797.)",
+        "opis": "Pod mletačkom vlašću grad je porušen i spaljen 1521. i 1646. Od 1573. utvrđeni Biograd je uporište kršćanskih postrojbi i sjedište guvernatura hrvatskih četa, najčešće iz obitelji Matković."
       },
       {
-        "razdoblje": "Suvremeni turizam",
-        "opis": "Danas je Biograd jedno od vodećih turističkih odredišta srednje Dalmacije. Marina Kornati je nautičko središte, a NP Kornati privlači posjetitelje iz cijelog svijeta. Biograd Boat Show (listopad) jedan je od najvećih sajmova nautike u jugoistočnoj Europi."
+        "razdoblje": "19. i 20. stoljeće",
+        "opis": "Za austrijske uprave (1815.–1918.) uređuju se obala i brodski promet, a Biograd dobiva obrise mediteranskoga lučkoga gradića (gradonačelnik Hubert Borelli). Od 1918. do 1923. pod talijanskom je okupacijom. Prvi turisti, Česi, dolaze 1920-ih, a prvi hotel gradi se 1935. na mjestu današnjeg hotela Ilirija. U Domovinskom ratu (1991.–1995.) grad je blizu prve crte bojišta."
+      },
+      {
+        "razdoblje": "Danas",
+        "opis": "Središte biogradske rivijere i nautički centar: biogradske marine imaju 1000 vezova u moru i 200 mjesta na kopnu, otvorene cijele godine. Grad je 2025. i 2026. proglašen najboljim malim gradom za život u Hrvatskoj, a 2026. dobio je oznaku Vijeća Europe za izvrsnost u upravljanju (ELoGE)."
       }
     ],
     "zanimljivosti": [
-      "Biograd je bio hrvatska kraljevska prijestolnica u 11. st. — jedan od najstarijih gradova na Jadranu",
-      "Nasuprot Biograda nalazi se otok Pašman, povezan trajektom (10 min vožnje)",
-      "NP Kornati — 140 otoka, 89 otočića i hridi — idealno za izlete brodom iz Biograda",
-      "Marina Kornati jedna je od najvećih marina na Jadranu s preko 800 vezova",
-      "Biograd Boat Show (listopad) — jedan od najvećih nautičkih sajmova u regiji",
-      "Vransko jezero (6 km od Biograda) — najveće prirodno jezero u Hrvatskoj, park prirode",
-      "Zadarska županija ima više sunčanih sati od većine europskih destinacija (2700+ h/godišnje)"
+      "Biograd je bio hrvatski kraljevski grad: 1018. postaje upravno središte države, a 1102. u njemu je okrunjen kralj Koloman.",
+      "Trajekt za Tkon na otoku Pašmanu vozi 15 minuta (Jadrolinija, linija 432).",
+      "NP Kornati obuhvaća 89 otoka, otočića i hridi na oko 217 km² i najgušće je otočje Jadrana.",
+      "Biogradske marine imaju 1000 vezova u moru i 200 mjesta na kopnu, otvorene su cijele godine.",
+      "Biograd Boat Show (listopad) najveći je nautički sajam u Hrvatskoj; 28. izdanje 2026. imalo je više od 400 izlagača i 500 plovila.",
+      "Vransko jezero, najveće jezero u Hrvatskoj, udaljeno je oko 7 km od Biograda.",
+      "U Zavičajnom muzeju čuva se teret mletačkog broda potopljenog 1583. kod otočića Gnalić, s više od 10 000 predmeta.",
+      "Biograd ima teniski centar s 14 zemljanih i 6 tvrdih terena u borovoj šumi uz plažu."
     ]
   },
 
@@ -2177,15 +2183,50 @@ export const db = {
     "objekti": [
       {
         "naziv": "Zavičajni muzej Biograd na Moru",
-        "opis": "Muzej u centru Biograda s izložbama o povijesti grada, arheološkim nalazima i pomorskoj baštini. Obavezan posjet za ljubitelje kulture i lokalne povijesti.",
+        "opis": "Jedinstvena zbirka na Jadranu „Teret potopljenog broda iz 16. stoljeća”: mletački trgovački brod potonuo je 1583. kod otočića Gnalić, a izvađeno je više od 10 000 predmeta (muransko staklo, svijećnjaci, brončani topovi, svileni damast). Uz nju arheološka i etnografska zbirka te povijesni odjel. Zgrada na rivi od jeseni 2026. rekonstruira se u Interpretacijski centar „Blago potopljenog broda”, pa prije posjeta nazovite muzej i provjerite je li postav otvoren.",
         "tip": "muzej, kultura",
+        "adresa": "Obala kralja Petra Krešimira IV 20–22, Biograd na Moru",
+        "telefon": "+385 23 383 721",
+        "email": "info@muzej-biograd.com",
         "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg",
-        "web": "",
+        "web": "https://www.muzej-biograd.com",
         "karta": "https://maps.google.com/?q=Zavi%C4%8Dajni+muzej+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
         "recenzija_izvor": "",
-        "recenzija_url": ""
+        "recenzija_url": "",
+        "izvor": "biogradnamoru.hr (Grad Biograd na Moru); provjereno 7.11.2026.; obavijest Grada od 27.10.2026. o rušenju zgrade muzeja radi rekonstrukcije"
+      },
+      {
+        "naziv": "Interpretacijski centar BioSfera",
+        "opis": "Interaktivni centar o prirodi Biograda i okolice u obnovljenoj zgradi Stare škole na rivi: na četiri etaže multimedijske sobe o Vranskom jezeru, Kornatima i Telašćici (instalacije Kajak, Jedrilica, Ronilac), Paklenici i Velebitu (stijena za penjanje, Spilja), gastro soba i suvenirnica. Prilagođen osobama s invaliditetom. Radno vrijeme provjerite prije posjeta.",
+        "tip": "interpretacijski centar, priroda, za obitelji",
+        "adresa": "Obala kralja Petra Krešimira IV (Stara škola), Biograd na Moru",
+        "telefon": "+385 91 232 3099",
+        "email": "strucna.sluzba@pp-vransko-jezero.hr",
+        "web": "https://www.discover-biograd.com/dozivite/biosfera",
+        "karta": "https://maps.google.com/?q=Biosfera+Biograd+na+Moru",
+        "izvor": "biogradnamoru.hr (Grad Biograd na Moru); provjereno 7.11.2026.; discover-biograd.com"
+      },
+      {
+        "naziv": "Ljetno kino Biograd",
+        "opis": "Kino na otvorenom s 600 sjedećih mjesta, obnovljeno i dograđeno 2025. Ljeti prikazuje svjetske hitove i domaće filmove; raspored projekcija objavljuje se na stranici kina.",
+        "tip": "kino na otvorenom, ljeto",
+        "adresa": "Biograd na Moru",
+        "web": "https://kino-biograd.com",
+        "karta": "https://maps.google.com/?q=Ljetno+kino+Biograd+na+Moru",
+        "izvor": "biogradnamoru.hr (Grad Biograd na Moru); provjereno 7.11.2026.; kino-biograd.com"
+      },
+      {
+        "naziv": "Gradska knjižnica Biograd na Moru",
+        "opis": "Gradska knjižnica s čitaonicom (dnevni tisak i časopisi) te književnim večerima i radionicama za djecu. Radno vrijeme: ponedjeljak–petak 08–20 h, subota 08–13 h.",
+        "tip": "knjižnica, kultura",
+        "adresa": "Šetalište kneza Branimira 52, Biograd na Moru",
+        "telefon": "+385 23 386 487",
+        "email": "gkbnm@zd.t-com.hr",
+        "web": "https://www.gkbnm.hr",
+        "karta": "https://maps.google.com/?q=Gradska+knji%C5%BEnica+Biograd+na+Moru",
+        "izvor": "biogradnamoru.hr (Grad Biograd na Moru); provjereno 7.11.2026."
       },
       {
         "naziv": "Bazilika i Samostan Sv. Ivana Evanđelista",
@@ -2279,7 +2320,7 @@ export const db = {
       },
       {
         "naziv": "Biograd Boat Show",
-        "opis": "Jedan od najvećih nautičkih sajmova u jugoistočnoj Europi, koji se održava u Marini Kornati (zadnje izdanje: 21.–25. listopada 2026.). Izlaže se nekoliko stotina plovila svih vrsta — jedrilice, motorne jahte, katamarani, gumenjaci. Zlatni član IFBSO mreže (36 najprestižnijih sajmova nautike na svijetu). Privlači desetke tisuća posjetitelja iz regije.",
+        "opis": "Jedan od najvećih nautičkih sajmova u jugoistočnoj Europi, koji se održava u Marini Kornati (zadnje izdanje: 21.–25. listopada 2026.). Izlaže se nekoliko stotina plovila svih vrsta — jedrilice, motorne jahte, katamarani, gumenjaci. Zlatni član IFBSO mreže (36 najprestižnijih sajmova nautike na svijetu). Privlači desetke tisuća posjetitelja; 28. izdanje 2026. okupilo je više od 400 izlagača i 500 plovila i najveći je nautički sajam u Hrvatskoj.",
         "termin": "listopad (sljedeći termin još nije objavljen)",
         "lokacija": "Marina Kornati, Biograd na Moru",
         "web": "http://bbs.com.hr/"

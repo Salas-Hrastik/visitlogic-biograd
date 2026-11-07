@@ -330,7 +330,7 @@ const CATEGORY_CONTEXTS = {
   kornati:     (db) => ({ grad: db.grad, kornati: db.kornati, np_kornati: npKornati }),
   izleti:      (db) => ({ grad: db.grad, izleti: db.izleti }),
   sport:       (db) => ({ grad: db.grad, sport: db.sport }),
-  atrakcije:   (db) => ({ grad: db.grad, atrakcije: db.atrakcije }),
+  atrakcije:   (db) => ({ grad: db.grad, atrakcije: db.atrakcije, povijest: db.opcenito?.povijest, zanimljivosti: db.opcenito?.zanimljivosti }),
   dogadanja:   (db) => ({
     grad: db.grad,
     dogadanja: { ...db.dogadanja, eventi: sortedUpcomingEvents(db.dogadanja?.eventi) }
@@ -719,6 +719,7 @@ function detectCategory(msg, lastCategory, db) {
     || m.includes('parkplatz') || m.includes('apotheke') || m.includes('tankstelle') || m.includes('werkstatt') || m.includes('reifenservice'))
     return 'prakticno';
 
+  if (/biosfer|ljetn\w* kin|\bkino\b|cinema|open-air|freiluftkino|cinema all'aperto|knjižnic|library|bibliothek|biblioteca|museum|museo|múzeum|gnalić|potopljen\w* brod|shipwreck|povijest|history|geschichte|storia|történet|histori/.test(m)) return 'atrakcije';
   if (m.includes('muzej') || m.includes('crkva') || m.includes('atrakcij') || m.includes('kultura') || m.includes('baštini') || m.includes('baština') || m.includes('samostan') || m.includes('ruševin') || m.includes('arheolog') || m.includes('povijesn') || m.includes('stošija') || m.includes('katarina') || m.includes('bazilika') || m.includes('monument') || m.includes('spomen')
     || m.includes('museum') || m.includes('church') || m.includes('attraction') || m.includes('heritage') || m.includes('ruins') || m.includes('historic site')
     || m.includes('museum') || m.includes('kirche') || m.includes('sehenswürdigkeit') || m.includes('kloster'))
