@@ -217,7 +217,16 @@ const RENT_RE = /rent[ -]?a[ -]?car|car rental|rental car|hire a car|car hire|na
 
 const FUEL_RE = /benzin|gorivo|goriva|nafta|tifon|autoplin|\blpg\b|\bunp\b|tankir|dizel|diesel|petrol station|gas station|\bfuel|refuel|tankstell|tanken|carburant|distributore|benzinkút|üzemanyag|čerpac|pumpa|bencinsk/;
 
-const PHARMACY_RE = /ljekarn|apotek|dežurn\w* ljek|pharmac|chemist|apothek|farmaci|gyógyszert|patik|lékárn|lekáreň|lekarn/;
+// Kupovina na 8 jezika; ide prije gastronomije ("kupiti" sadrži "piti") i nautike ("groceries near the marina").
+const SOUVENIR_RE = /suvenir|souvenir|andenken|mitbringsel|ricord|ajándék|szuvenír|suvenýr|darček|spominek|lavand|maslinov\w* ulj|olive oil/;
+const SHOP_RE = /supermarket|trgovin|dućan|ducan|kupiti|kupit|kupovin|namirnic|grocer|buy food|shopping|\bshops?\b|einkauf|kaufen|lebensmittel|supermarch|supermercat|negozi|comprare|spesa|bevásárl|élelmiszer|vásárol|nákup|potravin|nakup|trgovin|konzum|lidl|kaufland|plodine|tommy|studenac|eurospin|park ?& ?shop|\bbure\b/;
+
+// "Kupiti ulaznicu / lijek / kartu za trajekt" nije kupovina u trgovini.
+const SHOP_EXCLUDE = /kornat|ulaznic|ticket|eintritt|biglietto|jegy|vstupn|vstopnic|kart\w* za|lijek|medicine|medikament|trajekt|ferry|fähre|traghett/;
+// Riba, voće i povrće: tržnica i ribarnica prije supermarketa.
+const MARKET_RE = /ribarnic|tržnic|trznic|fish market|fischmarkt|mercato del pesce|halpiac|rybí trh|\bribu\b|svjež\w* rib|fresh fish|frischen? fisch|voće|povrće|fruit|vegetable|obst|gemüse/;
+
+const PHARMACY_RE = /\blijek|ljekarn|apotek|dežurn\w* ljek|pharmac|chemist|apothek|farmaci|gyógyszert|patik|lékárn|lekáreň|lekarn/;
 
 const PRAKTICNO_SECTIONS = [
   [{ test: m => VET_RE.test(m) }, 'veterinari'],
@@ -626,6 +635,7 @@ function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
   if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
   if (FUEL_RE.test(m)) return 'prakticno';
+  if ((SOUVENIR_RE.test(m) || SHOP_RE.test(m)) && !SHOP_EXCLUDE.test(m)) return 'prakticno';
   if (TAXI_RE.test(m) || RENT_RE.test(m) || (FERRY_RE.test(m) && !/kornat|izlet/.test(m) && !BEACH_WORDS.test(m))) return 'prakticno';
   if (BUS_RE.test(m) && !/izlet|excursion|ausflug|escursion/.test(m)) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
@@ -1093,6 +1103,14 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
 
     const toItems = (arr) => (arr || []).map(x => item(x, { adresa: x.adresa || x.tip || '' }));
 
+    // Kupovina: suveniri, tržnica i ribarnica, pa supermarketi (ne kad se kupuje ulaznica, lijek ili karta).
+    const firstBy = (arr, re) => [...arr.filter(x => re.test(`${x.naziv} ${x.tip || ''}`)), ...arr.filter(x => !re.test(`${x.naziv} ${x.tip || ''}`))];
+    if (!SHOP_EXCLUDE.test(m)) {
+      if (SOUVENIR_RE.test(m)) return toItems(firstBy(pi.lokalne_trgovine || [], /suvenir/i));
+      if (MARKET_RE.test(m)) return toItems(firstBy(pi.lokalne_trgovine || [], /tržnic|ribarnic/i));
+      if (SHOP_RE.test(m) && !/park(ing|ir)/.test(m)) return [...toItems(pi.supermarketi), ...toItems(pi.lokalne_trgovine)];
+    }
+
     if (m.includes('parking') || m.includes('parkiralis') || m.includes('parkira') || m.includes('park'))
       return toItems(pi.parking);
 
@@ -1143,8 +1161,8 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
         /eurospin|grocer|supermarch|supermercat|potravin|élelmiszer/.test(m))
       return toItems(pi.supermarketi);
 
-    if (m.includes('shopping') || m.includes('kupiti') || m.includes('kupnja') || m.includes('gdje kupiti') ||
-        m.includes('trgovin') || m.includes('prodavaonice') || m.includes('dućan'))
+    if (!SHOP_EXCLUDE.test(m) && (m.includes('shopping') || m.includes('kupiti') || m.includes('kupnja') || m.includes('gdje kupiti') ||
+        m.includes('trgovin') || m.includes('prodavaonice') || m.includes('dućan')))
       // Opće pitanje o trgovinama: najprije supermarketi (najčešća potreba gosta), zatim centri i specijalizirane trgovine.
       return [...toItems(pi.supermarketi), ...toItems(pi.lokalne_trgovine)];
 
@@ -1153,6 +1171,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
       return pi.trajekt_pasmanskim_kanalom
         ? [item(pi.trajekt_pasmanskim_kanalom, { adresa: pi.trajekt_pasmanskim_kanalom.ruta || '' })]
         : [];
+
 
     // Generalni upit → parking + prijevoz + ljekarna (prva)
     return [

@@ -77,6 +77,14 @@ async function translateBatch(strings, langName) {
 }
 
 const CHUNK = 20;
+
+async function translateSplit(strings, langName) {
+  const tr = await translateBatch(strings, langName);
+  if (tr) return strings.map((src, j) => [src, tr[j]]);
+  if (strings.length === 1) { console.warn(`   Nije prevedeno: ${strings[0].slice(0, 60)}`); return []; }
+  const half = Math.ceil(strings.length / 2);
+  return [...await translateSplit(strings.slice(0, half), langName), ...await translateSplit(strings.slice(half), langName)];
+}
 function chunk(a, n){ const out=[]; for(let i=0;i<a.length;i+=n) out.push(a.slice(i,i+n)); return out; }
 
 (async () => {
@@ -93,8 +101,9 @@ function chunk(a, n){ const out=[]; for(let i=0;i<a.length;i+=n) out.push(a.slic
     const batches = chunk(missing, CHUNK);
     for (let i = 0; i < batches.length; i++) {
       const b = batches[i];
-      const tr = await translateBatch(b, name);
-      if (tr) b.forEach((src, j) => { result[code][src] = tr[j]; });
+      // Ako model ne vrati isti broj prijevoda, skupina se dijeli na pola dok ne uspije.
+      const done = await translateSplit(b, name);
+      for (const [src, t] of done) result[code][src] = t;
       process.stdout.write(`   batch ${i+1}/${batches.length}\r`);
     }
     console.log(`   ✓ ${code} gotovo` + ' '.repeat(20));
