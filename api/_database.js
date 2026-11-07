@@ -2229,6 +2229,15 @@ export const db = {
         "izvor": "biogradnamoru.hr (Grad Biograd na Moru); provjereno 7.11.2026."
       },
       {
+        "naziv": "Interpretacijski centar rimske baštine (ROMANICA) — u pripremi",
+        "opis": "Budući centar o rimskoj baštini Biograda u središtu grada, dio EU projekta ROMANICA (Interreg Hrvatska – BiH – Crna Gora, 15.6.2026.–14.6.2028.) s Sveučilištem u Zadru i Međunarodnim centrom za podvodnu arheologiju. Istražuje se rimski lokalitet u Bošani (antička lučica i ladanjska vila) LiDAR-om, fotogrametrijom i 3D modeliranjem, a predviđeni su digitalni sadržaji, radionice i kulturno-turistička događanja. Centar još nije otvoren za posjetitelje.",
+        "tip": "rimska baština, u pripremi",
+        "adresa": "Biograd na Moru (središte grada); lokalitet Bošana",
+        "web": "https://www.biogradnamoru.hr/projekt/u-tijeku/romanica-roman-heritage-in-the-cross-border-region-connecting-past-and-present",
+        "karta": "https://maps.google.com/?q=Bo%C5%A1ana+Biograd+na+Moru",
+        "izvor": "biogradnamoru.hr, projekt ROMANICA (objava 18.9.2026.); provjereno 7.11.2026."
+      },
+      {
         "naziv": "Bazilika i Samostan Sv. Ivana Evanđelista",
         "opis": "Ruševine benediktinskog samostana i bazilike iz 11. stoljeća — svjedok Biograda kao nekadašnje hrvatske kraljevske prijestolnice. Jedan od najvažnijih arheoloških lokaliteta u Dalmaciji.",
         "tip": "ruševine, povijest, arheologija",
