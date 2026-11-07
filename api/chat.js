@@ -272,6 +272,9 @@ function ferryNote() {
     `Odgovori izravno sljedećim polascima i cijenom, uz napomenu da je red plovidbe privremen i podložan promjenama (${ferry.izvor}). Ne izmišljaj polaske za druge datume: za njih uputi na izvor.]`;
 }
 
+// Pitanje o plažama na Pašmanu traži plaže, a ne trajekt.
+const BEACH_WORDS = /plaž|plaz|beach|strand|spiagg|pláž|plaj|kupa|swim|baden|fkk|nudist/;
+
 const FERRY_RE = /trajekt|ferry|ferries|fähre|faehre|traghett|kompj|komp\b|pašman|pasman|tkon|jadrolinij|brodsk\w* linij|boat line|katamaran|catamaran|galešnjak/;
 
 // ===== AUTOBUS: linija 120 Zadar – Biograd i međugradske veze (api/_autobus.js) =====
@@ -621,7 +624,7 @@ function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
   if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
   if (FUEL_RE.test(m)) return 'prakticno';
-  if (TAXI_RE.test(m) || RENT_RE.test(m) || (FERRY_RE.test(m) && !/kornat|izlet/.test(m))) return 'prakticno';
+  if (TAXI_RE.test(m) || RENT_RE.test(m) || (FERRY_RE.test(m) && !/kornat|izlet/.test(m) && !BEACH_WORDS.test(m))) return 'prakticno';
   if (BUS_RE.test(m) && !/izlet|excursion|ausflug|escursion/.test(m)) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
