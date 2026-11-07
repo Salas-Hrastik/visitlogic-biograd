@@ -427,7 +427,7 @@ function detectLang(msg, fallback = 'hr') {
   // Koriste se SAMO kad je korisnik već u HR razgovoru (fallback='hr')
   const hrWeak = [...hrStrong,
     'more','mora','sunce','temperatura','hotel','kamp','charter','marina',
-    'kornati','kornata','ima'];
+    'kornati','kornata','ima','izlet','izleti','jezero','trajekt','hrana','vino','ribe','hvala','autobus'];
 
   if (fallback === 'hr') {
     if (has(hrWeak)) return 'hr';
@@ -445,35 +445,37 @@ function detectLang(msg, fallback = 'hr') {
            'apartman','kemping','kikötő','hajó','időjárás','tó','folyó','erdő']))
     return 'hu';
 
-  // SL — PRIJE EN/DE (slavenski, ali distinktivan)
-  if (has(['kje','kdaj','zakaj','koliko','kateri','katere','katera','morje',
+  // SL/CS/SK dijele mnogo riječi (pláž, ryby, autobus...): broje se samo riječi koje su
+  // u popisu jednog jezika, a kod izjednačenja ili bez pogotka ide se dalje (EN/DE/IT ili fallback).
+  const SLAVIC = {
+    sl: ['kje','kdaj','zakaj','koliko','kateri','katere','katera','morje',
            'nastanitev','restavracija','restavracije','iščem','tukaj','torej',
            'slovenijo','slovenec','slovenka','slovenija','prosim','hvala',
            'lepo','dober','dobro','drago','poceni','hrana','jesti','piti',
            'ribe','vino','zajtrk','kosilo','večerja','plavanje','kolesarjenje',
            'potapljanje','jadranje','apartma','plaže','plaža','otok','izlet',
-           'izleti','vreme','temperatura','parkirišče','avtobus','trajekt']))
-    return 'sl';
-
-  // CS — PRIJE EN/DE (zapadnoslavenski, háček = distinktivan)
-  if (has(['kde','kdy','proč','restaurace','ubytování','ubytovanie','děkuji',
+           'izleti','vreme','temperatura','parkirišče','avtobus','trajekt'],
+    cs: ['kde','kdy','proč','restaurace','ubytování','ubytovanie','děkuji',
            'výlet','počasí','česky','česká','čechy','chci','jaké','kolik',
            'pláž','moře','jídlo','jíst','pít','ryby','víno','snídaně','oběd',
            'večeře','plavání','cyklistika','potápění','plachtění','apartmán',
            'kemp','přístav','loď','ostrov','dovolená','doporučte','prosím',
            'děkuji','dobrý','pěkný','levný','drahý','parkoviště','autobus',
-           'trajekt','počasí','teplota','pláže','hotel']))
-    return 'cs';
-
-  // SK — PRIJE EN/DE (zapadnoslavenski, diakritika = distinktivna)
-  if (has(['kedy','ako','prečo','reštaurácia','ubytovanie','ďakujem','výlet',
+           'trajekt','počasí','teplota','pláže','hotel'],
+    sk: ['kedy','ako','prečo','reštaurácia','ubytovanie','ďakujem','výlet',
            'počasie','slovensky','slovenská','slovensko','koľko','pláž','more',
            'jedlo','jesť','piť','ryby','víno','raňajky','obed','večera',
            'plávanie','cyklistika','potápanie','plachtenie','apartmán',
            'kemp','prístav','loď','ostrov','dovolenka','odporúčate','prosím',
            'dobrý','pekný','lacný','drahý','parkovisko','autobus','trajekt',
-           'teplota','pláže','kde','čo','ktoré','ktorý','som','sme','ste']))
-    return 'sk';
+           'teplota','pláže','kde','čo','ktoré','ktorý','som','sme','ste'],
+  };
+  const slavicScore = Object.fromEntries(Object.entries(SLAVIC).map(([l, list]) => {
+    const others = Object.entries(SLAVIC).filter(([o]) => o !== l).flatMap(([, x]) => x);
+    return [l, list.filter(x => !others.includes(x) && w.includes(x)).length];
+  }));
+  const best = Object.entries(slavicScore).sort((a, b) => b[1] - a[1]);
+  if (best[0][1] > 0 && best[0][1] > best[1][1]) return best[0][0];
 
   // IT — romanski, distinktivan
   if (has(['dove','quando','come','perché','spiaggia','ristorante','albergo',
