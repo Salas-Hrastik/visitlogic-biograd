@@ -664,7 +664,7 @@ const TR = {
 const GENERIC_EVENT_WORDS = new Set(['biograd', 'biogradu', 'biograda', 'moru', 'boat', 'show', 'koncert', 'friends', 'family', 'sportska', 'natjecanja', 'povijest', 'race', '2026']);
 
 // Liječnik, zubar, pedijatar, bolnica... na svih 8 jezika: gost s tegobom treba kontakt, ne opis grada.
-const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar|zubobolj|stomatolog|pedijat|ginekolog|bolnic|ortoped|hitn\w* (pomoć|služb|medicin)|\bhitna\b|zdravstv|doctor|dentist|toothache|paediatr|pediatr|gyn[ae]?ec|clinic|hospital|emergency|\barzt|ärzt|zahnarzt|krankenhaus|notarzt|notaufnahme|medico|dentista|ospedale|pronto soccorso|orvos|fogorvos|kórház|lékař|zubař|nemocnic|lekár|zubár|zdravnik|zobozdravnik|bolnišnic/;
+const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar|zubobolj|stomatolog|pedijat|ginekolog|bolnic|ortoped|hitn\w* (pomoć|služb|medicin)|\bhitna\b|zdravstv|doctor|dentist|toothache|paediatr|pediatr|gyn[ae]?ec|clinic|hospital|emergency|\barzt|ärzt|zahnarzt|krankenhaus|notarzt|notaufnahme|medico|dentista|ospedale|pronto soccorso|orvos|fogorvos|kórház|lékař|zubař|nemocnic|lekár|zubár|zdravnik|zobozdravnik|bolnišnic|pohotovos|záchrank|zdravotn|ügyelet|mentő|nujna pomoč|urgenc|pronto socc/;
 
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
@@ -703,7 +703,7 @@ function detectCategory(msg, lastCategory, db) {
   }
 
   if (/plaž\w* za pse|dog beach|dog-friendly beach|hundestrand|spiaggia per cani|kutyás strand|pláž\w* pro psy|pláž\w* pre psy|pasja plaž|aqualifter|pristup\w* moru|invalid\w*.{0,40}(mor|plaž|kupa)|wheelchair.{0,40}(beach|sea)|rollstuhl.{0,40}(strand|meer)|disabled.{0,40}(beach|sea)/.test(m)) return 'plaze';
-  if (m.includes('plaža') || m.includes('plaze') || m.includes('plaže') || m.includes('plaža') || m.includes('kupanje') || m.includes('kupat') || m.includes('dražica') || m.includes('soline') || m.includes('bošana') || m.includes('kumenat') || m.includes('fkk') || m.includes('nudist') || m.includes('pješčan') || m.includes('sunčan') || m.includes('sunbath') || m.includes('more je') || m.includes('lijeva ruka') || m.includes('plivat')
+  if (m.includes('pláž') || m.includes('plaj') || m.includes('spiagg') || m.includes('strand') || m.includes('plaža') || m.includes('plaze') || m.includes('plaže') || m.includes('plaža') || m.includes('kupanje') || m.includes('kupat') || m.includes('dražica') || m.includes('soline') || m.includes('bošana') || m.includes('kumenat') || m.includes('fkk') || m.includes('nudist') || m.includes('pješčan') || m.includes('sunčan') || m.includes('sunbath') || m.includes('more je') || m.includes('lijeva ruka') || m.includes('plivat')
     || m.includes('beach') || m.includes('swim') || m.includes('sunbathe') || m.includes('sand')
     || m.includes('strand') || m.includes('strän') || m.includes('schwimmen') || m.includes('badestrand'))
     return 'plaze';
@@ -713,12 +713,14 @@ function detectCategory(msg, lastCategory, db) {
 
   // Padeži: "večeru", "ručku", "večerati"; samo "večeras" ostaje bez kategorije.
   if (/večer(a|u|e|i|om|at\w*)\b|ruč(ak|ka|ku|kom|at\w*)\b|doruč/.test(m)) return 'gastronomija';
+  if (/vacsor|ebéd|étterem|étkez|enni\b|večeř|oběd|restaurac|reštaurác|najesť|najíst|kosil[oa]|večerj|kosim\b|pranzo|ristorant|mangiare/.test(m)) return 'gastronomija';
 
   if (m.includes('restoran') || m.includes('jelo') || m.includes('hrana') || m.includes('jesti') || m.includes('ručak') || m.includes('večera') || m.includes('doručak') || m.includes('riba') || m.includes('plodovi mora') || m.includes('konoba') || m.includes('kafi') || m.includes('kav') || m.includes('bar ') || m.includes(' bar') || m.includes('piti') || m.includes('pek') || m.includes('hobotnica') || m.includes('lignje') || m.includes('brancin') || m.includes('brudet') || m.includes('vino') || m.includes('dalmatinska') || m.includes('gastronomij')
     || m.includes('restaurant') || m.includes('food') || m.includes('eat') || m.includes('dinner') || m.includes('lunch') || m.includes('breakfast') || m.includes('fish') || m.includes('seafood') || m.includes('wine') || m.includes('tavern') || m.includes('konoba')
     || m.includes('essen') || m.includes('speise') || m.includes('trinken') || m.includes('café') || m.includes('fisch') || m.includes('wein'))
     return 'gastronomija';
 
+  if (/vrgad/.test(m)) return 'izleti';
   if (m.includes('marina') || m.includes('brod') || m.includes('jedrilica') || m.includes('jedrenj') || m.includes('charter') || m.includes('nautica') || m.includes('nautika') || m.includes('nautičk') || m.includes('plovidba') || m.includes('plovit') || m.includes('sidriš') || m.includes('vez') || m.includes('gumenjak') || m.includes('motorni brod') || m.includes('rent a boat') || m.includes('rent-a-boat') || m.includes('iznajmit brod') || m.includes('kapacitet veza') || m.includes('kornati marina')
     || m.includes('sailing') || m.includes('boat') || m.includes('yacht') || m.includes('marina') || m.includes('charter') || m.includes('nautical') || m.includes('berth') || m.includes('mooring') || m.includes('catamaran')
     || m.includes('segelboot') || m.includes('boot') || m.includes('jacht') || m.includes('marina') || m.includes('charter'))
@@ -1694,6 +1696,8 @@ function stripBulletList(text) {
       /^\d+[.)]\s+/.test(t);
 
     if (isBullet || isSectionHeader) {
+      // "Taksi službe su:" bez popisa ispod izgleda kao prekinut odgovor; kartice slijede ispod.
+      if (isBullet && out.length && /:\s*$/.test(out[out.length - 1])) out[out.length - 1] = out[out.length - 1].replace(/:\s*$/, '.');
       skipBlank = true;
       continue;
     }
@@ -1992,9 +1996,11 @@ export default async function handler(req, res) {
       .filter(m => m.role === 'user' || m.role === 'assistant');
 
     const completion = await anthropic.messages.create({
-      model: 'claude-sonnet-5',
+      model: 'claude-sonnet-5-5',
       max_tokens: 800,
-      thinking: { type: 'disabled' }, // turistički bot: prioritet je brzina odgovora
+      // Turistički bot: prioritet je brzina odgovora. Sonnet 5.5 odbija 'disabled';
+      // 'between_tools' bez alata znači odgovor bez razmišljanja (dopušteno do effort 'high').
+      thinking: { type: 'between_tools' },
       // Prompt caching: stabilni blok (persona + pravila + stalne info) je keširan,
       // dinamički (jezik/vrijeme/sezona/baza) ide poslije njega.
       system: [
