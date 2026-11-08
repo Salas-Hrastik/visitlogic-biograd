@@ -1677,6 +1677,11 @@ function menuContext(message, history, category) {
   return { note, names };
 }
 
+function cutToLastSentence(text) {
+  const m = text.match(/^[\s\S]*[.!?…)](?=\s|$)/);
+  return m && m[0].length > text.length / 2 ? m[0].trim() : text.trim() + '…';
+}
+
 function stripBulletList(text) {
   const lines = text.split('\n');
   const out = [];
@@ -1959,7 +1964,7 @@ export default async function handler(req, res) {
       ? wantsItinerary
         ? `\n[SUSTAV: Automatski će biti prikazano ${cardItems.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
         : `\n[SUSTAV: Ispod odgovora automatski će biti prikazano ${cardItems.length} vizualnih kartica. Odgovori IZRAVNO na korisnikovo pitanje u 1–3 rečenice koristeći podatke iz baze (npr. cijena, datum, udaljenost, preporuka). Ako traženog podatka nema u bazi, reci to i uputi na TZ. NE nabrajaj kartice. Kartice prikazuju ove objekte iz baze (ne tvrdi da ih nema): ${cardItems.slice(0, 8).map(i => `${i.naziv}${i.telefon ? ` (${i.telefon})` : ''}`).join('; ')}.]`
-      : `\n[SUSTAV: Ispod ovog odgovora NEMA kartica. Ne spominji kartice niti "detalje ispod"; sve što gost treba napiši u odgovoru.]`;
+      : `\n[SUSTAV: Ispod ovog odgovora NEMA kartica. Ne spominji kartice niti "detalje ispod"; sve što gost treba napiši u odgovoru. Odgovor neka ima najviše oko 200 riječi: izaberi najvažnije i završi cjelovitom rečenicom.]`;
     const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
     const kornatiNote = detectedCategory === 'kornati'
       ? `\n[SUSTAV: Za ulaznice, cijene, bove, sidrenje, ronjenje, ribolov i pravila NP Kornati koristi ISKLJUČIVO blok np_kornati (službeni podaci parka, cjenik ${npKornati.cjenik.godina}., provjereno ${npKornati.provjereno}). Ulaznica se plaća po plovilu prema duljini; sezona je lipanj–rujan. Ako gost navede duljinu plovila i razdoblje, izračunaj točnu cijenu i reci da je kupnja izvan parka jeftinija nego u parku. Ako ne navede duljinu ili datum, navedi cijenu za najmanje plovilo (do 6,99 m) i pitaj za duljinu. Za izlet organiziranim brodom reci da cijena izleta obično već uključuje ulaznicu. Ne izmišljaj podatke kojih u bloku nema; za ostalo uputi na ${npKornati.izvor} ili +385 22 435 740.]`
@@ -1999,7 +2004,7 @@ export default async function handler(req, res) {
 
     const params = {
       model: 'claude-sonnet-5-5',
-      max_tokens: 800,
+      max_tokens: 1200,
       // Turistički bot: prioritet je brzina odgovora. Sonnet 5.5 odbija 'disabled';
       // 'between_tools' bez alata znači odgovor bez razmišljanja (dopušteno do effort 'high').
       thinking: { type: 'between_tools' },
@@ -2038,10 +2043,12 @@ export default async function handler(req, res) {
     }
 
     const rawReply = completion.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    // Odgovor odrezan na granici duljine završava na zadnjoj cijeloj rečenici, ne usred riječi.
+    const fullReply = completion.stop_reason === 'max_tokens' ? cutToLastSentence(rawReply) : rawReply;
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
-    const reply = (stripLists ? stripBulletList(rawReply) : rawReply)
+    const reply = (stripLists ? stripBulletList(fullReply) : fullReply)
       .replace(/https?:\/\/(?:www\.)?(?:google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)[^\s)\]]*/g, u => directionsUrl(u));
 
     // Objekti koje odgovor spominje idu prvi među kartice, i kad nisu bili u izboru.
