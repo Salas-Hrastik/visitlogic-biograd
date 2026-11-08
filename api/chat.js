@@ -894,6 +894,8 @@ function getSuggestions(category, lang, message) {
 function proxyImg(url) {
   if (!url) return '';
   // Direktni CDN-ovi koji ne trebaju proxy
+  // Već proslijeđena slika: drugi prolaz kroz wsrv ne uspijeva i završi na zamjenskoj slici.
+  if (url.includes('wsrv.nl/')) return url;
   if (url.includes('upload.wikimedia.org') || url.includes('commons.wikimedia.org')) return url;
   if (url.includes('lh3.googleusercontent.com')) return url;
   if (url.includes('ilirijabiograd.com')) return url;
