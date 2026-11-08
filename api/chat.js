@@ -329,7 +329,10 @@ for (const st of db.prakticne_info?.benzinska || []) {
 // ===== KATEGORIJSKI KONTEKSTI =====
 const CATEGORY_CONTEXTS = {
   plaze:       (db) => ({ grad: db.grad, plaze: db.plaze }),
-  gastronomija:(db) => ({ grad: db.grad, gastronomija: db.gastronomija }),
+  // Slike, karte i izvori modelu ne trebaju; bez njih kontekst je trećinu kraći.
+  gastronomija:(db) => ({ grad: db.grad, gastronomija: { ...db.gastronomija,
+    restorani: (db.gastronomija?.restorani || []).map(({ slika, karta, recenzija_url, izvor, ...r }) => r),
+    nocni_zivot: (db.gastronomija?.nocni_zivot || []).map(({ slika, karta, recenzija_url, izvor, ...r }) => r) } }),
   nautika:     (db) => ({ grad: db.grad, nautika: db.nautika }),
   smjestaj:    (db) => ({
     grad: db.grad,
@@ -640,6 +643,7 @@ function detectCategory(msg, lastCategory, db) {
   if (BUS_RE.test(m) && !/izlet|excursion|ausflug|escursion/.test(m)) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
+  if (/kunjk|arca noae|prošek|prosek|kraljevsk\w* jel|royal dish|königlich\w* gericht|gastro biograd/.test(m)) return 'gastronomija';
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
   if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
 
@@ -995,6 +999,8 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
       .sort((a, b) => {
         const gA = tipGrupa(a), gB = tipGrupa(b);
         if (gA !== gB) return gA - gB;
+        // Restorani s popisa TZ-a idu prije ostalih iste vrste.
+        if (!!a.tz_preporuka !== !!b.tz_preporuka) return a.tz_preporuka ? -1 : 1;
         return lokacijaPriority(a) - lokacijaPriority(b);
       });
     const svi = sortirani.map(r => item(r, { adresa: r.tip || '' }));

@@ -272,6 +272,13 @@ export const db = {
 
   "gastronomija": {
     "opis": "Biograd nudi izvrsnu dalmatinsku gastronomiju temeljenu na svježoj ribi i plodovima mora. Tipična jela uključuju brancina i lubina na gradelama, lignje na žaru, prstace, dagnje buzara, peku (janjetina ili riba), salatu od hobotnice i domaće tjestenine.",
+    "gastro_biograd": {
+      "opis": "Projekt TZ-a i Gastronauta (2024.) s petnaestak biogradskih ugostitelja ističe tri specijaliteta: školjke kunjke (Arca noae, simbol Pašmanskog kanala; na buzaru, lešo, na žaru i kao rižoto), jela s prošekom (dalmatinsko desertno vino u buzarama, brudetima, pašticadi i umacima) i Kraljevska jela u kraljevskom gradu.",
+      "kunjke": "Kampanel, Europa, Riva, Beštek, Daniela, Barba",
+      "prosek": "Crvena Luka, Casa Vecchia, Kampanel, Arkada, Riva, Daniela, Europa, Barba, Beštek, Marina Kornati, Park Soline, Bazilika, Dalmaland",
+      "kraljevska_jela": "Daniela, Europa, Riva, Arkada, Beštek, Dalmaland",
+      "izvor": "https://www.discover-biograd.com/okusite/gastro-biograd"
+    },
     "lokalna_jela": [
       { "naziv": "Brancin ili laban na žaru", "opis": "Lokalno ulovljena bijela riba, pripremljena na gradelama s maslinovim uljem i kapulom" },
       { "naziv": "Lignje na žaru ili punjene", "opis": "Svježe dalmatinske lignje — specijalitet svakog ribičarskog mjesta" },
@@ -290,26 +297,36 @@ export const db = {
         "opis": "Jedna od najcjenjenijih konoba u Biogradu — svježa riba, plodovi mora i tradicionalna dalmatinska jela u opuštenoj atmosferi. Preporuča se rezervacija.",
         "tip": "konoba, dalmatinska kuhinja",
         "telefon": "+385 95 312 3160",
-        "slika": "https://bestinbiograd.com/wp-content/uploads/2024/06/WhatsApp-Slika-2024-06-04-u-10.58.24_b3d474e0.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/Kampanel_1.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/konobakampanelbiograd/",
-        "karta": "https://maps.google.com/?q=Konoba+Kampanel+Biograd",
-        "ocjena": "4.7",
-        "recenzija": "\"Jedan od najfinijih restorana na Jadranu — svježa riba, divna atmosfera, ljubazno osoblje i velika terasa savršena za ljetne večeri.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Restaurant_Review-g608702-d12717110-Reviews-Konoba_Kampanel-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+        "karta": "https://maps.google.com/?q=Konoba+Kampanel%2C+Kralja+Kolomana+7%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s kunjkama, jela s prošekom.",
+        "recenzija_izvor": "TZ Biograd",
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd",
+        "adresa": "Kralja Kolomana 7, Biograd na Moru",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "gastro_biograd": [
+          "jela s kunjkama",
+          "jela s prošekom"
+        ]
       },
       {
         "naziv": "Restoran Dupin",
         "opis": "Mediteranska kuhinja s naglaskom na svježu ribu i plodove mora uz plažu Bošana. Prikladan za sve uzraste, popularno obiteljsko odredište.",
         "tip": "restoran, mediteranska kuhinja",
         "telefon": "+385 91 542 3885",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/86/d9/8a/dupin.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/Dupin.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/profile.php?id=199983453395566",
-        "karta": "https://maps.google.com/?q=Restoran+Dupin+Biograd",
-        "ocjena": "4.5",
-        "recenzija": "\"Najbolja hrana u Hrvatskoj — nevjerojatna svježa riba, predivna atmosfera na terasama uz plažu i uvijek nasmiješeno osoblje.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Restaurant_Review-g608702-d1035982-Reviews-Dupin-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+        "karta": "https://maps.google.com/?q=Restoran+Dupin%2C+%C5%A0etali%C5%A1te+kneza+Branimira+60%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "adresa": "Šetalište kneza Branimira 60, Biograd na Moru",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Konoba Galiot",
@@ -317,23 +334,30 @@ export const db = {
         "tip": "konoba",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/2/27/Dalmatian_fish_restaurant.jpg/800px-Dalmatian_fish_restaurant.jpg&w=400&h=220&fit=cover&output=jpg",
         "karta": "https://maps.google.com/?q=Konoba+Galiot+Biograd",
-        "ocjena": "4.3",
-        "recenzija": "\"Odlična konoba uz rivu — tradicionalna dalmatinska hrana, dobar izbor riba i ljubazno osoblje po pristupačnim cijenama.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Konoba+Galiot+Biograd"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Restoran Marina Kornati",
         "opis": "Restoran unutar marine — popularan kod nautičara i posjetitelja, hrana odlične kvalitete s pogledom na vezove i Kornate.",
         "tip": "marina restoran",
         "telefon": "+385 23 384 505",
-        "slika": "https://www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg",
-        "web": "https://www.marinakornati.com/en/homepage",
-        "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd",
-        "ocjena": "4.2",
-        "recenzija": "\"Idealno za nautičare i zaljubljenike u more — odlična riba, pogled na vezove i profesionalna usluga u srcu marine.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g608702-d633517-Reviews-Marina_Kornati-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/marina_kornati.webp&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://www.marinakornati.com/",
+        "karta": "https://maps.google.com/?q=Restoran+Marina+Kornati%2C+%C5%A0etali%C5%A1te+kneza+Branimira+1%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s prošekom.",
+        "recenzija_izvor": "TZ Biograd",
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd",
+        "adresa": "Šetalište kneza Branimira 1, Biograd na Moru",
+        "email": "restoran@marinakornati.com",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "gastro_biograd": [
+          "jela s prošekom"
+        ]
       },
       {
         "naziv": "Konoba Bazilika",
@@ -344,10 +368,13 @@ export const db = {
         "slika": "http://www.konoba-bazilika.com/images/ostalo/Nagrada_TZ_Bazilika.jpg",
         "web": "http://www.konoba-bazilika.com/",
         "karta": "https://maps.google.com/?q=Konoba+Bazilika+Biograd+na+Moru",
-        "ocjena": "4.4",
-        "recenzija": "\"Autentična dalmatinska konoba — svježa riba po pristupačnim cijenama, domaće vino i topla atmosfera u srcu Biograda.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Konoba+Bazilika+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s prošekom.",
+        "recenzija_izvor": "TZ Biograd",
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd",
+        "gastro_biograd": [
+          "jela s prošekom"
+        ]
       },
       {
         "naziv": "Konoba Leo",
@@ -356,10 +383,10 @@ export const db = {
         "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/25/16/fc/05/konoba-leo.jpg",
         "web": "https://www.instagram.com/konoba_leo/",
         "karta": "https://maps.google.com/?q=Konoba+Leo+Biograd+na+Moru",
-        "ocjena": "4.2",
-        "recenzija": "\"Mala i ugodna konoba s odličnom domaćom kuhinjom — brancin na gradelama i domaće tjestenine su obavezni izbor.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Konoba+Leo+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Čirjak",
@@ -368,23 +395,26 @@ export const db = {
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/2/27/Dalmatian_fish_restaurant.jpg/800px-Dalmatian_fish_restaurant.jpg&w=400&h=220&fit=cover&output=jpg",
         "web": "",
         "karta": "https://maps.google.com/?q=%C4%8Cirjak+Biograd+na+Moru",
-        "ocjena": "4.1",
-        "recenzija": "\"Odlično meso s roštilja i svježa riba — izvrsna kombinacija za one koji ne znaju birati između mora i kopna.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=%C4%8Cirjak+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Peperino",
         "opis": "Pizzeria i restoran s kapacitetom 200 mjesta, idealan za obitelji i veće grupe. Radi 09:00–24:00.",
         "tip": "pizzeria, restoran",
         "telefon": "+385 23 383 232",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/9a/9d/dc/peperino.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/PEPERINO_%283%29.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.peperino.com.hr",
-        "karta": "https://maps.google.com/?q=Peperino+Biograd+na+Moru",
-        "ocjena": "4.5",
-        "recenzija": "\"Velika pizzeria s odličnom pizzom iz krušne peći — idealno za obitelji, brza usluga i pristupačne cijene.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Peperino+Biograd+na+Moru"
+        "karta": "https://maps.google.com/?q=Restoran+Peperino%2C+Trg+hrvatskih+velikana+7%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "adresa": "Trg hrvatskih velikana 7, Biograd na Moru",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Barba",
@@ -394,23 +424,30 @@ export const db = {
         "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/81/c6/34/konoba-barba.jpg",
         "web": "https://www.konoba-barba.com.hr",
         "karta": "https://maps.google.com/?q=Barba+Biograd+na+Moru",
-        "ocjena": "4.5",
-        "recenzija": "\"Odličan caffe bar u centru — dobra kava, lagan ručak i predivna lokacija uz rivu. Omiljeno okupljalište lokalaca.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Barba+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s kunjkama, jela s prošekom.",
+        "recenzija_izvor": "TZ Biograd",
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd",
+        "gastro_biograd": [
+          "jela s kunjkama",
+          "jela s prošekom"
+        ]
       },
       {
         "naziv": "Mamma Mia",
         "opis": "Pizzeria u centru Biograda — talijanska pizza i pasta, popularna kod turista i lokalaca.",
         "tip": "pizzeria",
         "telefon": "+385 23 384 659",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/36/f7/15/pizzeria-mamma-mia.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/MAMMA_MIA_%286%29.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/mammamiabiograd/",
-        "karta": "https://maps.google.com/?q=Mamma+Mia+Biograd+na+Moru",
-        "ocjena": "4.1",
-        "recenzija": "\"Dobra pizza na pravom mjestu — brza usluga, prikladna za obitelji s djecom, blizu centra i plaže.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Mamma+Mia+Biograd+na+Moru"
+        "karta": "https://maps.google.com/?q=Pizzeria+Mamma+Mia%2C+Grgura+Ninskog+2%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "adresa": "Grgura Ninskog 2, Biograd na Moru",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Slad",
@@ -419,35 +456,41 @@ export const db = {
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/43/Ice_cream_in_a_cone.jpg/800px-Ice_cream_in_a_cone.jpg&w=400&h=220&fit=cover&output=jpg",
         "web": "",
         "karta": "https://maps.google.com/?q=Slad+Biograd+na+Moru",
-        "ocjena": "4.0",
-        "recenzija": "\"Dobra lokalna pizzeria — jednostavna, ukusna i pristupačna. Solidan izbor za večeru bez previše čekanja.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Slad+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Cocolino",
         "opis": "Pizzeria u centru Biograda s domaćom pizzom, tjesteninom i roštiljem.",
         "tip": "pizzeria",
         "telefon": "+385 23 385 584",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/7e/ce/fd/biograd-na-moru-cocolino.jpg",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Cocolino+Biograd+na+Moru",
-        "ocjena": "4.0",
-        "recenzija": "\"Popularna pizzeria u centru — odlična pizza, prijatna terasa i dobar omjer cijene i kvalitete.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Cocolino+Biograd+na+Moru"
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/COCOLINO_%283%29.webp&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://www.facebook.com/pages/Pizzeria-Cocolino/417191454983706?nr",
+        "karta": "https://maps.google.com/?q=Pizzeria+Cocolino%2C+Trg+hrvatskih+velikana+1%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "adresa": "Trg hrvatskih velikana 1, Biograd na Moru",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Blandona",
         "opis": "Slastičarnica i gelateria u srcu Biograda — domaći sladoled, kolači i slastice.",
         "tip": "slastičarnica, sladoled",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/66/29/f0/blandona.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/BLANDONA_.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "",
-        "karta": "https://maps.google.com/?q=Blandona+Biograd+na+Moru",
-        "ocjena": "4.5",
-        "recenzija": "\"Najbolji sladoled u Biogradu — kremast, svjež i s puno okusa. Obavezna postaja za svaki prolaz kroz centar!\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Blandona+Biograd+na+Moru"
+        "karta": "https://maps.google.com/?q=Slasti%C4%8Darnica+Blandona%2C+Kraljice+Jelene+2%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "adresa": "Kraljice Jelene 2, Biograd na Moru",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Pečenjara Brkljača",
@@ -456,24 +499,31 @@ export const db = {
         "slika": "https://brkljaca.hr/wp-content/uploads/2024/05/peceni-odojak-na-raznju-1.webp",
         "web": "",
         "karta": "https://maps.google.com/?q=Pe%C4%8Denjara+Brklja%C4%8Da+Biograd+na+Moru",
-        "ocjena": "4.3",
-        "recenzija": "\"Fantastičan odojak i janjetina — pravo domaće meso s roštilja, obilje jela i odlična vrijednost za novac.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Pe%C4%8Denjara+Brklja%C4%8Da+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Pizzeria Beštek",
         "opis": "Najbolje ocijenjena pizzeria u Biogradu — autentična pizza iz krušne peći, domaće tjestenine i topla obiteljska atmosfera.",
         "tip": "pizzeria",
         "adresa": "Ul. kraljice Jelene 5, Biograd na Moru",
-        "telefon": "023 367 591",
-        "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweqohgxM5YzNt-Cj7U929pe3d5YhMlXvxmVmnuVlTPE21Cp5fqxLKkBu2oJW81veSG7IfRbBACsuQqvpCiKqxv7dFQwAESveS37FKkWA3H4Ha4ChLe4M-fbEzbakobCjGl__UeTXmg=w400-h220-k-no",
+        "telefon": "+385 23 367 591",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/Be%C5%A1tek1.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "http://pizzeriabestek.com/",
-        "karta": "https://maps.google.com/?q=Pizzeria+Be%C5%A1tek+Biograd+na+Moru",
-        "ocjena": "4.8",
-        "recenzija": "\"Izvrsna pizza i odlična usluga — jedno od najboljih mjesta u Biogradu za večeru s obitelji ili prijateljima.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Pizzeria+Be%C5%A1tek+Biograd+na+Moru"
+        "karta": "https://maps.google.com/?q=Pizzeria+Be%C5%A1tek%2C+Ul.+kraljice+Jelene+5%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s kunjkama, jela s prošekom, Kraljevska jela.",
+        "recenzija_izvor": "TZ Biograd",
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "gastro_biograd": [
+          "jela s kunjkama",
+          "jela s prošekom",
+          "Kraljevska jela"
+        ]
       },
       {
         "naziv": "Restaurant Carpymore",
@@ -484,10 +534,10 @@ export const db = {
         "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwepctgxxtj7o-ZAEsqTgz65ZV0N8AWPe21ElSUVP5fvB6JCkxAfB49E30yZYCNcmUcM51VidoWxuWjiDVMw32DIJK5jZQawlyzRioZ9QMNVtAeN5A-tHwinC3lp8WDsCAQVrTMRpXosR9x4S=w400-h220-k-no",
         "web": "https://restaurant-carpymore.eatbu.hr/",
         "karta": "https://maps.google.com/?q=Restaurant+Carpymore+Biograd+na+Moru",
-        "ocjena": "4.7",
-        "recenzija": "\"Izvanredan restoran — kreativna kuhinja, ljubazno osoblje i odabrana vinska karta. Obvezna rezervacija u sezoni.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Restaurant+Carpymore+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Restoran-Pizzeria Šare",
@@ -495,27 +545,36 @@ export const db = {
         "tip": "bistro, pizzeria",
         "adresa": "Trg hrvatskih velikana 1, Biograd na Moru",
         "telefon": "+385 23 385 584",
-        "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwerc8Kt7W3daHhNmW6rHTkkBkMGmhoUyBpMOSVp3cOePusn5wF3y459eqTHEt97J60UKpGDukXB_nVR4iidbI0HwHbPZMdm-FbvEyYcXcFoH8VJaBZmBu90olTK0ZysXAEEfqWOe7Q=w400-h220-k-no",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/%C5%A0ARE_.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "http://www.bistropizzeriasare.com.hr/",
-        "karta": "https://maps.google.com/?q=Restoran+Pizzeria+%C5%A0are+Biograd+na+Moru",
-        "ocjena": "4.7",
-        "recenzija": "\"Odlična pizza i brza usluga u samom centru — idealno za ručak ili večeru, uvijek svježe i ukusno.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Restoran+Pizzeria+%C5%A0are+Biograd+na+Moru"
+        "karta": "https://maps.google.com/?q=Pizzeria+%26+Bistro+%C5%A0are%2C+Trg+hrvatskih+velikana+1%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Restoran Arkada",
         "opis": "Restoran uz šetalište Dražice s pogledom na more — svježa riba, plodovi mora i roštilj u opuštenoj atmosferi uz obalu.",
         "tip": "restoran, riba i plodovi mora",
-        "adresa": "Šetalište Dražice 3, Biograd na Moru",
-        "telefon": "098 757 394",
-        "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweomBDWXNFrxeRLkWz4K7kIvdXHBctcwbYy23SDaP8o-k7b7JAgCDTwQK8Hm3vVUZsLoRK-pA0fIv5luFosz3VG-LkEDmRBNspJ-IHF1ZoBU1LzEWquFqhWpeApQ_xwckEFOgTuJyw=w400-h220-k-no",
-        "web": "http://www.restoran-arkada.com/",
-        "karta": "https://maps.google.com/?q=Restoran+Arkada+Biograd+na+Moru",
-        "ocjena": "4.6",
-        "recenzija": "\"Predivna lokacija uz šetalište, svježa riba i odlična usluga — jedno od boljih mjesta za romantičnu večeru uz more.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Restoran+Arkada+Biograd+na+Moru"
+        "adresa": "Šetalište Dražica 3, Biograd na Moru",
+        "telefon": "+385 98 757 394",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/arkada.webp&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://www.restoran-arkada.com/hr/",
+        "karta": "https://maps.google.com/?q=Restoran+Arkada%2C+%C5%A0etali%C5%A1te+Dra%C5%BEica+3%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s prošekom, Kraljevska jela.",
+        "recenzija_izvor": "TZ Biograd",
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd",
+        "email": "arkada@zd.t-com.hr",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "gastro_biograd": [
+          "jela s prošekom",
+          "Kraljevska jela"
+        ]
       },
       {
         "naziv": "Restoran Boqueron",
@@ -526,10 +585,10 @@ export const db = {
         "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwercB2lQNet4Piv2f4U4cn2qjgH22rRf0PBCzDFquiPaaUdcddRUKXqUQ57EL3M4ALfnqgQeXMfajHT-Cv3BzQSGtAPegMsBmlBCr4ZoTNg6YY8J2cc_YMCCaoWj2Rp7hl8TZEBn=w400-h220-k-no",
         "web": "https://www.restoranboqueron.com/",
         "karta": "https://maps.google.com/?q=Restoran+Boqueron+Biograd+na+Moru",
-        "ocjena": "4.6",
-        "recenzija": "\"Autentični okusi Mediterana — svježe dagnje, lignje i riba na gradelama. Odlična usluga i pristupačne cijene.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Restoran+Boqueron+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Konoba Laguna",
@@ -538,52 +597,69 @@ export const db = {
         "adresa": "Put Solina 10, Biograd na Moru",
         "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwerhWeTNkPcNAKp7tghuFeClzGy94ZqIqv5gtGm75K9gjqC_hqrrnu1JMiWzGFqWRAnhOjnUvSMX3-eGdjHJz9MTAxcKqnrV74YUv54waOAv2ZJ4qUNaM4URcvMjJhe6a_Yc4vkYRF1H65o=w400-h220-k-no",
         "karta": "https://maps.google.com/?q=Konoba+Laguna+Biograd+na+Moru",
-        "ocjena": "4.6",
-        "recenzija": "\"Pravi dalmatinski domaći okusi — odlična riba, domaće vino i toplo osoblje koje te tretira kao gosta u svojoj kući.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Konoba+Laguna+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Restaurant Riva",
         "opis": "Restoran na Obali kralja Petra Krešimira IV — riba, plodovi mora i mediteranska jela s pogledom na biogradsku rivu.",
         "tip": "restoran, mediteranska kuhinja",
-        "adresa": "Obala kralja Petra Krešimira IV 4, Biograd na Moru",
-        "telefon": "098 130 0613",
-        "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwepTCvAInuvwg_bW45Xv5MCGpYvo0Lu-UxeGdVqSEo-ql78aaaDc7PED_JLzWynsmySP2bIRv3Dhaz36Yc0EnGVmLg7BLQMODVPnvKnUzpIUY1RkD8tjRW5Ho0HAkPoopwkYN16EIw=w400-h220-k-no",
+        "adresa": "Obala kralja Petra Krešimira IV. 4, Biograd na Moru",
+        "telefon": "+385 23 384 768",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/RIVA_%282%29.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://restaurant-riva.eatbu.hr/",
-        "karta": "https://maps.google.com/?q=Restaurant+Riva+Biograd+na+Moru",
-        "ocjena": "4.5",
-        "recenzija": "\"Odlična lokacija uz rivu, svježa riba i profesionalna usluga — idealno za večeru uz zalazak sunca nad morem.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Restaurant+Riva+Biograd+na+Moru"
+        "karta": "https://maps.google.com/?q=Restoran+Riva%2C+Obala+kralja+Petra+Kre%C5%A1imira+IV.+4%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s kunjkama, jela s prošekom, Kraljevska jela.",
+        "recenzija_izvor": "TZ Biograd",
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd",
+        "telefon2": "098 130 0613",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "gastro_biograd": [
+          "jela s kunjkama",
+          "jela s prošekom",
+          "Kraljevska jela"
+        ]
       },
       {
         "naziv": "Konoba Daniela",
         "opis": "Konoba uz Obalu kralja Petra Krešimira IV — tradicionalna dalmatinska jela, riba i meso s roštilja uz more.",
         "tip": "konoba, dalmatinska kuhinja",
-        "adresa": "Obala kralja Petra Krešimira IV 10, Biograd na Moru",
+        "adresa": "Obala Kralja Petra Krešimira IV. 10, Biograd na Moru",
         "telefon": "+385 23 383 883",
-        "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAwero9MFy4jd03Y21lKB-iSXhvK6dcO49OMxK4w2iG15XoeYcbZJomFi0kfuN_dx2VqF--JvA757Ad_ljJiHfvMjYR2Zn5b17e2eWFQ9Nj6kIlmVc6jaW1-miOclic1BRaoQsEcZK=w400-h220-k-no",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/OBALA_cover.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/konobadanielabiograd/",
-        "karta": "https://maps.google.com/?q=Konoba+Daniela+Biograd+na+Moru",
-        "ocjena": "4.2",
-        "recenzija": "\"Dobra konoba uz rivu — svježa riba, domaće vino i ugodna atmosfera. Solidna opcija za dalmatinski obrok.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Konoba+Daniela+Biograd+na+Moru"
+        "karta": "https://maps.google.com/?q=Konoba+Daniela%2C+Obala+Kralja+Petra+Kre%C5%A1imira+IV.+10%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s kunjkama, jela s prošekom, Kraljevska jela.",
+        "recenzija_izvor": "TZ Biograd",
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "gastro_biograd": [
+          "jela s kunjkama",
+          "jela s prošekom",
+          "Kraljevska jela"
+        ]
       },
       {
         "naziv": "Restaurant More",
         "opis": "Restoran u predjelu Crvena Luka s pogledom na Biograd — riba, plodovi mora i internacionalna kuhinja u mirnom okruženju.",
         "tip": "restoran, riba i plodovi mora",
         "adresa": "Crvena Luka 1, Biograd na Moru",
-        "telefon": "099 711 7663",
-        "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweqCISsdoZNv1wTbXMo0VvpOgmGzol0xfeJ9ZUv8XNljlazZ4k5wzEqxbiIHgC94NVO7n5qsC614m88ShVcIjmr_h9AqoG4ZHwqNR-3Q6l1PzNS49vYB1KXgDPAq7AGSFwvfAEyHOA=w400-h220-k-no",
+        "telefon": "+385 99 711 7663",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/More.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.restaurant-more.eu/",
-        "karta": "https://maps.google.com/?q=Restaurant+More+Crvena+Luka+Biograd",
-        "ocjena": "4.5",
-        "recenzija": "\"Prekrasan pogled na more, odlična svježa riba i romantična atmosfera — idealno za posebne prigode.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Restaurant+More+Crvena+Luka+Biograd"
+        "karta": "https://maps.google.com/?q=Restoran+More%2C+Crvena+Luka+1%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Grill & Pizza Lea",
@@ -592,37 +668,43 @@ export const db = {
         "adresa": "Put Solina, Biograd na Moru",
         "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweouU9srO_DVeMDi9kLkDrI9RDJz8WBvOZFsVRIfEEUl9F0vgtBXb0BFhVPS9YdTzFeSnSnEEuNLZrm9oUBR060sVMWQ_iBT-SnmSZmUYoPSje7K6ysvvAeKHhLUGJ_XpNvrg492OQ=w400-h220-k-no",
         "karta": "https://maps.google.com/?q=Grill+%26+Pizza+Lea+Biograd+na+Moru",
-        "ocjena": "4.6",
-        "recenzija": "\"Odlična pizza i roštilj uz plažu — savršeno za ručak nakon kupanja. Brza usluga i pristupačne cijene.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Grill+%26+Pizza+Lea+Biograd+na+Moru"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Caffe & Restoran Obala",
         "opis": "Najpopularniji caffe restoran na biogradskoj obali — bogata ponuda hrane i pića, doručak, ručak i večera uz more.",
         "tip": "caffe restoran",
-        "adresa": "Obala kralja Petra Krešimira IV 6, Biograd na Moru",
+        "adresa": "Obala kralja Petra Krešimira IV. 6, Biograd na Moru",
         "telefon": "+385 23 384 768",
-        "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweptHZSsRiRwaIozmOe1yisJOyJuq05gJ1rjg161oRy8i4UeepLpyJh_xASof0e5jBqzD_34NHNB2scMfINavD2jUpWoNscyXJBynuItTtDtKmyH18l5A0Sq225T8UkJtkL2MM7Dcg=w400-h220-k-no",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/OBALA_cover.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://caffebistroobala.wixsite.com/website",
-        "karta": "https://maps.google.com/?q=Caffe+Restoran+Obala+Biograd+na+Moru",
-        "ocjena": "4.6",
-        "recenzija": "\"Savršena lokacija uz obalu, odlična kava i ukusna hrana — omiljeno okupljalište i turista i lokalaca cijeli dan.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Caffe+Restoran+Obala+Biograd+na+Moru"
+        "karta": "https://maps.google.com/?q=Restoran+Obala%2C+Obala+kralja+Petra+Kre%C5%A1imira+IV.+6%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Liburnija Pizza & Restaurant",
         "opis": "Pizza i restoran u centru Biograda — široka ponuda pizza, tjestenina i glavnih jela za sve ukuse.",
         "tip": "pizzeria, restoran",
-        "adresa": "Ul. kralja Tvrtka 8, Biograd na Moru",
+        "adresa": "Tvrtkova 8, Biograd na Moru",
         "telefon": "+385 91 510 8576",
-        "slika": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweo-cyr9vCiwVyrs-rQgj8OO3m_qGTVc4MTH4HPR84FNuRaxZCnwIt2BajjnP82yLR5koybc3053GS5uuqbv-JUbwNbB9afiJuAQZcgKxAL9mgarUnspDAlY72vsyrtiiQ58LuQk=w400-h220-k-no",
-        "karta": "https://maps.google.com/?q=Liburnija+Pizza+Restaurant+Biograd+na+Moru",
-        "ocjena": "4.4",
-        "recenzija": "\"Dobra pizzeria u centru — solidna pizza, brza usluga i prikladna za obitelji. Jedna od popularnijih opcija u gradu.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Liburnija+Pizza+Restaurant+Biograd+na+Moru"
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/LIBURNIJA_%282%29.webp&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Restoran+Liburnija%2C+Tvrtkova+8%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "email": "Culjak.anamaria@gmail.com",
+        "web": "https://web.facebook.com/LiburnijaRestaurant/?_rdc=1&amp;_rdr#",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Kaciol",
@@ -630,13 +712,16 @@ export const db = {
         "tip": "restoran, morska hrana, mediteranska kuhinja",
         "adresa": "Bana Josipa Jelačića 2, Biograd na Moru",
         "telefon": "+385 99 733 1536",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/77/ce/5a/entrance-to-our-litle.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/KACIOL_%284%29.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/kaciolbiograd/",
-        "karta": "https://maps.google.com/?q=Kaciol+Biograd+na+Moru",
-        "ocjena": "4.6",
-        "recenzija": "\"Definitivno jedan od best u Biogradu — svježa riba, odlična usluga i pravo lokalno ozračje blizu marine.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Restaurant_Review-g608702-d23647714-Reviews-Kaciol-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+        "karta": "https://maps.google.com/?q=Konoba+Kaciol%2C+Bana+Josipa+Jela%C4%8Di%C4%87a+2%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "email": "Pape023@gmail.com",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Konoba Vapor",
@@ -644,33 +729,46 @@ export const db = {
         "tip": "konoba, dalmatinska kuhinja",
         "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/81/9d/74/konoba-vapor.jpg",
         "karta": "https://maps.google.com/?q=Konoba+Vapor+Biograd+na+Moru",
-        "ocjena": "4.5",
-        "recenzija": "\"Prava domaća kuhinja, pristupačne cijene i ljubazni domaćini — skriveni dragulj stare jezgre.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Restaurant_Review-g608702-d23647714-Reviews-Konoba_Vapor-Biograd_na_Moru.html"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Konoba MAX",
         "opis": "Odlična konoba poznata po steakovima i ribljem meniju — kombinacija dalmatinskog i internacionalnog pristupa. Popularna kod nautičara i lokalaca.",
         "tip": "konoba, steak, morska hrana",
         "telefon": "+385 98 890 950",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/d6/44/2a/fish.jpg",
-        "karta": "https://maps.google.com/?q=Konoba+MAX+Biograd+na+Moru",
-        "ocjena": "4.6",
-        "recenzija": "\"Odličan steak i svježa riba — konoba MAX je pouzdana adresa za kvalitetan obrok u Biogradu.\"",
-        "recenzija_izvor": "TripAdvisor"
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/max.webp&w=400&h=220&fit=cover&output=jpg",
+        "karta": "https://maps.google.com/?q=Konoba+steak+house+Max%2C+Trg+hrvatskih+velikana+9%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "adresa": "Trg hrvatskih velikana 9, Biograd na Moru",
+        "web": "https://web.facebook.com/people/Konoba-MAX/100069392087995/?sk=about",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "recenzija_url": ""
       },
       {
         "naziv": "Pizzeria Casa Vecchia",
         "opis": "Najpopularnija pizzeria u Biogradu prema broju recenzija — autentična talijanska pizza iz krušne peći, odlična pasta i brza usluga.",
         "tip": "pizzeria, talijanska kuhinja",
         "telefon": "+385 23 383 220",
-        "slika": "https://www.casavecchia.hr/wp-content/uploads/bg-home-about-us-1024x668.jpg",
-        "web": "https://casavecchia.hr",
-        "karta": "https://maps.google.com/?q=Pizzeria+Casa+Vecchia+Biograd+na+Moru",
-        "ocjena": "4.5",
-        "recenzija": "\"Najukusnija pizza u gradu — tanka korica, svježi sastojci i uvijek gužva. Vrijedi čekati!\"",
-        "recenzija_izvor": "TripAdvisor"
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/pizzeria_Casa_Vecchia.webp&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://www.casavecchia.hr/",
+        "karta": "https://maps.google.com/?q=Pizzeria+Casa+Vecchia%2C+Kolomanova+30%2C+Biograd+na+Moru",
+        "ocjena": "",
+        "recenzija": "Gastro Biograd (TZ): jela s prošekom.",
+        "recenzija_izvor": "TZ Biograd",
+        "adresa": "Kolomanova 30, Biograd na Moru",
+        "email": "info@casavecchia.hr",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "gastro_biograd": [
+          "jela s prošekom"
+        ],
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd"
       },
       {
         "naziv": "Pomalo Food & Wine Bar",
@@ -678,9 +776,10 @@ export const db = {
         "tip": "wine bar, tapas, mediteranska kuhinja",
         "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/8e/fd/d5/pomalo-food-wine-bar.jpg",
         "karta": "https://maps.google.com/?q=Pomalo+Food+Wine+Bar+Biograd+na+Moru",
-        "ocjena": "5.0",
-        "recenzija": "\"Savršeno iskustvo — pažljivo odabrana vina, kreativni tapasi i topla atmosfera. Apsolutni must za ljubitelje vina!\"",
-        "recenzija_izvor": "TripAdvisor"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Soline Beach Bar",
@@ -689,9 +788,10 @@ export const db = {
         "slika": "https://www.discover-biograd.com/storage/media/prirodne-ljepote/plaze/plaza-soline.webp",
         "web": "https://www.facebook.com/solinebnm/",
         "karta": "https://maps.google.com/?q=Soline+Beach+Bar+Biograd+na+Moru",
-        "ocjena": "4.1",
-        "recenzija": "\"Jedinstven doživljaj jesti uz more direktno na plaži Soline — dobra hrana i opuštena atmosfera.\"",
-        "recenzija_izvor": "TripAdvisor"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Maximus Grill & Bar",
@@ -699,9 +799,10 @@ export const db = {
         "tip": "grill, mediteranska kuhinja",
         "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/76/53/a2/interior.jpg",
         "karta": "https://maps.google.com/?q=Maximus+Grill+Bar+Biograd+na+Moru",
-        "ocjena": "4.7",
-        "recenzija": "\"Odličan grill restoran — kvalitetne namirnice, ljubazno osoblje i odlično za večernji obrok.\"",
-        "recenzija_izvor": "TripAdvisor"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Bistro Europa",
@@ -709,12 +810,20 @@ export const db = {
         "tip": "bistro",
         "adresa": "Obala Kralja Krešimira IV. 12, Biograd na Moru",
         "telefon": "+385 23 383 931",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/8f/a5/6e/inside-area.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/EUROPA_%282%29.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://bistro-europa-biograd.eatbu.hr",
-        "karta": "https://maps.google.com/?q=Bistro+Europa+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Bistro+Europa%2C+Obala+Kralja+Kre%C5%A1imira+IV.+12%2C+Biograd+na+Moru",
         "ocjena": "",
-        "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija": "Gastro Biograd (TZ): jela s kunjkama, jela s prošekom, Kraljevska jela.",
+        "recenzija_izvor": "TZ Biograd",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026.",
+        "gastro_biograd": [
+          "jela s kunjkama",
+          "jela s prošekom",
+          "Kraljevska jela"
+        ],
+        "recenzija_url": "https://www.discover-biograd.com/okusite/gastro-biograd"
       },
       {
         "naziv": "Bistro Figa",
@@ -722,12 +831,14 @@ export const db = {
         "tip": "bistro",
         "adresa": "Kraljice Jelene 33, Biograd na Moru",
         "telefon": "+385 91 899 1280",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/22/86/8a/aussenbereich.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/FIGA_.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/BistroFiga/",
-        "karta": "https://maps.google.com/?q=Bistro+Figa+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Bistro+Figa%2C+Kraljice+Jelene+33%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Konoba Navis",
@@ -735,12 +846,14 @@ export const db = {
         "tip": "konoba",
         "adresa": "Ul. Grubišnog Polja 4, Biograd na Moru",
         "telefon": "+385 92 290 1381",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/2/27/Dalmatian_fish_restaurant.jpg/800px-Dalmatian_fish_restaurant.jpg&w=400&h=220&fit=cover&output=jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/Navis.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/NavisKonoba/",
-        "karta": "https://maps.google.com/?q=Konoba+Navis+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Konoba+Navis%2C+Ul.+Grubi%C5%A1nog+Polja+4%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Pizzeria & Bistro Fibra",
@@ -748,12 +861,14 @@ export const db = {
         "tip": "pizzeria, bistro",
         "adresa": "Kralja Petra Krešimira IV. 19, Biograd na Moru",
         "telefon": "",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/08/50/f4/fibra.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/FIBRA_%282%29.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/PizzeriaSpaghetteriaFibra/",
-        "karta": "https://maps.google.com/?q=Pizzeria+Bistro+Fibra+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Pizzeria+%26+Bistro+Fibra%2C+Kralja+Petra+Kre%C5%A1imira+IV.+19%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Pizzeria Domestico",
@@ -761,12 +876,14 @@ export const db = {
         "tip": "pizzeria",
         "adresa": "Obala kralja Petra Krešimira IV 22, Biograd na Moru",
         "telefon": "+385 99 693 0352",
-        "slika": "https://domestiko.hr/wp-content/uploads/2024/06/Domestico-slika-2.jpg",
-        "web": "https://domestiko.hr",
-        "karta": "https://maps.google.com/?q=Pizzeria+Domestico+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/Domestico.webp&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://domestiko.hr/",
+        "karta": "https://maps.google.com/?q=Pizzeria+Domestico%2C+Obala+kralja+Petra+Kre%C5%A1imira+IV+22%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Balde Food & Bar",
@@ -774,12 +891,15 @@ export const db = {
         "tip": "restoran, beach bar",
         "adresa": "Plaža Soline, Biograd na Moru",
         "telefon": "+385 95 598 7321",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/b2/44/ed/balde-bar.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/balde.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/baldefoodandbar/",
-        "karta": "https://maps.google.com/?q=Balde+Food+Bar+Soline+Biograd",
+        "karta": "https://maps.google.com/?q=Balde+Food+%26+Bar%2C+Pla%C5%BEa+Soline%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "email": "baldefoodandbar@gmail.com",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Restoran Guste",
@@ -800,12 +920,14 @@ export const db = {
         "tip": "restoran",
         "adresa": "Fra Lina Pedišića 3, Biograd na Moru",
         "telefon": "+385 23 327 803",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/45/5e/2c/restoran-katusa.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/Katu%C5%A1a.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.facebook.com/restoran.katusa/",
-        "karta": "https://maps.google.com/?q=Restoran+Katuša+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Restoran+Katu%C5%A1a%2C+Fra+Lina+Pedi%C5%A1i%C4%87a+3%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Restoran Roko",
@@ -813,12 +935,14 @@ export const db = {
         "tip": "restoran",
         "adresa": "Obala kralja Petra Krešimira IV. 31, Biograd na Moru",
         "telefon": "+385 97 684 1774",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/e7/5b/b0/roko-in-the-evening.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/ROKO_%283%29.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://restoran-roko-biograd.eatbu.com",
-        "karta": "https://maps.google.com/?q=Restoran+Roko+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Restoran+Roko%2C+Obala+kralja+Petra+Kre%C5%A1imira+IV.+31%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Restoran Soline",
@@ -826,12 +950,14 @@ export const db = {
         "tip": "restoran",
         "adresa": "Šetalište Dražica 13, Biograd na Moru",
         "telefon": "+385 23 383 348",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/a4/ce/35/rumpsteak.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/soline.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "https://www.campsoline.com/restoran-park-soline",
-        "karta": "https://maps.google.com/?q=Restoran+Soline+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Restoran+Soline%2C+%C5%A0etali%C5%A1te+Dra%C5%BEica+13%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Restoran U Šime",
@@ -839,12 +965,14 @@ export const db = {
         "tip": "restoran",
         "adresa": "Zrmanjska 1, Biograd na Moru",
         "telefon": "+385 23 638 006",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/d5/cd/d0/restaurant-u-sime.jpg",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/U%20%C5%A0ime.webp&w=400&h=220&fit=cover&output=jpg",
         "web": "",
-        "karta": "https://maps.google.com/?q=Restoran+U+Šime+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Restoran+U+%C5%A0ime%2C+Zrmanjska+1%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Restoran Orkula",
@@ -852,12 +980,15 @@ export const db = {
         "tip": "restoran",
         "adresa": "Fra Lina Pedišića 27, Biograd na Moru",
         "telefon": "+385 95 904 0067",
-        "slika": "https://restaurant-orkula.hr/images/terasa1.jpg",
-        "web": "https://restaurant-orkula.hr",
-        "karta": "https://maps.google.com/?q=Restoran+Orkula+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/437_orkula.jpg&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://www.restaurant-orkula.hr/index.html",
+        "karta": "https://maps.google.com/?q=Restoran+Orkula%2C+Fra+Lina+Pedi%C5%A1i%C4%87a+27%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "email": "info@restaurant-orkula.hr",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Restoran Stari Grad",
@@ -865,12 +996,14 @@ export const db = {
         "tip": "restoran",
         "adresa": "Grgura Ninskog 11, Biograd na Moru",
         "telefon": "+385 91 910 9490",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/82/55/4a/bistro-stari-grad.jpg",
-        "web": "https://restaurant-stari-grad-biograd.eatbu.hr/",
-        "karta": "https://maps.google.com/?q=Restoran+Stari+Grad+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/Stari%20Grad.webp&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://restaurant-stari-grad-biograd.eatbu.hr/?lang=hr#menu",
+        "karta": "https://maps.google.com/?q=Restoran+Stari+Grad%2C+Grgura+Ninskog+11%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Bistro Laganini",
@@ -878,12 +1011,15 @@ export const db = {
         "tip": "bistro",
         "adresa": "Ul. kralja Petra Svačića 20 A, Biograd na Moru",
         "telefon": "+385 23 334 959",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/2/27/Dalmatian_fish_restaurant.jpg/800px-Dalmatian_fish_restaurant.jpg&w=400&h=220&fit=cover&output=jpg",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Bistro+Laganini+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/Laganini.webp&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://web.facebook.com/p/Laganini-Biograd-61550565057797/?_rdc=1&amp;_rdr#",
+        "karta": "https://maps.google.com/?q=Bistro+Laganini%2C+Ul.+kralja+Petra+Sva%C4%8Di%C4%87a+20+A%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "email": "numero11.bnm@gmail.com",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       },
       {
         "naziv": "Slastičarnica Miami",
@@ -891,12 +1027,14 @@ export const db = {
         "tip": "slastičarnica",
         "adresa": "Obala kralja Petra Krešimira IV 1, Biograd na Moru",
         "telefon": "",
-        "slika": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/07/54/83/front-of-a-building.jpg",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Slastičarnica+Miami+Biograd+na+Moru",
+        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/restorani/MIAMI_.webp&w=400&h=220&fit=cover&output=jpg",
+        "web": "https://web.facebook.com/slasticarnicamiami/?_rdc=1&amp;_rdr#",
+        "karta": "https://maps.google.com/?q=Slasti%C4%8Darnica+Miami%2C+Obala+kralja+Petra+Kre%C5%A1imira+IV+1%2C+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
-        "recenzija_izvor": ""
+        "recenzija_izvor": "",
+        "tz_preporuka": true,
+        "izvor": "discover-biograd.com (TZ Biograd, Restorani i Gastro Biograd); provjereno 8.11.2026."
       }
     ],
     "nocni_zivot": [
