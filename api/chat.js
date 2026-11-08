@@ -1767,7 +1767,7 @@ function buildDynamicSystem(lang, context, weatherCtx) {
 
   return `JEZIK ODGOVORA: Odgovaraj ISKLJUČIVO na ${targetLangLabel} jeziku. ${langNote}
 
-DANAŠNJI DATUM: ${new Date().toLocaleDateString('hr-HR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Zagreb' })}
+DANAŠNJI DATUM: ${new Date().toLocaleDateString('hr-HR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Zagreb' })}, ${new Date().toLocaleTimeString('hr-HR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Zagreb' })} (vrijeme u Biogradu). Dan u tjednu uzmi odavde; ne izračunavaj ga sam.
 
 AKTUALNO VRIJEME (REALNI PODACI — koristi ih konkretno!):
 ${weatherSummary}
@@ -1918,7 +1918,8 @@ export default async function handler(req, res) {
       : '';
     const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
     const ferryInfo = FERRY_RE.test(msgLow) && !/kornat|izlet/.test(msgLow) ? ferryNote() : '';
-    const busInfo = BUS_RE.test(msgLow) ? busNote() : '';
+    // "Kako do Zadra?" je pitanje o prijevozu i bez riječi "autobus".
+    const busInfo = BUS_RE.test(msgLow) || /(kako|čime) (do|doći|stići|otići)|how (do i |to )?get to|getting to|wie komme|come arrivare|hogyan jutok|jak se dostat|ako sa dostať|kako priti/.test(msgLow) ? busNote() : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
       : '';

@@ -1125,6 +1125,25 @@ function formatReply(text){
 }
 
 // ===== ADD MESSAGE =====
+// ===== NAVIGACIJA OD STVARNE LOKACIJE =====
+// Bez polazišta Google Maps na računalu procjenjuje lokaciju po IP adresi (npr. Split umjesto stvarnog mjesta).
+// Lokaciju traži preglednik, ostaje u pregledniku i ide samo u poveznicu za Google Maps.
+let lastPosition = null;
+function openNavigation(e){
+  const url = e.currentTarget.href;
+  if(!/\/maps\/dir\//.test(url) || !navigator.geolocation) return;
+  e.preventDefault();
+  const win = window.open("", "_blank");
+  const go = (target) => { if(win && !win.closed) win.location.href = target; else window.location.href = target; };
+  const withOrigin = (p) => url + "&origin=" + p.coords.latitude.toFixed(6) + "," + p.coords.longitude.toFixed(6);
+  if(lastPosition && Date.now() - lastPosition.timestamp < 5 * 60 * 1000) return go(withOrigin(lastPosition));
+  navigator.geolocation.getCurrentPosition(
+    (p) => { lastPosition = p; go(withOrigin(p)); },
+    () => go(url),
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 5 * 60 * 1000 }
+  );
+}
+
 function addMessage(text, type, suggestions, images, items, replyLinks){
   const chatMessages = document.getElementById("chat-messages");
 
@@ -1147,6 +1166,7 @@ function addMessage(text, type, suggestions, images, items, replyLinks){
         a.textContent = "🧭 " + uiText().map;
         a.target = "_blank";
         a.rel = "noopener";
+        a.addEventListener("click", openNavigation);
         row.appendChild(a);
       }
       if(l.web){
@@ -1257,6 +1277,7 @@ function addMessage(text, type, suggestions, images, items, replyLinks){
         a.textContent = "🧭 " + uiText().map;
         a.target = "_blank";
         a.rel = "noopener";
+        a.addEventListener("click", openNavigation);
         links.appendChild(a);
       }
       if(it.jelovnik){
