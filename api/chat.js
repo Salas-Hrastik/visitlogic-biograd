@@ -643,7 +643,7 @@ function detectCategory(msg, lastCategory, db) {
   if (BUS_RE.test(m) && !/izlet|excursion|ausflug|escursion/.test(m)) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
-  if (/kunjk|arca noae|prošek|prosek|kraljevsk\w* jel|royal dish|königlich\w* gericht|gastro biograd/.test(m)) return 'gastronomija';
+  if (/kunjk|arca noae|prošek|prosek|kraljevsk\w* jel|royal dish|königlich\w* gericht|gastro biograd|pizz|sladoled|slastič|ice cream|gelat|\beis\b|eiscaf|fagylalt|zmrzlin|cukrász|pekar|bakery|bäcker|panetteria/.test(m)) return 'gastronomija';
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
   if (/(cijen|košta|koliko je|price|cost|how much|preis|kostet|prezz|costa|mennyibe|kolik|koľko)/.test(m) && MENU_TERMS.some(([re]) => re.test(msg))) return 'gastronomija';
 
@@ -942,7 +942,7 @@ function item(o, extra = {}) {
 const GENERICKE_RIJECI = new Set([
   'plaža','plaže','plaza','beach','strand',
   'hotel','hoteli','hotels','unterkunft',
-  'restoran','restorani','restaurant','konoba','konobe','essen',
+  'restoran','restorani','restaurant','konoba','konobe','essen','pizza','pizze','pizzeria','bistro','grill','food','caffe','slastičarnica',
   'kamp','kampovi','camping','smještaj','smjestaj','accommodation',
   'izlet','izleti','excursion','kornati','kornate','ausflug',
   'sport','aktivnosti','activities','atrakcij','atrakcija',
@@ -954,13 +954,15 @@ const GENERICKE_RIJECI = new Set([
 function filterByMessage(lista, msg) {
   if (!msg) return lista;
   const m = msg.toLowerCase();
+  const msgWords = m.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
   const matched = lista.filter(it => {
     // Uzmi značajne riječi iz naziva — isključi generičke kategorijske pojmove
     const words = it.naziv.toLowerCase()
       .replace(/[★✓\-\/,\.\(\)]+/g, ' ')
       .split(/\s+/)
       .filter(w => w.length > 3 && !GENERICKE_RIJECI.has(w));
-    return words.some(w => m.includes(w));
+    // Cijele riječi (uz padeže), da "grad" iz imena ne pogodi "Biograd".
+    return words.some(w => msgWords.some(x => x === w || (w.length >= 5 && x.startsWith(w.slice(0, -1)))));
   });
   return matched.length > 0 ? matched : lista;
 }
@@ -1003,8 +1005,25 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
         if (!!a.tz_preporuka !== !!b.tz_preporuka) return a.tz_preporuka ? -1 : 1;
         return lokacijaPriority(a) - lokacijaPriority(b);
       });
+    // Specijaliteti projekta Gastro Biograd: samo restorani koji ih nude.
+    const SPEC = [[/kunjk|arca noae/, 'kunjk'], [/prošek|prosek/, 'prošek'], [/kraljevsk|royal|königlich/, 'Kraljevsk']];
+    const spec = SPEC.find(([q]) => q.test(m));
+    if (spec) {
+      const withSpec = sortirani.filter(r => (r.gastro_biograd || []).some(x => x.includes(spec[1])));
+      if (withSpec.length) return withSpec.map(r => item(r, { adresa: r.tip || '' }));
+    }
     const svi = sortirani.map(r => item(r, { adresa: r.tip || '' }));
-    return filterByMessage(svi, message);
+    const byName = filterByMessage(svi, message);
+    if (byName !== svi) return byName;
+    // Bez imena u pitanju: vrsta objekta (konoba, pizzeria, slastičarnica, bistro) sužava popis.
+    const TYPES = [[/konob|tavern|taverne|osteria|trattoria|kocsm|hospůdk/, /konob/i], [/pizz/, /pizz/i],
+      [/slastič|sladoled|ice cream|eis\b|gelat|dessert|torta|kolač|cukrász|zmrzlin/, /slastič|sladoled/i], [/bistro/, /bistro/i]];
+    const t = TYPES.find(([q]) => q.test(m));
+    if (t) {
+      const byType = svi.filter(i => t[1].test(`${i.naziv} ${i.adresa}`));
+      if (byType.length) return byType;
+    }
+    return svi;
   }
   if (category === 'nautika') {
     const m = (message || '').toLowerCase();
