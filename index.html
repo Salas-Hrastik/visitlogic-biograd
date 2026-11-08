@@ -1215,7 +1215,8 @@ function addMessage(text, type, suggestions, images, items, replyLinks){
         const label = SMJESTAJ_GRUPE[it.grupa];
         const title = document.createElement("div");
         title.className = "item-group-title";
-        title.textContent = label ? (label[currentLang] || label.hr) : it.grupa;
+        // Godina kao skupina: događanja koja prelaze u sljedeću godinu.
+        title.textContent = label ? (label[currentLang] || label.hr) : /^\d{4}$/.test(it.grupa) ? "📅 " + it.grupa + "." : it.grupa;
         cards.appendChild(title);
       }
       const card = document.createElement("div");
@@ -1252,7 +1253,8 @@ function addMessage(text, type, suggestions, images, items, replyLinks){
       if(it.adresa){
         const m = document.createElement("div");
         m.className = "item-card-meta";
-        m.textContent = "📍 " + it.adresa + (it.lokacija ? " · " + it.lokacija : "");
+        const year = it.godina && !String(it.adresa).includes(it.godina) ? " · " + it.godina + "." : "";
+        m.textContent = "📍 " + it.adresa + year + (it.lokacija ? " · " + it.lokacija : "");
         info.appendChild(m);
       }
 

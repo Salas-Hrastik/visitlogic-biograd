@@ -86,6 +86,7 @@ function sortedUpcomingEvents(eventi) {
       ...e,
       sljedeci_termin: next ? (next.exact ? e.termin : next.label) : e.termin,
       skupina: next && next.date <= soonLimit ? 'USKORO' : 'TIJEKOM GODINE',
+      godina: next ? next.date.getFullYear() : null,
     }));
 }
 
@@ -1192,8 +1193,11 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     return filterByMessage(svi, message);
   }
   if (category === 'dogadanja') {
+    // Događanja iz sljedeće godine dobivaju naslov godine i godinu u retku s terminom.
+    const thisYear = zagrebNow().day.getUTCFullYear();
     return sortedUpcomingEvents(db.dogadanja?.eventi)
-      .map(e => item(e, { adresa: e.termin || '', lokacija: e.lokacija || '' }));
+      .map(e => item(e, { adresa: e.termin || '', lokacija: e.lokacija || '',
+        ...(e.godina > thisYear ? { godina: e.godina, grupa: String(e.godina) } : {}) }));
   }
   if (category === 'prakticno') {
     const m = (message || '').toLowerCase();
@@ -1995,7 +1999,7 @@ export default async function handler(req, res) {
     // "Kako do Zadra?" je pitanje o prijevozu i bez riječi "autobus".
     const busInfo = BUS_RE.test(msgLow) || /(kako|čime)\b.{0,20}\b(do|doći|stići|otići|dolazak)\b|how\b.{0,20}\bget to|getting to|wie komm|come arrivo|come arrivare|hogyan jut|jak se dostat|ako sa dostať|kako priti/.test(msgLow) ? busNote() : '';
     const eventsNote = detectedCategory === 'dogadanja'
-      ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
+      ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja. Kad događanja prelaze u sljedeću godinu, to izričito naglasi (npr. "U 2027. slijede…") i uz svako navedi godinu.]`
       : '';
 
     // Poruke za Claude (do 10 prethodnih; system ide kao zaseban parametar)
