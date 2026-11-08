@@ -7,6 +7,7 @@ import { pharmacies } from "./_ljekarne.js";
 import { ferry } from "./_trajekt.js";
 import { buses } from "./_autobus.js";
 import { vrgada } from "./_vrgada.js";
+import { hotels } from "./_hoteli.js";
 import { fuel } from "./_gorivo.js";
 
 // Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
@@ -721,6 +722,10 @@ function detectCategory(msg, lastCategory, db) {
     || m.includes('essen') || m.includes('speise') || m.includes('trinken') || m.includes('café') || m.includes('fisch') || m.includes('wein'))
     return 'gastronomija';
 
+  if (!/jelovnik|menu|speisekarte|pizz|restoran|restaurant|večer|ručak/.test(m)) {
+    const w = m.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+    if (Object.keys(hotels.hoteli).some(n => hotelNamed(n, m, w))) return 'smjestaj';
+  }
   if (/vrgad/.test(m)) return 'izleti';
   if (m.includes('marina') || m.includes('brod') || m.includes('jedrilica') || m.includes('jedrenj') || m.includes('charter') || m.includes('nautica') || m.includes('nautika') || m.includes('nautičk') || m.includes('plovidba') || m.includes('plovit') || m.includes('sidriš') || m.includes('vez') || m.includes('gumenjak') || m.includes('motorni brod') || m.includes('rent a boat') || m.includes('rent-a-boat') || m.includes('iznajmit brod') || m.includes('kapacitet veza') || m.includes('kornati marina')
     || m.includes('sailing') || m.includes('boat') || m.includes('yacht') || m.includes('marina') || m.includes('charter') || m.includes('nautical') || m.includes('berth') || m.includes('mooring') || m.includes('catamaran')
@@ -1113,7 +1118,9 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     const isPansion  = has('pansion', 'pension', 'penzion', 'panzió', 'guest house', 'guesthouse', 'b&b');
 
     // Gumb za cijene vodi samo na vlastitu stranicu objekta: TZ stranice ne prikazuju cijene.
-    const cijene = (o) => (o.web && /^https?:\/\//i.test(o.web) && !o.web.includes('discover-biograd.com')) ? { cijene_url: o.web } : {};
+    // Gumb za cijene vodi na obrazac za rezervaciju hotela kad ga hotel ima, inače na vlastitu stranicu objekta.
+    const cijene = (o) => hotels.hoteli[o.naziv]?.rezervacija?.url ? { cijene_url: hotels.hoteli[o.naziv].rezervacija.url }
+      : (o.web && /^https?:\/\//i.test(o.web) && !o.web.includes('discover-biograd.com')) ? { cijene_url: o.web } : {};
     const group = (arr, grupa, adresa = o => o.lokacija || '') =>
       (arr || []).map(o => item(o, { adresa: adresa(o), grupa, ...cijene(o) }));
 
@@ -1499,6 +1506,38 @@ function namedObjectsNote(items, message) {
   if (!named.length || named.length > 3) return '';
   const lines = named.map(o => [o.naziv, o.adresa, o.telefon && `tel. ${o.telefon}`, o.telefon2 && `tel. ${o.telefon2}`, o.email && `e-mail ${o.email}`, o.web].filter(Boolean).join(' | '));
   return `\n[SUSTAV: Točni podaci iz baze za objekt koji gost spominje — navedi ih doslovno:\n${lines.join('\n')}]`;
+}
+
+// ===== HOTELI: ponuda, cjenik i obrazac za rezervaciju (api/_hoteli.js, mjesečno osvježavanje) =====
+const HOTEL_RE = /hotel|cijen|cjenik|košt|price|cost|preis|kost|prezz|cost|ár\b|árak|cen[ay]|ponud|sadrža|bazen|pool|wellness|spa\b|doručak|polupansion|all.?inclusive|rezerv|book|buch|prenot|foglal/;
+
+// "Hotel IN" se prepoznaje samo kao cijeli naziv, jer je "in" i obična riječ ("hotel in Biograd").
+function hotelNamed(naziv, m, words) {
+  if (/^Hotel IN\b/.test(naziv)) return /hotel\w*\s+in\b(?!\s+(biograd|der|dem|the|a\b|an\b))/.test(m);
+  return naziv.replace(/hotel|★/gi, ' ').toLowerCase().split(/\s+/).filter(w => w.length >= 4)
+    .some(t => words.some(w => w.startsWith(t.slice(0, Math.max(4, t.length - 1)))));
+}
+
+function hotelNote(message) {
+  const m = (message || '').toLowerCase();
+  if (!HOTEL_RE.test(m)) return '';
+  const words = m.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  const entries = Object.entries(hotels.hoteli);
+  // Imenovani hotel ("Meduza", "Carpymore", "Hotel IN"); bez imena, a uz riječ "hotel", šalje se svih jedanaest.
+  const named = entries.filter(([n]) => hotelNamed(n, m, words));
+  const chosen = named.length ? named : /hotel/.test(m) ? entries : [];
+  if (!chosen.length) return '';
+  const lines = chosen.map(([n, h]) => {
+    const cj = h.cjenik ? `Cjenik ${h.cjenik.godina}. (s hotelske stranice, provjereno ${h.cjenik.provjereno}): ` +
+      h.cjenik.stavke.map(st => `${st.soba} (${st.osnova}): ` + st.cijene.map(c => `${c.razdoblja.join(' i ')} ${c.eur} €`).join('; ')).join(' | ') +
+      `. ${h.cjenik.napomena}` : (h.cijene || '');
+    const rez = h.rezervacija ? `Rezervacija: ${h.rezervacija.url} (${h.rezervacija.tip === 'sustav' ? 'rezervacijski sustav, cijenu za odabrane datume prikazuje sam' : 'obrazac za upit, hotel šalje ponudu'})` : 'Obrazac za rezervaciju nije poznat.';
+    return `• ${n}: ${h.ponuda} ${cj} ${rez}`;
+  });
+  return `\n[SUSTAV — HOTELI (ponuda i cjenici sa stranica hotela, provjereno ${hotels.provjereno}):\n${lines.join('\n')}\n` +
+    `Cijene navodi točno kako pišu, za razdoblje koje odgovara datumu iz pitanja (ako ga nema, za današnji datum) i reci za koju su godinu. ` +
+    `Za hotele bez cjenika ne izmišljaj iznose: reci da cijenu daje rezervacijski sustav ili upit. ` +
+    `Kad gost pita za cijenu, ponudu ili rezervaciju određenog hotela, na kraju odgovora daj poveznicu na njegov obrazac u obliku [Rezervacija – naziv hotela](url).]`;
 }
 
 const MAX_REPLY_LINKS = 6;
@@ -1973,6 +2012,7 @@ export default async function handler(req, res) {
         : `\n[SUSTAV: Ispod odgovora automatski će biti prikazano ${cardItems.length} vizualnih kartica. Odgovori IZRAVNO na korisnikovo pitanje u 1–3 rečenice koristeći podatke iz baze (npr. cijena, datum, udaljenost, preporuka). Ako traženog podatka nema u bazi, reci to i uputi na TZ. NE nabrajaj kartice. Kartice prikazuju ove objekte iz baze (ne tvrdi da ih nema): ${cardItems.slice(0, 8).map(i => `${i.naziv}${i.telefon ? ` (${i.telefon})` : ''}`).join('; ')}.]`
       : `\n[SUSTAV: Ispod ovog odgovora NEMA kartica. Ne spominji kartice niti "detalje ispod"; sve što gost treba napiši u odgovoru. Odgovor neka ima najviše oko 200 riječi: izaberi najvažnije i završi cjelovitom rečenicom.]`;
     const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
+    const hotelInfo = detectedCategory === 'smjestaj' ? hotelNote(message) : '';
     const kornatiNote = detectedCategory === 'kornati'
       ? `\n[SUSTAV: Za ulaznice, cijene, bove, sidrenje, ronjenje, ribolov i pravila NP Kornati koristi ISKLJUČIVO blok np_kornati (službeni podaci parka, cjenik ${npKornati.cjenik.godina}., provjereno ${npKornati.provjereno}). Ulaznica se plaća po plovilu prema duljini; sezona je lipanj–rujan. Ako gost navede duljinu plovila i razdoblje, izračunaj točnu cijenu i reci da je kupnja izvan parka jeftinija nego u parku. Ako ne navede duljinu ili datum, navedi cijenu za najmanje plovilo (do 6,99 m) i pitaj za duljinu. Za izlet organiziranim brodom reci da cijena izleta obično već uključuje ulaznicu. Ne izmišljaj podatke kojih u bloku nema; za ostalo uputi na ${npKornati.izvor} ili +385 22 435 740.]`
         + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message, lang) : '')
@@ -2023,7 +2063,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + hotelInfo + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
       ]
     };
     // Popisi se brišu iz odgovora uz kartice; stranica ih skriva već tijekom ispisa.
