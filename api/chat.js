@@ -1891,7 +1891,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { message, history = [], category: lastCategory, forcedCategory, weather, clientLang, forceLang } = req.body || {};
+  const { message, history = [], category: lastCategory, forcedCategory, weather, clientLang, forceLang, stream: wantsStream } = req.body || {};
 
   // Warmup ping
   if (message === '__warmup__') {
@@ -1997,7 +1997,7 @@ export default async function handler(req, res) {
     const historyMessages = (history || []).slice(-10)
       .filter(m => m.role === 'user' || m.role === 'assistant');
 
-    const completion = await anthropic.messages.create({
+    const params = {
       model: 'claude-sonnet-5-5',
       max_tokens: 800,
       // Turistički bot: prioritet je brzina odgovora. Sonnet 5.5 odbija 'disabled';
@@ -2013,7 +2013,23 @@ export default async function handler(req, res) {
         ...historyMessages,
         { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
       ]
-    });
+    };
+    // Popisi se brišu iz odgovora uz kartice; stranica ih skriva već tijekom ispisa.
+    const stripLists = cardItems.length > 0 && !menuInfo.note;
+
+    // Postupni ispis: tekst ide stranici čim ga model napiše (NDJSON, redak po događaju),
+    // a gotov odgovor s karticama stiže u zadnjem retku jednako kao bez streaminga.
+    let completion;
+    if (wantsStream) {
+      res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-cache, no-transform', 'X-Accel-Buffering': 'no' });
+      const send = obj => res.write(JSON.stringify(obj) + '\n');
+      send({ type: 'start', stripLists });
+      const stream = anthropic.messages.stream(params);
+      stream.on('text', text => send({ type: 'delta', text }));
+      completion = await stream.finalMessage();
+    } else {
+      completion = await anthropic.messages.create(params);
+    }
 
     // Mjerenje prompt cachinga (Vercel logovi): read>0 → keširani prefiks se koristi.
     if (completion.usage) {
@@ -2021,11 +2037,11 @@ export default async function handler(req, res) {
       console.log(`[cache] read=${u.cache_read_input_tokens ?? 0} write=${u.cache_creation_input_tokens ?? 0} input=${u.input_tokens ?? 0} output=${u.output_tokens ?? 0}`);
     }
 
-    const rawReply = completion.content[0]?.type === 'text' ? completion.content[0].text : '';
+    const rawReply = completion.content.filter(b => b.type === 'text').map(b => b.text).join('');
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
-    const reply = (cardItems.length > 0 && !menuInfo.note ? stripBulletList(rawReply) : rawReply)
+    const reply = (stripLists ? stripBulletList(rawReply) : rawReply)
       .replace(/https?:\/\/(?:www\.)?(?:google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)[^\s)\]]*/g, u => directionsUrl(u));
 
     // Objekti koje odgovor spominje idu prvi među kartice, i kad nisu bili u izboru.
@@ -2042,17 +2058,26 @@ export default async function handler(req, res) {
           .slice(0, Math.max(cardItems.length, mentioned.length))
       : cardItems;
 
-    return res.status(200).json({
+    const payload = {
       reply,
       category: detectedCategory,
       lang,
       suggestions,
       links,
       items: localizeItems(shownItems, lang)
-    });
+    };
+    if (wantsStream) {
+      res.write(JSON.stringify({ type: 'done', ...payload }) + '\n');
+      return res.end();
+    }
+    return res.status(200).json(payload);
 
   } catch (err) {
     console.error('Chat error:', err.message);
+    if (res.headersSent) {
+      res.write(JSON.stringify({ type: 'done', reply: 'Došlo je do greške. Molimo pokušajte ponovno ili nas kontaktirajte na ' + db.grad.telefon_tz, category: null, suggestions: [], items: [] }) + '\n');
+      return res.end();
+    }
     return res.status(200).json({
       reply: 'Došlo je do greške. Molimo pokušajte ponovno ili nas kontaktirajte na ' + db.grad.telefon_tz,
       category: null,

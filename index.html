@@ -1415,14 +1415,18 @@ async function sendMessage(){
         forcedCategory,
         weather: currentWeather,
         clientLang: currentLang,
-        forceLang: lockedLang
+        forceLang: lockedLang,
+        stream: true
       })
     });
 
     clearTimeout(timeout);
-    typing.remove();
 
-    const data = await response.json();
+    // Odgovor modela stiže postupno (NDJSON); kategorije bez modela i greške stižu kao obični JSON.
+    const data = (response.headers.get("content-type") || "").includes("ndjson")
+      ? await readStream(response, typing)
+      : await response.json();
+    typing.remove();
 
     if(data.lang) setLang(data.lang);
 
@@ -1451,6 +1455,55 @@ async function sendMessage(){
       addMessage(uiText().serverErr, "bot");
     }
   }
+}
+
+// ===== POSTUPNI ISPIS ODGOVORA =====
+// Tekst se ispisuje u privremeni oblačić čim stigne; na kraju ga zamjenjuje gotov odgovor s karticama.
+// Kad uz odgovor idu kartice, poslužitelj briše popise, pa ih ni ovdje ne prikazujemo dok se pišu.
+function hideLists(text){
+  return text.split("\n").filter(l => {
+    const t = l.trim();
+    return !(/^[-•–—]\s+/.test(t) || /^\d+[.)]\s+/.test(t) || /^\*\*[^*]+\*\*:?\s*$/.test(t) || /^#{2,4}\s+/.test(t));
+  }).join("\n").replace(/\n{3,}/g, "\n\n");
+}
+
+async function readStream(response, typing){
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  const chatMessages = document.getElementById("chat-messages");
+  let buffer = "", text = "", stripLists = false, bubble = null, done = null, lastPaint = 0;
+  const paint = () => {
+    if(!bubble){
+      typing.remove();
+      bubble = document.createElement("div");
+      bubble.className = "bot-message";
+      chatMessages.appendChild(bubble);
+      bubble.innerHTML = formatReply(stripLists ? hideLists(text) : text);
+      // Kao i gotov odgovor (addMessage): na vidiku ostaje početak, gost čita dok se piše.
+      bubble.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    bubble.innerHTML = formatReply(stripLists ? hideLists(text) : text);
+  };
+  while(true){
+    const { value, done: end } = await reader.read();
+    if(end) break;
+    buffer += decoder.decode(value, { stream: true });
+    let nl;
+    while((nl = buffer.indexOf("\n")) >= 0){
+      const line = buffer.slice(0, nl).trim();
+      buffer = buffer.slice(nl + 1);
+      if(!line) continue;
+      const ev = JSON.parse(line);
+      if(ev.type === "start") stripLists = !!ev.stripLists;
+      else if(ev.type === "delta") text += ev.text;
+      else if(ev.type === "done") done = ev;
+    }
+    // Najviše jedno iscrtavanje svakih 50 ms, da dugi odgovori ne usporavaju stranicu.
+    if(text && Date.now() - lastPaint > 50){ paint(); lastPaint = Date.now(); }
+  }
+  if(bubble) bubble.remove();
+  return done || { reply: text };
 }
 
 function quickAsk(text, cat){
