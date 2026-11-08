@@ -966,69 +966,70 @@ export const db = {
     "nocni_zivot": [
       {
         "naziv": "Aqua Club",
-        "opis": "Najpopularniji noćni klub u Biogradu na Moru — glazba, ples i ljetne noći uz more.",
-        "tip": "noćni klub",
+        "opis": "Najpoznatiji biogradski klub: ljeti radi do kasno u noć, uz DJ-eve, bendove i koktele. Izvan sezone uglavnom ne radi; provjerite na stranici kluba.",
+        "tip": "noćni klub · ljeti",
         "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
-        "web": "",
+        "web": "https://www.facebook.com/p/Aqua-club-Biograd-100063590983085/",
         "karta": "https://maps.google.com/?q=Aqua+Club+Biograd+na+Moru",
-        "ocjena": "4.2",
-        "recenzija": "\"Odlično ozračje, dobra glazba i prava ljetna atmosfera — Aqua Club je srce noćnog života Biograda!\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Aqua+Club+Biograd+na+Moru"
+        "adresa": "Biograd na Moru (kod plaže Soline prema stranici kluba)",
+        "izvor": "Time Out, RestaurantGuru, Facebook stranica kluba; provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Beach Club Ilirija",
+        "tip": "beach bar · ljetni koncerti",
+        "adresa": "Uz olimpijski bazen hotela Ilirija, Tina Ujevića 7, Biograd na Moru",
+        "telefon": "+385 23 290 777",
+        "web": "https://ilirijabiograd.com/restorani-i-barovi",
+        "karta": "https://maps.google.com/?q=Bazen+Ilirija+Biograd+na+Moru",
+        "opis": "Bar uz vanjski olimpijski bazen na moru: danju druženje, sport, piće i brza hrana, a navečer ljetni koncerti i događanja pod zvijezdama.",
+        "izvor": "ilirijabiograd.com; provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Lavender Lounge Bar",
+        "tip": "lounge bar · kava, kokteli, vino",
+        "adresa": "Ispod hotela Adriatic, između hotela Ilirija i Adriatic, Biograd na Moru",
+        "telefon": "+385 23 290 777",
+        "web": "https://ilirijabiograd.com/restorani-i-barovi",
+        "karta": "https://maps.google.com/?q=Hotel+Adriatic+Biograd+na+Moru",
+        "opis": "Opušten bar u boji lavande nekoliko koraka od mora, u hladu borova: ujutro kava, danju piće i kokteli (više od 30 vrsta), navečer chill-out glazba i vina iz regije; može se naručiti i lagani zalogaj.",
+        "izvor": "ilirijabiograd.com, Kongres Magazine; provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Ilirija „I” bar s terasom",
+        "tip": "bar · živa glazba navečer",
+        "adresa": "Hotel Ilirija, Tina Ujevića 7, Biograd na Moru",
+        "telefon": "+385 23 290 777",
+        "web": "https://ilirijabiograd.com/restorani-i-barovi",
+        "karta": "https://maps.google.com/?q=Hotel+Ilirija+Biograd+na+Moru",
+        "opis": "Terasa i bar hotela Ilirija korak od šetnice uz more, s pogledom na hotelsku marinu i zalaske sunca; navečer živa glazba.",
+        "izvor": "ilirijabiograd.com; provjereno 8.11.2026."
       },
       {
         "naziv": "Pocco Locco Cocktail Bar",
-        "opis": "Koktel bar s bogatom ponudom pića i noćnim programom u centru Biograda — uz more i rivu.",
-        "tip": "cocktail bar, noćni život",
+        "opis": "Koktel bar na šetnici uz more. Radno vrijeme nije objavljeno; ljeti radi do kasno.",
+        "tip": "cocktail bar",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
         "web": "",
         "karta": "https://maps.google.com/?q=Pocco+Locco+Biograd+na+Moru",
-        "ocjena": "4.4",
-        "recenzija": "\"Izvrsni kokteli, opuštena atmosfera uz rivu i uvijek dobra glazba — savršeno mjesto za ljetne večeri.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Pocco+Locco+Biograd+na+Moru"
+        "adresa": "Šetnica uz more (Put Solina), Biograd na Moru",
+        "izvor": "TripAligner, RestaurantGuru; provjereno 8.11.2026."
       },
       {
         "naziv": "Queen Bar",
-        "opis": "Bar s noćnim programom i glazbom u centru Biograda na Moru — popularan u ljetnoj sezoni.",
-        "tip": "bar, noćni život",
+        "opis": "Bar u Biogradu na Moru s večernjim programom u sezoni. Adresa i radno vrijeme nisu objavljeni u provjerenom izvoru.",
+        "tip": "bar",
         "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
         "web": "",
         "karta": "https://maps.google.com/?q=Queen+Bar+Biograd+na+Moru",
-        "ocjena": "4.1",
-        "recenzija": "\"Dobar bar za opuštenu večer — dobra glazba, prijatan ambijent i uvijek veselo društvo u centru Biograda.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": ""
+        "izvor": "RestaurantGuru (2026.); provjereno 8.11.2026."
       },
       {
-        "naziv": "Shamrock Irish Pub",
-        "opis": "Popularni irski pub s live glazbom i bogatim izborom piva — opuštena atmosfera, dobar za sve uzraste i sportske prijenose.",
-        "tip": "pub, live glazba",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=Shamrock+Irish+Pub+Biograd+na+Moru",
-        "ocjena": "4.3",
-        "recenzija": "\"Odlična atmosfera, live glazba i široki izbor piva — pravo irsko iskustvo u srcu Dalmacije.\"",
-        "recenzija_izvor": "TripAdvisor"
-      },
-      {
-        "naziv": "Club Mirage",
-        "opis": "Noćni klub s DJ-jevima i elektroničkom glazbom — popularan kod mlađe publike, živahne ljetne večeri uz ples.",
-        "tip": "noćni klub, DJ",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=Club+Mirage+Biograd+na+Moru",
-        "ocjena": "4.0",
-        "recenzija": "\"Jedino pravo mjesto za ples u Biogradu — dobra glazba, zabavna atmosfera, brz bar.\"",
-        "recenzija_izvor": "TripAdvisor"
-      },
-      {
-        "naziv": "Beach Bar Donat",
-        "opis": "Savršen beach bar za koktele uz zalazak sunca — opuštena ali svečana atmosfera uz more, idealan za parove i romantične večeri.",
-        "tip": "beach bar, kokteli",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=Beach+Bar+Donat+Biograd+na+Moru",
-        "ocjena": "4.4",
-        "recenzija": "\"Spektakularan zalazak sunca uz koktele — romantično, opušteno i savršeno za posebne trenutke.\"",
-        "recenzija_izvor": "TripAdvisor"
+        "naziv": "Caffe bar Mornar",
+        "tip": "kafić na rivi",
+        "adresa": "Riva (Obala kralja Petra Krešimira IV), Biograd na Moru",
+        "karta": "https://maps.google.com/?q=Caffe+bar+Mornar+Biograd+na+Moru",
+        "opis": "Kafić na rivi uz marinu; s njega se prenosi javna web kamera biogradske šetnice i marine.",
+        "izvor": "livecamcroatia.com (domaćin kamere); provjereno 8.11.2026."
       }
     ],
     "savjeti": [
@@ -3157,7 +3158,7 @@ export const db = {
     },
     {
       "pitanje": "Kakav je noćni život?",
-      "odgovor": "Biograd nudi opušten mediteranski ugođaj — koktejl barovi uz plažu (Beach Bar Donat), Shamrock Irish Pub (live glazba), Club Mirage (DJ, mlađa publika), Aqua Club (noćni klub). Nije destinacija 'wild nightlife', ali ima dobar izbor za ljetne večeri."
+      "odgovor": "Biograd nudi opušten mediteranski ugođaj, a ne veliku klupsku scenu. Ljeti: Aqua Club (noćni klub), Beach Club Ilirija uz bazen (koncerti), Lavender Lounge Bar uz more (kokteli i chill-out), terasa i bar hotela Ilirija sa živom glazbom te koktel barovi na šetnici. Izvan sezone većina klubova i beach barova ne radi."
     },
     {
       "pitanje": "Koje su povijesne znamenitosti?",
@@ -3182,7 +3183,7 @@ export const db = {
     },
     "romantika": {
       "romantični_restorani": ["Restaurant More (Crvena Luka, pogled na more)", "Konoba Kampanel (terasa s pogledom, stari grad)", "Restaurant Riva (na rivi; Kraljevska jela i kunjke)", "Restoran Arkada (šetalište Dražica uz more)"],
-      "romantične_aktivnosti": ["Zalazak sunca s rive — pogled na Pašman", "Privatna brodska tura do Kornata (cijeli dan, samo za dvoje)", "Večera u konobi na Kornatima", "Šetnja starovalnom i rivom u sumrak", "Kokteli na Beach Bar Donat"],
+      "romantične_aktivnosti": ["Zalazak sunca s rive — pogled na Pašman", "Privatna brodska tura do Kornata (cijeli dan, samo za dvoje)", "Večera u konobi na Kornatima", "Šetnja starovalnom i rivom u sumrak", "Kokteli u Lavender Lounge Baru uz more"],
       "romantični_smjestaj": ["Hotel Villa Meduza (boutique, direktno na moru)", "Glamp@Camp (luksuzni šator na plaži)", "Crvena Luka villas (privatne vile uz more)"]
     },
     "sezonalni_savjeti": {
