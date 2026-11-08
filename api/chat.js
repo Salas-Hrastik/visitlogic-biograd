@@ -1538,7 +1538,7 @@ function hotelNote(message) {
   return `\n[SUSTAV — HOTELI (ponuda i cjenici sa stranica hotela, provjereno ${hotels.provjereno}):\n${lines.join('\n')}\n` +
     `Cijene navodi točno kako pišu, za razdoblje koje odgovara datumu iz pitanja (ako ga nema, za današnji datum) i reci za koju su godinu. ` +
     `Za hotele bez cjenika ne izmišljaj iznose: reci da cijenu daje rezervacijski sustav ili upit. ` +
-    `Kad gost pita za cijenu, ponudu ili rezervaciju određenog hotela, na kraju odgovora daj poveznicu na njegov obrazac u obliku [Rezervacija – naziv hotela](url).]`;
+    `Kad gost pita za cijenu, ponudu ili rezervaciju određenog hotela, na kraju odgovora daj poveznicu na njegov obrazac u obliku [Rezervacija – naziv hotela](url), s riječju "Rezervacija" na jeziku gosta.]`;
 }
 
 const MAX_REPLY_LINKS = 6;
@@ -2068,7 +2068,8 @@ export default async function handler(req, res) {
       ]
     };
     // Popisi se brišu iz odgovora uz kartice; stranica ih skriva već tijekom ispisa.
-    const stripLists = cardItems.length > 0 && !menuInfo.note;
+    // Cijene po razdobljima (jelovnici, cjenici hotela) model piše kao popis: taj popis ostaje.
+    const stripLists = cardItems.length > 0 && !menuInfo.note && !hotelInfo;
 
     // Postupni ispis: tekst ide stranici čim ga model napiše (NDJSON, redak po događaju),
     // a gotov odgovor s karticama stiže u zadnjem retku jednako kao bez streaminga.
