@@ -677,6 +677,11 @@ function detectCategory(msg, lastCategory, db) {
   if (BUS_RE.test(m) && !/izlet|excursion|ausflug|escursion/.test(m)) return 'prakticno';
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
+  // Ime hotela vodi u smještaj i kad postoji istoimeni restoran (Meduza, Carpymore), osim pitanja o hrani.
+  if (!/jelovnik|menu|speisekarte|étlap|pizz|restoran|restaurant|ristorant|večer|ručak|jesti|essen/.test(m)) {
+    const w = m.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+    if (Object.keys(hotels.hoteli).some(n => hotelNamed(n, m, w))) return 'smjestaj';
+  }
   if (/coffee|kaffee|\bcafé\b|caffè|kávé|kafić|kafic|kav[aeu]\b|cocktail|koktel|\bpub\b|lounge bar|ausgehen|nightlife|vita notturna|éjszakai|noční život|nočný život|nočno življenje/.test(m)) return 'gastronomija';
   if (/kunjk|arca noae|prošek|prosek|kraljevsk\w* jel|royal dish|königlich\w* gericht|gastro biograd|pizz|sladoled|slastič|ice cream|gelat|\beis\b|eiscaf|fagylalt|zmrzlin|cukrász|pekar|bakery|bäcker|panetteria/.test(m)) return 'gastronomija';
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
@@ -722,10 +727,6 @@ function detectCategory(msg, lastCategory, db) {
     || m.includes('essen') || m.includes('speise') || m.includes('trinken') || m.includes('café') || m.includes('fisch') || m.includes('wein'))
     return 'gastronomija';
 
-  if (!/jelovnik|menu|speisekarte|pizz|restoran|restaurant|večer|ručak/.test(m)) {
-    const w = m.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
-    if (Object.keys(hotels.hoteli).some(n => hotelNamed(n, m, w))) return 'smjestaj';
-  }
   if (/vrgad/.test(m)) return 'izleti';
   if (m.includes('marina') || m.includes('brod') || m.includes('jedrilica') || m.includes('jedrenj') || m.includes('charter') || m.includes('nautica') || m.includes('nautika') || m.includes('nautičk') || m.includes('plovidba') || m.includes('plovit') || m.includes('sidriš') || m.includes('vez') || m.includes('gumenjak') || m.includes('motorni brod') || m.includes('rent a boat') || m.includes('rent-a-boat') || m.includes('iznajmit brod') || m.includes('kapacitet veza') || m.includes('kornati marina')
     || m.includes('sailing') || m.includes('boat') || m.includes('yacht') || m.includes('marina') || m.includes('charter') || m.includes('nautical') || m.includes('berth') || m.includes('mooring') || m.includes('catamaran')
