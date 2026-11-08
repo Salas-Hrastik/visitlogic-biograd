@@ -1203,7 +1203,7 @@ export const db = {
       },
       {
         "naziv": "Hotel IN ★★★★",
-        "opis": "Četverozjezdičani hotel na šetalištu Biograda.",
+        "opis": "Hotel s četiri zvjezdice na šetalištu Biograda.",
         "lokacija": "Šetalište kneza Branimira 32, 23210 Biograd na Moru",
         "telefon": "+385 23 291 291",
         "email": "sales@hoteli-bozava.hr",
