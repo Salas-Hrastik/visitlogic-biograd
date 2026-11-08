@@ -1919,7 +1919,7 @@ export default async function handler(req, res) {
     const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
     const ferryInfo = FERRY_RE.test(msgLow) && !/kornat|izlet/.test(msgLow) ? ferryNote() : '';
     // "Kako do Zadra?" je pitanje o prijevozu i bez riječi "autobus".
-    const busInfo = BUS_RE.test(msgLow) || /(kako|čime) (do|doći|stići|otići)|how (do i |to )?get to|getting to|wie komme|come arrivare|hogyan jutok|jak se dostat|ako sa dostať|kako priti/.test(msgLow) ? busNote() : '';
+    const busInfo = BUS_RE.test(msgLow) || /(kako|čime)\b.{0,20}\b(do|doći|stići|otići|dolazak)\b|how\b.{0,20}\bget to|getting to|wie komm|come arrivo|come arrivare|hogyan jut|jak se dostat|ako sa dostať|kako priti/.test(msgLow) ? busNote() : '';
     const eventsNote = detectedCategory === 'dogadanja'
       ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja.]`
       : '';
