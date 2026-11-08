@@ -1062,7 +1062,7 @@ export const db = {
     "hoteli": [
       {
         "naziv": "Hotel Ilirija ★★★★",
-        "opis": "Najveći resort u Biogradu — Hotel Ilirija, Hotel Kornati, Hotel Adriatic, Villa Primorje i Camp Park Soline pod jednim upravljanjem.",
+        "opis": "Wellness hotel uz more, u središtu Ilirija Resorta: wellness od 2 000 m² s unutarnjim infinity bazenom, poliklinika Fiziovita, vanjski bazen resorta i dječji klub; kućni ljubimci dopušteni.",
         "lokacija": "Tina Ujevića 7, 23210 Biograd na Moru",
         "telefon": "+385 23 383 556",
         "email": "reservations@ilirijabiograd.com",
@@ -1076,7 +1076,7 @@ export const db = {
       },
       {
         "naziv": "Hotel Kornati ★★★★",
-        "opis": "106 klimatiziranih soba s pogledom na marinu i Kornate, uz samu Marinu Kornati.",
+        "opis": "Hotel Ilirija Resorta uz Marinu Kornati, sa sobama s pogledom na more; unutarnji i vanjski bazen resorta u blizini, kućni ljubimci dopušteni.",
         "lokacija": "Tina Ujevića 7, 23210 Biograd na Moru",
         "telefon": "+385 23 358 333",
         "email": "reservations@ilirijabiograd.com",
@@ -1090,9 +1090,9 @@ export const db = {
       },
       {
         "naziv": "Hotel Adriatic ★★★",
-        "opis": "Dizajnerski hotel 20 m od plaže, dio Ilirija Resorta.",
+        "opis": "Hotel Ilirija Resorta nekoliko koraka od mora, među lavandom i borovima: unutarnji i vanjski infinity bazen, wellness i program za djecu; kućni ljubimci dopušteni.",
         "lokacija": "Tina Ujevića 6, 23210 Biograd na Moru",
-        "telefon": "+385 23 383 556",
+        "telefon": "+385 23 290 700",
         "email": "reservations@ilirijabiograd.com",
         "slika": "https://www.discover-biograd.com/attachments/preview/682c699a9a03d/wbwi8235jpeg-615.jpg",
         "web": "https://ilirijabiograd.com/en/hotel-adriatic",
@@ -1103,8 +1103,8 @@ export const db = {
         "recenzija_url": ""
       },
       {
-        "naziv": "Hotel Adria ★★★",
-        "opis": "Hotel 350 m od plaže Soline, all-inclusive u sezoni.",
+        "naziv": "Hotel Adria ★★★★",
+        "opis": "All-inclusive obiteljski hotel s četiri zvjezdice u borovoj šumi, 350 m od plaže Soline: bazeni, animacija, Kids Club i SPA kutak.",
         "lokacija": "Augusta Šenoe 42, 23210 Biograd na Moru",
         "telefon": "+385 52 877 300",
         "email": "reservations@rudan.com",
@@ -1118,7 +1118,7 @@ export const db = {
       },
       {
         "naziv": "Hotel Bolero ★★★",
-        "opis": "Hotel u centru Biograda, sezonski bazen, privatni parking, restoran.",
+        "opis": "Hotel u Biogradu s bazenom, restoranom i aperitiv barom; sobe s doručkom, polupansionom ili punim pansionom.",
         "lokacija": "Ivana Meštrovića 1, 23210 Biograd na Moru",
         "telefon": "+385 23 386 888",
         "email": "recepcija@hotel-bolero.hr",
@@ -1132,9 +1132,10 @@ export const db = {
       },
       {
         "naziv": "Hotel Albamaris ★★★",
-        "opis": "Hotel s teniskim terenom i kongresnim dvoranama, ljubimci dozvoljeni.",
+        "opis": "Hotel u borovoj šumi, 400 m od plaže Soline i 600 m od centra; konferencijska dvorana do 40 osoba, parking uz nadoplatu, teniski centar 100 m od hotela.",
         "lokacija": "Augusta Šenoe 40, 23210 Biograd na Moru",
         "telefon": "+385 23 335 766",
+        "telefon2": "+385 91 2399 301",
         "email": "biograd@hotelalbamaris.com",
         "slika": "https://www.discover-biograd.com/attachments/preview/6826fc28127b9/hotel-albamaris.jpg",
         "web": "https://hotelalbamaris.com",
@@ -1147,9 +1148,10 @@ export const db = {
       },
       {
         "naziv": "Hotel Hygge ★★★",
-        "opis": "Boutique hotel s 20 soba, 5 min od plaže.",
+        "opis": "Moderan hotel blizu plaža, s parkingom i mjestom za autobus.",
         "lokacija": "Vlahe Bukovca 3, 23210 Biograd na Moru",
         "telefon": "+385 23 384 463",
+        "telefon2": "+385 98 313 424",
         "email": "info@castrumnovum.com",
         "slika": "https://www.discover-biograd.com/attachments/preview/6826fe906dd7f/hotel-hygge.jpg",
         "web": "https://www.hotelhygge.hr",
@@ -1161,7 +1163,7 @@ export const db = {
       },
       {
         "naziv": "Hotel Carpymore ★★★",
-        "opis": "Hotel u centru Biograda, 9 soba.",
+        "opis": "Hotel, restoran i pizzerija 20 m od rive; klimatizirane sobe s doručkom, recepcija 0–24, restoran otvoren i za vanjske goste.",
         "lokacija": "Kralja Tvrtka 10, 23210 Biograd na Moru",
         "telefon": "+385 23 386 119",
         "email": "info@carpymore.hr",
@@ -1175,7 +1177,7 @@ export const db = {
       },
       {
         "naziv": "Hotel Žućo ★★★",
-        "opis": "Hotel s 18 soba u centru Biograda.",
+        "opis": "Obiteljski hotel s 18 soba, 200 m od mora, s restoranom i terasom.",
         "lokacija": "Augusta Šenoe 25, 23210 Biograd na Moru",
         "telefon": "+385 23 383 717",
         "email": "",
@@ -1189,7 +1191,7 @@ export const db = {
       },
       {
         "naziv": "Hotel Meduza ★★★",
-        "opis": "Hotel s 16 soba u centru Biograda.",
+        "opis": "Obiteljski hotel s tri zvjezdice (Hotel Villa Meduza), oko 600 m od centra i plaža Dražica i Soline; radi cijele godine, s restoranom, doručkom, parkingom i besplatnim Wi-Fi-jem.",
         "lokacija": "Augusta Šenoe 24, 23210 Biograd na Moru",
         "telefon": "+385 23 384 025",
         "email": "hotel@hotelmeduza.com",
@@ -1203,12 +1205,12 @@ export const db = {
       },
       {
         "naziv": "Hotel IN ★★★★",
-        "opis": "Hotel s četiri zvjezdice na šetalištu Biograda.",
+        "opis": "Hotel s četiri zvjezdice na šetalištu uz Marinu Kornati.",
         "lokacija": "Šetalište kneza Branimira 32, 23210 Biograd na Moru",
-        "telefon": "+385 23 291 291",
-        "email": "sales@hoteli-bozava.hr",
+        "telefon": "",
+        "email": "",
         "slika": "https://www.discover-biograd.com/attachments/preview/67f4c0b1322ec/in.jpg",
-        "web": "https://hotelin-biograd.com",
+        "web": "",
         "karta": "https://maps.google.com/?q=Hotel+IN+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
