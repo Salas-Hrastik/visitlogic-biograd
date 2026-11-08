@@ -1126,22 +1126,38 @@ function formatReply(text){
 
 // ===== ADD MESSAGE =====
 // ===== NAVIGACIJA OD STVARNE LOKACIJE =====
-// Bez polazišta Google Maps na računalu procjenjuje lokaciju po IP adresi (npr. Split umjesto stvarnog mjesta).
-// Lokaciju traži preglednik, ostaje u pregledniku i ide samo u poveznicu za Google Maps.
-let lastPosition = null;
-function openNavigation(e){
-  const url = e.currentTarget.href;
-  if(!/\/maps\/dir\//.test(url) || !navigator.geolocation) return;
+// Stranica ne smije pročitati lokaciju bez dopuštenja preglednika, pa je ne traži.
+// Polazište određuje aplikacija za karte, koja na mobitelu već ima pristup GPS-u:
+// iPhone/iPad otvara Apple Karte, Android aplikaciju Google Maps (poveznica bez polazišta = "moja lokacija").
+// Ako je korisnik stranici ranije sam dopustio lokaciju, koristi se ona, bez novog upita.
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+async function locationAlreadyAllowed(){
+  try { return !!navigator.geolocation && (await navigator.permissions.query({ name: "geolocation" })).state === "granted"; }
+  catch { return false; }
+}
+// Jedan rukovatelj za sve poveznice "kako doći" (kartice i tekst odgovora).
+document.addEventListener("click", function(e){
+  const a = e.target.closest && e.target.closest('a[href*="/maps/dir/"]');
+  if(a) openNavigation(e, a.href);
+});
+function openNavigation(e, url){
+  if(!/\/maps\/dir\//.test(url)) return;
   e.preventDefault();
+  const dest = new URL(url).searchParams.get("destination") || "";
+  if(IS_IOS && dest){
+    window.location.href = "https://maps.apple.com/?daddr=" + encodeURIComponent(dest) + "&dirflg=d";
+    return;
+  }
   const win = window.open("", "_blank");
   const go = (target) => { if(win && !win.closed) win.location.href = target; else window.location.href = target; };
-  const withOrigin = (p) => url + "&origin=" + p.coords.latitude.toFixed(6) + "," + p.coords.longitude.toFixed(6);
-  if(lastPosition && Date.now() - lastPosition.timestamp < 5 * 60 * 1000) return go(withOrigin(lastPosition));
-  navigator.geolocation.getCurrentPosition(
-    (p) => { lastPosition = p; go(withOrigin(p)); },
-    () => go(url),
-    { enableHighAccuracy: true, timeout: 8000, maximumAge: 5 * 60 * 1000 }
-  );
+  locationAlreadyAllowed().then(allowed => {
+    if(!allowed) return go(url);
+    navigator.geolocation.getCurrentPosition(
+      (p) => go(url + "&origin=" + p.coords.latitude.toFixed(6) + "," + p.coords.longitude.toFixed(6)),
+      () => go(url),
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 5 * 60 * 1000 }
+    );
+  });
 }
 
 function addMessage(text, type, suggestions, images, items, replyLinks){
@@ -1166,7 +1182,6 @@ function addMessage(text, type, suggestions, images, items, replyLinks){
         a.textContent = "🧭 " + uiText().map;
         a.target = "_blank";
         a.rel = "noopener";
-        a.addEventListener("click", openNavigation);
         row.appendChild(a);
       }
       if(l.web){
@@ -1277,7 +1292,6 @@ function addMessage(text, type, suggestions, images, items, replyLinks){
         a.textContent = "🧭 " + uiText().map;
         a.target = "_blank";
         a.rel = "noopener";
-        a.addEventListener("click", openNavigation);
         links.appendChild(a);
       }
       if(it.jelovnik){
