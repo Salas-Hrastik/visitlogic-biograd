@@ -1463,7 +1463,7 @@ async function sendMessage(){
 function hideLists(text){
   return text.split("\n").filter(l => {
     const t = l.trim();
-    return !(/^[-•–—]\s+/.test(t) || /^\d+[.)]\s+/.test(t) || /^\*\*[^*]+\*\*:?\s*$/.test(t) || /^#{2,4}\s+/.test(t));
+    return !(/^[-•–—](\s|$)/.test(t) || /^\d+([.)](\s|$)|$)/.test(t) || /^\*\*[^*]+\*\*:?\s*$/.test(t) || /^#{2,4}\s+/.test(t));
   }).join("\n").replace(/\n{3,}/g, "\n\n");
 }
 
