@@ -1175,6 +1175,8 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     const svi = (db.izleti?.destinacije || []).map(d => item(d, {
       adresa: d.udaljenost ? `🚗 ${d.udaljenost}` : ''
     }));
+    // Klik na tab "Izleti" prikazuje sve; njegov tekst spominje Zadar, Vransko i Krku pa ne smije filtrirati.
+    if (full) return svi;
     // Pitanja koja ne sadrže riječ iz naziva (npr. "Plitvice", "quad", "ronjenje").
     const m = (message || '').toLowerCase();
     const byTopic = IZLET_TEME.filter(([re]) => re.test(m)).flatMap(([, names]) => names);
@@ -1186,6 +1188,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
   }
   if (category === 'sport') {
     const svi = (db.sport?.aktivnosti || []).map(a => item(a, { adresa: a.tip || '' }));
+    if (full) return svi; // tab "Sport" spominje ronjenje, windsurfing i kayak, a prikazuje sve
     return filterByMessage(svi, message);
   }
   if (category === 'atrakcije') {
