@@ -6,6 +6,7 @@ import { npKornati } from "./_np_kornati.js";
 import { pharmacies } from "./_ljekarne.js";
 import { ferry } from "./_trajekt.js";
 import { buses } from "./_autobus.js";
+import { vrgada } from "./_vrgada.js";
 import { fuel } from "./_gorivo.js";
 
 // Instant lokalizacija kartica iz unaprijed prevedene baze (samo lookup, bez API poziva).
@@ -277,8 +278,39 @@ function ferryNote() {
     `Svi polasci danas iz Biograda: ${line(day, 'biograd')}. Iz Tkona: ${line(day, 'tkon')}.\n` +
     `Sutra (${label(tomorrow)}) iz Biograda: ${line(tomorrow, 'biograd')}. Iz Tkona: ${line(tomorrow, 'tkon')}.\n` +
     `Cijene (${seasonal ? 'sezonski' : 'izvansezonski'} cjenik, jednako u oba smjera): ${prices}. ${ferry.djeca}\n` +
-    `${ferry.napomena} Iz Biograda Jadrolinija nema drugih redovnih brodskih linija; izleti na Kornate idu turističkim brodovima.\n` +
+    `${ferry.napomena} Iz Biograda vozi još putnička brodska linija 415 za Pakoštane i otok Vrgadu (Vrgada r.p.z.); izleti na Kornate idu turističkim brodovima.\n` +
     `Odgovori izravno sljedećim polascima i cijenom, uz napomenu da je red plovidbe privremen i podložan promjenama (${ferry.izvor}). Ne izmišljaj polaske za druge datume: za njih uputi na izvor.]`;
+}
+
+// ===== BROD BIOGRAD – PAKOŠTANE – VRGADA: linija 415 (api/_vrgada.js) =====
+const VRGADA_RE = /vrgad|brod\w* (za|do) pako|\b415\b/;
+
+function vrgadaDepartures(d) {
+  const p = vrgada.razdoblja.find(r => inPeriods(r.od_do, d));
+  if (!p) return null;
+  const sunday = d.getUTCDay() === 0 || (p.blagdan_kao_nedjelja && !!croatianHoliday(d));
+  return sunday ? p.nedjelja : p.radni;
+}
+
+function vrgadaNote() {
+  const { day, time } = zagrebNow();
+  const tomorrow = new Date(day.getTime() + 864e5);
+  const label = d => { const h = croatianHoliday(d); return `${DAY_NAMES_HR[d.getUTCDay()]} ${d.getUTCDate()}.${d.getUTCMonth() + 1}.${h ? ` (blagdan: ${h})` : ''}`; };
+  const fmt = (t, from) => { const x = (t || []).filter(v => !from || v > from); return x.length ? x.join(', ') : 'nema'; };
+  const day1 = (d, from) => {
+    const r = vrgadaDepartures(d);
+    if (!r) return 'nema podatka u redu plovidbe';
+    return `Biograd→Vrgada ${fmt(r.biograd_vrgada, from)}; Vrgada→Biograd ${fmt(r.vrgada_biograd, from)}; ` +
+      `Biograd→Pakoštane ${fmt(r.biograd_pakostane, from)}; Pakoštane→Biograd ${fmt(r.pakostane_biograd, from)}; ` +
+      `Pakoštane→Vrgada ${fmt(r.pakostane_vrgada, from)}; Vrgada→Pakoštane ${fmt(r.vrgada_pakostane, from)}`;
+  };
+  const seasonal = inPeriods([vrgada.cjenik_sezonski_od_do], day);
+  const prices = vrgada.cjenik.map(c => `${c.relacija} ${(seasonal ? c.sezona : c.izvan).toFixed(2).replace('.', ',')} €`).join('; ');
+  return `\n[SUSTAV — BRODSKA LINIJA ${vrgada.linija} (${vrgada.operater}, tel. ${vrgada.telefon}, red plovidbe ${vrgada.godina}., provjereno ${vrgada.provjereno}):\n` +
+    `Sada je ${label(day)}, ${time}.\nPreostali polasci danas: ${day1(day, time)}.\nSvi polasci danas: ${day1(day)}.\nSutra (${label(tomorrow)}): ${day1(tomorrow)}.\n` +
+    `Cijene za odrasle (${seasonal ? 'sezonski' : 'izvansezonski'} cjenik, jednako u oba smjera): ${prices}. ${vrgada.napomena}\n` +
+    `"nema" znači da tog dana na toj relaciji nema polaska (nedjeljom brod ne vozi do Biograda, nego samo Pakoštane–Vrgada). ` +
+    `Odgovori izravno polascima i cijenom; napomeni da je red plovidbe podložan promjenama (${vrgada.izvor}). Ne izmišljaj polaske za druge datume.]`;
 }
 
 // Pitanje o plažama na Pašmanu traži plaže, a ne trajekt.
@@ -701,6 +733,9 @@ function detectCategory(msg, lastCategory, db) {
     || m.includes('kornaten') || m.includes('national park') || m.includes('inseln'))
     return 'kornati';
 
+  // Agencije s popisa TZ-a prodaju izlete: pitanje o agenciji prikazuje agencije, ne odredišta.
+  if (/agencij|agenc[yi]|agentur|agenzi|reisebüro|utazási iroda|cestovn\w* kancel/.test(m) && !/kornat/.test(m)) return 'smjestaj';
+  if (/vrgad|plitvi|\bquad|\batv\b|buggy|jahanj|jahat|horse|reiten|cavall|lovagl|rafting|kayak|kajak|zrmanj|degustacij|ražnjevi|raznjevi|sunset|krstarenj|cruise|špilj|spilj|modrič|telašćic|telascic|ronjenj|ronit|diving|tauch|immersion|potáp|búvárk/.test(m)) return 'izleti';
   if (m.includes('izlet') || m.includes('okolica') || m.includes('zadar') || m.includes('šibenik') || m.includes('sibenik') || m.includes('krka') || m.includes('vransko') || m.includes('vrana') || m.includes('pašman') || m.includes('pasman') || m.includes('nin ') || m.includes(' nin') || m.includes('paklenica') || m.includes('plitvice') || m.includes('blizina') || m.includes('ausflug')
     || m.includes('trip') || m.includes('excursion') || m.includes('day') || m.includes('nearby') || m.includes('visit zadar') || m.includes('around') || m.includes('surroundings')
     || m.includes('tagesausflug') || m.includes('umgebung'))
@@ -970,6 +1005,22 @@ function filterByMessage(lista, msg) {
   return matched.length > 0 ? matched : lista;
 }
 
+const IZLET_TEME = [
+  [/plitvi/, ['Izlet Plitvička jezera']],
+  [/krk[aeiu]\b|skradin/, ['Izlet Krka i Skradin']],
+  [/vrgad/, ['Otok Vrgada', 'True Boat Croatia']],
+  [/pašman|pasman|tkon/, ['Otok Pašman']],
+  [/telašćic|telascic/, ['Izlet Kornati i Telašćica']],
+  [/\bquad|\batv\b|buggy|off.?road/, ['Off road Vransko jezero (quad)']],
+  [/jahanj|jahat|horse|reiten|cavall|lovagl|\bkonj/, ['MK Ranch']],
+  [/rafting|kayak|kajak|zrmanj/, ['Rafting / kayaking na Zrmanji']],
+  [/ronjenj|ronit|ronilač|diving|tauch|immersion|immersi|potáp|búvár/, ['Just Dive Croatia']],
+  [/degustacij|vino|vina|wine|wein|ražnjevi|raznjevi|večer|dinner/, ['Degustacija vina i ulja – Ražnjevića Dvori', 'Povijesne večere – Ražnjevića Dvori']],
+  [/sunset|zalaz|krstarenj|cruise|jaht/, ['Sunset gourmet cruise']],
+  [/špilj|spilj|cave|höhle|modrič/, ['Netaknuti dragulji prirode']],
+  [/privatn\w* (izlet|brod)|private boat|privatboot/, ['True Boat Croatia']],
+];
+
 function getCategoryItems(category, message = '', { full = false } = {}) {
   if (category === 'plaze') {
     const svi = (db.plaze || []).map(p => item(p, { adresa: p.tip || '' }));
@@ -1121,6 +1172,13 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     const svi = (db.izleti?.destinacije || []).map(d => item(d, {
       adresa: d.udaljenost ? `🚗 ${d.udaljenost}` : ''
     }));
+    // Pitanja koja ne sadrže riječ iz naziva (npr. "Plitvice", "quad", "ronjenje").
+    const m = (message || '').toLowerCase();
+    const byTopic = IZLET_TEME.filter(([re]) => re.test(m)).flatMap(([, names]) => names);
+    if (byTopic.length) {
+      const hit = svi.filter(i => byTopic.includes(i.naziv));
+      if (hit.length) return hit;
+    }
     return filterByMessage(svi, message);
   }
   if (category === 'sport') {
@@ -1378,39 +1436,39 @@ function getSeasonContext() {
   if (month >= 7 && month <= 8) return {
     label: 'VRHUNAC SEZONE (srpanj/kolovoz)',
     opis: 'Gužve, sve radi, visoke cijene, obavezna rezervacija unaprijed.',
-    izleti_kornati: 'Organizirani izleti SVAKI DAN, više polazaka. Polazak 07:30. Cijena 65–80 EUR/osobi s ručkom. OBAVEZNA rezervacija 2–3 dana unaprijed. Sve konobe na otocima rade.',
+    izleti_kornati: 'Organizirani izleti voze u sezoni; dane, polazak i cijenu potvrđuje agencija. Prema TZ-u izlet Kornati i Telašćica stoji 60 EUR po osobi (9:00–17:30, s ručkom). Rezervirati nekoliko dana unaprijed. Konobe na otocima rade.',
     savjet_izlet: 'Rezervirajte odmah — mjesta se pune tjednima unaprijed. Ponesite SPF50+, nema sjene na otocima.'
   };
   if (month === 6) return {
     label: 'POČETAK SEZONE (lipanj)',
     opis: 'Sve radi, manje gužvi nego u srpnju/kolovozu, povoljnije cijene.',
-    izleti_kornati: 'Organizirani izleti svaki dan. Polazak 08:00. Cijena 50–70 EUR/osobi. Rezervacija dan ranije dovoljna. Sve konobe rade.',
-    savjet_izlet: 'Lipanj je idealan — more toplo, nema gužvi, konobe prihvaćaju goste bez dugog čekanja.'
+    izleti_kornati: 'Organizirani izleti voze u sezoni; dane, polazak i cijenu potvrđuje agencija. Prema TZ-u izlet Kornati i Telašćica stoji 60 EUR po osobi (9:00–17:30, s ručkom). Konobe na otocima rade.',
+    savjet_izlet: 'Lipanj je dobar za izlete: manje gužve nego u srpnju i kolovozu.'
   };
   if (month === 9) return {
     label: 'POSTSEZONE (rujan)',
     opis: 'IDEALAN TERMIN — more toplo (24°C+), manje gužvi, romantična atmosfera.',
     izleti_kornati: 'Organizirani izleti svaki dan. Polazak 08:00. Cijena 50–70 EUR/osobi. Rezervacija dan ranije. Sve konobe rade.',
-    savjet_izlet: 'Rujan je turistima tajna — jednaka ponuda kao lipanj/kolovoz, ali bez gužvi i jeftinije.'
+    savjet_izlet: 'Rujan je odličan za izlete: more je još toplo, a gužve manje nego u kolovozu.'
   };
   if (month === 10) return {
     label: 'JESEN (listopad)',
     opis: 'Sezona se zatvara, dio sadržaja zatvoren, mirno i autentično.',
-    izleti_kornati: 'Organizirani izleti SAMO vikendom. Inače privatni charter (200–400 EUR/dan za cijeli brod). Kontakt: Škver Tours (+385 23 384 457) ili Marina Kornati (+385 23 383 800). Konobe na otocima: provjeriti unaprijed, većina zatvorena.',
-    savjet_izlet: 'Charter s lokalnim skiperom je pravo iskustvo u listopadu — tiho, bez turista, NP Kornati u punoj jesenskoj ljepoti.'
+    izleti_kornati: 'Kraj sezone: grupni izleti voze rjeđe ili samo na upit, ovisno o agenciji i vremenu. Alternativa je privatni najam broda ili charter (Marina Kornati +385 23 383 800). Konobe na otocima: provjeriti unaprijed, dio je zatvoren.',
+    savjet_izlet: 'U listopadu je na Kornatima tiho i bez gužve; prije polaska provjeriti vjetar i vozi li izlet.'
   };
   if (month >= 11 || month <= 3) return {
     label: 'VAN SEZONE (studeni–ožujak)',
     opis: 'Mnogi sadržaji zatvoreni, grad miran i autentičan.',
-    izleti_kornati: 'NEMA organiziranih izleta. Isključivo privatni charter na upit (200+ EUR/dan). Kontakt: Marina Kornati (+385 23 383 800). VAŽNO: sve konobe na otocima zatvorene — nema ručka na otocima.',
-    savjet_izlet: 'Van sezone Kornati su dostupni samo privatnim brodom ili charterom. Preporuča se iskusnijim nautičarima. Divlje, samotan i nezaboravno — ali bez ikakve infrastrukture.'
+    izleti_kornati: 'Grupni izleti uglavnom ne voze; moguć je privatni najam broda ili charter na upit (Marina Kornati +385 23 383 800, agencije s popisa TZ-a). Cijenu ne navodi. Konobe na otocima uglavnom ne rade.',
+    savjet_izlet: 'Van sezone Kornati su dostupni uglavnom privatnim brodom ili charterom; na otocima gotovo ništa ne radi. Za kraće izlete preporuči Zadar, Šibenik, Krku ili Vransko jezero.'
   };
   // month 4-5: predsezone
   return {
     label: 'PREDSEZONE (travanj/svibanj)',
     opis: 'Otvaranje sadržaja, idealno za aktivni odmor bez gužvi.',
-    izleti_kornati: 'Organizirani izleti vikendom (Škver Tours, Biograd Boat Charter) — radnim danom NEMA grupnih izleta, ali privatni charter dostupan. Cijena 40–60 EUR/osobi za vikend izlet; charter 200–400 EUR/dan. Konobe na otocima: Levrnaka i Žakan otvaraju krajem travnja — provjeriti unaprijed.',
-    savjet_izlet: 'Predsezoni charter s iskusnim skiperom nudi autentično iskustvo bez turista. Idealno za parove ili manje grupe.'
+    izleti_kornati: 'Početak sezone: grupni izleti voze rjeđe, ovisno o agenciji i vremenu; privatni najam broda moguć na upit. Prema TZ-u izlet Kornati i Telašćica stoji 60 EUR po osobi. Konobe na otocima otvaraju se postupno: provjeriti unaprijed.',
+    savjet_izlet: 'U predsezoni je bez gužve; prije polaska provjeriti vjetar i vozi li izlet.'
   };
 }
 
@@ -1922,6 +1980,7 @@ export default async function handler(req, res) {
       : '';
     const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
     const ferryInfo = FERRY_RE.test(msgLow) && !/kornat|izlet/.test(msgLow) ? ferryNote() : '';
+    const vrgadaInfo = VRGADA_RE.test(msgLow) ? vrgadaNote() : '';
     // "Kako do Zadra?" je pitanje o prijevozu i bez riječi "autobus".
     const busInfo = BUS_RE.test(msgLow) || /(kako|čime)\b.{0,20}\b(do|doći|stići|otići|dolazak)\b|how\b.{0,20}\bget to|getting to|wie komm|come arrivo|come arrivare|hogyan jut|jak se dostat|ako sa dostať|kako priti/.test(msgLow) ? busNote() : '';
     const eventsNote = detectedCategory === 'dogadanja'
@@ -1944,7 +2003,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + busInfo + menuInfo.note }
+        { role: 'user', content: message + itemsNote + namedNote + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
       ]
     });
 

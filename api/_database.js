@@ -214,49 +214,39 @@ export const db = {
     },
     "charter_agencije": [
       {
-        "naziv": "Biograd Boat Charter",
-        "tip": "charter jedrilice · katamarani · motorni brodovi",
+        "naziv": "Charter tvrtke u Marini Kornati",
+        "tip": "charter jedrilica · katamarana · motornih brodova",
         "adresa": "Marina Kornati, Šibuljina bb, Biograd na Moru",
-        "telefon": "+385 91 500 5001",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd+na+Moru",
-        "slika": "https://wsrv.nl/?url=www.discover-biograd.com/images/tz-biograd-video.webp&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Vrhunska flota jedrilica i katamarana, profesionalni skiperi, polazak iz Marine Kornati.",
-        "recenzija_izvor": "Charter Biograd"
-      },
-      {
-        "naziv": "Kornati Charter",
-        "tip": "charter jedrilice · izleti na Kornate · skip charter",
-        "adresa": "Lučka uprava Biograd, Šibuljina bb, Biograd na Moru",
         "telefon": "+385 23 383 800",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Biograd+na+Moru+marina",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biograd_na_moru_aerial.jpg/1280px-Biograd_na_moru_aerial.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Specijalizirani za izlete na Kornate i tjedni charter. Lokalni stručnjaci za Jadran.",
-        "recenzija_izvor": "Marina Kornati"
+        "email": "info@marinakornati.com",
+        "web": "https://ilirijabiograd.com/en/charter",
+        "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd+na+Moru",
+        "slika": "https://www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg",
+        "opis": "U marini je više od 300 plovila kod desetak domaćih i stranih charter tvrtki; popis tvrtki i kontakti su na stranici marine, a upit se može poslati i samoj marini.",
+        "izvor": "ilirijabiograd.com/hr/charter, provjereno 8.11.2026."
       },
       {
         "naziv": "Škver Tours — brodski izleti",
-        "tip": "organizirani izleti · dnevni charter · Kornati",
-        "adresa": "Obala Kralja Tomislava 2, Biograd na Moru",
+        "tip": "organizirani izleti · Kornati · Pašman",
+        "adresa": "Kornatska 2, Biograd na Moru",
         "telefon": "+385 23 384 457",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Škver+Tours+Biograd",
+        "email": "info@skver-tours.com",
+        "web": "https://skver-tours.com/?l=hr",
+        "karta": "https://maps.google.com/?q=Kornatska+2+Biograd+na+Moru",
         "slika": "https://wsrv.nl/?url=www.discover-biograd.com/storage/media/prirodne-ljepote/NP-kornati/11-06-21%20NP%20KORNATI%202%20_86Y9965.jpg&w=400&h=220&fit=cover&output=jpg",
-        "recenzija": "Lokalna agencija s provjerenim brodskim izletima na Kornate, ribolov i kupanje u uvalama.",
-        "recenzija_izvor": "TZ Biograd"
+        "opis": "Lokalna agencija: izleti, robinzonski smještaj na Kornatima, najam brodova i transferi.",
+        "izvor": "TZ Biograd i skver-tours.com, provjereno 8.11.2026."
       },
       {
-        "naziv": "Marina Kornati — Najam brodova",
-        "tip": "marina · servis · vezovi · najam plovila",
+        "naziv": "Marina Kornati",
+        "tip": "marina · servis · vezovi · charter",
         "adresa": "Šibuljina bb, 23210 Biograd na Moru",
         "telefon": "+385 23 383 800",
         "web": "https://www.marinakornati.com",
         "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd",
         "slika": "https://www.marinakornati.com/clients/1/headers/5jerztfcnptzp32.jpg",
-        "ocjena": "4.0",
-        "recenzija": "Jedna od najvećih marina na Jadranu — 800+ vezova, dizalica, carinska ispostava, gorivo. Polazišna točka za Kornate.",
-        "recenzija_izvor": "TripAdvisor"
+        "opis": "Jedna od najvećih marina na Jadranu i polazište za Kornate; godišnji i tranzitni vez, servis i charter.",
+        "izvor": "marinakornati.com"
       }
     ],
     "iznajmljivanje_brodova": {
@@ -1712,7 +1702,7 @@ export const db = {
     "turisticke_agencije": [
       {
         "naziv": "Adriagate d.o.o. – Poslovnica Biograd",
-        "opis": "Turistička agencija u Biogradu na Moru.",
+        "opis": "Poslovnica agencije Adriagate: smještaj u privatnim apartmanima, kućama za odmor i vilama na cijeloj obali.",
         "tip": "turistička agencija",
         "lokacija": "Trg hrvatskih velikana bb, Biograd na Moru",
         "telefon": "+385 23 386 479",
@@ -1727,7 +1717,7 @@ export const db = {
       },
       {
         "naziv": "Turistička agencija Škver tours",
-        "opis": "Lokalna turistička agencija iz Biograda s 20+ provjerenih privatnih apartmana.",
+        "opis": "Lokalna agencija iz Biograda: apartmani i kuće za odmor, robinzonski turizam, izleti (Pašman, Kornati, špilja Modrič), najam brodova, rent-a-car i transferi.",
         "tip": "turistička agencija",
         "lokacija": "Kornatska 2, Biograd na Moru",
         "telefon": "+385 23 384 457",
@@ -1736,13 +1726,13 @@ export const db = {
         "web": "https://skver-tours.com/?l=hr",
         "karta": "https://maps.google.com/?q=Turisti%C4%8Dka%20agencija%20%C5%A0kver%20tours%20Kornatska%202%2C%20Biograd%20na%20Moru",
         "ocjena": "",
-        "recenzija": "\"Provjeren lokalni smještaj uz osobni pristup i direktan kontakt s agencijom.\"",
-        "recenzija_izvor": "Škver Tours",
-        "recenzija_url": "https://www.skver-tours.com"
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Biograd tourist agency",
-        "opis": "Turistička agencija u Biogradu na Moru.",
+        "opis": "Agencija specijalizirana za izlete: Kornati, Telašćica, NP Krka, Plitvice, Paklenica, Vransko jezero, Zadar, Šibenik, Split i Trogir; jedrenje, kanu na Zrmanji, ribolov, najam bicikala, brodova i vozila.",
         "tip": "turistička agencija",
         "lokacija": "Kralja Petra Svačića 19, Biograd na Moru",
         "telefon": "+385 23 492 628",
@@ -1757,7 +1747,7 @@ export const db = {
       },
       {
         "naziv": "Turistička agencija Ilirija travel",
-        "opis": "Turistička agencija u Biogradu na Moru.",
+        "opis": "Agencija Ilirije d.d.: izleti (Off road Vransko jezero, Povijesne večere i degustacije u Ražnjevića Dvorima, Sunset gourmet cruise), transferi i wellness programi.",
         "tip": "turistička agencija",
         "lokacija": "Tina Ujevića 7, Biograd na Moru",
         "telefon": "+385 23 383 121",
@@ -1772,7 +1762,7 @@ export const db = {
       },
       {
         "naziv": "Turistička agencija Blu",
-        "opis": "Turistička agencija u Biogradu na Moru.",
+        "opis": "Apartmani i sobe, izleti (Kornati, NP Krka, Plitvice), najam brodova i robinzonski program; govore hrvatski, engleski, talijanski, francuski i španjolski.",
         "tip": "turistička agencija",
         "lokacija": "Obala kralja Petra Krešimira IV. bb, Biograd na Moru",
         "telefon": "+385 23 386 538",
@@ -1787,7 +1777,7 @@ export const db = {
       },
       {
         "naziv": "My way travel",
-        "opis": "Turistička agencija u Biogradu na Moru.",
+        "opis": "Agencija u centru Biograda: jednodnevni izleti brodom u nacionalne parkove, najam skutera i bicikala te apartmani.",
         "tip": "turistička agencija",
         "lokacija": "Dr. Franje Tuđmana 10, Biograd na Moru",
         "telefon": "+385 91 5373 835",
@@ -1802,7 +1792,7 @@ export const db = {
       },
       {
         "naziv": "Moreta turistička agencija (online)",
-        "opis": "Turistička agencija u Biogradu na Moru.",
+        "opis": "Online agencija: apartmani i kuće u Biogradu te izleti u malim grupama (Zadar, Šibenik, Skradin, Nin, Pašman).",
         "tip": "turistička agencija",
         "lokacija": "Ivana Meštrovića 20, Biograd na Moru",
         "telefon": "+385 98 182 3397",
@@ -1817,7 +1807,7 @@ export const db = {
       },
       {
         "naziv": "Turistička agencija Leut",
-        "opis": "Turistička agencija u Biogradu na Moru.",
+        "opis": "Agencija, darovni dućan i mjenjačnica: apartmani i sobe, najam vozila i plovila, robinzonski odmor na Kornatima, kanu safari na Zrmanji i izleti.",
         "tip": "turistička agencija",
         "lokacija": "Trg kralja Tomislava 2, Biograd na Moru",
         "telefon": "+385 23 385 570",
@@ -1880,45 +1870,21 @@ export const db = {
     "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g303811-d1449349-Reviews-Kornati_National_Park-Kornati_Islands_National_Park_Sibenik_Knin_County_Dalmatia.html",
     "udaljenost": "Oko 20–30 nautičkih milja od Biograda",
     "izleti": {
-      "opis": "Organizirani izleti brodom polaze svakodnevno iz luke Biograda (lipanj–rujan). Trajanje: 8–10 sati.",
-      "sadrzaj_izleta": "Plovidba između otoka, zaustavljanje u providnim zaljevima za kupanje, ribolov, ručak u konobama na otocima (Levrnaka, Mana, Kornat)",
-      "cijena_izleta": "Orijentacijska cijena: 50–80 EUR po osobi (ovisno o operatoru, s ručkom)",
+      "opis": "Izletnički brodovi za Kornate polaze iz luke Biograd u sezoni (otprilike svibanj–listopad, prema ponudi agencija); izlet traje cijeli dan. Izvan sezone grupni izleti uglavnom ne voze, pa ostaje privatni najam broda ili charter iz Marine Kornati.",
+      "sadrzaj_izleta": "Plovidba između otoka, kupanje u uvalama, ručak na brodu ili u konobi na otocima; dio izleta uključuje i Telašćicu.",
+      "cijena_izleta": "Prema TZ Biograd: izlet Kornati i Telašćica 60 € po osobi (9:00–17:30, s ručkom i pićem). Privatni izleti True Boat Croatia: paketi od 80 € do 150 € prema njihovoj stranici. Cijene za drugu sezonu provjeriti kod agencije.",
       "sezone": {
-        "vrhunac": {
-          "period": "srpanj–kolovoz",
-          "dostupnost": "svaki dan, više polazaka dnevno",
-          "polazak": "07:30 — preporuča se ukrcaj 15 min ranije",
-          "rezervacija": "OBAVEZNA 2–3 dana unaprijed — mjesta brzo popunjena",
-          "cijena": "65–80 EUR po osobi (s ručkom u konobama)",
-          "konobe": "sve konobe na otocima rade — Levrnaka, Žakan, Kornat",
-          "napomena": "Gužve na brodovima i u konobama, ali nezaboravno iskustvo. SPF zaštita obavezna, nema sjene na otocima."
-        },
         "sezona": {
-          "period": "lipanj i rujan",
-          "dostupnost": "svaki dan",
-          "polazak": "08:00",
-          "rezervacija": "dan ranije dovoljan",
-          "cijena": "50–70 EUR po osobi (s ručkom)",
-          "konobe": "sve konobe rade",
-          "napomena": "IDEALAN termin — manje gužvi, more toplo (24°C+), sve radi, romantičnija atmosfera nego u kolovozu."
-        },
-        "predsezone": {
-          "period": "travanj–svibanj i listopad",
-          "dostupnost": "organizirani izleti SAMO vikendom (ili na upit), inače privatni charter",
-          "polazak": "08:30 (vikend izleti), charter fleksibilan",
-          "rezervacija": "kontaktirati agenciju unaprijed (Škver Tours, Biograd Boat Charter)",
-          "cijena": "40–60 EUR/osobi za vikend izlet; privatni charter 200–400 EUR/dan (cijeli brod)",
-          "konobe": "PAŽNJA: većina konoba na otocima u predsezoni ne radi — provjeriti unaprijed",
-          "napomena": "Tiho, divlje, bez gužvi — preporuča se iskusnijim nautičarima ili uz lokalnog skipera. NP Kornati je otvoren, jedrilice i charter dostupni."
+          "period": "otprilike svibanj–listopad",
+          "dostupnost": "organizirani izleti prema rasporedu agencija; dane i polaske potvrditi pri rezervaciji",
+          "rezervacija": "turističke agencije u Biogradu (popis TZ-a), u srpnju i kolovozu nekoliko dana unaprijed",
+          "konobe": "konobe na otocima rade u sezoni; radno vrijeme provjeriti kod konobe"
         },
         "van_sezone": {
-          "period": "studeni–ožujak",
-          "dostupnost": "NEMA organiziranih izleta — isključivo privatni charter (na upit)",
-          "polazak": "fleksibilno, ovisno o charter ugovoru",
-          "rezervacija": "kontakt: Marina Kornati (+385 23 383 800) ili Škver Tours (+385 23 384 457)",
-          "cijena": "charter od 200+ EUR/dan (cijeli brod)",
-          "konobe": "ZATVORENO — sve konobe na otocima ne rade",
-          "napomena": "NP Kornati je otvoren, ali samotan i bez sadržaja. Preporuča se ISKLJUČIVO iskusnim nautičarima s vlastitim brodom ili s certificiranim skiperom."
+          "period": "otprilike studeni–ožujak",
+          "dostupnost": "grupni izleti uglavnom ne voze; privatni najam broda ili charter na upit",
+          "rezervacija": "Marina Kornati (+385 23 383 800, info@marinakornati.com) za charter; agencije za privatne izlete",
+          "konobe": "konobe na otocima uglavnom ne rade"
         }
       },
       "konobe_na_otocima": [
@@ -1994,168 +1960,239 @@ export const db = {
   },
 
   "izleti": {
-    "opis": "Biograd je izvrsno polazišno mjesto za jednodnevne izlete na otoke, u nacionalne parkove i u gradove srednje Dalmacije.",
+    "opis": "Biograd je polazište za jednodnevne izlete na otoke, u nacionalne parkove i gradove sjeverne Dalmacije. Organizirane izlete s popisa TZ-a prodaju turističke agencije u Biogradu.",
     "destinacije": [
       {
         "naziv": "NP Kornati",
-        "opis": "Najgušći arhipelag Jadrana — obavezan posjet. Brodom iz Biograda, 8–10 sati, konobe na otocima.",
+        "opis": "Najrazvedenije otočje Jadrana, nacionalni park pred Biogradom. Ide se izletničkim brodom na cijeli dan ili vlastitim, odnosno unajmljenim brodom; ulaznica za park plaća se posebno ako nije uključena u izlet.",
         "udaljenost": "20–30 NM brodom",
         "tip": "brodski izlet",
         "slika": "https://upload.wikimedia.org/wikipedia/commons/5/51/Kornati.jpg",
         "web": "https://www.np-kornati.hr",
         "karta": "https://maps.google.com/?q=Kornati+National+Park",
-        "ocjena": "4.5",
-        "recenzija": "\"Zapanjujući otoci, dramatični klifovi, kristalno čisto more — jedan od pravih dragulja Hrvatske. Obavezno vidjeti!\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g303811-d1449349-Reviews-Kornati_National_Park-Kornati_Islands_National_Park_Sibenik_Knin_County_Dalmatia.html"
+        "izvor": "np-kornati.hr"
+      },
+      {
+        "naziv": "Izlet Kornati i Telašćica",
+        "opis": "Cjelodnevno krstarenje tradicionalnim drvenim brodom: Kornati, svjetionik Vela Sestrica i klifovi Telašćice, kupanje u uvali ili u Slanom jezeru, šetnja do vidikovca. Cijena 60 € po osobi, 9:00–17:30; uključeni piće dobrodošlice, sendvič, ručak (riba i meso s roštilja), vino, voda, sokovi i vodič. Rezervacija u turističkim agencijama u Biogradu; TZ ne navodi organizatora.",
+        "udaljenost": "brodom iz Biograda",
+        "tip": "brodski izlet",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/kornati-1.webp",
+        "web": "https://www.discover-biograd.com/dozivite/izleti/kornati-i-telascica",
+        "karta": "https://maps.google.com/?q=Park+prirode+Telascica",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
       },
       {
         "naziv": "Park prirode Vransko jezero",
-        "opis": "Najveće prirodno jezero u Hrvatskoj (30 km²), 6 km od Biograda. Ornitološki rezervat — gnijezdište dalmatinskog pelikana i 250+ vrsta ptica. Biciklizam, eko-šetnje.",
-        "udaljenost": "6 km",
-        "tip": "priroda, biciklizam",
-        "slika": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Lake_Vrana_Croatia.jpg",
+        "opis": "Najveće prirodno jezero u Hrvatskoj i jedno od najvećih močvarnih područja u mediteranskoj Hrvatskoj, nekoliko kilometara od Biograda. Zimovalište za oko 100 000 ptica vodarica; za promatranje ptica najbolji su rano jutro i sumrak. Biciklizam i šetnje uz jezero; u ornitološkom rezervatu ribolov je zabranjen.",
+        "udaljenost": "nekoliko km",
+        "tip": "priroda, ptice, biciklizam",
+        "slika": "https://www.discover-biograd.com/storage/media/prirodne-ljepote/PP-Vransko-Jezero/Vransko%20jezero_panorama.webp",
         "web": "https://www.pp-vransko-jezero.hr",
         "karta": "https://maps.google.com/?q=Vransko+Lake+Nature+Park",
-        "ocjena": "4.3",
-        "recenzija": "\"Nevjerojatni pogledi na jezero i Kornate s vidikovca Kamenjak — odlično za birdwatching i biciklizam. Vrijedi svaki korak!\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g608702-d5894061-Reviews-Vransko_Jezero_Nature_Park-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Off road Vransko jezero (quad)",
+        "opis": "Quad izlet s vodičem oko Vranskog jezera, za starije od 12 godina: suhozidi, maslinici, ostaci rimskog akvadukta, templarska utvrda iz 12. st. i Maškovića han. Trajanje 3 sata, travanj–listopad, grupe 1–8 osoba. Organizator Ilirija Travel.",
+        "udaljenost": "okolica Biograda",
+        "tip": "quad, avantura",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/off-road-vransko-jezero.webp",
+        "web": "https://ilirija-travel.com",
+        "karta": "https://maps.google.com/?q=Vransko+jezero",
+        "telefon": "+385 23 383 121",
+        "email": "tourist-agency@ilirijabiograd.com",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
       },
       {
         "naziv": "Zadar — stari grad",
-        "opis": "Antički grad 28 km od Biograda — Rimski forum, Crkva sv. Donata, Morske orgulje i Pozdrav suncu (spektakularni zalasci). Alfred Hitchcock rekao je da je zadarni zalazak sunca najljepši na svijetu.",
-        "udaljenost": "28 km",
+        "opis": "Rimski forum, crkva sv. Donata, Morske orgulje i Pozdrav Suncu na rivi; zalazak sunca koji je, prema predaji, Hitchcock nazvao najljepšim na svijetu.",
+        "udaljenost": "oko 30 km",
         "tip": "gradski izlet, kultura",
         "slika": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Church_of_St._Donatus_in_Zadar_%28by_Pudelek%29.JPG",
-        "web": "https://www.zadar.hr/en/",
+        "web": "https://zadar.travel",
         "karta": "https://maps.google.com/?q=Zadar+Old+Town",
-        "ocjena": "4.5",
-        "recenzija": "\"Fascinantan stari grad pun uskih uličica, predivnih građevina i jedinstvenih Morskih orgulja — satima možete uživati u atmosferi i odličnoj hrani.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Attractions-g295374-Activities-Zadar_Zadar_County_Dalmatia.html"
+        "izvor": "zadar.hr"
       },
       {
-        "naziv": "Otok Pašman (trajektom)",
-        "opis": "Mirni otok nasuprot Biograda, 10 minuta trajektom. Netaknuta priroda, ribarska sela, tirkizno more i daleko manje turista.",
-        "udaljenost": "10 min trajektom",
-        "tip": "otočni izlet, plaže, mir",
-        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Pasman_from_Biograd_na_Moru.jpg/1280px-Pasman_from_Biograd_na_Moru.jpg",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Pasman+island+Croatia",
-        "ocjena": "4.6",
-        "recenzija": "\"Netaknuta priroda, tirkizno more i gotovo nikakve gužve — Pašman je skriveni dragulj nasuprot Biograda.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Tourism-g608699-Pasman_Zadar_County_Dalmatia-Vacations.html"
+        "naziv": "Otok Pašman",
+        "opis": "Otok nasuprot Biogradu, trajektom do Tkona za 15 minuta. Pustograd (utvrda iz 6. st.), samostan sv. Kuzme i Damjana na Ćokovcu, suhozidi i vidikovci nad Pašmanskim kanalom i Kornatima. Škver Tours nudi vođeni program od 1 do 3 dana tijekom cijele godine, za grupe do 20 osoba.",
+        "udaljenost": "15 min trajektom",
+        "tip": "otočni izlet, kultura",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/otok-pasman.webp",
+        "web": "https://skver-tours.com/?l=hr",
+        "karta": "https://maps.google.com/?q=Tkon+Pasman",
+        "telefon": "+385 23 384 457",
+        "email": "info@skver-tours.com",
+        "izvor": "TZ Biograd i Jadrolinija, provjereno 8.11.2026."
       },
       {
-        "naziv": "NP Krka — Skradinski buk",
-        "opis": "Nacionalni park s impresivnim slapovima rijeke Krke, 65 km od Biograda. Savjetuje se rani dolazak ili posjet u lipnju/rujnu zbog gužvi.",
-        "udaljenost": "65 km",
+        "naziv": "Otok Vrgada",
+        "opis": "Mali ribarski otok bez automobila, s pješčanom plažom i mirnim selom. Iz Biograda vozi putnički brod linije 415 (Vrgada r.p.z.) preko Pakoštana; organizirani izlet brodom prema TZ-u stoji 45 € po osobi, 9:00–15:30, s razgledom, sendvičem, ručkom i pićem (rezervacija u turističkim agencijama u Biogradu).",
+        "udaljenost": "brodom iz Biograda",
+        "tip": "otočni izlet",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/vrgada-1.webp",
+        "web": "https://vrgada-rpz.hr/hr",
+        "karta": "https://maps.google.com/?q=Vrgada+Island+Croatia",
+        "telefon": "+385 91 601 9153",
+        "email": "info@vrgada-rpz.hr",
+        "izvor": "vrgada-rpz.hr i TZ Biograd, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Izlet Krka i Skradin",
+        "opis": "Organizirani izlet autobusom u NP Krka: sedreni slapovi i Skradinski buk, pješačke staze i etno selo, zatim brodom do Skradina i kupanje u rijeci. Cijena 80 € po osobi, 8:30–16:00; uključeni prijevoz, voda i sendvič, vodič, ulaznica i vožnja brodom. Rezervacija u turističkim agencijama u Biogradu; TZ ne navodi organizatora.",
+        "udaljenost": "oko 60 km",
         "tip": "priroda, slapovi",
-        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Skradinski_buk.jpg/1280px-Skradinski_buk.jpg",
-        "web": "https://www.npkrka.hr",
-        "karta": "https://maps.google.com/?q=NP+Krka+Skradinski+Buk",
-        "ocjena": "4.7",
-        "recenzija": "\"Jedna od najljepših prirodnih ljepota Hrvatske — impresivni slapovi, kristalno čista voda i netaknuta šumska priroda.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g295368-d274131-Reviews-Krka_Waterfalls-Sibenik_Knin_County_Dalmatia.html"
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/krka-1.webp",
+        "web": "https://www.discover-biograd.com/dozivite/izleti/krka-i-skradin",
+        "karta": "https://maps.google.com/?q=Skradinski+buk",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Izlet Plitvička jezera",
+        "opis": "Organizirani izlet u najstariji hrvatski nacionalni park (UNESCO od 1979.): 16 jezera, staze i drveni mostovi, vlakić i električni brod preko jezera Kozjak. Cijena 96 € po osobi, 7:45–17:30; uključeni autobus, vodič i ulaznica s brodom i vlakićem. Rezervacija u turističkim agencijama u Biogradu; TZ ne navodi organizatora.",
+        "udaljenost": "oko 150 km",
+        "tip": "priroda, UNESCO",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/plitvicka-1.webp",
+        "web": "https://www.discover-biograd.com/dozivite/izleti/plitvicka-jezera",
+        "karta": "https://maps.google.com/?q=Plitvice+Lakes+National+Park",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
       },
       {
         "naziv": "Šibenik — katedrala i tvrđave",
-        "opis": "UNESCO-zaštićena katedrala sv. Jakova (15. st.) i tvrđave, 65 km od Biograda. Predivne starogradske ulice.",
-        "udaljenost": "65 km",
+        "opis": "Katedrala sv. Jakova (UNESCO), kameni stari grad i tvrđave nad gradom.",
+        "udaljenost": "oko 60 km",
         "tip": "gradski izlet, kultura, UNESCO",
-        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Cathedral_of_St._James_in_%C5%A0ibenik_3.jpg/1280px-Cathedral_of_St._James_in_%C5%A0ibenik_3.jpg",
+        "slika": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Cathedral_of_St._James%2C_%C5%A0ibenik_01.jpg/960px-Cathedral_of_St._James%2C_%C5%A0ibenik_01.jpg",
+        "web": "https://www.sibenik-tourism.hr",
         "karta": "https://maps.google.com/?q=Sibenik+old+town",
-        "ocjena": "4.6",
-        "recenzija": "\"UNESCO katedrala i tvrđave su spektakularni — stari grad je jedan od najljepših u Dalmaciji, prepun živahnih kavana i restorana.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Attractions-g295368-Activities-Sibenik_Sibenik_Knin_County_Dalmatia.html"
+        "izvor": "sibenik-tourism.hr"
       },
       {
-        "naziv": "Nin — Kraljičina plaža",
-        "opis": "Mali antički grad 40 km sjeverno, s Crkvom sv. Križa (9. st.) i ljekovitim blatom uz Kraljičinu plažu — najduljom pješčanom plažom u Dalmaciji.",
-        "udaljenost": "40 km",
-        "tip": "kultura, pješčana plaža",
-        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Nin_from_air.jpg/1280px-Nin_from_air.jpg",
+        "naziv": "Nin",
+        "opis": "Mali povijesni grad na otočiću u laguni: crkva sv. Križa (9. st.), solana, pješčane plaže i ljekovito blato kod Kraljičine plaže.",
+        "udaljenost": "oko 45 km",
+        "tip": "kultura, pješčane plaže",
+        "slika": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Church_of_the_Holy_Cross%2C_Nin.jpg/960px-Church_of_the_Holy_Cross%2C_Nin.jpg",
+        "web": "https://www.nin.hr",
         "karta": "https://maps.google.com/?q=Nin+Croatia",
-        "ocjena": "4.5",
-        "recenzija": "\"Jedina prava pješčana plaža u okolici i ljekovito blato — Nin je obvezna stanica za obiteljski odmor uz kulturu i jedinstveni Jadran.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Nin+Croatia+beach"
+        "izvor": "nin.hr"
       },
       {
         "naziv": "NP Paklenica",
-        "opis": "Kanjon i planinarstvo u Velebitu, 75 km od Biograda. Popularno za planinarenje, via ferrate i slobodno penjanje.",
-        "udaljenost": "75 km",
-        "tip": "planinarenje, aktivnosti",
-        "slika": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Paklenica_gorge.jpg/1280px-Paklenica_gorge.jpg",
-        "web": "https://www.np-paklenica.hr",
+        "opis": "Kanjoni Velike i Male Paklenice na Velebitu, šume crnog bora i stijena Anića kuk (400 m), najpoznatija penjačka točka u Hrvatskoj. Klanac Velike Paklenice prohodan je i za obične šetače; za planinare Vaganski vrh (1757 m).",
+        "udaljenost": "oko 75 km",
+        "tip": "planinarenje, penjanje",
+        "slika": "https://www.discover-biograd.com/storage/media/prirodne-ljepote/NP-Paklenica/Vidikovac%20Paklari%C4%87_foto%20Luka%20Gerlanc.jpg",
+        "web": "https://np-paklenica.hr",
         "karta": "https://maps.google.com/?q=NP+Paklenica",
-        "ocjena": "4.6",
-        "recenzija": "\"Impresivni kanjoni i planinski pejzaž Velebita s pogledom na Jadran — jedinstven doživljaj za aktivne turiste i planinarenje.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Attraction_Review-g295369-d3726614-Reviews-Paklenica_National_Park-Starigrad_Paklenica_Zadar_County_Dalmatia.html"
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
       },
       {
-        "naziv": "Just Dive Biograd",
-        "opis": "Ronilački centar na plažama Dražica i Bošana — tečajevi za početnike, vođena ronjenja u akvatoriju Kornata, intro dives. Jedni od najpopularnijih ronilačkih operatera u regiji.",
-        "udaljenost": "lokalno",
-        "tip": "ronjenje, snorkeling, tečajevi",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=Just+Dive+Biograd+na+Moru",
-        "ocjena": "4.7",
-        "recenzija": "\"Izvanredni ronilački centar — profesionalni instruktori, sigurna oprema i spektakularna ronilačka mjesta u Kornatima.\"",
-        "recenzija_izvor": "TripAdvisor"
+        "naziv": "Rafting / kayaking na Zrmanji",
+        "opis": "Rafting ili kayaking na 14 km staze kanjonom Zrmanje u podnožju Velebita. Cijena 75 € po osobi, 8:00–17:00; uključeni oprema (kaciga, neopren, prsluk) i skiper. Rezervacija u turističkim agencijama u Biogradu; TZ ne navodi organizatora.",
+        "udaljenost": "kanjon Zrmanje",
+        "tip": "rafting, kayak",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/zrmanja-1.webp",
+        "web": "https://www.discover-biograd.com/dozivite/izleti/raftingkayaking-safari",
+        "karta": "https://maps.google.com/?q=Zrmanja+rafting+Kastel+Zegarski",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
       },
       {
-        "naziv": "True Boat Croatia — Privatne brodske ture",
-        "opis": "Privatni brodski izleti pola i cijelog dana s lokalnim kapetanom ribičkim stilom. Autentično iskustvo — ribolov, kupanje u uvalama, dalmatinski piknik.",
-        "udaljenost": "lokalno",
+        "naziv": "Degustacija vina i ulja – Ražnjevića Dvori",
+        "opis": "Vođena degustacija četiri vina ovog kraja i maslinovog ulja, uz pršut, sir i domaći kruh, u staroj turskoj oružarnici iz 16. st. Cijena 50 € po osobi, 18:00–21:00; uključeni prijevoz i poklon 2 dl maslinovog ulja. Rezervacija u turističkim agencijama u Biogradu; TZ ne navodi organizatora.",
+        "udaljenost": "Ražnjevića Dvori",
+        "tip": "gastro, vino",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/wine-1.webp",
+        "web": "https://www.discover-biograd.com/dozivite/izleti/degustacija-vina-i-maslinovog-ulja-raznjevica-dvori",
+        "karta": "https://maps.google.com/?q=Raznjevica+Dvori",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Povijesne večere – Ražnjevića Dvori",
+        "opis": "Gastronomski vremeplov u konobi iz 16. st.: jela Ravnih kotara pripremljena na stari način, među maslinama i bademima. Tijekom cijele godine; organizator Ilirija Travel.",
+        "udaljenost": "Ražnjevića Dvori",
+        "tip": "gastro, baština",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/povijesne-vecere.webp",
+        "web": "https://ilirija-travel.com",
+        "karta": "https://maps.google.com/?q=Raznjevica+Dvori",
+        "telefon": "+385 23 383 121",
+        "email": "tourist-agency@ilirijabiograd.com",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Sunset gourmet cruise",
+        "opis": "Večernje krstarenje jahtom uz dalmatinski meni, pjenušac i sjevernodalmatinska vina, za zalaska sunca. Trajanje 3 sata (20:00–23:00, od 1. kolovoza 19:00–22:00), travanj–rujan; organizator Ilirija Travel.",
+        "udaljenost": "iz Biograda",
+        "tip": "krstarenje, gastro",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/sunset-gourmet-cruise.webp",
+        "web": "https://ilirija-travel.com",
+        "karta": "https://maps.google.com/?q=Marina+Kornati+Biograd",
+        "telefon": "+385 23 383 121",
+        "email": "tourist-agency@ilirijabiograd.com",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "More, galeb, spiza i ja",
+        "opis": "Plovidba Pašmanskim kanalom, Žutskim otočjem i Kornatima do uvale Kravljačica, s ribom, školjkama, brudetom i domaćim vinom; noćenje u robinzonskim kućicama. 1–2 dana, svibanj–listopad, grupe 8–20 osoba; organizator Škver Tours.",
+        "udaljenost": "Kornati",
+        "tip": "brodski izlet, gastro",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/more,-galeb,-spiza-i-ja.webp",
+        "web": "https://skver-tours.com/?l=hr",
+        "karta": "https://maps.google.com/?q=Kornati+National+Park",
+        "telefon": "+385 23 384 457",
+        "email": "info@skver-tours.com",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Netaknuti dragulji prirode",
+        "opis": "Dvosatni obilazak špilje Modrič (Rovanjska) i gastro tura na OPG-u Odžaković u Nadinu: pršut, sir, peka, prisnac i nadinsko vino. Tijekom cijele godine; organizator Škver Tours.",
+        "udaljenost": "špilja Modrič i Nadin",
+        "tip": "špilja, gastro",
+        "slika": "https://www.discover-biograd.com/storage/media/izleti/netaknuti-dragulji-prirode.webp",
+        "web": "https://skver-tours.com/?l=hr",
+        "karta": "https://maps.google.com/?q=Spilja+Modric",
+        "telefon": "+385 23 384 457",
+        "email": "info@skver-tours.com",
+        "izvor": "TZ Biograd, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "Just Dive Croatia",
+        "opis": "Ronilački centar u Crvenoj Luci: probno ronjenje za odrasle i djecu od 8 godina (1,5–2 sata), tečajevi od početnih do instruktorskih, izleti ronjenja s broda, među ostalim u Kornate.",
+        "udaljenost": "Crvena Luka",
+        "tip": "ronjenje, tečajevi",
+        "slika": "",
+        "web": "https://justdive-croatia.com",
+        "karta": "https://maps.google.com/?q=Crvena+Luka+Resort",
+        "telefon": "+385 91 236 6688",
+        "telefon2": "+385 99 263 5547",
+        "email": "info@justdive-croatia.com",
+        "izvor": "justdive-croatia.com, provjereno 8.11.2026."
+      },
+      {
+        "naziv": "True Boat Croatia",
+        "opis": "Privatni izleti tradicionalnom pasarom s lokalnim kapetanom na Kornate i Vrgadu, cijeli ili pola dana, do 17 gostiju; hrana i piće uključeni. Paketi na stranici od 80 € (BASIC) do 150 € (ROYAL).",
+        "udaljenost": "Kralja Petra Svačića 19, Biograd",
         "tip": "privatni brodski izlet",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=True+Boat+Croatia+Biograd",
-        "ocjena": "4.8",
-        "recenzija": "\"Nezaboravno iskustvo — pravi dalmatinski ribar kao kapetan, kristalne uvale i svježa riba s roštilja na brodu.\"",
-        "recenzija_izvor": "TripAdvisor"
+        "slika": "",
+        "web": "https://trueboatcroatia.com",
+        "karta": "https://maps.google.com/?q=Kralja+Petra+Svacica+19+Biograd+na+Moru",
+        "telefon": "+385 91 927 0858",
+        "email": "info@trueboatcroatia.com",
+        "izvor": "trueboatcroatia.com, provjereno 8.11.2026."
       },
       {
-        "naziv": "Jahanje do Vranskog jezera",
-        "opis": "Jahanje konjima do Vranskog jezera s kupanjem u jezeru, dalmatinski piknik sa šunkom, sirom i lokalnim vinom. Jedinstveno iskustvo dalmatinske prirode.",
-        "udaljenost": "6 km",
-        "tip": "jahanje, eko-turizam",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/0/0f/Lake_Vrana_Croatia.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=Horseback+Riding+Biograd+Vransko+Lake",
-        "ocjena": "4.8",
-        "recenzija": "\"Jedno od najljepših iskustava odmora — jahanje kroz dalmatinsku prirodu do jezera, kupanje s konjem i piknik.\"",
-        "recenzija_izvor": "TripAdvisor"
-      },
-      {
-        "naziv": "ATV / Buggy terenske ture",
-        "opis": "Adrenalinske ture quadovima i buggyjevima kroz skrivene dalmatinske puteve, šume i polja — tura lokalnom divljinom daleko od turističkih gužvi.",
-        "udaljenost": "lokalno i okolica",
-        "tip": "quad, buggy, adrenalin",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=ATV+Quad+Tour+Biograd+na+Moru",
-        "ocjena": "4.7",
-        "recenzija": "\"Nevjerojatna zabava za cijelu obitelj — vožnja kroz skrivena mjesta Dalmacije koja ne možeš vidjeti iz auta.\"",
-        "recenzija_izvor": "TripAdvisor"
-      },
-      {
-        "naziv": "Otok Vrgada — izlet",
-        "opis": "Trajektom iz Biograda do malog otoka bez automobila — pješčane plaže, autentično ribarsko selo, mir i dalmatinski ugođaj bez turista.",
-        "udaljenost": "trajektom ~30 min",
-        "tip": "otočni izlet, trajekt",
-        "slika": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biograd_na_Moru.jpg/1280px-Biograd_na_Moru.jpg&w=400&h=220&fit=cover&output=jpg",
-        "karta": "https://maps.google.com/?q=Vrgada+Island+Croatia",
-        "ocjena": "4.6",
-        "recenzija": "\"Skriveni dragulj Dalmacije — pješčane plaže bez gužve, mir i autentičan život malog otočnog mjesta.\"",
-        "recenzija_izvor": "TripAdvisor"
+        "naziv": "MK Ranch",
+        "opis": "Ranč u Parku prirode Vransko jezero kod Pakoštana: škola jahanja, trekking i jahanje u prirodi s instruktorom (western stil); besplatno terapijsko jahanje za djecu i odrasle kojima je potrebno.",
+        "udaljenost": "kod Pakoštana",
+        "tip": "jahanje",
+        "slika": "",
+        "web": "https://mkranch.com",
+        "karta": "https://maps.google.com/?q=MK+Ranch+Pakostane",
+        "izvor": "mkranch.com, provjereno 8.11.2026."
       }
     ]
   },
-
   "sport": {
     "opis": "Biograd i okolica nude bogat izbor sportskih i avanturističkih aktivnosti, posebno ljeti.",
     "aktivnosti": [
@@ -3093,7 +3130,7 @@ export const db = {
       "guzve_na_plazama": "Plaže Dražica i Soline su prepune u srpnju i kolovozu. Plaža Bošana i Kumenat su mirnije alternative. Preporuči dolazak ujutro (prije 9h) za dobra mjesta.",
       "gotovina": "Mnogi objekti — konobe, beach barovi i manje prodavaonice — primaju SAMO gotovinu. Savjet: uvijek imajte 50–100 EUR u džepu.",
       "cijene_u_parkovima": "Hrana u Dalmalandu i na nekim plažama je izrazito skupa. Ponesite vlastitu hranu i piće u Dalmaland.",
-      "rent_a_boat_oprez": "Neki rent-a-boat operateri imaju loše recenzije (prljavi brodovi, loša usluga). Preporuči provjerene operatere: Škver Tours, True Boat Croatia, Marina Kornati Charter.",
+      "rent_a_boat_oprez": "Za najam broda uputi na agencije s popisa TZ-a (npr. Škver Tours, Biograd tourist agency, Leut, Blu) ili na charter tvrtke u Marini Kornati; ne ocjenjuj pojedine operatere.",
       "parkiranje_ljeto": "Parkiranje u centru je teško u srpnju/kolovozu. Preporuči parking kod marine ili dolazak pješice/biciklom.",
       "turisticke_zamke": "Neki restorani na rivi imaju skuplje cijene za prosječnu kvalitetu. Konobe malo dalje od rive nude bolju vrijednost."
     }
@@ -3110,7 +3147,7 @@ export const db = {
     },
     {
       "pitanje": "Što mogu raditi s djecom?",
-      "odgovor": "Dalmaland aquapark (tobogani, bazeni, rollercoasteri), plaža Soline (plitko more, pijesak, trampolin), Crvena Luka Resort (dječji bazen, animacija), jahanje konjima, ATV ture za stariju djecu, kayak i SUP."
+      "odgovor": "Dalmaland aquapark (tobogani, bazeni, rollercoasteri), plaža Soline (plitko more, pijesak, trampolin), Crvena Luka Resort (dječji bazen, animacija), jahanje na MK Ranchu kod Pakoštana, quad izlet oko Vranskog jezera za djecu od 12 godina (Ilirija Travel), kayak i SUP."
     },
     {
       "pitanje": "Kako doći do Biograda?",
@@ -3122,11 +3159,11 @@ export const db = {
     },
     {
       "pitanje": "Gdje mogu ići na ronjenje?",
-      "odgovor": "Just Dive Biograd centar nudi tečajeve za početnike i vođena ronjenja. Lokacije na plažama Dražica i Bošana. Organiziraju izlete u akvatorij Kornata."
+      "odgovor": "Ronilački centar Just Dive Croatia u Crvenoj Luci nudi probno ronjenje od 8 godina, tečajeve i izlete ronjenja s broda, među ostalim u Kornate (justdive-croatia.com, +385 91 236 6688)."
     },
     {
       "pitanje": "Koje izlete mogu napraviti iz Biograda?",
-      "odgovor": "NP Kornati (brodom, 1 dan), NP Krka + Skradin (autom 1h), Zadar stari grad (30 min), Plitvička jezera (2h), otoci Pašman i Vrgada (trajektom), Dalmaland aquapark (lokalno), jahanje do Vranskog jezera."
+      "odgovor": "NP Kornati (brodom, 1 dan), NP Krka + Skradin (autom 1h), Zadar stari grad (30 min), Plitvička jezera (2h), otok Pašman (trajektom do Tkona) i Vrgada (brodskom linijom 415 ili izletom), Dalmaland aquapark (lokalno), Vransko jezero."
     },
     {
       "pitanje": "Kad je najbolje posjetiti Biograd?",
