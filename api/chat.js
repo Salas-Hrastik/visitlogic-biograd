@@ -655,7 +655,7 @@ function detectCategory(msg, lastCategory, db) {
   if (/turističk\w* agencij|turistične agencij|tourist agenc|travel agenc|reiseagentur|reisebüro|agenzi\w* (turistic|di viaggi)|utazási iroda|cestovn\w* agent/.test(m)) return 'smjestaj';
   if (/\bleut\b|adriagate|ilirija travel|my way travel|moreta/.test(m)) return 'smjestaj';
   if (/agencij/.test(m) && !/charter|čarter|jedr|nautič|izlet|kornat/.test(m)) return 'smjestaj';
-  if (/pansion|pension|penzion|panzió|privatni smještaj|private accommodation|apartm|appartament|szállás|ubytov|nastanit|alloggi|unterkunft|ferienwohnung|ferienh|mediteransk\w* sel|mediterranean village|san antonij?\w*|crven\w* luk|bungalov|kuć\w* za odmor|\bkemp/.test(m)) return 'smjestaj';
+  if (/pansion|pension|penzion|panzió|privatni smještaj|private accommodation|apartm|appartament|szállás|ubytov|nastanit|alloggi|unterkunft|ferienwohnung|ferienh|mediteransk\w* sel|mediterranean village|san antonij?\w*|crven\w* luk|bungalov|kuć\w* za odmor|\bkemp|glamp|\bkamp(?!anel)|camping|campsite|campeggio|kemping|kempink|mobilne kućice|mobile home|mobilheim/.test(m)) return 'smjestaj';
 
   if (/škver|skver/.test(m) && !/izlet|brod|kornat|trip|boat/.test(m)) return 'smjestaj';
 
@@ -1054,7 +1054,7 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     const isHotel    = has('hotel', 'szálloda');
     const isApartman = has('apartm', 'appartament', 'privat', 'privát', 'zasebn', 'soukrom', 'súkrom', 'magán', 'soba', 'stanza', 'szoba', 'pokoj', 'izba',
       'rent', 'room', 'wohnung', 'zimmer', 'kuća za odmor', 'kuće za odmor', 'holiday home', 'ferienh');
-    const isKamp     = has('kamp', 'kemp', 'camp', 'šator', 'karavan', 'mobile home', 'zelt');
+    const isKamp     = has('kamp', 'kemp', 'camp', 'glamp', 'šator', 'karavan', 'mobile home', 'zelt');
     const isVila     = has('vila', 'villa', 'bungalov', 'bungalow', 'crven', 'san anton', 'mediteransk', 'mediterranean village');
     const isPansion  = has('pansion', 'pension', 'penzion', 'panzió', 'guest house', 'guesthouse', 'b&b');
 
@@ -1079,7 +1079,11 @@ function getCategoryItems(category, message = '', { full = false } = {}) {
     const typeCount = [isHotel, isApartman, isKamp, isVila, isPansion].filter(Boolean).length;
     if (typeCount !== 1) return [...hoteli, ...kontakti];
     if (isHotel)    return filterByMessage(hoteli, message);
-    if (isKamp)     return filterByMessage(kampovi, message);
+    if (isKamp) {
+      const glamping = kampovi.filter(k => /glamp/i.test(k.naziv));
+      if (has('glamp')) return glamping;
+      return filterByMessage(kampovi, message);
+    }
     if (isPansion)  return pansioni;
     if (isVila)     return [...selo, ...luka, ...privatni.filter(p => /vil+a/i.test(p.naziv))];
     // Sadržaj se traži u hrvatskom opisu, a pitanje može biti na bilo kojem jeziku.
