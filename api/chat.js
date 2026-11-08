@@ -1697,7 +1697,9 @@ function stripBulletList(text) {
 
     if (isBullet || isSectionHeader) {
       // "Taksi službe su:" bez popisa ispod izgleda kao prekinut odgovor; kartice slijede ispod.
-      if (isBullet && out.length && /:\s*$/.test(out[out.length - 1])) out[out.length - 1] = out[out.length - 1].replace(/:\s*$/, '.');
+      let k = out.length - 1;
+      while (k >= 0 && out[k].trim() === '') k--;
+      if (isBullet && k >= 0 && /:\s*$/.test(out[k])) out[k] = out[k].replace(/:\s*$/, '.');
       skipBlank = true;
       continue;
     }
