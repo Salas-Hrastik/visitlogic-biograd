@@ -1079,10 +1079,10 @@ export const db = {
         "slika": "https://ilirijabiograd.com/img/header-1920.webp",
         "web": "https://ilirijabiograd.com/en/hotels-resort",
         "karta": "https://maps.google.com/?q=Ilirija+Resort+Biograd",
-        "ocjena": "8.2/10",
-        "recenzija": "\"Lokacija savršena, osoblje iznimno ljubazno, hrana fantastična. Toplo preporučam svima koji traže vrhunski odmor u centru Biograda.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Hotel_Review-g608702-d602025-Reviews-Hotel_Ilirija-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Hotel Kornati ★★★★",
@@ -1093,10 +1093,10 @@ export const db = {
         "slika": "https://www.discover-biograd.com/attachments/preview/682c780d2cb59/kornati.jpeg",
         "web": "https://ilirijabiograd.com/en/hotel-kornati",
         "karta": "https://maps.google.com/?q=Hotel+Kornati+Biograd",
-        "ocjena": "4.2",
-        "recenzija": "\"Odličan hotel uz marinu — čiste sobe, predivan pogled na Kornate i ljubazno osoblje.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Hotel_Review-g608702-d602026-Reviews-Hotel_Kornati-Biograd_na_Moru_Zadar_County_Dalmatia.html"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Hotel Adriatic ★★★",
@@ -1107,10 +1107,10 @@ export const db = {
         "slika": "https://www.discover-biograd.com/attachments/preview/682c699a9a03d/wbwi8235jpeg-615.jpg",
         "web": "https://ilirijabiograd.com/en/hotel-adriatic",
         "karta": "https://maps.google.com/?q=Hotel+Adriatic+Biograd+na+Moru",
-        "ocjena": "4.0",
-        "recenzija": "\"Prikladan hotel u srcu Biograda — dobra lokacija, 20 m od plaže, ljubazno osoblje.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Hotel_Review-g608702-Biograd_na_Moru_Zadar_County_Dalmatia-Hotels.html"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Hotel Adria ★★★",
@@ -1230,16 +1230,17 @@ export const db = {
       {
         "naziv": "Villa Primorje — Ilirija Resort",
         "opis": "Autentična dalmatinska kamena kuća za 6 osoba (3 sobe), dio Ilirija Resorta.",
-        "lokacija": "Biograd na Moru",
+        "lokacija": "Put Primorja 20, 23210 Biograd na Moru",
         "telefon": "+385 23 383 556",
-        "email": "reservations@ilirijabiograd.com",
+        "email": "sales@ilirijabiograd.com",
         "slika": "",
         "web": "https://ilirijabiograd.com/en/villa-primorje",
         "karta": "https://maps.google.com/?q=Villa+Primorje+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
         "recenzija_izvor": "",
-        "recenzija_url": ""
+        "recenzija_url": "",
+        "izvor": "ilirijabiograd.com; provjereno 8.11.2026."
       }
     ],
     "kampovi": [
@@ -1253,10 +1254,10 @@ export const db = {
         "slika": "https://www.discover-biograd.com/attachments/preview/67f4c3b4a4b52/soline.jpg",
         "web": "https://www.campsoline.com",
         "karta": "https://maps.google.com/?q=Camp+Park+Soline+Biograd",
-        "ocjena": "4.2",
-        "recenzija": "\"Prelijepi mobilni domovi u stoljetnoj borovoj šumi, samo 250 m od plaže — čisto, dobro opremljeno, idealno za obitelji s djecom.\"",
-        "recenzija_izvor": "TripAdvisor",
-        "recenzija_url": "https://www.tripadvisor.com/Hotels-g608702-c3-zff29-Biograd_na_Moru_Zadar_County_Dalmatia-Hotels.html"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Camp Biograd Šangulin",
@@ -1267,10 +1268,10 @@ export const db = {
         "slika": "https://www.discover-biograd.com/attachments/preview/6826e802575a8/sangulin.jpg",
         "web": "https://sangulin.hr",
         "karta": "https://maps.google.com/?q=Camp+Sangulin+Biograd",
-        "ocjena": "4.1",
-        "recenzija": "\"Kamp u borovoj šumi s direktnim izlazom na more — mirno obiteljsko okruženje i dobre sanitarije.\"",
-        "recenzija_izvor": "Google",
-        "recenzija_url": "https://maps.google.com/?q=Camp+Sangulin+Biograd"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": ""
       },
       {
         "naziv": "Kamp Mia",
@@ -1345,25 +1346,31 @@ export const db = {
       },
       {
         "naziv": "Grande Glamping",
-        "opis": "Luksuzni glamping smještaj u blizini Biograda — luksuzan odmor u prirodi s hotelskim sadržajima.",
+        "opis": "Glamping kamp u mediteranskom raslinju na mirnom mjestu, oko 2 km od centra Biograda i 1 km od mora: šatori standard, premium i deluxe.",
         "tip": "glamping, luksuzni kamp",
         "slika": "",
         "web": "https://grande-glamping.com",
         "karta": "https://maps.google.com/?q=Grande+Glamping+Biograd",
-        "ocjena": "4.5",
-        "recenzija": "\"Savršena kombinacija prirode i luksuza — glamping koji se pamti.\"",
-        "recenzija_izvor": "TripAdvisor"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "lokacija": "oko 2 km od centra Biograda, 1 km od plaže (kod Fun Parka)",
+        "izvor": "grande-glamping.com; provjereno 8.11.2026."
       },
       {
         "naziv": "Glamp@Camp",
-        "opis": "Glamping uz samu plažu — luksuzni šatori s klima uređajem, dvije spavaće sobe, TV, kuhinjom i terasom direktno na moru.",
+        "opis": "Glamping šatori uz plažu Soline (Glamping Beach Soline).",
         "tip": "glamping, beachfront",
         "slika": "",
         "web": "https://glampatcamp.com",
         "karta": "https://maps.google.com/?q=Glamp+Camp+Biograd",
-        "ocjena": "4.6",
-        "recenzija": "\"Buđenje uz šum mora u luksuznom šatoru — jedinstven doživljaj za sve generacije!\"",
-        "recenzija_izvor": "TripAdvisor"
+        "ocjena": "",
+        "recenzija": "",
+        "recenzija_izvor": "",
+        "recenzija_url": "",
+        "lokacija": "Plaža Soline, Biograd na Moru",
+        "izvor": "glampatcamp.com; provjereno 8.11.2026."
       }
     ],
     "pansioni": [
@@ -1716,17 +1723,18 @@ export const db = {
       },
       {
         "naziv": "Guest House Dia",
-        "opis": "Guest house otvoren 0–24h.",
-        "lokacija": "Biograd na Moru",
+        "opis": "Guest house oko 600 m od šetnice uz more: sobe s balkonom, besplatan Wi-Fi i parkiralište; trgovina, bar i restoran na 50 m.",
+        "lokacija": "Otona Ivekovića 4, 23210 Biograd na Moru",
         "telefon": "+385 91 338 3927",
         "email": "",
         "slika": "",
         "web": "",
-        "karta": "https://maps.google.com/?q=Guest+House+Dia+Biograd+na+Moru",
+        "karta": "https://maps.google.com/?q=Otona+Ivekovi%C4%87a+4+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
         "recenzija_izvor": "",
-        "recenzija_url": ""
+        "recenzija_url": "",
+        "izvor": "tripaligner.com, frommers.com; provjereno 8.11.2026."
       }
     ],
     "turisticke_agencije": [
@@ -1842,7 +1850,7 @@ export const db = {
         "lokacija": "Trg kralja Tomislava 2, Biograd na Moru",
         "telefon": "+385 23 385 570",
         "email": "",
-        "slika": "https://www.discover-biograd.com/images/tz-biograd-logo.webp",
+        "slika": "",
         "web": "https://leut.hr",
         "karta": "https://maps.google.com/?q=Turisti%C4%8Dka%20agencija%20Leut%20Trg%20kralja%20Tomislava%202%2C%20Biograd%20na%20Moru",
         "ocjena": "",
