@@ -1694,34 +1694,6 @@ export const db = {
         "recenzija_url": ""
       },
       {
-        "naziv": "Felix Apartment",
-        "opis": "Privatni apartmani u Biogradu na Moru.",
-        "lokacija": "Biograd na Moru",
-        "telefon": "",
-        "email": "",
-        "slika": "",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Felix+Apartment+Biograd+na+Moru",
-        "ocjena": "",
-        "recenzija": "",
-        "recenzija_izvor": "",
-        "recenzija_url": ""
-      },
-      {
-        "naziv": "Apartmani Ana",
-        "opis": "Privatni apartmani uz more.",
-        "lokacija": "Biograd na Moru",
-        "telefon": "+385 91 4324307",
-        "email": "",
-        "slika": "",
-        "web": "",
-        "karta": "https://maps.google.com/?q=Apartmani+Ana+Biograd+na+Moru",
-        "ocjena": "",
-        "recenzija": "",
-        "recenzija_izvor": "",
-        "recenzija_url": ""
-      },
-      {
         "naziv": "Guest House Dia",
         "opis": "Guest house oko 600 m od šetnice uz more: sobe s balkonom, besplatan Wi-Fi i parkiralište; trgovina, bar i restoran na 50 m.",
         "lokacija": "Otona Ivekovića 4, 23210 Biograd na Moru",
