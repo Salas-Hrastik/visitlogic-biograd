@@ -1631,9 +1631,12 @@ setTimeout(() => {
 }, 500);
 
 // ===== GLASOVNI UNOS =====
-// Web Speech API na svim platformama (uključujući iOS Safari 16.4+).
-// Na iOS koristimo restart petlju (continuous=false) s akumulacijom teksta kroz cikluse
-// i tajmerom od 2500 ms koji traje PREKO granica iOS ciklusa — ključ ispravnog rada.
+// Tekst se upisuje u polje dok gost govori; nakon pauze pitanje se šalje samo.
+// Preglednici se ponašaju različito, pa svaki dobiva svoj način rada:
+// - Chrome/Edge na računalu: neprekidno slušanje; pauzu od 1,5 s mjerimo sami.
+// - Chrome na Androidu: kratke sesije (neprekidno slušanje ponavlja tekst); Android sam završi na pauzi.
+// - Safari (iPhone, iPad, Mac): sesije se prekidaju usred rečenice, pa ih nastavljamo i spajamo tekst,
+//   a pauza od 2 s teče preko granica sesija.
 (function(){
   const micBtn  = document.getElementById("mic-btn");
   const micMsg  = document.getElementById("mic-unsupported");
@@ -1648,138 +1651,144 @@ setTimeout(() => {
   }
 
   const ua = navigator.userAgent || '';
-  const isIOS = /iPad|iPhone|iPod/.test(ua) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isSafari = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    || (/Safari\//.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Android/.test(ua));
+  const isAndroid = /Android/.test(ua);
+  const MODE = isSafari ? 'restart' : isAndroid ? 'single' : 'continuous';
+  const PAUSE_MS = MODE === 'restart' ? 2000 : 1500;
+  const IDLE_MS = 8000;
 
   const txt = () => UI_TEXT[currentLang] || UI_TEXT.hr;
   const basePlaceholder = () => (WELCOME_I18N[currentLang] || WELCOME_I18N.hr).placeholder;
   const baseSend = () => (WELCOME_I18N[currentLang] || WELCOME_I18N.hr).send;
 
-  // ---- Stanje glasovnog unosa ----
-  let voiceActive    = false;
-  let shouldSend     = false;  // finish() postavi → onend pošalje
-  let iosBase        = '';     // tekst akumuliran kroz iOS cikluse
-  let transcript     = '';     // ukupni tekst (iosBase + trenutni ciklus)
-  let speechEndTimer = null;   // 2500 ms tišine nakon govora → pošalji
-  let idleTimer      = null;   // 8000 ms bez ikakvog govora → odustani
-  let currentRec     = null;   // aktivni SpeechRecognition objekt
+  let active = false;      // gost je uključio mikrofon i još nije poslano
+  let rec = null;          // trenutna sesija prepoznavanja
+  let baseText = '';       // tekst iz prijašnjih sesija (Safari)
+  let text = '';           // sve što je dosad izgovoreno
+  let pauseTimer = null, idleTimer = null;
 
-  function clearTimers() {
-    if (speechEndTimer) { clearTimeout(speechEndTimer); speechEndTimer = null; }
-    if (idleTimer)      { clearTimeout(idleTimer);      idleTimer = null;      }
+  function clearTimers(){ clearTimeout(pauseTimer); clearTimeout(idleTimer); pauseTimer = idleTimer = null; }
+
+  // Spaja rezultate jedne sesije. Android ponekad vraća isti tekst u više rezultata
+  // ("koji", "koji su", "koji su izleti"), pa se rezultat koji ponavlja prethodni ne dodaje.
+  function sessionText(results){
+    let out = '';
+    for (let i = 0; i < results.length; i++) {
+      const t = results[i][0].transcript.trim();
+      if (!t) continue;
+      if (out && t.toLowerCase().startsWith(out.toLowerCase())) out = t;
+      else if (!out.toLowerCase().endsWith(t.toLowerCase())) out = out ? out + ' ' + t : t;
+    }
+    return out;
   }
 
-  function resetMicUI() {
+  function show(){
+    input.value = text;
+    input.scrollLeft = input.scrollWidth; // kraj rečenice ostaje vidljiv u polju
+  }
+
+  function stopUI(){
     micBtn.classList.remove("listening");
     input.placeholder = basePlaceholder();
     sendBtn.textContent = baseSend();
   }
 
-  function finish() {
+  // Kraj unosa: zaustavi prepoznavanje i pošalji ono što je izgovoreno.
+  function finish(){
+    if (!active) return;
+    active = false;
     clearTimers();
-    shouldSend = true;
-    try { if (currentRec) currentRec.stop(); } catch(e) {}
+    const r = rec; rec = null;
+    try { if (r) r.abort(); } catch(e) {}
+    stopUI();
+    if (text.trim()) { input.value = text.trim(); sendMessage(); }
   }
 
-  function startListening(isRestart) {
-    if (currentRec) return;
-    if (!isRestart) { transcript = ''; iosBase = ''; }
+  // Gost je prekinuo drugim klikom na mikrofon: ništa se ne šalje, tekst ostaje u polju.
+  function cancel(){
+    active = false;
+    clearTimers();
+    const r = rec; rec = null;
+    try { if (r) r.abort(); } catch(e) {}
+    stopUI();
+  }
 
-    var rec = new SpeechRecognition();
-    window.recognition = rec; // da applyLang može prebaciti jezik prepoznavanja
+  function armPause(){
+    clearTimeout(pauseTimer);
+    pauseTimer = setTimeout(finish, PAUSE_MS);
+  }
 
-    rec.lang = (UI_LANGS[currentLang] || UI_LANGS.hr).speechLang;
-    rec.interimResults = true;
-    rec.continuous = !isIOS;
+  function startSession(){
+    if (!active || rec) return;
+    const r = new SpeechRecognition();
+    window.recognition = r;
+    r.lang = (UI_LANGS[currentLang] || UI_LANGS.hr).speechLang;
+    r.interimResults = true;
+    r.continuous = MODE === 'continuous';
 
-    rec.onresult = function(e) {
-      var sessionText = '';
-      for (var i = 0; i < e.results.length; i++) sessionText += e.results[i][0].transcript;
-      var text = (isIOS && iosBase) ? iosBase + ' ' + sessionText : sessionText;
-      transcript = text;
-      input.value = text;
-      if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
-      if (speechEndTimer) clearTimeout(speechEndTimer);
-      // Tajmer teče KROZ iOS cikluse — ne briše se u onend restart putanji
-      speechEndTimer = setTimeout(finish, 2500);
+    r.onresult = function(e){
+      if (r !== rec) return;
+      const t = sessionText(e.results);
+      text = baseText && t ? baseText + ' ' + t : (t || baseText);
+      show();
+      clearTimeout(idleTimer); idleTimer = null;
+      armPause();
     };
 
-    rec.onend = function() {
-      currentRec = null;
-      if (isIOS && voiceActive && !shouldSend) {
-        // iOS restart putanja: NE diramo speechEndTimer — neka odbrojava 2,5 s
-        // od zadnjeg prepoznatog govora, bez obzira na iOS granice sesija.
-        iosBase = transcript;
-        setTimeout(function() { if (voiceActive) startListening(true); }, 80);
-        return;
-      }
-      clearTimers();
-      var wasActive = voiceActive;
-      voiceActive = false;
-      shouldSend = false;
-      resetMicUI();
-      if (wasActive && transcript.trim()) sendMessage();
-    };
-
-    rec.onerror = function(e) {
-      clearTimers();
-      currentRec = null;
-      var err = (e && e.error) || 'unknown';
-      if (err === 'not-allowed' || err === 'audio-capture' || err === 'service-not-allowed') {
-        voiceActive = false; shouldSend = false;
-        resetMicUI();
+    r.onerror = function(e){
+      const err = e && e.error;
+      if (err === 'not-allowed' || err === 'service-not-allowed' || err === 'audio-capture') {
+        cancel();
         input.placeholder = txt().micDenied;
-        setTimeout(function() { input.placeholder = basePlaceholder(); }, 3000);
-        return;
+        setTimeout(function(){ input.placeholder = basePlaceholder(); }, 3000);
       }
-      if (err === 'no-speech') {
-        if (voiceActive) {
-          setTimeout(function() { if (voiceActive) startListening(true); }, 150);
-          return;
-        }
-        resetMicUI();
-        input.placeholder = txt().noSpeech;
-        setTimeout(function() { input.placeholder = basePlaceholder(); }, 2500);
-        return;
-      }
-      if (voiceActive) {
-        setTimeout(function() { if (voiceActive) startListening(true); }, 150);
-      } else {
-        voiceActive = false; shouldSend = false;
-        resetMicUI();
-      }
+      // Ostale greške (no-speech, network, aborted) završavaju sesiju; o nastavku odlučuje onend.
     };
 
-    currentRec = rec;
+    r.onend = function(){
+      if (r !== rec) return;   // stara sesija nakon finish/cancel
+      rec = null;
+      if (!active) return;
+      if (MODE === 'restart') {
+        // Safari je prekinuo sesiju: zapamti tekst i nastavi slušati; pauza i dalje odbrojava.
+        baseText = text;
+        setTimeout(startSession, 80);
+        return;
+      }
+      // Chrome/Android: sesija je završila na pauzi govora.
+      if (text.trim()) finish();
+      else { cancel(); input.placeholder = txt().noSpeech; setTimeout(function(){ input.placeholder = basePlaceholder(); }, 2500); }
+    };
+
+    rec = r;
+    try { r.start(); }
+    catch(ex) { rec = null; cancel(); }
+  }
+
+  micBtn.addEventListener("click", function(){
+    if (active) { text.trim() ? finish() : cancel(); return; }
+    active = true;
+    text = ''; baseText = '';
+    input.value = '';
     micBtn.classList.add("listening");
     input.placeholder = txt().listen;
     sendBtn.textContent = txt().done;
-    try {
-      rec.start();
-      if (!isRestart) idleTimer = setTimeout(finish, 8000);
-    } catch(ex) {
-      currentRec = null;
-      voiceActive = false;
-      resetMicUI();
-    }
-  }
-
-  micBtn.addEventListener("click", function() {
-    if (voiceActive) { finish(); return; }
-    input.value = '';
-    voiceActive = true;
-    shouldSend = false;
-    iosBase = '';
-    transcript = '';
-    startListening(false);
+    // Ako gost ništa ne kaže, slušanje se ugasi s porukom.
+    idleTimer = setTimeout(function(){
+      cancel();
+      input.placeholder = txt().noSpeech;
+      setTimeout(function(){ input.placeholder = basePlaceholder(); }, 2500);
+    }, IDLE_MS);
+    startSession();
   });
 
-  // Za vrijeme slušanja "Gotovo" i Enter odmah završavaju i šalju pitanje.
-  document.addEventListener("click", function(e) {
-    if (voiceActive && e.target === sendBtn) { e.stopImmediatePropagation(); finish(); }
+  // Za vrijeme slušanja "Gotovo" i Enter odmah šalju izgovoreno.
+  document.addEventListener("click", function(e){
+    if (active && e.target === sendBtn) { e.stopImmediatePropagation(); finish(); }
   }, true);
-  input.addEventListener("keypress", function(e) {
-    if (voiceActive && e.key === "Enter") { e.stopImmediatePropagation(); e.preventDefault(); finish(); }
+  input.addEventListener("keypress", function(e){
+    if (active && e.key === "Enter") { e.stopImmediatePropagation(); e.preventDefault(); finish(); }
   }, true);
 })();
 
