@@ -1631,8 +1631,9 @@ setTimeout(() => {
 }, 500);
 
 // ===== GLASOVNI UNOS =====
-// Klik na 🎤 počinje slušanje; pitanje se šalje samo nakon kratke pauze u govoru.
-// Preglednici različito završavaju slušanje (Safari i mobiteli često nastave), pa pauzu mjerimo sami.
+// Web Speech API na svim platformama (uključujući iOS Safari 16.4+).
+// Na iOS koristimo restart petlju (continuous=false) s akumulacijom teksta kroz cikluse
+// i tajmerom od 2500 ms koji traje PREKO granica iOS ciklusa — ključ ispravnog rada.
 (function(){
   const micBtn  = document.getElementById("mic-btn");
   const micMsg  = document.getElementById("mic-unsupported");
@@ -1640,86 +1641,146 @@ setTimeout(() => {
   const sendBtn = document.getElementById("send-btn");
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  if(!SpeechRecognition){
+  if (!SpeechRecognition) {
     micBtn.style.display = "none";
     micMsg.style.display = "inline";
     return;
   }
 
-  const SILENCE_MS = 1500;   // pauza nakon govora koja završava pitanje
-  const NO_SPEECH_MS = 8000; // ako korisnik ništa ne kaže
-  const recognition = new SpeechRecognition();
-  recognition.continuous = false;
-  recognition.interimResults = true;
+  const ua = navigator.userAgent || '';
+  const isIOS = /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-  let listening = false;
-  let autoSubmit = false;
-  let silenceTimer = null;
   const txt = () => UI_TEXT[currentLang] || UI_TEXT.hr;
   const basePlaceholder = () => (WELCOME_I18N[currentLang] || WELCOME_I18N.hr).placeholder;
   const baseSend = () => (WELCOME_I18N[currentLang] || WELCOME_I18N.hr).send;
 
-  function armTimer(ms){
-    clearTimeout(silenceTimer);
-    silenceTimer = setTimeout(() => { if(listening) recognition.stop(); }, ms);
+  // ---- Stanje glasovnog unosa ----
+  let voiceActive    = false;
+  let shouldSend     = false;  // finish() postavi → onend pošalje
+  let iosBase        = '';     // tekst akumuliran kroz iOS cikluse
+  let transcript     = '';     // ukupni tekst (iosBase + trenutni ciklus)
+  let speechEndTimer = null;   // 2500 ms tišine nakon govora → pošalji
+  let idleTimer      = null;   // 8000 ms bez ikakvog govora → odustani
+  let currentRec     = null;   // aktivni SpeechRecognition objekt
+
+  function clearTimers() {
+    if (speechEndTimer) { clearTimeout(speechEndTimer); speechEndTimer = null; }
+    if (idleTimer)      { clearTimeout(idleTimer);      idleTimer = null;      }
   }
 
-  micBtn.addEventListener("click", function(){
-    if(listening){ autoSubmit = false; recognition.stop(); return; }
-    recognition.lang = (UI_LANGS[currentLang] || UI_LANGS.hr).speechLang;
-    input.value = "";
-    input.placeholder = txt().listen;
-    sendBtn.textContent = txt().done;
-    micBtn.classList.add("listening");
-    listening = true;
-    autoSubmit = true;
-    armTimer(NO_SPEECH_MS);
-    try { recognition.start(); }
-    catch(e){ resetMic(); }
-  });
-
-  // Za vrijeme slušanja "Pošalji" (sada "Gotovo") i Enter odmah završavaju i šalju pitanje.
-  document.addEventListener("click", function(e){
-    if(listening && e.target === sendBtn){ e.stopImmediatePropagation(); recognition.stop(); }
-  }, true);
-  input.addEventListener("keypress", function(e){
-    if(listening && e.key === "Enter"){ e.stopImmediatePropagation(); e.preventDefault(); recognition.stop(); }
-  }, true);
-
-  recognition.addEventListener("result", function(e){
-    let transcript = "";
-    for(let i = 0; i < e.results.length; i++){
-      transcript += e.results[i][0].transcript;
-    }
-    input.value = transcript;
-    armTimer(SILENCE_MS);
-  });
-
-  recognition.addEventListener("end", function(){
-    const send = autoSubmit && input.value.trim();
-    resetMic();
-    if(send) sendMessage();
-  });
-
-  recognition.addEventListener("error", function(e){
-    const err = e.error;
-    resetMic();
-    if(err === "not-allowed" || err === "service-not-allowed"){
-      input.placeholder = txt().micDenied;
-      setTimeout(() => { input.placeholder = basePlaceholder(); }, 3000);
-    } else if(err === "no-speech"){
-      input.placeholder = txt().noSpeech;
-      setTimeout(() => { input.placeholder = basePlaceholder(); }, 2500);
-    }
-  });
-
-  function resetMic(){
-    clearTimeout(silenceTimer);
-    listening = false;
+  function resetMicUI() {
     micBtn.classList.remove("listening");
     input.placeholder = basePlaceholder();
     sendBtn.textContent = baseSend();
   }
+
+  function finish() {
+    clearTimers();
+    shouldSend = true;
+    try { if (currentRec) currentRec.stop(); } catch(e) {}
+  }
+
+  function startListening(isRestart) {
+    if (currentRec) return;
+    if (!isRestart) { transcript = ''; iosBase = ''; }
+
+    var rec = new SpeechRecognition();
+    window.recognition = rec; // da applyLang može prebaciti jezik prepoznavanja
+
+    rec.lang = (UI_LANGS[currentLang] || UI_LANGS.hr).speechLang;
+    rec.interimResults = true;
+    rec.continuous = !isIOS;
+
+    rec.onresult = function(e) {
+      var sessionText = '';
+      for (var i = 0; i < e.results.length; i++) sessionText += e.results[i][0].transcript;
+      var text = (isIOS && iosBase) ? iosBase + ' ' + sessionText : sessionText;
+      transcript = text;
+      input.value = text;
+      if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+      if (speechEndTimer) clearTimeout(speechEndTimer);
+      // Tajmer teče KROZ iOS cikluse — ne briše se u onend restart putanji
+      speechEndTimer = setTimeout(finish, 2500);
+    };
+
+    rec.onend = function() {
+      currentRec = null;
+      if (isIOS && voiceActive && !shouldSend) {
+        // iOS restart putanja: NE diramo speechEndTimer — neka odbrojava 2,5 s
+        // od zadnjeg prepoznatog govora, bez obzira na iOS granice sesija.
+        iosBase = transcript;
+        setTimeout(function() { if (voiceActive) startListening(true); }, 80);
+        return;
+      }
+      clearTimers();
+      var wasActive = voiceActive;
+      voiceActive = false;
+      shouldSend = false;
+      resetMicUI();
+      if (wasActive && transcript.trim()) sendMessage();
+    };
+
+    rec.onerror = function(e) {
+      clearTimers();
+      currentRec = null;
+      var err = (e && e.error) || 'unknown';
+      if (err === 'not-allowed' || err === 'audio-capture' || err === 'service-not-allowed') {
+        voiceActive = false; shouldSend = false;
+        resetMicUI();
+        input.placeholder = txt().micDenied;
+        setTimeout(function() { input.placeholder = basePlaceholder(); }, 3000);
+        return;
+      }
+      if (err === 'no-speech') {
+        if (voiceActive) {
+          setTimeout(function() { if (voiceActive) startListening(true); }, 150);
+          return;
+        }
+        resetMicUI();
+        input.placeholder = txt().noSpeech;
+        setTimeout(function() { input.placeholder = basePlaceholder(); }, 2500);
+        return;
+      }
+      if (voiceActive) {
+        setTimeout(function() { if (voiceActive) startListening(true); }, 150);
+      } else {
+        voiceActive = false; shouldSend = false;
+        resetMicUI();
+      }
+    };
+
+    currentRec = rec;
+    micBtn.classList.add("listening");
+    input.placeholder = txt().listen;
+    sendBtn.textContent = txt().done;
+    try {
+      rec.start();
+      if (!isRestart) idleTimer = setTimeout(finish, 8000);
+    } catch(ex) {
+      currentRec = null;
+      voiceActive = false;
+      resetMicUI();
+    }
+  }
+
+  micBtn.addEventListener("click", function() {
+    if (voiceActive) { finish(); return; }
+    input.value = '';
+    voiceActive = true;
+    shouldSend = false;
+    iosBase = '';
+    transcript = '';
+    startListening(false);
+  });
+
+  // Za vrijeme slušanja "Gotovo" i Enter odmah završavaju i šalju pitanje.
+  document.addEventListener("click", function(e) {
+    if (voiceActive && e.target === sendBtn) { e.stopImmediatePropagation(); finish(); }
+  }, true);
+  input.addEventListener("keypress", function(e) {
+    if (voiceActive && e.key === "Enter") { e.stopImmediatePropagation(); e.preventDefault(); finish(); }
+  }, true);
 })();
 
 </script>
