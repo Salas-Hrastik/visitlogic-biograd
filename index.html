@@ -1656,7 +1656,7 @@ setTimeout(() => {
   const isAndroid = /Android/.test(ua);
   const MODE = isSafari ? 'restart' : isAndroid ? 'single' : 'continuous';
   const PAUSE_MS = MODE === 'restart' ? 2000 : 1500;
-  const IDLE_MS = 8000;
+  const IDLE_MS = MODE === 'restart' ? 12000 : 8000;
 
   const txt = () => UI_TEXT[currentLang] || UI_TEXT.hr;
   const basePlaceholder = () => (WELCOME_I18N[currentLang] || WELCOME_I18N.hr).placeholder;
@@ -1669,6 +1669,25 @@ setTimeout(() => {
   let pauseTimer = null, idleTimer = null;
 
   function clearTimers(){ clearTimeout(pauseTimer); clearTimeout(idleTimer); pauseTimer = idleTimer = null; }
+
+  // Dijagnostika: slijed događaja (bez izgovorenog teksta) ide u Vercel log kad unos završi.
+  let vlog = [], vt0 = 0;
+  function note(e, x){ if (vlog.length < 80) vlog.push({ t: Date.now() - vt0, e: e, x: x }); }
+  function flushLog(){
+    if (!vlog.length) return;
+    const body = JSON.stringify({ ua: navigator.userAgent, mode: MODE, lang: currentLang, events: vlog });
+    vlog = [];
+    try { fetch('/api/voicelog', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }); } catch(e) {}
+  }
+  function noSpeechMsg(){
+    input.placeholder = txt().noSpeech;
+    setTimeout(function(){ input.placeholder = basePlaceholder(); }, 2500);
+  }
+  // Odbrojavanje "ništa nisam čuo" kreće tek kad mikrofon stvarno snima (ne dok preglednik traži dopuštenje).
+  function armIdle(){
+    if (idleTimer || text) return;
+    idleTimer = setTimeout(function(){ note('idle-timeout'); cancel(); noSpeechMsg(); }, IDLE_MS);
+  }
 
   // Spaja rezultate jedne sesije. Android ponekad vraća isti tekst u više rezultata
   // ("koji", "koji su", "koji su izleti"), pa se rezultat koji ponavlja prethodni ne dodaje.
@@ -1702,6 +1721,8 @@ setTimeout(() => {
     const r = rec; rec = null;
     try { if (r) r.abort(); } catch(e) {}
     stopUI();
+    note('finish', text.trim().length);
+    flushLog();
     if (text.trim()) { input.value = text.trim(); sendMessage(); }
   }
 
@@ -1712,6 +1733,8 @@ setTimeout(() => {
     const r = rec; rec = null;
     try { if (r) r.abort(); } catch(e) {}
     stopUI();
+    note('cancel', text.trim().length);
+    flushLog();
   }
 
   function armPause(){
@@ -1727,7 +1750,13 @@ setTimeout(() => {
     r.interimResults = true;
     r.continuous = MODE === 'continuous';
 
+    r.onstart = function(){ note('start'); };
+    r.onaudiostart = function(){ note('audiostart'); if (r === rec) armIdle(); };
+    r.onspeechstart = function(){ note('speechstart'); };
+    r.onspeechend = function(){ note('speechend'); };
+    r.onnomatch = function(){ note('nomatch'); };
     r.onresult = function(e){
+      note('result', e.results.length + ':' + (e.results[e.results.length - 1] && e.results[e.results.length - 1].isFinal ? 'F' : 'i'));
       if (r !== rec) return;
       const t = sessionText(e.results);
       text = baseText && t ? baseText + ' ' + t : (t || baseText);
@@ -1738,6 +1767,7 @@ setTimeout(() => {
 
     r.onerror = function(e){
       const err = e && e.error;
+      note('error', err);
       if (err === 'not-allowed' || err === 'service-not-allowed' || err === 'audio-capture') {
         cancel();
         input.placeholder = txt().micDenied;
@@ -1747,6 +1777,7 @@ setTimeout(() => {
     };
 
     r.onend = function(){
+      note('end');
       if (r !== rec) return;   // stara sesija nakon finish/cancel
       rec = null;
       if (!active) return;
@@ -1758,28 +1789,25 @@ setTimeout(() => {
       }
       // Chrome/Android: sesija je završila na pauzi govora.
       if (text.trim()) finish();
-      else { cancel(); input.placeholder = txt().noSpeech; setTimeout(function(){ input.placeholder = basePlaceholder(); }, 2500); }
+      else { cancel(); noSpeechMsg(); }
     };
 
     rec = r;
-    try { r.start(); }
-    catch(ex) { rec = null; cancel(); }
+    try { r.start(); note('start-call', r.lang); }
+    catch(ex) { note('start-throw', ex && ex.name); rec = null; cancel(); }
+    // Ako preglednik ne javi početak snimanja, odbrojavanje kreće nakon 3 s.
+    setTimeout(function(){ if (r === rec) armIdle(); }, 3000);
   }
 
   micBtn.addEventListener("click", function(){
     if (active) { text.trim() ? finish() : cancel(); return; }
     active = true;
     text = ''; baseText = '';
+    vlog = []; vt0 = Date.now(); note('click');
     input.value = '';
     micBtn.classList.add("listening");
     input.placeholder = txt().listen;
     sendBtn.textContent = txt().done;
-    // Ako gost ništa ne kaže, slušanje se ugasi s porukom.
-    idleTimer = setTimeout(function(){
-      cancel();
-      input.placeholder = txt().noSpeech;
-      setTimeout(function(){ input.placeholder = basePlaceholder(); }, 2500);
-    }, IDLE_MS);
     startSession();
   });
 
