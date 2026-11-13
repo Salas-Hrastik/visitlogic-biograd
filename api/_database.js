@@ -2386,6 +2386,20 @@ export const db = {
     "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Dalmatinske tradicijske igre (lipanj).",
     "eventi": [
       {
+        "naziv": "Dnevnik bodybuildera – promocija knjige Marka Lukačića",
+        "opis": "Gradska knjižnica Biograd na Moru poziva na promociju knjige „Dnevnik bodybuildera” Marka Lukačića. Početak je u 18:00 sati.",
+        "termin": "19.11.2026",
+        "lokacija": "Gradska knjižnica Biograd na Moru",
+        "web": "https://www.discover-biograd.com/dogadanja/kalendar-dogadanja"
+      },
+      {
+        "naziv": "Regata Nenin đir",
+        "opis": "Sedma memorijalna jedriličarska regata „Nenin đir” u Biogradu na Moru. Organizator je Jedriličarski klub Briva.",
+        "termin": "21.11. – 22.11.2026",
+        "lokacija": "Biograd na Moru",
+        "web": "https://www.discover-biograd.com/dogadanja/kalendar-dogadanja"
+      },
+      {
         "naziv": "Advent u Biogradu",
         "opis": "Tradicionalni Božićni sajam s kućicama, blagdanskim delicijama, koncertima i programom za djecu, koji se prema Programu rada Turističke zajednice održava četiri subote tijekom adventa. Detaljan program za 2026. još nije objavljen; prošle godine održavao se od 18 sati u centralnom parku na Trgu hrvatskih velikana.",
         "termin": "prosinac 2026. (subotom, točni datumi još nisu objavljeni)",
