@@ -678,10 +678,14 @@ function detectCategory(msg, lastCategory, db) {
   if (/novac|gotovin|withdraw|\bcash\b|geld abheben|geldautomat|bancomat|prelevare|pénzfelvét|vybrat peníze|vybrať peniaze|dvig\w* denar/.test(m)) return 'prakticno';
 
   // Ime hotela vodi u smještaj i kad postoji istoimeni restoran (Meduza, Carpymore), osim pitanja o hrani.
+  // "Kornati" bez riječi hotel znači park ili otoke, ne Hotel Kornati (ulaznica za NP Kornati, izlet na Kornate).
   if (!/jelovnik|menu|speisekarte|étlap|pizz|restoran|restaurant|ristorant|večer|ručak|jesti|essen/.test(m)) {
     const w = m.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
-    if (Object.keys(hotels.hoteli).some(n => hotelNamed(n, m, w))) return 'smjestaj';
+    const stayWords = /hotel|sob[aeiu]\b|sobe|room|zimmer|camera|szoba|pokoj|noćen|nocen|smješt|smjest|rezerv|book|übernacht/.test(m);
+    if (Object.keys(hotels.hoteli).some(n => !(/kornat/i.test(n) && !stayWords) && hotelNamed(n, m, w))) return 'smjestaj';
   }
+  // Izlet na Kornate je Kornati, ne nautika ("izlet brodom", "boat trip").
+  if (/kornat/.test(m) && !/marin/.test(m) && /izlet|trip|excursion|ausflug|escursion|gita|kirándul|výlet|izlet/.test(m)) return 'kornati';
   if (/coffee|kaffee|\bcafé\b|caffè|kávé|kafić|kafic|kav[aeu]\b|cocktail|koktel|\bpub\b|lounge bar|ausgehen|nightlife|vita notturna|éjszakai|noční život|nočný život|nočno življenje/.test(m)) return 'gastronomija';
   if (/kunjk|arca noae|prošek|prosek|kraljevsk\w* jel|royal dish|königlich\w* gericht|gastro biograd|pizz|sladoled|slastič|ice cream|gelat|\beis\b|eiscaf|fagylalt|zmrzlin|cukrász|pekar|bakery|bäcker|panetteria/.test(m)) return 'gastronomija';
   if (/jelovnik|cjenik pić|speisekarte|étlap|jídeln|jedáln|jedilnik|wine list|vinsk\w* kart/.test(m) || Object.values(MENU_NAMES).some(re => re.test(msg))) return 'gastronomija';
@@ -745,7 +749,7 @@ function detectCategory(msg, lastCategory, db) {
   // Agencije s popisa TZ-a prodaju izlete: pitanje o agenciji prikazuje agencije, ne odredišta.
   if (/agencij|agenc[yi]|agentur|agenzi|reisebüro|utazási iroda|cestovn\w* kancel/.test(m) && !/kornat/.test(m)) return 'smjestaj';
   if (/vrgad|plitvi|\bquad|\batv\b|buggy|jahanj|jahat|horse|reiten|cavall|lovagl|rafting|kayak|kajak|zrmanj|degustacij|ražnjevi|raznjevi|sunset|krstarenj|cruise|špilj|spilj|modrič|telašćic|telascic|ronjenj|ronit|diving|tauch|immersion|potáp|búvárk/.test(m)) return 'izleti';
-  if (m.includes('izlet') || m.includes('okolica') || m.includes('zadar') || m.includes('šibenik') || m.includes('sibenik') || m.includes('krka') || m.includes('vransko') || m.includes('vrana') || m.includes('pašman') || m.includes('pasman') || m.includes('nin ') || m.includes(' nin') || m.includes('paklenica') || m.includes('plitvice') || m.includes('blizina') || m.includes('ausflug')
+  if (m.includes('izlet') || m.includes('okolica') || m.includes('zadar') || m.includes('šibenik') || m.includes('sibenik') || m.includes('krka') || m.includes('vransko') || m.includes('vrana') || m.includes('pašman') || m.includes('pasman') || /(?<!\p{L})nin(a|u|om)?(?!\p{L})/u.test(m) || m.includes('paklenica') || m.includes('plitvice') || m.includes('blizina') || m.includes('ausflug')
     || m.includes('trip') || m.includes('excursion') || m.includes('day') || m.includes('nearby') || m.includes('visit zadar') || m.includes('around') || m.includes('surroundings')
     || m.includes('tagesausflug') || m.includes('umgebung'))
     return 'izleti';
