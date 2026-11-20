@@ -1210,7 +1210,7 @@ export const db = {
         "telefon": "",
         "email": "",
         "slika": "https://www.discover-biograd.com/attachments/preview/67f4c0b1322ec/in.jpg",
-        "web": "",
+        "web": "https://hotelin-biograd.com",
         "karta": "https://maps.google.com/?q=Hotel+IN+Biograd+na+Moru",
         "ocjena": "",
         "recenzija": "",
@@ -2385,13 +2385,6 @@ export const db = {
   "dogadanja": {
     "opis": "Biograd ima bogat kulturni i sportski program tijekom cijele godine. Istaknute manifestacije uključuju Boat Show (listopad), Biogradsku noć (kolovoz), Family Festival (lipanj) i Dalmatinske tradicijske igre (lipanj).",
     "eventi": [
-      {
-        "naziv": "Dnevnik bodybuildera – promocija knjige Marka Lukačića",
-        "opis": "Gradska knjižnica Biograd na Moru poziva na promociju knjige „Dnevnik bodybuildera” Marka Lukačića. Početak je u 18:00 sati.",
-        "termin": "19.11.2026",
-        "lokacija": "Gradska knjižnica Biograd na Moru",
-        "web": "https://www.discover-biograd.com/dogadanja/kalendar-dogadanja"
-      },
       {
         "naziv": "Regata Nenin đir",
         "opis": "Sedma memorijalna jedriličarska regata „Nenin đir” u Biogradu na Moru. Organizator je Jedriličarski klub Briva.",
