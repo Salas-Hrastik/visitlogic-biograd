@@ -1532,17 +1532,18 @@ async function pickAnsweredFollowup(candidates, { message, reply, history, categ
   const hist = [...(history || []), { role: 'user', content: message }, { role: 'assistant', content: reply }].slice(-10);
   const check = async q => {
     const p = prepareRequest({ message: q, history: hist, lastCategory: category, weather, clientLang: lang, forceLang: lang, forFollowupCheck: true }).params;
-    const last = p.messages[p.messages.length - 1];
+    // Podaci koje bi bot dobio za to pitanje (sustavski dio + bilješke [SUSTAV]) idu kao prilog,
+    // a provjera ima svoju ulogu: inače model počne odgovarati umjesto da procijeni.
+    const data = p.system.map(b => b.text).join('\n\n') + '\n\n' + p.messages[p.messages.length - 1].content.slice(q.length);
     const r = await anthropic.messages.create({
       model: 'claude-haiku-5-5',
-      max_tokens: 5,
+      max_tokens: 4,
       thinking: { type: 'disabled' },
-      system: p.system,
-      messages: [...p.messages.slice(0, -1), { role: 'user', content: last.content +
-        '\n\n[PROVJERA: Ne odgovaraj na pitanje. Sadrže li podaci iz sustavske poruke i bilješki [SUSTAV] u ovom upitu izravan, konkretan odgovor na ovo pitanje gosta? Odgovori samo DA ili NE.]' }],
+      system: 'Ti si provjerivač. Dobivaš podatke turističkog chatbota i pitanje gosta. Ne odgovaraš na pitanje, nego procjenjuješ sadrže li podaci izravan, konkretan odgovor na njega (naziv, cijenu, vrijeme, adresu ili opis koji pitanje traži). Odgovaraš isključivo jednom riječju: DA ili NE.',
+      messages: [{ role: 'user', content: `<podaci>\n${data}\n</podaci>\n\nPitanje gosta: ${q}\n\nSadrže li podaci izravan, konkretan odgovor na to pitanje? Odgovori samo DA ili NE.` }],
     }, { timeout: 8000, maxRetries: 0 });
     const t = r.content.filter(b => b.type === 'text').map(b => b.text).join('').trim().toUpperCase();
-    raws.push(`${r.stop_reason}:${JSON.stringify(r.content.map(b => b.type))}:${t.slice(0, 30)}`);
+    raws.push(t.slice(0, 12));
     return /^(DA|YES)/.test(t);
   };
   const errors = [], raws = [];
