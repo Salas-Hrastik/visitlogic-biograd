@@ -501,6 +501,43 @@ background:#0077a8;
 color:white;
 }
 
+/* ===== PREDLOŽENO POTPITANJE ===== */
+.followup{
+margin-top:10px;
+display:flex;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
+background:#fff8f0;
+border:1px dashed #f4a261;
+border-radius:12px;
+padding:10px 12px;
+}
+.followup-text{
+flex:1 1 240px;
+color:#004e89;
+font-size:16px;
+cursor:pointer;
+}
+.followup-text small{ display:block; color:#8a6a4a; font-size:13px; margin-bottom:2px; }
+.followup button{
+background:#f4a261;
+color:#004e89;
+border:none;
+border-radius:16px;
+padding:8px 14px;
+font-weight:bold;
+font-size:15px;
+cursor:pointer;
+white-space:nowrap;
+}
+.followup button:hover{ background:#e8894a; }
+@media (max-width:600px){
+  .followup{ padding:9px 10px; gap:8px; }
+  .followup-text{ font-size:15px; flex-basis:100%; }
+  .followup button{ width:100%; padding:10px 14px; font-size:15px; }
+}
+
 /* ===== ITEM CARDS ===== */
 .item-cards{
 margin-top:10px;
@@ -983,14 +1020,14 @@ const WELCOME_I18N = {
 
 // Natpisi sučelja izvan tabova i naslovnice
 const UI_TEXT = {
-  hr: { h1:'AI turistički informator', region:'Biograd na Moru · Zadarska županija · Dalmacija', now:'Biograd sada:', loading:'⏳ učitavam...', sea:'More', map:'Navigacija', menu:'Jelovnik', prices:'Provjeri cijene', pricesTitle:'Aktualne cijene i dostupnost (direktna rezervacija)', more:'Više', moreTitle:'Pronađi više o objektu (Google)', voice:'Govori (glasovni unos)', voiceNo:'glasovni unos nije podržan', openTab:'Otvori u novoj kartici ↗', frameBlocked:'Ova stranica ne dopušta prikaz u prozoru.', noAnswer:'Asistent nije dao odgovor.', slow:'Odgovor traje dulje nego očekivano. Pokušajte ponovno.', serverErr:'Greška u komunikaciji sa serverom.', listen:"🎤 Govorite… pitanje šaljem sam čim zastanete", done:"Gotovo ✓", micDenied:"⚠️ Dopustite pristup mikrofonu u pregledniku", noSpeech:"Ništa nisam čuo — pokušajte ponovno" },
-  en: { h1:'AI Tourist Information', region:'Biograd na Moru · Zadar County · Dalmatia', now:'Biograd now:', loading:'⏳ loading...', sea:'Sea', map:'Directions', menu:'Menu', prices:'Check prices', pricesTitle:'Current prices and availability (direct booking)', more:'More', moreTitle:'Find out more (Google)', voice:'Speak (voice input)', voiceNo:'voice input not supported', openTab:'Open in new tab ↗', frameBlocked:'This page cannot be displayed in a window.', noAnswer:'The assistant did not answer.', slow:'The answer is taking longer than expected. Please try again.', serverErr:'Could not reach the server.', listen:"🎤 Speak… I'll send your question as soon as you pause", done:"Done ✓", micDenied:"⚠️ Allow microphone access in your browser", noSpeech:"I didn't hear anything — please try again" },
-  de: { h1:'KI-Touristeninformation', region:'Biograd na Moru · Gespanschaft Zadar · Dalmatien', now:'Biograd jetzt:', loading:'⏳ wird geladen...', sea:'Meer', map:'Route', menu:'Speisekarte', prices:'Preise prüfen', pricesTitle:'Aktuelle Preise und Verfügbarkeit (Direktbuchung)', more:'Mehr', moreTitle:'Mehr erfahren (Google)', voice:'Sprechen (Spracheingabe)', voiceNo:'Spracheingabe nicht unterstützt', openTab:'In neuem Tab öffnen ↗', frameBlocked:'Diese Seite kann nicht im Fenster angezeigt werden.', noAnswer:'Der Assistent hat nicht geantwortet.', slow:'Die Antwort dauert länger als erwartet. Bitte versuchen Sie es erneut.', serverErr:'Der Server ist nicht erreichbar.', listen:"🎤 Sprechen Sie… ich sende die Frage, sobald Sie eine Pause machen", done:"Fertig ✓", micDenied:"⚠️ Erlauben Sie den Mikrofonzugriff im Browser", noSpeech:"Ich habe nichts gehört — bitte erneut versuchen" },
-  sl: { h1:'AI turistični informator', region:'Biograd na Moru · Zadrska županija · Dalmacija', now:'Biograd zdaj:', loading:'⏳ nalagam...', sea:'Morje', map:'Navigacija', menu:'Jedilnik', prices:'Preveri cene', pricesTitle:'Aktualne cene in razpoložljivost (neposredna rezervacija)', more:'Več', moreTitle:'Več o objektu (Google)', voice:'Govorite (glasovni vnos)', voiceNo:'glasovni vnos ni podprt', openTab:'Odpri v novem zavihku ↗', frameBlocked:'Te strani ni mogoče prikazati v oknu.', noAnswer:'Asistent ni odgovoril.', slow:'Odgovor traja dlje od pričakovanega. Poskusite znova.', serverErr:'Povezava s strežnikom ni uspela.', listen:"🎤 Govorite… vprašanje pošljem sam, ko se ustavite", done:"Končano ✓", micDenied:"⚠️ V brskalniku dovolite dostop do mikrofona", noSpeech:"Nič nisem slišal — poskusite znova" },
-  it: { h1:'Informazioni turistiche AI', region:'Biograd na Moru · Regione di Zara · Dalmazia', now:'Biograd ora:', loading:'⏳ caricamento...', sea:'Mare', map:'Indicazioni', menu:'Menù', prices:'Verifica prezzi', pricesTitle:'Prezzi attuali e disponibilità (prenotazione diretta)', more:'Altro', moreTitle:'Scopri di più (Google)', voice:'Parla (input vocale)', voiceNo:'input vocale non supportato', openTab:'Apri in una nuova scheda ↗', frameBlocked:'Questa pagina non può essere visualizzata in una finestra.', noAnswer:'L\'assistente non ha risposto.', slow:'La risposta richiede più tempo del previsto. Riprova.', serverErr:'Impossibile raggiungere il server.', listen:"🎤 Parla… invio la domanda appena fai una pausa", done:"Fatto ✓", micDenied:"⚠️ Consenti l'accesso al microfono nel browser", noSpeech:"Non ho sentito nulla — riprova" },
-  hu: { h1:'AI turisztikai tájékoztató', region:'Biograd na Moru · Zára megye · Dalmácia', now:'Biograd most:', loading:'⏳ betöltés...', sea:'Tenger', map:'Útvonal', menu:'Étlap', prices:'Árak ellenőrzése', pricesTitle:'Aktuális árak és elérhetőség (közvetlen foglalás)', more:'Több', moreTitle:'További információ (Google)', voice:'Beszéljen (hangbevitel)', voiceNo:'a hangbevitel nem támogatott', openTab:'Megnyitás új lapon ↗', frameBlocked:'Ez az oldal nem jeleníthető meg ablakban.', noAnswer:'Az asszisztens nem válaszolt.', slow:'A válasz a vártnál tovább tart. Kérjük, próbálja újra.', serverErr:'A szerver nem érhető el.', listen:"🎤 Beszéljen… amint szünetet tart, elküldöm a kérdést", done:"Kész ✓", micDenied:"⚠️ Engedélyezze a mikrofont a böngészőben", noSpeech:"Nem hallottam semmit — próbálja újra" },
-  cs: { h1:'AI turistický informátor', region:'Biograd na Moru · Zadarská župa · Dalmácie', now:'Biograd teď:', loading:'⏳ načítání...', sea:'Moře', map:'Navigace', menu:'Jídelní lístek', prices:'Ověřit ceny', pricesTitle:'Aktuální ceny a dostupnost (přímá rezervace)', more:'Více', moreTitle:'Zjistit více (Google)', voice:'Mluvte (hlasový vstup)', voiceNo:'hlasový vstup není podporován', openTab:'Otevřít na nové kartě ↗', frameBlocked:'Tuto stránku nelze zobrazit v okně.', noAnswer:'Asistent neodpověděl.', slow:'Odpověď trvá déle, než se čekalo. Zkuste to znovu.', serverErr:'Server není dostupný.', listen:"🎤 Mluvte… otázku odešlu sám, jakmile se odmlčíte", done:"Hotovo ✓", micDenied:"⚠️ Povolte v prohlížeči přístup k mikrofonu", noSpeech:"Nic jsem neslyšel — zkuste to znovu" },
-  sk: { h1:'AI turistický informátor', region:'Biograd na Moru · Zadarská župa · Dalmácia', now:'Biograd teraz:', loading:'⏳ načítava sa...', sea:'More', map:'Navigácia', menu:'Jedálny lístok', prices:'Overiť ceny', pricesTitle:'Aktuálne ceny a dostupnosť (priama rezervácia)', more:'Viac', moreTitle:'Zistiť viac (Google)', voice:'Hovorte (hlasový vstup)', voiceNo:'hlasový vstup nie je podporovaný', openTab:'Otvoriť na novej karte ↗', frameBlocked:'Túto stránku nemožno zobraziť v okne.', noAnswer:'Asistent neodpovedal.', slow:'Odpoveď trvá dlhšie, než sa čakalo. Skúste to znova.', serverErr:'Server nie je dostupný.', listen:"🎤 Hovorte… otázku odošlem sám, keď sa odmlčíte", done:"Hotovo ✓", micDenied:"⚠️ Povoľte v prehliadači prístup k mikrofónu", noSpeech:"Nič som nepočul — skúste to znova" }
+  hr: { h1:'AI turistički informator', region:'Biograd na Moru · Zadarska županija · Dalmacija', now:'Biograd sada:', loading:'⏳ učitavam...', sea:'More', map:'Navigacija', menu:'Jelovnik', prices:'Provjeri cijene', pricesTitle:'Aktualne cijene i dostupnost (direktna rezervacija)', more:'Više', moreTitle:'Pronađi više o objektu (Google)', voice:'Govori (glasovni unos)', voiceNo:'glasovni unos nije podržan', openTab:'Otvori u novoj kartici ↗', frameBlocked:'Ova stranica ne dopušta prikaz u prozoru.', noAnswer:'Asistent nije dao odgovor.', slow:'Odgovor traje dulje nego očekivano. Pokušajte ponovno.', serverErr:'Greška u komunikaciji sa serverom.', listen:"🎤 Govorite… pitanje šaljem sam čim zastanete", done:"Gotovo ✓", micDenied:"⚠️ Dopustite pristup mikrofonu u pregledniku", noSpeech:"Ništa nisam čuo — pokušajte ponovno", followTitle:"Možda vas zanima:", followBtn:"Prenesi u pitanje" },
+  en: { h1:'AI Tourist Information', region:'Biograd na Moru · Zadar County · Dalmatia', now:'Biograd now:', loading:'⏳ loading...', sea:'Sea', map:'Directions', menu:'Menu', prices:'Check prices', pricesTitle:'Current prices and availability (direct booking)', more:'More', moreTitle:'Find out more (Google)', voice:'Speak (voice input)', voiceNo:'voice input not supported', openTab:'Open in new tab ↗', frameBlocked:'This page cannot be displayed in a window.', noAnswer:'The assistant did not answer.', slow:'The answer is taking longer than expected. Please try again.', serverErr:'Could not reach the server.', listen:"🎤 Speak… I'll send your question as soon as you pause", done:"Done ✓", micDenied:"⚠️ Allow microphone access in your browser", noSpeech:"I didn't hear anything — please try again", followTitle:"You might also ask:", followBtn:"Use this question" },
+  de: { h1:'KI-Touristeninformation', region:'Biograd na Moru · Gespanschaft Zadar · Dalmatien', now:'Biograd jetzt:', loading:'⏳ wird geladen...', sea:'Meer', map:'Route', menu:'Speisekarte', prices:'Preise prüfen', pricesTitle:'Aktuelle Preise und Verfügbarkeit (Direktbuchung)', more:'Mehr', moreTitle:'Mehr erfahren (Google)', voice:'Sprechen (Spracheingabe)', voiceNo:'Spracheingabe nicht unterstützt', openTab:'In neuem Tab öffnen ↗', frameBlocked:'Diese Seite kann nicht im Fenster angezeigt werden.', noAnswer:'Der Assistent hat nicht geantwortet.', slow:'Die Antwort dauert länger als erwartet. Bitte versuchen Sie es erneut.', serverErr:'Der Server ist nicht erreichbar.', listen:"🎤 Sprechen Sie… ich sende die Frage, sobald Sie eine Pause machen", done:"Fertig ✓", micDenied:"⚠️ Erlauben Sie den Mikrofonzugriff im Browser", noSpeech:"Ich habe nichts gehört — bitte erneut versuchen", followTitle:"Vielleicht interessiert Sie:", followBtn:"Als Frage übernehmen" },
+  sl: { h1:'AI turistični informator', region:'Biograd na Moru · Zadrska županija · Dalmacija', now:'Biograd zdaj:', loading:'⏳ nalagam...', sea:'Morje', map:'Navigacija', menu:'Jedilnik', prices:'Preveri cene', pricesTitle:'Aktualne cene in razpoložljivost (neposredna rezervacija)', more:'Več', moreTitle:'Več o objektu (Google)', voice:'Govorite (glasovni vnos)', voiceNo:'glasovni vnos ni podprt', openTab:'Odpri v novem zavihku ↗', frameBlocked:'Te strani ni mogoče prikazati v oknu.', noAnswer:'Asistent ni odgovoril.', slow:'Odgovor traja dlje od pričakovanega. Poskusite znova.', serverErr:'Povezava s strežnikom ni uspela.', listen:"🎤 Govorite… vprašanje pošljem sam, ko se ustavite", done:"Končano ✓", micDenied:"⚠️ V brskalniku dovolite dostop do mikrofona", noSpeech:"Nič nisem slišal — poskusite znova", followTitle:"Morda vas zanima:", followBtn:"Prenesi v vprašanje" },
+  it: { h1:'Informazioni turistiche AI', region:'Biograd na Moru · Regione di Zara · Dalmazia', now:'Biograd ora:', loading:'⏳ caricamento...', sea:'Mare', map:'Indicazioni', menu:'Menù', prices:'Verifica prezzi', pricesTitle:'Prezzi attuali e disponibilità (prenotazione diretta)', more:'Altro', moreTitle:'Scopri di più (Google)', voice:'Parla (input vocale)', voiceNo:'input vocale non supportato', openTab:'Apri in una nuova scheda ↗', frameBlocked:'Questa pagina non può essere visualizzata in una finestra.', noAnswer:'L\'assistente non ha risposto.', slow:'La risposta richiede più tempo del previsto. Riprova.', serverErr:'Impossibile raggiungere il server.', listen:"🎤 Parla… invio la domanda appena fai una pausa", done:"Fatto ✓", micDenied:"⚠️ Consenti l'accesso al microfono nel browser", noSpeech:"Non ho sentito nulla — riprova", followTitle:"Potrebbe interessarti:", followBtn:"Usa questa domanda" },
+  hu: { h1:'AI turisztikai tájékoztató', region:'Biograd na Moru · Zára megye · Dalmácia', now:'Biograd most:', loading:'⏳ betöltés...', sea:'Tenger', map:'Útvonal', menu:'Étlap', prices:'Árak ellenőrzése', pricesTitle:'Aktuális árak és elérhetőség (közvetlen foglalás)', more:'Több', moreTitle:'További információ (Google)', voice:'Beszéljen (hangbevitel)', voiceNo:'a hangbevitel nem támogatott', openTab:'Megnyitás új lapon ↗', frameBlocked:'Ez az oldal nem jeleníthető meg ablakban.', noAnswer:'Az asszisztens nem válaszolt.', slow:'A válasz a vártnál tovább tart. Kérjük, próbálja újra.', serverErr:'A szerver nem érhető el.', listen:"🎤 Beszéljen… amint szünetet tart, elküldöm a kérdést", done:"Kész ✓", micDenied:"⚠️ Engedélyezze a mikrofont a böngészőben", noSpeech:"Nem hallottam semmit — próbálja újra", followTitle:"Talán ez is érdekli:", followBtn:"Kérdésként átvesz" },
+  cs: { h1:'AI turistický informátor', region:'Biograd na Moru · Zadarská župa · Dalmácie', now:'Biograd teď:', loading:'⏳ načítání...', sea:'Moře', map:'Navigace', menu:'Jídelní lístek', prices:'Ověřit ceny', pricesTitle:'Aktuální ceny a dostupnost (přímá rezervace)', more:'Více', moreTitle:'Zjistit více (Google)', voice:'Mluvte (hlasový vstup)', voiceNo:'hlasový vstup není podporován', openTab:'Otevřít na nové kartě ↗', frameBlocked:'Tuto stránku nelze zobrazit v okně.', noAnswer:'Asistent neodpověděl.', slow:'Odpověď trvá déle, než se čekalo. Zkuste to znovu.', serverErr:'Server není dostupný.', listen:"🎤 Mluvte… otázku odešlu sám, jakmile se odmlčíte", done:"Hotovo ✓", micDenied:"⚠️ Povolte v prohlížeči přístup k mikrofonu", noSpeech:"Nic jsem neslyšel — zkuste to znovu", followTitle:"Mohlo by vás zajímat:", followBtn:"Převzít do dotazu" },
+  sk: { h1:'AI turistický informátor', region:'Biograd na Moru · Zadarská župa · Dalmácia', now:'Biograd teraz:', loading:'⏳ načítava sa...', sea:'More', map:'Navigácia', menu:'Jedálny lístok', prices:'Overiť ceny', pricesTitle:'Aktuálne ceny a dostupnosť (priama rezervácia)', more:'Viac', moreTitle:'Zistiť viac (Google)', voice:'Hovorte (hlasový vstup)', voiceNo:'hlasový vstup nie je podporovaný', openTab:'Otvoriť na novej karte ↗', frameBlocked:'Túto stránku nemožno zobraziť v okne.', noAnswer:'Asistent neodpovedal.', slow:'Odpoveď trvá dlhšie, než sa čakalo. Skúste to znova.', serverErr:'Server nie je dostupný.', listen:"🎤 Hovorte… otázku odošlem sám, keď sa odmlčíte", done:"Hotovo ✓", micDenied:"⚠️ Povoľte v prehliadači prístup k mikrofónu", noSpeech:"Nič som nepočul — skúste to znova", followTitle:"Mohlo by vás zaujímať:", followBtn:"Prevziať do otázky" }
 };
 const uiText = () => UI_TEXT[currentLang] || UI_TEXT.hr;
 const SMJESTAJ_GRUPE = {
@@ -1160,7 +1197,7 @@ function openNavigation(e, url){
   });
 }
 
-function addMessage(text, type, suggestions, images, items, replyLinks){
+function addMessage(text, type, suggestions, images, items, replyLinks, followup){
   const chatMessages = document.getElementById("chat-messages");
 
   const div = document.createElement("div");
@@ -1358,6 +1395,33 @@ function addMessage(text, type, suggestions, images, items, replyLinks){
     chatMessages.appendChild(cards);
   }
 
+  // Predloženo potpitanje: gumb ga prenosi u polje za pitanje, gdje ga gost može doraditi i poslati.
+  if(type === "bot" && followup){
+    const box = document.createElement("div");
+    box.className = "followup";
+    const q = document.createElement("div");
+    q.className = "followup-text";
+    const lbl = document.createElement("small");
+    lbl.textContent = "💡 " + uiText().followTitle;
+    q.appendChild(lbl);
+    q.appendChild(document.createTextNode(followup));
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "✏️ " + uiText().followBtn;
+    const use = () => {
+      const inp = document.getElementById("user-input");
+      inp.value = followup;
+      inp.focus();
+      inp.setSelectionRange(followup.length, followup.length);
+      inp.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    };
+    btn.onclick = use;
+    q.onclick = use;
+    box.appendChild(q);
+    box.appendChild(btn);
+    chatMessages.appendChild(box);
+  }
+
   if(suggestions && suggestions.length && type === "bot"){
     const sug = document.createElement("div");
     sug.className = "suggestions";
@@ -1442,7 +1506,7 @@ async function sendMessage(){
     }
 
     if(data.reply){
-      addMessage(data.reply, "bot", data.suggestions, data.images, data.items, data.links);
+      addMessage(data.reply, "bot", data.suggestions, data.images, data.items, data.links, data.followup);
       chatHistory.push({ role: "assistant", content: data.reply });
       if(chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
     } else {
@@ -1474,18 +1538,20 @@ async function readStream(response, typing){
   const decoder = new TextDecoder();
   const chatMessages = document.getElementById("chat-messages");
   let buffer = "", text = "", stripLists = false, bubble = null, done = null, lastPaint = 0;
+  // Potpitanje (redak iza §§) stiže na kraju; dok se piše, ne prikazuje se u odgovoru.
+  const visible = () => { const t = text.split("§")[0]; return stripLists ? hideLists(t) : t; };
   const paint = () => {
     if(!bubble){
       typing.remove();
       bubble = document.createElement("div");
       bubble.className = "bot-message";
       chatMessages.appendChild(bubble);
-      bubble.innerHTML = formatReply(stripLists ? hideLists(text) : text);
+      bubble.innerHTML = formatReply(visible());
       // Kao i gotov odgovor (addMessage): na vidiku ostaje početak, gost čita dok se piše.
       bubble.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
-    bubble.innerHTML = formatReply(stripLists ? hideLists(text) : text);
+    bubble.innerHTML = formatReply(visible());
   };
   while(true){
     const { value, done: end } = await reader.read();

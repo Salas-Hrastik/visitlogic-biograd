@@ -1513,6 +1513,18 @@ function namedObjectsNote(items, message) {
   return `\n[SUSTAV: Točni podaci iz baze za objekt koji gost spominje — navedi ih doslovno:\n${lines.join('\n')}]`;
 }
 
+// ===== PREDLOŽENO POTPITANJE =====
+// Model na kraju odgovora u zasebnom retku iza oznake §§ predloži sljedeće pitanje gosta;
+// poslužitelj ga odvaja od odgovora i šalje kao "followup" (stranica nudi gumb za prijenos u polje).
+const FOLLOWUP_NOTE = `\n[SUSTAV: Na samom kraju odgovora, u zasebnom zadnjem retku, napiši "§§ " i jedno kratko pitanje (najviše 12 riječi) koje bi gost prirodno mogao postaviti sljedeće, nadovezujući se na ovaj odgovor, na jeziku odgovora. Piši ga kao gost u prvom licu (npr. "Koliko košta ulaznica za Kornate?"), ne kao pitanje gostu. Ne ponavljaj ono na što si već odgovorio.]`;
+
+function splitFollowup(text) {
+  const m = text.match(/\n?[ \t]*§§[ \t]*([^\n]+)\s*$/);
+  if (!m) return { reply: text.replace(/§§\s*$/, '').trim(), followup: '' };
+  const q = m[1].replace(/^[„"*]+|[“"*]+$/g, '').trim().slice(0, 160);
+  return { reply: text.slice(0, m.index).trim(), followup: q };
+}
+
 // ===== HOTELI: ponuda, cjenik i obrazac za rezervaciju (api/_hoteli.js, mjesečno osvježavanje) =====
 const HOTEL_RE = /hotel|cijen|cjenik|košt|price|cost|preis|kost|prezz|cost|ár\b|árak|cen[ay]|ponud|sadrža|bazen|pool|wellness|spa\b|doručak|polupansion|all.?inclusive|rezerv|book|buch|prenot|foglal/;
 
@@ -2068,7 +2080,7 @@ export default async function handler(req, res) {
       ],
       messages: [
         ...historyMessages,
-        { role: 'user', content: message + itemsNote + namedNote + hotelInfo + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
+        { role: 'user', content: message + FOLLOWUP_NOTE + itemsNote + namedNote + hotelInfo + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
       ]
     };
     // Popisi se brišu iz odgovora uz kartice; stranica ih skriva već tijekom ispisa.
@@ -2097,7 +2109,8 @@ export default async function handler(req, res) {
 
     const rawReply = completion.content.filter(b => b.type === 'text').map(b => b.text).join('');
     // Odgovor odrezan na granici duljine završava na zadnjoj cijeloj rečenici, ne usred riječi.
-    const fullReply = completion.stop_reason === 'max_tokens' ? cutToLastSentence(rawReply) : rawReply;
+    const split = splitFollowup(rawReply);
+    const fullReply = completion.stop_reason === 'max_tokens' ? cutToLastSentence(split.reply) : split.reply;
     const suggestions = getSuggestions(detectedCategory || 'opcenito', lang, message);
 
     // Ako postoje kartice → ukloni bullet/numbered liste iz AI teksta
@@ -2120,6 +2133,7 @@ export default async function handler(req, res) {
 
     const payload = {
       reply,
+      followup: split.followup,
       category: detectedCategory,
       lang,
       suggestions,
