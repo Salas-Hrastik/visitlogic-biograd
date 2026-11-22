@@ -671,6 +671,13 @@ const HEALTH_RE = /doktor|liječni|lijecni|ambulant|dom zdravlja|ordinacij|zubar
 function detectCategory(msg, lastCategory, db) {
   const m = msg.toLowerCase();
   if (VET_RE.test(m) || HEALTH_RE.test(m) || PHARMACY_RE.test(m) || EMERGENCY_RE.test(m)) return 'prakticno';
+  // Pravila za jezike koje ostatak detekcije slabije pokriva (sl, it, hu, cs, sk).
+  if (/kornat/.test(m) && /plaž|pláž|plaj|strand|strän|beach|spiagg|pláž/.test(m)) return 'kornati';
+  if (/(ostrov|island|insel|isol[ae]|sziget|otoc|otok)/.test(m) && /restaur|reštaur|konob|jesť|jíst|jesti|essen|eat|mangiare|enni|ristorant|étterem/.test(m)) return 'kornati';
+  if (/\bparkir|\bparking|\bparkol|\bparkov|\bparcheg|\bparken\b/.test(m)) return 'prakticno';
+  if (/dalmaland|zabavn\w* park|zabavišč|zábavn\w* park|vidámpark|amusement park|freizeitpark|parco divertimenti/.test(m)) return 'atrakcije';
+  if (/\bevent|eventi|veranstalt|rendezvény|\bprogram (događ|manifest|event)|\bakce\b|podujat|dogod[ek]|dogajanj|manifestac|questa settimana|this week|diese woche|ezen a héten|tento týden|tento týždeň|ta teden|koncert|concert|konzert/.test(m) && !/kornat|izlet/.test(m)) return 'dogadanja';
+  if (/\bbarca\b|barca a vela|\bvela\b|plachetn|vitorlás|jadrnic|segelboot|motorboot|\bjacht|\bčoln|\bloď|\blod[ei]\b|\bhajó|csónak|charter|čarter|csárter/.test(m)) return 'nautika';
   if (FUEL_RE.test(m)) return 'prakticno';
   if ((SOUVENIR_RE.test(m) || SHOP_RE.test(m)) && !SHOP_EXCLUDE.test(m)) return 'prakticno';
   if (TAXI_RE.test(m) || RENT_RE.test(m) || (FERRY_RE.test(m) && !/kornat|izlet/.test(m) && !BEACH_WORDS.test(m))) return 'prakticno';
@@ -724,9 +731,9 @@ function detectCategory(msg, lastCategory, db) {
 
   // Padeži: "večeru", "ručku", "večerati"; samo "večeras" ostaje bez kategorije.
   if (/večer(a|u|e|i|om|at\w*)\b|ruč(ak|ka|ku|kom|at\w*)\b|doruč/.test(m)) return 'gastronomija';
-  if (/vacsor|ebéd|étterem|étkez|enni\b|večeř|oběd|restaurac|reštaurác|najesť|najíst|kosil[oa]|večerj|kosim\b|pranzo|ristorant|mangiare/.test(m)) return 'gastronomija';
+  if (/vacsor|ebéd|étterem|étkez|enni\b|večeř|oběd|restaurac|reštaurác|najesť|najíst|kosil[oa]|večerj|kosim\b|pranzo|ristorant|mangiare|jesť|\bjíst|\bjesti\b|\bjedlo|\bjídlo|\bétel/.test(m)) return 'gastronomija';
 
-  if (m.includes('restoran') || m.includes('jelo') || m.includes('hrana') || m.includes('jesti') || m.includes('ručak') || m.includes('večera') || m.includes('doručak') || m.includes('riba') || m.includes('plodovi mora') || m.includes('konoba') || m.includes('kafi') || m.includes('kav') || m.includes('bar ') || m.includes(' bar') || m.includes('piti') || m.includes('pek') || m.includes('hobotnica') || m.includes('lignje') || m.includes('brancin') || m.includes('brudet') || m.includes('vino') || m.includes('dalmatinska') || m.includes('gastronomij')
+  if (m.includes('restoran') || m.includes('jelo') || m.includes('hrana') || m.includes('jesti') || m.includes('ručak') || m.includes('večera') || m.includes('doručak') || m.includes('riba') || m.includes('plodovi mora') || m.includes('konoba') || m.includes('kafi') || m.includes('kav') || /\bbar\b|\bbarovi/.test(m) || m.includes('piti') || m.includes('pek') || m.includes('hobotnica') || m.includes('lignje') || m.includes('brancin') || m.includes('brudet') || m.includes('vino') || m.includes('dalmatinska') || m.includes('gastronomij')
     || m.includes('restaurant') || m.includes('food') || m.includes('eat') || m.includes('dinner') || m.includes('lunch') || m.includes('breakfast') || m.includes('fish') || m.includes('seafood') || m.includes('wine') || m.includes('tavern') || m.includes('konoba')
     || m.includes('essen') || m.includes('speise') || m.includes('trinken') || m.includes('café') || m.includes('fisch') || m.includes('wein'))
     return 'gastronomija';
@@ -742,13 +749,13 @@ function detectCategory(msg, lastCategory, db) {
     || m.includes('unterkunft') || m.includes('übernacht') || m.includes('zimmer') || m.includes('hotel') || m.includes('camping'))
     return 'smjestaj';
 
-  if (m.includes('kornat') || m.includes('kornati') || m.includes('np kornati') || m.includes('park kornati') || m.includes('izlet kornati') || m.includes('otoci') || m.includes('arhipelag') || m.includes('levrnaka') || m.includes('mana') || m.includes('galešnjak') || m.includes('excursion') || m.includes('day trip to')
+  if (m.includes('kornat') || m.includes('kornati') || m.includes('np kornati') || m.includes('park kornati') || m.includes('izlet kornati') || m.includes('otoci') || m.includes('arhipelag') || m.includes('levrnaka') || /\bmana\b/.test(m) || m.includes('galešnjak') || m.includes('excursion') || m.includes('day trip to')
     || m.includes('kornaten') || m.includes('national park') || m.includes('inseln'))
     return 'kornati';
 
   // Agencije s popisa TZ-a prodaju izlete: pitanje o agenciji prikazuje agencije, ne odredišta.
   if (/agencij|agenc[yi]|agentur|agenzi|reisebüro|utazási iroda|cestovn\w* kancel/.test(m) && !/kornat/.test(m)) return 'smjestaj';
-  if (/vrgad|plitvi|\bquad|\batv\b|buggy|jahanj|jahat|horse|reiten|cavall|lovagl|rafting|kayak|kajak|zrmanj|degustacij|ražnjevi|raznjevi|sunset|krstarenj|cruise|špilj|spilj|modrič|telašćic|telascic|ronjenj|ronit|diving|tauch|immersion|potáp|búvárk/.test(m)) return 'izleti';
+  if (/vrgad|plitvi|\bquad|\batv\b|buggy|jahanj|jahat|horse|reiten|cavall|lovagl|rafting|kayak|kajak|zrmanj|degustacij|ražnjevi|raznjevi|sunset|krstarenj|cruise|špilj|spilj|modrič|telašćic|telascic|ronjenj|ronit|diving|tauch|immersion|immersio|potaplj|potáp|búvárk/.test(m)) return 'izleti';
   if (m.includes('izlet') || m.includes('okolica') || /zad(ar|ru|ra|ar)|šibenik|sibenik|skradin|plitvic|paklenic|\bnin\b|\bnina\b|\bninu\b/.test(m) || m.includes('šibenik') || m.includes('sibenik') || m.includes('krka') || m.includes('vransko') || m.includes('vrana') || m.includes('pašman') || m.includes('pasman') || /(?<!\p{L})nin(a|u|om)?(?!\p{L})/u.test(m) || m.includes('paklenica') || m.includes('plitvice') || m.includes('blizina') || m.includes('ausflug')
     || m.includes('trip') || m.includes('excursion') || m.includes('day') || m.includes('nearby') || m.includes('visit zadar') || m.includes('around') || m.includes('surroundings')
     || m.includes('tagesausflug') || m.includes('umgebung'))
@@ -801,7 +808,8 @@ function detectCategory(msg, lastCategory, db) {
 
   if (m.includes('temperatura') || m.includes('klima') || m.includes('klimat') || m.includes('vrijeme') || m.includes('vremenski') || m.includes('sunce') || m.includes('sunčan') || m.includes('kišn') || m.includes('kiša') || m.includes('vjetar') || m.includes('bura') || m.includes('jugo') || m.includes('sezona') || m.includes('srpanj') || m.includes('kolovoz') || m.includes('lipanj') || m.includes('rujan') || m.includes('travanj') || m.includes('svibanj') || m.includes('toplota') || m.includes('toplo') || m.includes('hladno')
     || m.includes('temperature') || m.includes('weather') || m.includes('climate') || m.includes('season') || m.includes('sunny') || m.includes('rain') || m.includes('wind') || m.includes('hot') || m.includes('cold') || m.includes('july') || m.includes('august') || m.includes('june') || m.includes('september')
-    || m.includes('temperatur') || m.includes('wetter') || m.includes('klima') || m.includes('sommer') || m.includes('sonne'))
+    || m.includes('temperatur') || m.includes('wetter') || m.includes('klima') || m.includes('sommer') || m.includes('sonne')
+    || /\bvreme\b|vremen|počasí|počasie|időjárás|\bmeteo|\bclima\b|podneb|slunečn|slnečn|soleggi|giornate di sole|napsüt|teplota mo|teplota vod|temperatura del mare|tengervíz|plachtění|plachten|jadranj|veleggi|vitorláz/.test(m))
     return 'klima';
 
   return null;
@@ -894,7 +902,7 @@ function getSuggestions(category, lang, message) {
       atrakcije:   ['🏛️ Biograd múzeum?', '⛪ Templomok és romok?', '🏖 Biograd strandjai?', '🎡 Dalmaland vidámpark?', '⛵ Kornati kirándulás?'],
       opcenito:    ['🏖 Biograd strandjai?', '⛵ Kornati kirándulás?', '🐟 Dalmát gasztronómia?', '🏨 Szállás Biogradban?', '☀️ Éghajlat és szezon?'],
       prakticno:   ['🅿️ Parkolás a belvárosban?', '⛽ Benzinkút?', '🏥 Orvos Biogradban?', '🛒 Hol van a Lidl vagy Kaufland?', '🔧 Autószerelő?'],
-      klima:       ['🏖 Melyik strandot ajánlod?', '⛵ Mikor ideális a vitorlázás?', '🌊 Tenger hőmérséklete augusztusban?', '☀️ Hány napos nap?', '🏨 Szállás nyárra?'],
+      klima:       ['🏖 Melyik strandot ajánlod?', '⛵ Mikor ideális a vitorlázás?', '🌊 Tenger hőmérséklete augusztusban?', '☀️ Hány napsütéses nap van?', '🏨 Szállás nyárra?'],
     },
     cs: {
       plaze:       ['⛵ Výlet na Kornati?', '🤿 Potápění v Biogradu?', '🏨 Ubytování u pláže?', '🅿️ Parkování u pláže Dražica?', '☀️ Počasí v červenci?'],
@@ -1513,6 +1521,13 @@ function namedObjectsNote(items, message) {
   return `\n[SUSTAV: Točni podaci iz baze za objekt koji gost spominje — navedi ih doslovno:\n${lines.join('\n')}]`;
 }
 
+// Kratko pitanje s engleskim riječima ("Tennis in Biograd?") model zna odgovoriti na engleskom;
+// jezik se zato ponavlja na kraju poruke.
+const LANG_NAMES = { en: 'English', de: 'Deutsch', it: 'italiano', sl: 'slovenščina', cs: 'čeština', sk: 'slovenčina', hu: 'magyar' };
+function langNote(lang) {
+  return LANG_NAMES[lang] ? `\n[SYSTEM: write the whole answer and the suggested questions only in ${LANG_NAMES[lang]}.]` : '';
+}
+
 // ===== PREDLOŽENO POTPITANJE =====
 // Model na kraju odgovora u zasebnom retku iza oznake §§ predloži sljedeće pitanje gosta;
 // poslužitelj ga odvaja od odgovora i šalje kao "followup" (stranica nudi gumb za prijenos u polje).
@@ -2086,7 +2101,7 @@ function prepareRequest({ message, history = [], lastCategory, forcedCategory, w
     ],
     messages: [
       ...historyMessages,
-      { role: 'user', content: message + (forFollowupCheck ? '' : FOLLOWUP_NOTE) + itemsNote + namedNote + hotelInfo + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
+      { role: 'user', content: message + (forFollowupCheck ? '' : FOLLOWUP_NOTE) + langNote(lang) + itemsNote + namedNote + hotelInfo + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
     ]
   };
   // Popisi se brišu iz odgovora uz kartice; stranica ih skriva već tijekom ispisa.
