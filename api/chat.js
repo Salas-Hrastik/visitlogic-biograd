@@ -1544,8 +1544,10 @@ async function pickAnsweredFollowup(candidates, { message, reply, history, categ
     const t = r.content.filter(b => b.type === 'text').map(b => b.text).join('').trim().toUpperCase();
     return /^(DA|YES)/.test(t);
   };
-  const results = await Promise.all(candidates.map(q => check(q).catch(e => { console.error('followup check:', e.message); return false; })));
-  console.log(`[followup] ${results.map(r => r ? 'DA' : 'NE').join(' ')}`);
+  const errors = [];
+  const results = await Promise.all(candidates.map(q => check(q).catch(e => { errors.push(e.message); return false; })));
+  pickAnsweredFollowup.last = { candidates, results, errors };
+  console.log(`[followup] ${results.map(r => r ? 'DA' : 'NE').join(' ')}${errors.length ? ' greške: ' + errors.join(' | ') : ''}`);
   return candidates[results.indexOf(true)] || '';
 }
 
@@ -2185,6 +2187,7 @@ export default async function handler(req, res) {
       return res.end();
     }
     payload.followup = await pickAnsweredFollowup(split.candidates, followupArgs).catch(() => '');
+    if (req.body?.debugFollowup) payload.followupCheck = pickAnsweredFollowup.last || { candidates: split.candidates };
     return res.status(200).json(payload);
 
   } catch (err) {
