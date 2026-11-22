@@ -1516,7 +1516,7 @@ function namedObjectsNote(items, message) {
 // ===== PREDLOŽENO POTPITANJE =====
 // Model na kraju odgovora u zasebnom retku iza oznake §§ predloži sljedeće pitanje gosta;
 // poslužitelj ga odvaja od odgovora i šalje kao "followup" (stranica nudi gumb za prijenos u polje).
-const FOLLOWUP_NOTE = `\n[SUSTAV: Na samom kraju odgovora, u zasebnom zadnjem retku, napiši "§§ " i jedno kratko pitanje (najviše 12 riječi) koje bi gost prirodno mogao postaviti sljedeće, nadovezujući se na ovaj odgovor, na jeziku odgovora. Piši ga kao gost u prvom licu (npr. "Koliko košta ulaznica za Kornate?"), ne kao pitanje gostu. Ne ponavljaj ono na što si već odgovorio.]`;
+const FOLLOWUP_NOTE = `\n[SUSTAV: Na samom kraju odgovora, u zasebnom zadnjem retku, napiši "§§ " i jedno kratko pitanje (najviše 12 riječi) koje bi gost mogao postaviti sljedeće, na jeziku odgovora, u prvom licu gosta (npr. "Koliko košta ulaznica za Kornate?"). UVJET: odgovor na to pitanje mora postojati u podacima koje si dobio u ovom upitu (baza, cjenik, red plovidbe, jelovnik, popis objekata) — npr. drugi objekt s popisa, njegova cijena, adresa, termin, udaljenost ili sadržaj koji su navedeni. Ne predlaži pitanja o prijavama, savjetima, mišljenju ("najbolji"), vremenu dolaska, ni o podacima koji u njima ne piše. Ne ponavljaj ono na što si već odgovorio.]`;
 
 function splitFollowup(text) {
   const m = text.match(/\n?[ \t]*§§[ \t]*([^\n]+)\s*$/);
@@ -1979,7 +1979,10 @@ export default async function handler(req, res) {
     // Eksplicitni klik na tab (forcedCategory) ima prioritet nad detekcijom iz teksta —
     // riješava krivo prepoznavanje kategorije na jezicima koje detekcija ne pokriva (hu, cs, sk, sl, it).
     const isForced = forcedCategory && CATEGORY_CONTEXTS[forcedCategory];
-    const detectedCategory = isForced ? forcedCategory : detectCategory(message, lastCategory, db);
+    // Potpitanje bez naziva teme ("A za plovilo od 12 m?") nastavlja temu prethodnog pitanja.
+    const isFollowupLike = /\?|\S+\s+\S+\s+\S+/.test(message) && !/^(hvala|thanks|danke|grazie|köszönöm|děkuji|ďakujem|bok|hi|hello|hallo)\b/i.test(message.trim());
+    const detectedCategory = isForced ? forcedCategory
+      : detectCategory(message, lastCategory, db) || (isFollowupLike && lastCategory && CATEGORY_CONTEXTS[lastCategory] ? lastCategory : null);
     const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
     const context = ctxFn ? ctxFn(db, message) : { grad: db.grad, opcenito: db.opcenito, atrakcije: db.atrakcije };
 
