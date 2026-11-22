@@ -1542,11 +1542,12 @@ async function pickAnsweredFollowup(candidates, { message, reply, history, categ
         '\n\n[PROVJERA: Ne odgovaraj na pitanje. Sadrže li podaci iz sustavske poruke i bilješki [SUSTAV] u ovom upitu izravan, konkretan odgovor na ovo pitanje gosta? Odgovori samo DA ili NE.]' }],
     }, { timeout: 8000, maxRetries: 0 });
     const t = r.content.filter(b => b.type === 'text').map(b => b.text).join('').trim().toUpperCase();
+    raws.push(`${r.stop_reason}:${JSON.stringify(r.content.map(b => b.type))}:${t.slice(0, 30)}`);
     return /^(DA|YES)/.test(t);
   };
-  const errors = [];
+  const errors = [], raws = [];
   const results = await Promise.all(candidates.map(q => check(q).catch(e => { errors.push(e.message); return false; })));
-  pickAnsweredFollowup.last = { candidates, results, errors };
+  pickAnsweredFollowup.last = { candidates, results, errors, raws };
   console.log(`[followup] ${results.map(r => r ? 'DA' : 'NE').join(' ')}${errors.length ? ' greške: ' + errors.join(' | ') : ''}`);
   return candidates[results.indexOf(true)] || '';
 }
