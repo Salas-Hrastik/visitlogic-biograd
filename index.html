@@ -1395,32 +1395,7 @@ function addMessage(text, type, suggestions, images, items, replyLinks, followup
     chatMessages.appendChild(cards);
   }
 
-  // Predloženo potpitanje: gumb ga prenosi u polje za pitanje, gdje ga gost može doraditi i poslati.
-  if(type === "bot" && followup){
-    const box = document.createElement("div");
-    box.className = "followup";
-    const q = document.createElement("div");
-    q.className = "followup-text";
-    const lbl = document.createElement("small");
-    lbl.textContent = "💡 " + uiText().followTitle;
-    q.appendChild(lbl);
-    q.appendChild(document.createTextNode(followup));
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.textContent = "✏️ " + uiText().followBtn;
-    const use = () => {
-      const inp = document.getElementById("user-input");
-      inp.value = followup;
-      inp.focus();
-      inp.setSelectionRange(followup.length, followup.length);
-      inp.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    };
-    btn.onclick = use;
-    q.onclick = use;
-    box.appendChild(q);
-    box.appendChild(btn);
-    chatMessages.appendChild(box);
-  }
+  if(type === "bot" && followup) chatMessages.appendChild(followupBox(followup));
 
   if(suggestions && suggestions.length && type === "bot"){
     const sug = document.createElement("div");
@@ -1435,6 +1410,43 @@ function addMessage(text, type, suggestions, images, items, replyLinks, followup
   }
 
   div.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// Predloženo potpitanje: gumb ga prenosi u polje za pitanje, gdje ga gost može doraditi i poslati.
+function followupBox(followup){
+  const box = document.createElement("div");
+  box.className = "followup";
+  const q = document.createElement("div");
+  q.className = "followup-text";
+  const lbl = document.createElement("small");
+  lbl.textContent = "💡 " + uiText().followTitle;
+  q.appendChild(lbl);
+  q.appendChild(document.createTextNode(followup));
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.textContent = "✏️ " + uiText().followBtn;
+  const use = () => {
+    const inp = document.getElementById("user-input");
+    inp.value = followup;
+    inp.focus();
+    inp.setSelectionRange(followup.length, followup.length);
+    inp.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  };
+  btn.onclick = use;
+  q.onclick = use;
+  box.appendChild(q);
+  box.appendChild(btn);
+  return box;
+}
+
+// Potpitanje stiže nakon odgovora: ide iza kartica zadnjeg odgovora, ispred brzih pitanja.
+function appendFollowup(followup){
+  if(!followup) return;
+  const chatMessages = document.getElementById("chat-messages");
+  const last = chatMessages.lastElementChild;
+  const box = followupBox(followup);
+  if(last && last.classList.contains("suggestions")) chatMessages.insertBefore(box, last);
+  else chatMessages.appendChild(box);
 }
 
 // ===== SEND MESSAGE =====
@@ -1489,11 +1501,24 @@ async function sendMessage(){
     clearTimeout(timeout);
 
     // Odgovor modela stiže postupno (NDJSON); kategorije bez modela i greške stižu kao obični JSON.
-    const data = (response.headers.get("content-type") || "").includes("ndjson")
-      ? await readStream(response, typing)
-      : await response.json();
-    typing.remove();
+    // Gotov odgovor prikazuje se odmah; provjereno potpitanje (zaseban redak u streamu) dodaje se kad stigne.
+    if((response.headers.get("content-type") || "").includes("ndjson")){
+      await readStream(response, typing, showReply, appendFollowup);
+    } else {
+      showReply(await response.json());
+    }
 
+  } catch(e) {
+    typing.remove();
+    if(e.name === "AbortError"){
+      addMessage(uiText().slow, "bot");
+    } else {
+      addMessage(uiText().serverErr, "bot");
+    }
+  }
+
+  function showReply(data){
+    typing.remove();
     if(data.lang) setLang(data.lang);
 
     if(data.category){
@@ -1512,14 +1537,6 @@ async function sendMessage(){
     } else {
       addMessage(uiText().noAnswer, "bot");
     }
-
-  } catch(e) {
-    typing.remove();
-    if(e.name === "AbortError"){
-      addMessage(uiText().slow, "bot");
-    } else {
-      addMessage(uiText().serverErr, "bot");
-    }
   }
 }
 
@@ -1533,7 +1550,7 @@ function hideLists(text){
   }).join("\n").replace(/\n{3,}/g, "\n\n");
 }
 
-async function readStream(response, typing){
+async function readStream(response, typing, onDone, onFollowup){
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   const chatMessages = document.getElementById("chat-messages");
@@ -1565,13 +1582,14 @@ async function readStream(response, typing){
       const ev = JSON.parse(line);
       if(ev.type === "start") stripLists = !!ev.stripLists;
       else if(ev.type === "delta") text += ev.text;
-      else if(ev.type === "done") done = ev;
+      else if(ev.type === "done"){ done = ev; if(bubble){ bubble.remove(); bubble = null; } onDone(ev); }
+      else if(ev.type === "followup" && onFollowup) onFollowup(ev.followup);
     }
     // Najviše jedno iscrtavanje svakih 50 ms, da dugi odgovori ne usporavaju stranicu.
-    if(text && Date.now() - lastPaint > 50){ paint(); lastPaint = Date.now(); }
+    if(text && !done && Date.now() - lastPaint > 50){ paint(); lastPaint = Date.now(); }
   }
   if(bubble) bubble.remove();
-  return done || { reply: text };
+  if(!done) onDone({ reply: text.split("§")[0] });
 }
 
 function quickAsk(text, cat){

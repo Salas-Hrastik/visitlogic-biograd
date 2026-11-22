@@ -1516,14 +1516,39 @@ function namedObjectsNote(items, message) {
 // ===== PREDLOŽENO POTPITANJE =====
 // Model na kraju odgovora u zasebnom retku iza oznake §§ predloži sljedeće pitanje gosta;
 // poslužitelj ga odvaja od odgovora i šalje kao "followup" (stranica nudi gumb za prijenos u polje).
-const FOLLOWUP_NOTE = `\n[SUSTAV: Na samom kraju odgovora, u zasebnom zadnjem retku, napiši "§§ " i jedno kratko pitanje (najviše 12 riječi) koje bi gost mogao postaviti sljedeće, na jeziku odgovora, u prvom licu gosta (npr. "Koliko košta ulaznica za Kornate?"). UVJET: odgovor na to pitanje mora postojati u podacima koje si dobio u ovom upitu (baza, cjenik, red plovidbe, jelovnik, popis objekata) — npr. drugi objekt s popisa, njegova cijena, adresa, termin, udaljenost ili sadržaj koji su navedeni. Ne predlaži pitanja o prijavama, savjetima, mišljenju ("najbolji"), vremenu dolaska, ni o podacima koji u njima ne piše. Ne ponavljaj ono na što si već odgovorio.]`;
+const FOLLOWUP_NOTE = `\n[SUSTAV: Na samom kraju odgovora, u zasebnom zadnjem retku, napiši "§§ " i tri različita kratka pitanja (svako najviše 12 riječi) odvojena znakom "||", koja bi gost mogao postaviti sljedeće, na jeziku odgovora, u prvom licu gosta (npr. "Koliko košta ulaznica za Kornate?"). Najbolje stavi prvo. Odgovor na svako mora postojati u podacima koje si dobio u ovom upitu (baza, cjenik, red plovidbe, jelovnik, popis objekata) — npr. drugi objekt s popisa, njegova cijena, adresa, termin, udaljenost ili sadržaj. Ne predlaži pitanja o prijavama, savjetima, mišljenju ("najbolji"), vremenu dolaska, ni o podacima koji u njima ne piše. Ne ponavljaj ono na što si već odgovorio.]`;
 
 function splitFollowup(text) {
   const m = text.match(/\n?[ \t]*§§[ \t]*([^\n]+)\s*$/);
-  if (!m) return { reply: text.replace(/§§\s*$/, '').trim(), followup: '' };
-  const q = m[1].replace(/^[„"*]+|[“"*]+$/g, '').trim().slice(0, 160);
-  return { reply: text.slice(0, m.index).trim(), followup: q };
+  if (!m) return { reply: text.replace(/§§\s*$/, '').trim(), candidates: [] };
+  const candidates = m[1].split('||').map(q => q.replace(/^[\s„"*]+|[\s“"*]+$/g, '').slice(0, 160)).filter(q => q.length > 5).slice(0, 3);
+  return { reply: text.slice(0, m.index).trim(), candidates };
 }
+
+// Potpitanje se prikazuje samo ako podaci koje bi bot dobio za to pitanje sadrže odgovor.
+// Svaki kandidat priprema se kao pravi upit (isti kontekst i bilješke), a Claude Haiku 5.5 procjenjuje DA/NE.
+async function pickAnsweredFollowup(candidates, { message, reply, history, category, weather, lang }) {
+  if (!candidates.length) return '';
+  const hist = [...(history || []), { role: 'user', content: message }, { role: 'assistant', content: reply }].slice(-10);
+  const check = async q => {
+    const p = prepareRequest({ message: q, history: hist, lastCategory: category, weather, clientLang: lang, forceLang: lang, forFollowupCheck: true }).params;
+    const last = p.messages[p.messages.length - 1];
+    const r = await anthropic.messages.create({
+      model: 'claude-haiku-5-5',
+      max_tokens: 5,
+      thinking: { type: 'disabled' },
+      system: p.system,
+      messages: [...p.messages.slice(0, -1), { role: 'user', content: last.content +
+        '\n\n[PROVJERA: Ne odgovaraj na pitanje. Sadrže li podaci iz sustavske poruke i bilješki [SUSTAV] u ovom upitu izravan, konkretan odgovor na ovo pitanje gosta? Odgovori samo DA ili NE.]' }],
+    }, { timeout: 8000, maxRetries: 0 });
+    const t = r.content.filter(b => b.type === 'text').map(b => b.text).join('').trim().toUpperCase();
+    return /^(DA|YES)/.test(t);
+  };
+  const results = await Promise.all(candidates.map(q => check(q).catch(e => { console.error('followup check:', e.message); return false; })));
+  console.log(`[followup] ${results.map(r => r ? 'DA' : 'NE').join(' ')}`);
+  return candidates[results.indexOf(true)] || '';
+}
+
 
 // ===== HOTELI: ponuda, cjenik i obrazac za rezervaciju (api/_hoteli.js, mjesečno osvježavanje) =====
 const HOTEL_RE = /hotel|cijen|cjenik|košt|price|cost|preis|kost|prezz|cost|ár\b|árak|cen[ay]|ponud|sadrža|bazen|pool|wellness|spa\b|doručak|polupansion|all.?inclusive|rezerv|book|buch|prenot|foglal/;
@@ -1954,6 +1979,118 @@ function buildCategoryIntro(cat, n, lang) {
 const MAX_CARDS_WITH_ANSWER = 8;
 
 // ===== GLAVNI HANDLER =====
+// Priprema upita za model: jezik, kategorija, kartice, kontekst i bilješke [SUSTAV].
+// Koristi je odgovor na pitanje gosta i provjera predloženih potpitanja (forFollowupCheck).
+function prepareRequest({ message, history = [], lastCategory, forcedCategory, weather, clientLang, forceLang, forFollowupCheck = false }) {
+  // Prioritet: eksplicitni zahtjev u poruci ("odgovori na X") > korisnikov odabir zastavom
+  // (forceLang) > automatska detekcija iz teksta poruke.
+  const SUPPORTED_LANGS = ['hr','en','de','it','sl','cs','sk','hu'];
+  const lang = detectRequestedLang(message)
+    || (forceLang && SUPPORTED_LANGS.includes(forceLang) ? forceLang : detectLang(message, clientLang || 'hr'));
+  // Eksplicitni klik na tab (forcedCategory) ima prioritet nad detekcijom iz teksta —
+  // riješava krivo prepoznavanje kategorije na jezicima koje detekcija ne pokriva (hu, cs, sk, sl, it).
+  const isForced = forcedCategory && CATEGORY_CONTEXTS[forcedCategory];
+  // Potpitanje bez naziva teme ("A za plovilo od 12 m?") nastavlja temu prethodnog pitanja.
+  const isFollowupLike = /\?|\S+\s+\S+\s+\S+/.test(message) && !/^(hvala|thanks|danke|grazie|köszönöm|děkuji|ďakujem|bok|hi|hello|hallo)\b/i.test(message.trim());
+  const detectedCategory = isForced ? forcedCategory
+    : detectCategory(message, lastCategory, db) || (isFollowupLike && lastCategory && CATEGORY_CONTEXTS[lastCategory] ? lastCategory : null);
+  const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
+  const context = ctxFn ? ctxFn(db, message) : { grad: db.grad, opcenito: db.opcenito, atrakcije: db.atrakcije };
+
+  // getCategoryItems je sinkron — pokrećemo PRIJE system prompta da LLM zna o karticama
+  const items = getCategoryItems(detectedCategory, message, { full: !!isForced });
+
+  const systemDynamic = buildDynamicSystem(lang, context, weather);
+  const seasonCtx = getSeasonContext(); // za [SUSTAV] itinerer note
+
+  // Ako kartice postoje, dodajemo eksplicitnu uputu u zadnju user poruku
+  const msgLow = message.toLowerCase();
+
+  // Detektiramo zahtjev za konkretnim itinererom / planom dana
+  const wantsItinerary = msgLow.includes('itinerer') || msgLow.includes('raspored') ||
+    msgLow.includes('plan puta') || msgLow.includes('sat po sat') || msgLow.includes('korak po korak') ||
+    msgLow.includes('detaljan program') || msgLow.includes('itinerary') || msgLow.includes('schedule') ||
+    msgLow.includes('step by step') || msgLow.includes('reiseplan') || msgLow.includes('tagesplan') ||
+    // "konkretan prijedlog" za izletničke kategorije → itinerer
+    ((msgLow.includes('konkretan') || msgLow.includes('konkretno') || msgLow.includes('specific') || msgLow.includes('konkreten')) &&
+     (msgLow.includes('prijedlog') || msgLow.includes('plan') || msgLow.includes('odlazak') || msgLow.includes('izlet') || msgLow.includes('posjet') || msgLow.includes('trip') || msgLow.includes('visit') || msgLow.includes('ausflug')));
+
+  // Popis tražene vrste smještaja prikazuje se cijeli: to je ono što gost i pita.
+  const menuInfo = menuContext(message, history, detectedCategory);
+  const menuFirst = menuInfo.names.flatMap(n => {
+    const known = items.find(i => i.naziv === n);
+    if (known) return [known];
+    const raw = (db.gastronomija?.restorani || []).find(r => r.naziv === n);
+    return raw ? [item(raw)] : [];
+  });
+  const rankedItems = menuFirst.length ? [...menuFirst, ...items.filter(i => !menuInfo.names.includes(i.naziv))] : items;
+  const cardItems = detectedCategory === 'smjestaj' ? rankedItems : rankedItems.slice(0, MAX_CARDS_WITH_ANSWER);
+  const itemsNote = cardItems.length > 0
+    ? wantsItinerary
+      ? `\n[SUSTAV: Automatski će biti prikazano ${cardItems.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
+      : `\n[SUSTAV: Ispod odgovora automatski će biti prikazano ${cardItems.length} vizualnih kartica. Odgovori IZRAVNO na korisnikovo pitanje u 1–3 rečenice koristeći podatke iz baze (npr. cijena, datum, udaljenost, preporuka). Ako traženog podatka nema u bazi, reci to i uputi na TZ. NE nabrajaj kartice. Kartice prikazuju ove objekte iz baze (ne tvrdi da ih nema): ${cardItems.slice(0, 8).map(i => `${i.naziv}${i.telefon ? ` (${i.telefon})` : ''}`).join('; ')}.]`
+    : `\n[SUSTAV: Ispod ovog odgovora NEMA kartica. Ne spominji kartice niti "detalje ispod"; sve što gost treba napiši u odgovoru. Odgovor neka ima najviše oko 200 riječi: izaberi najvažnije i završi cjelovitom rečenicom.]`;
+  const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
+  const hotelInfo = detectedCategory === 'smjestaj' ? hotelNote(message) : '';
+  const kornatiNote = detectedCategory === 'kornati'
+    ? `\n[SUSTAV: Za ulaznice, cijene, bove, sidrenje, ronjenje, ribolov i pravila NP Kornati koristi ISKLJUČIVO blok np_kornati (službeni podaci parka, cjenik ${npKornati.cjenik.godina}., provjereno ${npKornati.provjereno}). Ulaznica se plaća po plovilu prema duljini; sezona je lipanj–rujan. Ako gost navede duljinu plovila i razdoblje, izračunaj točnu cijenu i reci da je kupnja izvan parka jeftinija nego u parku. Ako ne navede duljinu ili datum, navedi cijenu za najmanje plovilo (do 6,99 m) i pitaj za duljinu. Za izlet organiziranim brodom reci da cijena izleta obično već uključuje ulaznicu. Ne izmišljaj podatke kojih u bloku nema; za ostalo uputi na ${npKornati.izvor} ili +385 22 435 740.]`
+      + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message, lang) : '')
+      + (lang !== 'hr' ? `\n[SYSTEM: the notes above are for the system only; write the answer ONLY in the guest's language (${lang}), never in Croatian.]` : '')
+    : '';
+  const emergencyNote = EMERGENCY_RE.test(msgLow)
+    ? `\n[SUSTAV: Za policiju, vatrogasce, pomoć na cesti i spašavanje na moru koristi samo prakticne_info.hitne_sluzbe. U opasnosti uvijek prvo navedi broj (112 za sve, 192 policija, 193 vatrogasci, 194 hitna pomoć, 195 more, 1987 pomoć na cesti, sa stranog mobitela +385 1 1987), zatim lokalni kontakt.]`
+    : '';
+  const taxiNote = TAXI_RE.test(msgLow)
+    ? `\n[SUSTAV: Gost treba taksi. Navedi u odgovoru sve taksije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /taxi|taksi/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Cijenu i transfer (npr. do Zračne luke Zadar) gost dogovara telefonom; ne navodi cijene ni udaljenosti kojih nema u bazi.]`
+    : '';
+  const rentNote = RENT_RE.test(msgLow)
+    ? `\n[SUSTAV: Gost traži rent-a-car. Navedi agencije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /rent/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Telefone napiši u odgovoru. Cijene navedi samo kako stoje u bazi: ne tvrdi da su po danu, jer agencija to ne navodi, i savjetuj potvrdu s agencijom.]`
+    : '';
+  const fuelNote = FUEL_RE.test(msgLow)
+    ? `\n[SUSTAV: Za benzinske postaje koristi samo prakticne_info.benzinska (službeni podaci mzoe-gor.hr). U Biogradu su tri INA postaje; 0–24 radi samo INA Magistrala; autoplin u Biogradu nema, najbliži je Petrol Pakoštane (06–22). Cijene su od ${fuel.provjereno} i mijenjaju se svaka dva tjedna: navedi ih s tim datumom i uputi na mzoe-gor.hr za aktualne. Radno vrijeme može se razlikovati vikendom i u sezoni.]`
+    : '';
+  const vetNote = VET_RE.test(msgLow)
+    ? `\n[SUSTAV: Za veterinara koristi samo prakticne_info.veterinari. U Biogradu rade ambulanta Nova i praksa Dado; službeni raspored dežurstva za Biograd nije objavljen. Izvan radnog vremena, nedjeljom i za hitne slučajeve uputi na dežurni mobitel Veterinarske stanice Zadar (+385 98 33 94 00) ili ambulantu Bokanjac u Zadru (0–24, +385 91 511 5092) i savjetuj da prije polaska nazovu. Ne postavljaj dijagnozu.]`
+    : '';
+  const healthNote = detectedCategory === 'prakticno' && HEALTH_RE.test(msgLow) && !VET_RE.test(msgLow)
+    ? `\n[SUSTAV: Za zdravstvo koristi samo kontakte iz baze (prakticne_info.zdravstvo). Specijalnu bolnicu za ortopediju preporuči SAMO za ozljede kostiju, zglobova i sustava za kretanje; za zubobolju, temperaturu, bolest djeteta i ostalo uputi na odgovarajuću ordinaciju u Domu zdravlja, a za hitna stanja ili izvan radnog vremena na 194 ili 112. Ne postavljaj dijagnozu i ne savjetuj lijekove.]`
+    : '';
+  const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
+  const ferryInfo = FERRY_RE.test(msgLow) && !/kornat|izlet/.test(msgLow) ? ferryNote() : '';
+  const vrgadaInfo = VRGADA_RE.test(msgLow) ? vrgadaNote() : '';
+  // "Kako do Zadra?" je pitanje o prijevozu i bez riječi "autobus".
+  const busInfo = BUS_RE.test(msgLow) || /(kako|čime)\b.{0,20}\b(do|doći|stići|otići|dolazak)\b|how\b.{0,20}\bget to|getting to|wie komm|come arrivo|come arrivare|hogyan jut|jak se dostat|ako sa dostať|kako priti/.test(msgLow) ? busNote() : '';
+  const eventsNote = detectedCategory === 'dogadanja'
+    ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja. Kad događanja prelaze u sljedeću godinu, to izričito naglasi (npr. "U 2027. slijede…") i uz svako navedi godinu.]`
+    : '';
+
+  // Poruke za Claude (do 10 prethodnih; system ide kao zaseban parametar)
+  const historyMessages = (history || []).slice(-10)
+    .filter(m => m.role === 'user' || m.role === 'assistant');
+
+  const params = {
+    model: 'claude-sonnet-5-5',
+    max_tokens: 1200,
+    // Turistički bot: prioritet je brzina odgovora. Sonnet 5.5 odbija 'disabled';
+    // 'between_tools' bez alata znači odgovor bez razmišljanja (dopušteno do effort 'high').
+    thinking: { type: 'between_tools' },
+    // Prompt caching: stabilni blok (persona + pravila + stalne info) je keširan,
+    // dinamički (jezik/vrijeme/sezona/baza) ide poslije njega.
+    system: [
+      { type: 'text', text: SYSTEM_STABLE, cache_control: { type: 'ephemeral' } },
+      { type: 'text', text: systemDynamic },
+    ],
+    messages: [
+      ...historyMessages,
+      { role: 'user', content: message + (forFollowupCheck ? '' : FOLLOWUP_NOTE) + itemsNote + namedNote + hotelInfo + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
+    ]
+  };
+  // Popisi se brišu iz odgovora uz kartice; stranica ih skriva već tijekom ispisa.
+  // Cijene po razdobljima (jelovnici, cjenici hotela) model piše kao popis: taj popis ostaje.
+  const stripLists = cardItems.length > 0 && !menuInfo.note && !hotelInfo;
+  return { lang, isForced, detectedCategory, items, menuInfo, rankedItems, cardItems, hotelInfo, params, stripLists };
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -1971,38 +2108,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Prioritet: eksplicitni zahtjev u poruci ("odgovori na X") > korisnikov odabir zastavom
-    // (forceLang) > automatska detekcija iz teksta poruke.
-    const SUPPORTED_LANGS = ['hr','en','de','it','sl','cs','sk','hu'];
-    const lang = detectRequestedLang(message)
-      || (forceLang && SUPPORTED_LANGS.includes(forceLang) ? forceLang : detectLang(message, clientLang || 'hr'));
-    // Eksplicitni klik na tab (forcedCategory) ima prioritet nad detekcijom iz teksta —
-    // riješava krivo prepoznavanje kategorije na jezicima koje detekcija ne pokriva (hu, cs, sk, sl, it).
-    const isForced = forcedCategory && CATEGORY_CONTEXTS[forcedCategory];
-    // Potpitanje bez naziva teme ("A za plovilo od 12 m?") nastavlja temu prethodnog pitanja.
-    const isFollowupLike = /\?|\S+\s+\S+\s+\S+/.test(message) && !/^(hvala|thanks|danke|grazie|köszönöm|děkuji|ďakujem|bok|hi|hello|hallo)\b/i.test(message.trim());
-    const detectedCategory = isForced ? forcedCategory
-      : detectCategory(message, lastCategory, db) || (isFollowupLike && lastCategory && CATEGORY_CONTEXTS[lastCategory] ? lastCategory : null);
-    const ctxFn = detectedCategory ? CATEGORY_CONTEXTS[detectedCategory] : null;
-    const context = ctxFn ? ctxFn(db, message) : { grad: db.grad, opcenito: db.opcenito, atrakcije: db.atrakcije };
-
-    // getCategoryItems je sinkron — pokrećemo PRIJE system prompta da LLM zna o karticama
-    const items = getCategoryItems(detectedCategory, message, { full: !!isForced });
-
-    const systemDynamic = buildDynamicSystem(lang, context, weather);
-    const seasonCtx = getSeasonContext(); // za [SUSTAV] itinerer note
-
-    // Ako kartice postoje, dodajemo eksplicitnu uputu u zadnju user poruku
-    const msgLow = message.toLowerCase();
-
-    // Detektiramo zahtjev za konkretnim itinererom / planom dana
-    const wantsItinerary = msgLow.includes('itinerer') || msgLow.includes('raspored') ||
-      msgLow.includes('plan puta') || msgLow.includes('sat po sat') || msgLow.includes('korak po korak') ||
-      msgLow.includes('detaljan program') || msgLow.includes('itinerary') || msgLow.includes('schedule') ||
-      msgLow.includes('step by step') || msgLow.includes('reiseplan') || msgLow.includes('tagesplan') ||
-      // "konkretan prijedlog" za izletničke kategorije → itinerer
-      ((msgLow.includes('konkretan') || msgLow.includes('konkretno') || msgLow.includes('specific') || msgLow.includes('konkreten')) &&
-       (msgLow.includes('prijedlog') || msgLow.includes('plan') || msgLow.includes('odlazak') || msgLow.includes('izlet') || msgLow.includes('posjet') || msgLow.includes('trip') || msgLow.includes('visit') || msgLow.includes('ausflug')));
+    const { lang, isForced, detectedCategory, items, menuInfo, rankedItems, cardItems, hotelInfo, params, stripLists } =
+      prepareRequest({ message, history, lastCategory, forcedCategory, weather, clientLang, forceLang });
 
     // Klik na tab je pregled kategorije: instant lista bez AI poziva.
     // Tipkano pitanje uvijek ide kroz AI jer traži odgovor, a ne popis.
@@ -2016,79 +2123,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // Popis tražene vrste smještaja prikazuje se cijeli: to je ono što gost i pita.
-    const menuInfo = menuContext(message, history, detectedCategory);
-    const menuFirst = menuInfo.names.flatMap(n => {
-      const known = items.find(i => i.naziv === n);
-      if (known) return [known];
-      const raw = (db.gastronomija?.restorani || []).find(r => r.naziv === n);
-      return raw ? [item(raw)] : [];
-    });
-    const rankedItems = menuFirst.length ? [...menuFirst, ...items.filter(i => !menuInfo.names.includes(i.naziv))] : items;
-    const cardItems = detectedCategory === 'smjestaj' ? rankedItems : rankedItems.slice(0, MAX_CARDS_WITH_ANSWER);
-    const itemsNote = cardItems.length > 0
-      ? wantsItinerary
-        ? `\n[SUSTAV: Automatski će biti prikazano ${cardItems.length} vizualnih kartica s ponuđačima izleta. Korisnik traži KONKRETAN ITINERER.\n\nTRENUTNA SEZONA: ${seasonCtx.label}\nDOSTUPNOST IZLETA: ${seasonCtx.izleti_kornati}\nSAVJET: ${seasonCtx.savjet_izlet}\n\nPROGNOZA: Iz bloka "PROGNOZA ZA NAREDNIH X DANA" u promptu — preporuči KONKRETNE optimalne dane za izlet (koji dani su sunčani, koji kišoviti). Ako korisnik pita za "ovaj tjedan" ili "naredne dane" — napiši koji dani su dobri za izlet i koji loši.\n\nNapiši strukturiran plan dana PRILAGOĐEN OVOJ SEZONI I PROGNOZI. Format: emoji + vrijeme + kratki opis, npr. "🕖 07:30 — Polazak...". Na kraju dodaj preporuku optimalnog dana na temelju prognoze + praktične savjete. SMIJE koristiti strukturirani format s vremenima. Kartice s agencijama prikazuju se automatski ispod.]`
-        : `\n[SUSTAV: Ispod odgovora automatski će biti prikazano ${cardItems.length} vizualnih kartica. Odgovori IZRAVNO na korisnikovo pitanje u 1–3 rečenice koristeći podatke iz baze (npr. cijena, datum, udaljenost, preporuka). Ako traženog podatka nema u bazi, reci to i uputi na TZ. NE nabrajaj kartice. Kartice prikazuju ove objekte iz baze (ne tvrdi da ih nema): ${cardItems.slice(0, 8).map(i => `${i.naziv}${i.telefon ? ` (${i.telefon})` : ''}`).join('; ')}.]`
-      : `\n[SUSTAV: Ispod ovog odgovora NEMA kartica. Ne spominji kartice niti "detalje ispod"; sve što gost treba napiši u odgovoru. Odgovor neka ima najviše oko 200 riječi: izaberi najvažnije i završi cjelovitom rečenicom.]`;
-    const namedNote = detectedCategory === 'smjestaj' ? namedObjectsNote(cardItems, message) : '';
-    const hotelInfo = detectedCategory === 'smjestaj' ? hotelNote(message) : '';
-    const kornatiNote = detectedCategory === 'kornati'
-      ? `\n[SUSTAV: Za ulaznice, cijene, bove, sidrenje, ronjenje, ribolov i pravila NP Kornati koristi ISKLJUČIVO blok np_kornati (službeni podaci parka, cjenik ${npKornati.cjenik.godina}., provjereno ${npKornati.provjereno}). Ulaznica se plaća po plovilu prema duljini; sezona je lipanj–rujan. Ako gost navede duljinu plovila i razdoblje, izračunaj točnu cijenu i reci da je kupnja izvan parka jeftinija nego u parku. Ako ne navede duljinu ili datum, navedi cijenu za najmanje plovilo (do 6,99 m) i pitaj za duljinu. Za izlet organiziranim brodom reci da cijena izleta obično već uključuje ulaznicu. Ne izmišljaj podatke kojih u bloku nema; za ostalo uputi na ${npKornati.izvor} ili +385 22 435 740.]`
-        + (/ulaznic|cijen|cjenik|košt|plat|ticket|price|cost|preis|kost|eintritt|prezz|biglietto|jegy|ár|vstup|vstop|cen/.test(msgLow) ? kornatiPriceNote(message, lang) : '')
-        + (lang !== 'hr' ? `\n[SYSTEM: the notes above are for the system only; write the answer ONLY in the guest's language (${lang}), never in Croatian.]` : '')
-      : '';
-    const emergencyNote = EMERGENCY_RE.test(msgLow)
-      ? `\n[SUSTAV: Za policiju, vatrogasce, pomoć na cesti i spašavanje na moru koristi samo prakticne_info.hitne_sluzbe. U opasnosti uvijek prvo navedi broj (112 za sve, 192 policija, 193 vatrogasci, 194 hitna pomoć, 195 more, 1987 pomoć na cesti, sa stranog mobitela +385 1 1987), zatim lokalni kontakt.]`
-      : '';
-    const taxiNote = TAXI_RE.test(msgLow)
-      ? `\n[SUSTAV: Gost treba taksi. Navedi u odgovoru sve taksije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /taxi|taksi/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Cijenu i transfer (npr. do Zračne luke Zadar) gost dogovara telefonom; ne navodi cijene ni udaljenosti kojih nema u bazi.]`
-      : '';
-    const rentNote = RENT_RE.test(msgLow)
-      ? `\n[SUSTAV: Gost traži rent-a-car. Navedi agencije iz baze s brojevima: ${(db.prakticne_info?.prijevoz || []).filter(x => /rent/i.test(x.naziv)).map(x => `${x.naziv} ${x.telefon}`).join('; ')}. Telefone napiši u odgovoru. Cijene navedi samo kako stoje u bazi: ne tvrdi da su po danu, jer agencija to ne navodi, i savjetuj potvrdu s agencijom.]`
-      : '';
-    const fuelNote = FUEL_RE.test(msgLow)
-      ? `\n[SUSTAV: Za benzinske postaje koristi samo prakticne_info.benzinska (službeni podaci mzoe-gor.hr). U Biogradu su tri INA postaje; 0–24 radi samo INA Magistrala; autoplin u Biogradu nema, najbliži je Petrol Pakoštane (06–22). Cijene su od ${fuel.provjereno} i mijenjaju se svaka dva tjedna: navedi ih s tim datumom i uputi na mzoe-gor.hr za aktualne. Radno vrijeme može se razlikovati vikendom i u sezoni.]`
-      : '';
-    const vetNote = VET_RE.test(msgLow)
-      ? `\n[SUSTAV: Za veterinara koristi samo prakticne_info.veterinari. U Biogradu rade ambulanta Nova i praksa Dado; službeni raspored dežurstva za Biograd nije objavljen. Izvan radnog vremena, nedjeljom i za hitne slučajeve uputi na dežurni mobitel Veterinarske stanice Zadar (+385 98 33 94 00) ili ambulantu Bokanjac u Zadru (0–24, +385 91 511 5092) i savjetuj da prije polaska nazovu. Ne postavljaj dijagnozu.]`
-      : '';
-    const healthNote = detectedCategory === 'prakticno' && HEALTH_RE.test(msgLow) && !VET_RE.test(msgLow)
-      ? `\n[SUSTAV: Za zdravstvo koristi samo kontakte iz baze (prakticne_info.zdravstvo). Specijalnu bolnicu za ortopediju preporuči SAMO za ozljede kostiju, zglobova i sustava za kretanje; za zubobolju, temperaturu, bolest djeteta i ostalo uputi na odgovarajuću ordinaciju u Domu zdravlja, a za hitna stanja ili izvan radnog vremena na 194 ili 112. Ne postavljaj dijagnozu i ne savjetuj lijekove.]`
-      : '';
-    const pharmacyInfo = PHARMACY_RE.test(msgLow) ? pharmacyNote() : '';
-    const ferryInfo = FERRY_RE.test(msgLow) && !/kornat|izlet/.test(msgLow) ? ferryNote() : '';
-    const vrgadaInfo = VRGADA_RE.test(msgLow) ? vrgadaNote() : '';
-    // "Kako do Zadra?" je pitanje o prijevozu i bez riječi "autobus".
-    const busInfo = BUS_RE.test(msgLow) || /(kako|čime)\b.{0,20}\b(do|doći|stići|otići|dolazak)\b|how\b.{0,20}\bget to|getting to|wie komm|come arrivo|come arrivare|hogyan jut|jak se dostat|ako sa dostať|kako priti/.test(msgLow) ? busNote() : '';
-    const eventsNote = detectedCategory === 'dogadanja'
-      ? `\n[SUSTAV: Događanja u bazi poredana su po polju sljedeci_termin. Ako gost pita općenito što slijedi, odgovor podijeli u dva odvojena dijela: najprije "Uskoro" (skupina USKORO, redom po datumu), zatim "Tijekom godine" (skupina TIJEKOM GODINE, strogo kronološki od najranijeg, uz mjesec i godinu iz sljedeci_termin). Ne miješaj ta dva dijela i ne navodi prošla događanja. Kad događanja prelaze u sljedeću godinu, to izričito naglasi (npr. "U 2027. slijede…") i uz svako navedi godinu.]`
-      : '';
-
-    // Poruke za Claude (do 10 prethodnih; system ide kao zaseban parametar)
-    const historyMessages = (history || []).slice(-10)
-      .filter(m => m.role === 'user' || m.role === 'assistant');
-
-    const params = {
-      model: 'claude-sonnet-5-5',
-      max_tokens: 1200,
-      // Turistički bot: prioritet je brzina odgovora. Sonnet 5.5 odbija 'disabled';
-      // 'between_tools' bez alata znači odgovor bez razmišljanja (dopušteno do effort 'high').
-      thinking: { type: 'between_tools' },
-      // Prompt caching: stabilni blok (persona + pravila + stalne info) je keširan,
-      // dinamički (jezik/vrijeme/sezona/baza) ide poslije njega.
-      system: [
-        { type: 'text', text: SYSTEM_STABLE, cache_control: { type: 'ephemeral' } },
-        { type: 'text', text: systemDynamic },
-      ],
-      messages: [
-        ...historyMessages,
-        { role: 'user', content: message + FOLLOWUP_NOTE + itemsNote + namedNote + hotelInfo + eventsNote + kornatiNote + healthNote + vetNote + emergencyNote + taxiNote + rentNote + fuelNote + pharmacyInfo + ferryInfo + vrgadaInfo + busInfo + menuInfo.note }
-      ]
-    };
-    // Popisi se brišu iz odgovora uz kartice; stranica ih skriva već tijekom ispisa.
-    // Cijene po razdobljima (jelovnici, cjenici hotela) model piše kao popis: taj popis ostaje.
-    const stripLists = cardItems.length > 0 && !menuInfo.note && !hotelInfo;
 
     // Postupni ispis: tekst ide stranici čim ga model napiše (NDJSON, redak po događaju),
     // a gotov odgovor s karticama stiže u zadnjem retku jednako kao bez streaminga.
@@ -2136,17 +2170,21 @@ export default async function handler(req, res) {
 
     const payload = {
       reply,
-      followup: split.followup,
       category: detectedCategory,
       lang,
       suggestions,
       links,
       items: localizeItems(shownItems, lang)
     };
+    // Odgovor ide gostu odmah; provjereno potpitanje stiže iza njega (u streamu kao zaseban redak).
+    const followupArgs = { message, reply, history, category: detectedCategory, weather, lang };
     if (wantsStream) {
       res.write(JSON.stringify({ type: 'done', ...payload }) + '\n');
+      const followup = await pickAnsweredFollowup(split.candidates, followupArgs).catch(() => '');
+      if (followup) res.write(JSON.stringify({ type: 'followup', followup }) + '\n');
       return res.end();
     }
+    payload.followup = await pickAnsweredFollowup(split.candidates, followupArgs).catch(() => '');
     return res.status(200).json(payload);
 
   } catch (err) {
